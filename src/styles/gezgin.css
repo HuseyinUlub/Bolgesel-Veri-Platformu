@@ -1,0 +1,197 @@
+/*
+ * Veri Gezgini: hikâye sayfasıyla aynı sade görünüm.
+ * explorer.css ve components.css'ten SONRA yüklenir; yalnızca görünümü ezer, düzeni korur.
+ */
+:root {
+    --bg-color: #f9f9f3;
+    --text-dark: #2f2f2f;
+    --text-muted: #6b6b6b;
+    --primary: #b0401f;
+    --green: #5b7f95;
+    --primary-light: #d8835a;
+    --primary-dark: #86301a;
+    --kart: #efeee6;
+    --cizgi: #e3e3e0;
+    --map-empty: #ececec;
+    --map-highlight: #2f2f2f;
+    --font-sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+    --es-aralik: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+*, body, button, select, input { font-family: var(--font-sans); }
+.fa, .fas, [class^='fa-'], [class*=' fa-'] { font-family: 'Font Awesome 6 Free' !important; }
+body { background: var(--bg-color); }
+.bg-pattern { display: none; }
+
+/* üst çubuk */
+header {
+    background: rgba(249, 249, 243, 0.97);
+    backdrop-filter: none;
+    box-shadow: none;
+    border-bottom: 1px solid var(--cizgi);
+}
+header h1 {
+    font-size: 1.35rem !important;
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: var(--text-dark) !important;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+.nav-pill, .nav-pill-gray {
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid transparent !important;
+    border-radius: 0 !important;
+    padding: 4px 2px !important;
+    color: #6b6b6b !important;
+    font-family: var(--es-aralik);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.nav-pill:hover, .nav-pill.active, .nav-pill-gray:hover, .nav-pill-gray.active {
+    background: transparent !important;
+    color: var(--text-dark) !important;
+    border-bottom-color: var(--text-dark) !important;
+}
+.header-nav { gap: 14px; }
+.tools-menu summary, .hikaye-donus {
+    border-radius: 0; background: #fff; border: 1px solid var(--cizgi);
+    font-family: var(--es-aralik); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* metin kartları: gri zemin, köşesiz, gölgesiz, görselsiz */
+.glass-card {
+    background: var(--kart);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-mask-image: none;
+}
+.glass-card::before { display: none; }
+.topic-section h2 { font-weight: 600; font-size: 1.75rem; letter-spacing: -0.01em; }
+.topic-section p { color: #3f3f3f; }
+.sub-heading { font-family: var(--es-aralik); font-weight: 500; font-size: 0.95rem; }
+.soft-rule { border-color: var(--cizgi); }
+
+.stat-box {
+    background: #fff; border: 0; border-radius: 0; box-shadow: none;
+}
+.stat-box h4 { font-family: var(--es-aralik); font-weight: 500; letter-spacing: 0.06em; color: #8c8c8c; }
+.stat-box .stat-val { font-weight: 600; color: var(--text-dark); }
+.stat-box .stat-label { color: var(--primary); }
+.top-table td { border-color: var(--cizgi); }
+.top-table tr { background: #fff; border-radius: 0; }
+.top-table tr td:first-child { font-family: var(--es-aralik); color: #8c8c8c; }
+
+/* kontroller */
+.controls-container {
+    background: #fff; border: 1px solid var(--cizgi); border-radius: 0; box-shadow: none; backdrop-filter: none;
+}
+.control-group label { font-family: var(--es-aralik); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #6b6b6b; }
+.control-group select { border-radius: 0; border-color: var(--cizgi); box-shadow: none; }
+
+/* harita ve grafik */
+#turkey-map, #data-chart { filter: none; }
+.map-path { stroke-width: 0.6px; }
+.tooltip { border-radius: 0; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); }
+
+.btn-green { border-radius: 0; background: var(--text-dark); }
+.infographic-promo { border-radius: 0; background: #fff; }
+.nav-btn { border-radius: 0; box-shadow: none; border: 1px solid var(--cizgi); background: #fff; color: var(--text-dark); }
+.app-footer { background: var(--bg-color); border-top: 1px solid var(--cizgi); color: #8c8c8c; }
+#loading { background: var(--bg-color); }
+
+header p#site-altbaslik { display: none; }
+.header-logo { height: 40px !important; width: auto; }
+.nav-pill, .nav-pill-gray, .sub-heading, .stat-box h4, .control-group label, .tools-menu summary, .hikaye-donus,
+.top-table tr td:first-child { font-family: var(--es-aralik) !important; }
+/* Gezgin'in giriş kartı: kurumsal görsel yerine sade harita */
+.hakkinda-visual { display: none !important; }
+.map-container.hakkinda-map { transform: none; flex: 0 0 50vh; }
+/* SVG'nin kendi boyutu kapsayıcıyı büyütmesin (yeniden çizimde büyüme döngüsü) */
+.map-container { min-height: 0; }
+#turkey-map { position: absolute; inset: 0; }
+.icindekiler-not { display: none; }
+
+/* Kaydırınca da aynı düzen: solda logo ve başlık, sağda düğmeler, altta konu satırı */
+header, header.scrolled { padding: 10px 24px 0; flex-direction: column; align-items: stretch; text-align: left; box-shadow: none; }
+.header-titles, header.scrolled .header-titles {
+    width: 100%; max-width: 1360px; margin: 0 auto; padding-left: 0;
+    display: flex; align-items: center; justify-content: flex-start; gap: 12px; min-height: 40px;
+}
+.header-logo, header.scrolled .header-logo { position: static; height: 36px !important; }
+header h1, header.scrolled h1 { font-size: 1.1rem !important; margin: 0; white-space: nowrap; }
+.hikaye-donus, header.scrolled .hikaye-donus { position: static; transform: none; margin-left: auto; }
+.tools-menu, header.scrolled .tools-menu { position: relative; transform: none; right: auto; top: auto; margin: 0; }
+.header-nav, header.scrolled .header-nav {
+    max-width: 1360px; width: 100%; margin: 8px auto 0; padding-bottom: 6px;
+    justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto;
+}
+header.scrolled .header-nav > :first-child { margin-left: 0; }
+header.scrolled .nav-pill { padding: 4px 2px !important; font-size: 11px; }
+@media (max-width: 700px) { header h1 { display: none; } .header-logo { height: 30px !important; } }
+/* Hakkında bağlantısı, Hikâyeler düğmesinin hemen yanında */
+.hakkinda-link, header.scrolled .hakkinda-link { margin-left: 0 !important; }
+
+/* ---- Toprak paleti (Anadolu'dakiler ile ortak kimlik) ---- */
+:root { --kiremit: #c74827; --hardal: #dd9a3a; --adacayi: #7d9076; --ismavi: #5b7f95; --krem: #fffcf0; --map-highlight: #2f2f2f; }
+header, header.scrolled { padding-bottom: 0; }
+.header-nav, header.scrolled .header-nav { padding-bottom: 8px; }
+.nav-pill:hover, .nav-pill.active, .nav-pill-gray:hover, .nav-pill-gray.active { border-bottom-color: var(--kiremit) !important; }
+.glass-card { background: var(--krem); border: 1px solid #ece4d0; border-top: 3px solid var(--bolum-renk, var(--kiremit)); }
+.topic-header { display: flex; align-items: center; gap: 12px; }
+.stat-box { background: #fff; border: 1px solid #ece4d0; }
+.stat-box .stat-label { color: var(--kiremit); }
+.controls-container { background: var(--krem); border-color: #ece4d0; }
+.btn-green { background: var(--kiremit); }
+.hikaye-donus:hover, .tools-menu summary:hover { border-color: var(--kiremit); }
+.topic-section p a { color: var(--ismavi); }
+@media (max-width: 700px) {
+    .hikaye-donus, .tools-menu summary, header.scrolled .hikaye-donus { padding: 6px 8px !important; font-size: 10px !important; letter-spacing: 0.02em !important; }
+    .tools-menu summary i { display: none; }
+    .header-titles { gap: 6px !important; }
+}
+/* Dar ekranda da konu satırı görünür ve yatay kayar; ayrı menü düğmesine gerek yok */
+@media (max-width: 1024px) {
+    .mobile-menu-toggle { display: none !important; }
+    .header-nav, header.scrolled .header-nav {
+        position: static; flex-direction: row; width: 100%; margin: 6px 0 0; padding: 0 0 6px;
+        opacity: 1; visibility: visible; transform: none; background: none; box-shadow: none; backdrop-filter: none;
+        border-radius: 0; gap: 14px; overflow-x: auto; scrollbar-width: none;
+    }
+    .header-nav::-webkit-scrollbar { display: none; }
+    .tools-menu { margin-top: 0 !important; }
+    .header-titles { align-items: center !important; }
+}
+
+/* Konu satırı: 7 üst başlık + Giriş; okunur büyüklükte, ikonlu sekmeler */
+.header-nav, header.scrolled .header-nav { gap: 26px; margin-top: 10px; padding-bottom: 0; }
+.nav-pill, .nav-pill-gray, header.scrolled .nav-pill {
+    font-family: var(--yazi, 'Source Sans 3', 'Segoe UI', system-ui, sans-serif) !important;
+    font-size: 16px !important; font-weight: 600; text-transform: none; letter-spacing: 0;
+    color: #4a4a4a !important; padding: 6px 2px 9px !important;
+    border-bottom: 3px solid transparent !important; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 7px;
+}
+.nav-pill i { font-size: 14px; color: #9a9a9a; transition: color .15s; }
+.nav-pill:hover, .nav-pill-gray:hover, header.scrolled .nav-pill:hover { color: var(--text-dark) !important; border-bottom-color: #d8cfc0 !important; }
+.nav-pill.active, .nav-pill-gray.active, header.scrolled .nav-pill.active { color: #1f1f1f !important; border-bottom-color: var(--kiremit) !important; }
+.nav-pill:hover i, .nav-pill.active i { color: var(--kiremit); }
+@media (max-width: 1024px) {
+    .header-nav, header.scrolled .header-nav { gap: 18px; }
+    .nav-pill, .nav-pill-gray, header.scrolled .nav-pill { font-size: 15px !important; }
+}
+
+/* Harita daha büyük: sağ panel genişledi, haritaya grafikten daha fazla yükseklik ayrıldı (masaüstü) */
+@media (min-width: 1025px) {
+    .container { max-width: 1680px; gap: 32px; }
+    .scrolly-sections { flex: 1 1 0; min-width: 0; }
+    .sticky-panel { flex: 1.5 1 0; min-width: 0; }
+    .map-container:not(.hakkinda-map) { flex: 1.8 1 0; }
+    .chart-container { flex: 1 1 0; }
+}

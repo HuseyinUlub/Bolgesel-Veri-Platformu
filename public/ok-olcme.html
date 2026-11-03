@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ölçme ve Yöntem · Kalkınma Okuryazarlığı</title>
+<meta name="description" content="Bileşik endeksler, Beşeri Kalkınma Endeksi, Gini ve Theil eşitsizlik ölçüleri, endeks, medyan ve ortalama.">
+<link rel="icon" href="./img/logo.png">
+<link rel="stylesheet" href="./ok/site.css">
+<link rel="stylesheet" href="./ok/ortak.css">
+<style>
+  .ko-secenekler{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 10px;font-size:14px}
+  .ko-secenekler label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+  .ko-adimlar{counter-reset:a;list-style:none;padding:0;margin:8px 0 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+  .ko-adimlar li{counter-increment:a;background:#fff;border:1px solid var(--cizgi);padding:10px 12px;font-size:14px;line-height:1.4}
+  .ko-adimlar li:before{content:counter(a);display:block;font-family:var(--es-aralik);font-size:12px;color:var(--vurgu);margin-bottom:4px}
+</style>
+</head>
+<body>
+<header id="ust"></header>
+<main class="ko">
+  <section class="ko-sayfa-ust">
+    <p class="ko-yol"><a href="okuryazarlik.html">Kalkınma Okuryazarlığı</a> › 02</p>
+    <h1>Ölçme ve Yöntem</h1>
+    <p class="giris">Gelişmişlik ve eşitsizlik doğrudan gözlenemez; göstergelerden türetilen endekslerle ölçülür. Bu başlıkta
+      bölgesel analizde en sık kullanılan ölçülerin nasıl hesaplandığı, neyi gösterdiği ve neyi göstermediği anlatılmaktadır.</p>
+    <nav id="icindekiler" aria-label="Bu sayfadaki yazılar"></nav>
+  </section>
+
+  <!-- 1 SEGE -->
+  <article class="ko-yazi" id="sege">
+    <p class="ust">Ölçme ve Yöntem · 01</p>
+    <h2>Bileşik Endeks Nasıl Kurulur: SEGE Örneği</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b>
+      <p>Gelişmişlik tek bir göstergeyle ölçülemez. Bileşik endeks; ekonomi, eğitim, sağlık gibi alanlardan seçilen çok sayıda
+        göstergeyi ortak bir ölçeğe çevirip birleştirerek tek bir değer üretir. Sosyo-Ekonomik Gelişmişlik Sıralaması (SEGE)
+        Türkiye'de bu yaklaşımın en bilinen örneğidir.</p></div>
+    <ol class="ko-adimlar" aria-label="Bileşik endeks kurma adımları">
+      <li>Kavramı tanımlamak ve alanları belirlemek</li>
+      <li>Her alan için gösterge seçmek</li>
+      <li>Göstergeleri ortak ölçeğe çevirmek (standartlaştırma)</li>
+      <li>Ağırlıkları belirlemek ve birleştirmek</li>
+      <li>Sıralamak, kademelere ayırmak, sağlamlığını sınamak</li>
+    </ol>
+    <div class="ko-sekil">
+      <p class="ko-cumle" id="sg-cumle" aria-live="polite"></p>
+      <div class="ko-grafik"><h4 id="sg-b">SEGE Endeks Değerleri ve Kademeler</h4><p class="alt">Her nokta bir ildir; renk, ilin gelişmişlik kademesini gösterir</p>
+        <svg id="sg-dagilim" role="img" aria-label="SEGE endeks değerlerinin dağılımı"></svg><div class="ko-lejant" id="sg-lejant"></div></div>
+      <div class="ko-grafik" style="margin-top:26px"><h4>Kendi Endeksinizi Kurun</h4>
+        <p class="alt">Göstergeleri seçin; eşit ağırlıklı, standartlaştırılmış bir endeks hesaplanır ve SEGE sıralamasıyla karşılaştırılır</p>
+        <div class="ko-secenekler" id="sg-secenek"></div>
+        <p class="ko-cumle" id="sg-cumle2" aria-live="polite"></p>
+        <svg id="sg-kiyas" role="img" aria-label="Kendi endeks sıralaması ile SEGE sıralamasının karşılaştırması"></svg></div>
+    </div>
+    <div class="ko-metin">
+      <h3>Neden Önemli?</h3>
+      <p>SEGE sonuçları; yatırım teşvik bölgelerinin belirlenmesi, kamu kaynaklarının dağıtımı ve bölge planlarında öncelik
+        tespiti gibi kararlarda başvurulan bir kaynaktır. Bu nedenle endeksin hangi göstergelerden oluştuğunu ve sıralamanın
+        gösterge seçimine ne kadar duyarlı olduğunu bilmek, sonuçların doğru kullanılması için gereklidir. Yukarıdaki
+        uygulamada farklı gösterge setleriyle sıralamanın nasıl değiştiği görülebilir.</p>
+    </div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b>
+      <p>Farklı yıllardaki SEGE çalışmalarında illerin sıra değişimini doğrudan "gelişme" ya da "gerileme" olarak yorumlamak.
+        Çalışmalar arasında gösterge seti, yöntem ve il sayısı değiştiğinden sıra değişiminin bir kısmı yöntem farkından
+        kaynaklanır. Ayrıca sıralama göreli bir ölçüdür: bir ilin sırasının düşmesi, mutlak olarak gerilediği anlamına gelmez.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Standartlaştırma.</b> Göstergeler farklı birimlerde olduğundan (TL, yüzde, binde) önce ortak ölçeğe çevrilir. En sık
+        kullanılan yöntem z-puanıdır: (değer − ortalama) / standart sapma. Alternatif olarak en küçük–en büyük ölçeklemesi
+        (0–1 aralığı) kullanılır; Beşeri Kalkınma Endeksi bu yöntemi uygular.</p>
+      <p><b>Yön.</b> "Düşük iyi" göstergelerin (bebek ölüm hızı, işsizlik oranı) işareti ters çevrilir.</p>
+      <p><b>Ağırlıklandırma.</b> SEGE çalışmalarında ağırlıklar temel bileşenler analiziyle, yani göstergeler arasındaki
+        ortak değişimden istatistiksel olarak türetilir. Uygulamadaki eşit ağırlıklandırma basit ve şeffaftır; ancak birbiriyle
+        yüksek korelasyonlu göstergeler aynı boyutu fazla temsil edebilir.</p>
+      <p><b>Sağlamlık sınaması.</b> Gösterge çıkarıp ekleyerek, ağırlıkları değiştirerek sıralamanın ne kadar değiştiğine
+        bakılır. Sıralamanın orta kısmındaki iller arasındaki farklar genellikle küçüktür; birkaç sıralık fark istatistiksel
+        olarak anlamlı olmayabilir. Bu nedenle kademe bilgisi tek tek sıralardan daha güvenilirdir.</p>
+      <p><b>Kendi endeksinizi kurun</b> uygulamasında göstergelerin en son yıl değerleri kullanılır; kişi başı GSYH'nin
+        logaritması alınır, bebek ölüm hızının işareti ters çevrilir. Uyum ölçüsü Spearman sıra korelasyonudur.</p>
+    </div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: Sanayi ve Teknoloji Bakanlığı SEGE Çalışmaları, TÜİK; Hesaplama: Platform</p><a class="kesfet" href="./#vt-sege">SEGE Değişimini Ana Sayfada İnceleyin</a></div>
+  </article>
+
+  <!-- 2 BKE -->
+  <article class="ko-yazi" id="bke">
+    <p class="ust">Ölçme ve Yöntem · 02</p>
+    <h2>Beşeri Kalkınma Endeksi</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b>
+      <p>Beşeri Kalkınma Endeksi, kalkınmayı yalnızca gelirle değil; uzun ve sağlıklı yaşam, eğitim ve gelir olmak üzere üç
+        boyutla ölçer. Endeks 0 ile 1 arasında değer alır; 1'e yaklaştıkça beşeri kalkınma düzeyi yükselir.</p></div>
+    <div class="ko-sekil">
+      <div class="ko-kontrol"><label>İl <select id="bk-il"></select></label></div>
+      <p class="ko-cumle" id="bk-cumle" aria-live="polite"></p>
+      <div class="ko-grafik"><svg id="bk-grafik" role="img" aria-label="Beşeri Kalkınma Endeksi ve alt endeksleri"></svg>
+        <div class="ko-lejant"><span><i style="background:#e0d6c8"></i>81 ilin aralığı</span><span><i style="background:#a8502e;border-radius:50%"></i>Seçilen il</span><span><i style="background:#2f2f2f;width:3px"></i>Türkiye</span></div></div>
+    </div>
+    <div class="ko-metin">
+      <h3>Neden Önemli?</h3>
+      <p>Gelir düzeyi benzer iki il, eğitim ve sağlık göstergelerinde birbirinden belirgin biçimde ayrışabilir. Alt endeksler,
+        bir ilin hangi boyutta geride kaldığını gösterdiği için bölge planlarında öncelik alanlarının belirlenmesine yardımcı
+        olur. Örneğin gelir alt endeksi görece iyi, eğitim alt endeksi zayıf olan bir ilde eğitim yatırımları öne çıkar.</p>
+    </div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b>
+      <p>İl endeks değerlerini UNDP'nin ülke sıralamalarıyla doğrudan karşılaştırmak. İl düzeyindeki hesaplamada kullanılan
+        göstergeler ve sınır değerler ülke endeksinden farklı olabilir; karşılaştırma yalnızca aynı çalışmanın içinde anlamlıdır.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Hesaplama.</b> Her boyut önce en küçük ve en büyük sınır değerlerine göre 0–1 aralığına ölçeklenir:
+        (değer − alt sınır) / (üst sınır − alt sınır). Gelir boyutunda logaritma kullanılır; böylece gelirin artan düzeylerinde
+        her ek liranın katkısı azalır. Endeks, üç alt endeksin geometrik ortalamasıdır:</p>
+      <div class="ko-formul">BKE = (I<sub>yaşam</sub> × I<sub>eğitim</sub> × I<sub>gelir</sub>)<sup>1/3</sup></div>
+      <p><b>Neden geometrik ortalama?</b> Aritmetik ortalamada bir boyuttaki zayıflık diğer boyuttaki güçlülükle tamamen
+        telafi edilebilir. Geometrik ortalama bu telafiyi sınırlar; boyutlar arasında dengesizlik olan iller daha düşük değer alır.
+        Seçilen ilin aritmetik ve geometrik ortalama değerleri yukarıdaki cümlede verilmiştir.</p>
+      <p><b>Kaynak ve kapsam.</b> İl düzeyindeki endeks TÜİK tarafından hesaplanmaktadır; kullanılan göstergelerin ayrıntısı
+        TÜİK'in yöntem notunda yer alır. Seri 2018 yılından itibaren mevcuttur.</p>
+    </div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK İl Bazında Beşeri Kalkınma Endeksi; Hesaplama: Platform</p><a class="kesfet" href="analiz.html">Analiz Masası'nda İnceleyin</a></div>
+  </article>
+
+  <!-- 3 GINI -->
+  <article class="ko-yazi" id="gini">
+    <p class="ust">Ölçme ve Yöntem · 03</p>
+    <h2>Gini Katsayısı</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b>
+      <p>Gini katsayısı, gelirin ne kadar eşitsiz dağıldığını 0 ile 1 arasında bir sayıyla gösterir. Herkes aynı gelire sahip
+        olsaydı katsayı 0, bütün gelir tek bir kişide toplansaydı 1 olurdu. Aynı yöntem kişiler arasında da iller arasında da
+        uygulanabilir; ancak iki sonuç farklı şeyleri ölçer.</p></div>
+    <div class="ko-sekil">
+      <p class="ko-cumle" id="gn-cumle" aria-live="polite"></p>
+      <div class="ko-iki">
+        <div class="ko-grafik"><h4>İller Arası GSYH Dağılımı: Lorenz Eğrisi</h4>
+          <p class="alt">İller kişi başı GSYH'ye göre küçükten büyüğe sıralanmıştır</p>
+          <svg id="gn-lorenz" role="img" aria-label="İller arası GSYH dağılımının Lorenz eğrisi"></svg>
+          <div class="ko-lejant" id="gn-lejant"></div></div>
+        <div class="ko-grafik"><h4 id="gn-b2">Hanehalkı Gelirinde Gini Katsayısı, Düzey 2</h4>
+          <p class="alt">Bölge içinde kişiler arasındaki gelir eşitsizliği</p>
+          <svg id="gn-cubuk" role="img" aria-label="Düzey 2 bölgelerinde gelir Gini katsayısı"></svg></div>
+      </div>
+    </div>
+    <div class="ko-metin">
+      <h3>Neden Önemli?</h3>
+      <p>Bölgesel analizde iki farklı Gini katsayısı karşımıza çıkar. Soldaki grafik, illerin ortalamaları arasındaki farkı
+        (bölgeler arası eşitsizlik) gösterir. Sağdaki grafik ise TÜİK Gelir ve Yaşam Koşulları Araştırmasından hesaplanan,
+        her bölgenin kendi içinde kişiler arasındaki gelir eşitsizliğidir. Bir bölge, Türkiye ortalamasına yakın gelire sahipken
+        kendi içinde çok eşitsiz olabilir; iki ölçü birbirini tamamlar.</p>
+    </div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b>
+      <p>İller arası hesaplanan Gini katsayısını, hanehalkı gelirine dayalı resmî Gini katsayısıyla karşılaştırmak. İl
+        ortalamaları kişiler arasındaki farkları gizlediğinden, iller arası katsayı her zaman çok daha düşük çıkar.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Lorenz eğrisi ve Gini.</b> Yatay eksende nüfusun birikimli payı, dikey eksende gelirin birikimli payı yer alır.
+        Tam eşitlikte eğri köşegen üzerindedir. Gini katsayısı, köşegen ile eğri arasındaki alanın köşegenin altındaki toplam
+        alana oranıdır:</p>
+      <div class="ko-formul">G = 1 − Σ<sub>k</sub> (X<sub>k</sub> − X<sub>k−1</sub>) (Y<sub>k</sub> + Y<sub>k−1</sub>)</div>
+      <p><b>Gini ve Theil.</b> Gini katsayısı dağılımın ortasındaki değişimlere, Theil endeksi ise uçlardaki değişimlere daha
+        duyarlıdır. Gini, gruplar arası ve grup içi bileşenlere tam olarak ayrıştırılamaz; bu nedenle bölgesel ayrıştırmada
+        <a href="#theil">Theil endeksi</a> tercih edilir.</p>
+      <p><b>Örneklem.</b> Hanehalkı geliri Gini katsayısı örneklem araştırmasına dayanır; Düzey 2 düzeyinde örneklem hatası
+        vardır. Bölgeler arasındaki küçük farklar ve yıllık küçük değişimler istatistiksel olarak anlamlı olmayabilir.</p>
+    </div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Bölgesel Hesaplar, ADNKS, Gelir ve Yaşam Koşulları Araştırması; Hesaplama: Platform</p><a class="kesfet" href="analiz.html">Analiz Masası'nda İnceleyin</a></div>
+  </article>
+
+  <!-- 4 THEIL -->
+  <article class="ko-yazi" id="theil">
+    <p class="ust">Ölçme ve Yöntem · 04</p>
+    <h2>Theil Endeksi</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b>
+      <p>Theil endeksi, gelirin birimler arasında ne kadar eşitsiz dağıldığını tek bir sayıyla özetler. Bütün iller aynı kişi
+        başı gelire sahip olsaydı endeks sıfır olurdu; değer büyüdükçe iller arasındaki fark artar. En önemli özelliği, toplam
+        eşitsizliği bölgeler arası ve bölgeler içi olarak ikiye ayırabilmesidir.</p></div>
+    <div class="ko-sekil">
+      <p class="ko-cumle" id="th-cumle" aria-live="polite"></p>
+      <div class="ko-iki">
+        <div class="ko-grafik"><h4>İller Arası Kişi Başı GSYH Eşitsizliği ve Bileşenleri</h4>
+          <p class="alt">Theil endeksi, nüfus ağırlıklı · bir yılın üzerine gelin</p>
+          <svg id="th-alan" role="img" aria-label="Theil endeksinin bölgeler arası ve bölgeler içi bileşenleri"></svg>
+          <div class="ko-lejant"><span><i style="background:#8f3418"></i>Düzey 1 bölgeleri arası</span><span><i style="background:#e0b49b"></i>Düzey 1 bölgeleri içi</span></div></div>
+        <div class="ko-grafik"><h4>Düzey 1 Bölgelerinin İçindeki Eşitsizlik</h4><p class="alt" id="th-cubuk-a"></p>
+          <svg id="th-cubuk" role="img" aria-label="Düzey 1 bölgelerinin kendi içindeki Theil endeksi"></svg></div>
+      </div>
+    </div>
+    <div class="ko-metin">
+      <h3>Neden Önemli?</h3>
+      <p>Bölgesel politikada iki ayrı soru vardır: Bölgeler birbirinden ne kadar farklı ve bölgelerin kendi içinde ne kadar fark
+        var? Theil endeksi bu iki soruyu aynı hesapta cevaplar. Bölgeler arası payın yüksek olması, bölgeler arası dengeyi
+        gözeten politikaların önemini gösterir. Bölge içi payın yüksek olması ise farkın bölge merkezleri ile çevre iller
+        arasında yoğunlaştığına işaret eder; bu durum bölge planlarında il düzeyinde farklılaştırılmış önlemleri gerektirir.</p>
+    </div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b>
+      <p>Farklı coğrafi düzeylerde hesaplanmış Theil değerlerini karşılaştırmak. İl düzeyinde hesaplanan endeks, Düzey 2
+        düzeyinde hesaplanandan her zaman daha yüksektir; çünkü il verisi, bölge ortalamalarının gizlediği farkları da içerir.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Hesaplama.</b> Nüfus ağırlıklı Theil endeksi (OECD, <em>Regions and Cities at a Glance</em>, Tablo 2.2 yöntemi):</p>
+      <div class="ko-formul">T = Σ<sub>i</sub> s<sub>i</sub> · ln( s<sub>i</sub> / p<sub>i</sub> )</div>
+      <p>s<sub>i</sub> ilin Türkiye GSYH'si içindeki payı, p<sub>i</sub> Türkiye nüfusu içindeki payıdır. Bir ilin GSYH payı
+        nüfus payına eşitse katkısı sıfırdır.</p>
+      <p><b>Ayrıştırma.</b> İller Düzey 1 bölgelerine gruplandığında endeks iki bileşene ayrılır:</p>
+      <div class="ko-formul">T = T<sub>arası</sub> + Σ<sub>g</sub> S<sub>g</sub> · T<sub>g</sub></div>
+      <p>T<sub>arası</sub> bölgeler tek birer birim sayıldığında hesaplanan endeks, T<sub>g</sub> g bölgesinin kendi içindeki
+        endeksi, S<sub>g</sub> ise o bölgenin GSYH payıdır.</p>
+      <ul>
+        <li>Tek ilden oluşan İstanbul (TR1) bölgesinin iç eşitsizliği tanım gereği sıfırdır.</li>
+        <li>Endeksin mutlak değeri tek başına yorumlanmaz; zaman içindeki değişimi ve bileşenlerin payı anlamlıdır.</li>
+        <li>Kişi başı GSYH üretim yerine göre hesaplandığından endeks, hanehalkı geliri eşitsizliğini değil üretimin mekânsal dağılımını ölçer.</li>
+      </ul>
+    </div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Bölgesel Hesaplar; Hesaplama: Platform</p><a class="kesfet" href="analiz.html">Analiz Masası'nda İnceleyin</a></div>
+  </article>
+
+  <!-- 5 ENDEKS / MEDYAN / ORTALAMA -->
+  <article class="ko-yazi" id="ortalama">
+    <p class="ust">Ölçme ve Yöntem · 05</p>
+    <h2>Endeks (Türkiye=100), Medyan ve Ortalama</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b>
+      <p>"Ortalama il" ile "Türkiye ortalaması" aynı şey değildir. Türkiye değeri büyük illerin ağırlığını taşır; illerin basit
+        ortalaması ve medyanı ise her ile eşit ağırlık verir. Endeks (Türkiye=100), bir ilin değerini Türkiye değerine göre
+        okumayı kolaylaştırır.</p></div>
+    <div class="ko-sekil">
+      <div class="vt-secim" role="group" aria-label="Gösterge" id="or-secim"></div>
+      <p class="ko-cumle" id="or-cumle" aria-live="polite"></p>
+      <div class="ko-grafik"><svg id="or-grafik" role="img" aria-label="İl değerlerinin dağılımı, Türkiye değeri, il ortalaması ve medyanı"></svg>
+        <div class="ko-lejant"><span><i style="background:#2f2f2f;width:3px"></i>Türkiye değeri (=100)</span><span><i style="background:#b0401f;width:3px"></i>İllerin basit ortalaması</span><span><i style="background:#1f5f7a;width:3px"></i>İllerin medyanı</span></div></div>
+    </div>
+    <div class="ko-metin">
+      <h3>Neden Önemli?</h3>
+      <p>Kişi başı GSYH gibi göstergelerde Türkiye değeri, yüksek değerli ve kalabalık birkaç ilin etkisiyle illerin çoğunun
+        üzerinde yer alır. Bu nedenle "Türkiye ortalamasının altındaki iller" ifadesi, illerin büyük çoğunluğunu kapsayabilir.
+        Planlama ve izleme çalışmalarında hangi referans değerin kullanıldığı açıkça belirtilmelidir.</p>
+      <ul>
+        <li><b>Türkiye değeri:</b> Ülke toplamından hesaplanır; nüfus ağırlıklıdır. Ülkenin genel düzeyini gösterir.</li>
+        <li><b>İllerin basit ortalaması:</b> Her il eşit ağırlıktadır; uç değerlerden etkilenir.</li>
+        <li><b>Medyan:</b> İller sıralandığında ortadaki ilin değeridir; uç değerlerden etkilenmez, "tipik ili" temsil eder.</li>
+      </ul>
+    </div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b>
+      <p>Bir ilin "ortalamanın altında" olduğunu söylerken hangi ortalamanın kastedildiğini belirtmemek; ya da ortalaması
+        alınamayacak değerlerin (oranların, kişi başı değerlerin) basit ortalamasını Türkiye değeri gibi sunmak.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Endeks hesabı.</b> Endeks = (il değeri / Türkiye değeri) × 100. 120, ilin Türkiye değerinin %20 üzerinde; 80,
+        %20 altında olduğunu gösterir. Endeksler arasındaki farklar yüzde puan değil, endeks puanı olarak ifade edilir.</p>
+      <p><b>Oranların ortalaması.</b> Bölge ya da Türkiye düzeyinde oran hesaplanırken il oranlarının basit ortalaması değil,
+        pay ve paydanın ayrı ayrı toplanıp bölünmesi esas alınmalıdır. Kişi başı GSYH'de bölge değeri, bölge GSYH'sinin bölge
+        nüfusuna oranıdır.</p>
+      <p><b>Çarpık dağılımlar.</b> Gelir, mevduat ve ihracat gibi göstergeler sağa çarpıktır (az sayıda çok yüksek değer).
+        Bu tür göstergelerde medyan ve logaritmik ölçek daha bilgilendiricidir.</p>
+    </div></details>
+    <div class="ko-alt"><p class="vt-kaynak" id="or-kaynak">Kaynak: TÜİK; Hesaplama: Platform</p><a class="kesfet" href="analiz.html">Analiz Masası'nda İnceleyin</a></div>
+  </article>
+
+  <nav id="sonraki"></nav>
+</main>
+<footer id="alt"></footer>
+
+<script src="./ok/d3.min.js"></script>
+<script src="./ok/ortak.js"></script>
+<script>
+OK.iskelet('olcme');
+const nf = OK.nf;
+const spearman = (a, b) => { const r = (v) => { const s = v.map((x, i) => [x, i]).sort((p, q) => p[0] - q[0]); const o = []; s.forEach(([, i], k) => (o[i] = k)); return o; };
+  return OK.regresyon(r(a).map((x, i) => [x, r(b)[i]])).r; };
+
+/* ===== 1. SEGE ===== */
+(async function () {
+  try {
+    const [seg, eko, egi, sag, dem, goc, ula, A] = await Promise.all(['sosyo-ekonomik-gelismislik', 'ekonomi', 'egitim', 'saglik', 'demografi', 'goc', 'ulastirma'].map(OK.kat).concat(OK.adlar()));
+    const E = OK.seri(seg, 'sege-endeks-degeri'), Kd = OK.seri(seg, 'sosyo-ekonomik-gelismislik-kademesi', 'il', E.yil), Sr = OK.seri(seg, 'sosyo-ekonomik-gelismislik-siralamasi', 'il', E.yil);
+    const KR = ['#6e2a14', '#a8502e', '#cc8058', '#e2b48f', '#ecd0b8', '#f6ebe0'];
+    document.getElementById('sg-b').textContent = `SEGE ${E.yil} Endeks Değerleri ve Kademeler`;
+    document.getElementById('sg-lejant').innerHTML = KR.map((r, i) => `<span><i style="background:${r};border-radius:50%;border:1px solid #d9d7cf"></i>${i + 1}. kademe</span>`).join('');
+    const svg = d3.select('#sg-dagilim'); const W = 760, H = 210, m = { l: 20, r: 20, t: 10, b: 30 };
+    svg.attr('viewBox', `0 0 ${W} ${H}`);
+    const x = d3.scaleLinear().domain(d3.extent([...E.d.values()])).nice().range([m.l, W - m.r]);
+    svg.append('g').attr('class', 'eksen').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(8).tickFormat((t) => nf(t, 1)).tickSizeOuter(0));
+    svg.append('text').attr('class', 'eksen-ad').attr('x', W - m.r).attr('y', H - 2).attr('text-anchor', 'end').text('Endeks değeri (sağa doğru daha gelişmiş)');
+    const v2 = [...E.d].filter(([k]) => A.il.has(k)).map(([k, deger]) => ({ k, ad: A.il.get(k), deger, kd: Kd.d.get(k), sr: Sr.d.get(k) }));
+    const sim2 = d3.forceSimulation(v2).force('x', d3.forceX((d) => x(d.deger)).strength(1)).force('y', d3.forceY((H - m.b + m.t) / 2).strength(0.08)).force('c', d3.forceCollide(6.2)).stop();
+    for (let i = 0; i < 260; i++) sim2.tick();
+    svg.selectAll('circle').data(v2).join('circle').attr('cx', (d) => d.x).attr('cy', (d) => Math.max(m.t + 6, Math.min(H - m.b - 6, d.y))).attr('r', 5.4)
+      .attr('fill', (d) => KR[(d.kd ?? 6) - 1]).attr('stroke', '#bdb7aa').attr('stroke-width', 0.6)
+      .on('mousemove', (e, d) => OK.ipGoster(e, `<b>${d.ad}</b><br><span class="s">Endeks değeri: ${nf(d.deger, 3)}<br>Sıra: ${d.sr ?? '–'} · ${d.kd ?? '–'}. kademe</span>`)).on('mouseleave', OK.ipGizle);
+    const say = d3.rollup(v2, (a) => a.length, (d) => d.kd);
+    document.getElementById('sg-cumle').innerHTML = `SEGE ${E.yil} çalışmasında 81 il altı kademeye ayrılmıştır: birinci kademede <strong>${say.get(1) ?? 0}</strong>, altıncı kademede <strong>${say.get(6) ?? 0}</strong> il yer almaktadır. Endeks değerleri ortalaması sıfır olacak biçimde standartlaştırılmıştır.`;
+
+    // kendi endeksiniz
+    const GOS = [
+      { ad: 'Kişi başına GSYH', s: OK.seri(eko, 'kisi-basina-gsyh-tl'), log: true, on: true },
+      { ad: 'Yükseköğretim mezunu oranı', s: OK.seri(egi, '15-yas-ve-uzeri-yuksekokul-veya-fakulte-mezunu-orani'), on: true },
+      { ad: 'Okul öncesi okullaşma', s: OK.seri(egi, 'okul-oncesi-net-okullasma-orani-3-5-yas') },
+      { ad: 'Bin kişiye hekim', s: OK.seri(sag, 'bin-kisi-basina-dusen-toplam-hekim-sayisi'), on: true },
+      { ad: 'Bebek ölüm hızı (ters)', s: OK.seri(dem, 'bebek-olum-hizi-binde'), ters: true },
+      { ad: 'Net göç hızı', s: OK.seri(goc, 'net-goc-hizi-binde') },
+      { ad: 'Bin kişiye otomobil', s: OK.seri(ula, 'bin-kisi-basina-otomobil-sayisi') },
+    ];
+    const kap = d3.select('#sg-secenek');
+    kap.selectAll('label').data(GOS).join('label').html((g, i) => `<input type="checkbox" ${g.on ? 'checked' : ''} data-i="${i}"> ${g.ad}`);
+    kap.selectAll('input').on('change', hesapla);
+    function hesapla() {
+      const sec = GOS.filter((g, i) => kap.select(`input[data-i="${i}"]`).property('checked'));
+      if (!sec.length) { document.getElementById('sg-cumle2').textContent = 'En az bir gösterge seçin.'; d3.select('#sg-kiyas').selectAll('*').remove(); return; }
+      const kod = [...A.il.keys()].filter((k) => Sr.d.has(k) && sec.every((g) => g.s.d.has(k)));
+      const z = sec.map((g) => { const vals = kod.map((k) => (g.log ? Math.log(g.s.d.get(k)) : g.s.d.get(k)) * (g.ters ? -1 : 1)); const mu = d3.mean(vals), sd = d3.deviation(vals); return vals.map((x) => (x - mu) / sd); });
+      const puan = kod.map((k, i) => d3.mean(z, (zz) => zz[i]));
+      const sira = puan.map((p, i) => [p, i]).sort((a, b) => b[0] - a[0]); const benim = []; sira.forEach(([, i], r) => (benim[i] = r + 1));
+      const veri = kod.map((k, i) => ({ k, ad: A.il.get(k), x: Sr.d.get(k), y: benim[i] }));
+      const rho = spearman(veri.map((d) => d.x), veri.map((d) => d.y));
+      const fark = [...veri].sort((a, b) => Math.abs(b.x - b.y) - Math.abs(a.x - a.y))[0];
+      OK.nokta('#sg-kiyas', veri, { W: 760, H: 360, xAd: `SEGE ${E.yil} sırası`, yAd: 'Kendi endeksinizdeki sıra', xBicim: (t) => nf(t), yBicim: (t) => nf(t), etiket: 6,
+        renk: (d) => (Math.abs(d.x - d.y) > 15 ? '#b0401f' : '#cc8058'), ip: (d) => `<b>${d.ad}</b><br><span class="s">SEGE sırası: ${d.x}<br>Kendi endeksinizde: ${d.y}</span>` });
+      const s = d3.select('#sg-kiyas'); const W2 = 760, H2 = 360;
+      s.insert('line', 'g').attr('x1', 56).attr('y1', H2 - 40).attr('x2', W2 - 20).attr('y2', 18).attr('stroke', '#8c8c8c').attr('stroke-dasharray', '4 3');
+      document.getElementById('sg-cumle2').innerHTML = `Seçilen ${sec.length} gösterge ile kurulan endeksin SEGE sıralamasıyla uyumu (Spearman): <strong>${nf(rho, 2)}</strong>. En büyük fark ${fark.ad} ilindedir: SEGE'de <strong>${fark.x}.</strong>, sizin endeksinizde <strong>${fark.y}.</strong> sıra. Kesikli çizgi üzerindeki iller iki sıralamada aynı yerdedir.`;
+    }
+    hesapla();
+  } catch (e) { OK.hata('#sg-cumle', e); }
+})();
+
+/* ===== 2. BKE ===== */
+(async function () {
+  try {
+    const [seg, A] = await Promise.all([OK.kat('sosyo-ekonomik-gelismislik'), OK.adlar()]);
+    const b = 'beseri-kalkinma-endeksi-';
+    const BOY = [['0-1', 'Beşeri Kalkınma Endeksi'], ['yasam-beklentisi-alt-endeksi-0-1', 'Yaşam beklentisi alt endeksi'], ['egitim-alt-endeksi-0-1', 'Eğitim alt endeksi'], ['gelir-alt-endeksi-0-1', 'Gelir alt endeksi']]
+      .map(([s, ad]) => ({ ad, S: OK.seri(seg, b + s) }));
+    const yil = BOY[0].S.yil;
+    const sel = document.getElementById('bk-il');
+    const iller = [...BOY[0].S.d.keys()].filter((k) => A.il.has(k)).sort((p, q) => A.il.get(p).localeCompare(A.il.get(q), 'tr'));
+    sel.innerHTML = iller.map((k) => `<option value="${k}">${A.il.get(k)}</option>`).join('');
+    sel.value = iller.includes('TRA21') ? 'TRA21' : iller[0];
+    function ciz() {
+      const k = sel.value;
+      const svg = d3.select('#bk-grafik'); const W = 760, sat = 46, m = { t: 26, r: 30, b: 28, l: 210 }, H = m.t + m.b + sat * BOY.length;
+      svg.attr('viewBox', `0 0 ${W} ${H}`).selectAll('*').remove();
+      const tum = BOY.flatMap((o) => [...o.S.d.values()]);
+      const x = d3.scaleLinear().domain([d3.min(tum) - 0.02, 1]).range([m.l, W - m.r]);
+      svg.append('g').attr('class', 'izgara').selectAll('line').data(x.ticks(6)).join('line').attr('x1', x).attr('x2', x).attr('y1', m.t).attr('y2', H - m.b);
+      svg.append('g').attr('class', 'eksen').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat((t) => nf(t, 2)).tickSizeOuter(0));
+      BOY.forEach((o, i) => {
+        const yy = m.t + sat * i + sat / 2; const vals = [...o.S.d].filter(([kk]) => kk.length === 5).map(([, v]) => v);
+        const g = svg.append('g');
+        g.append('text').attr('x', m.l - 12).attr('y', yy).attr('dy', '0.35em').attr('text-anchor', 'end').style('font-size', '13px').style('font-weight', i === 0 ? 600 : 400).style('fill', i === 0 ? 'var(--metin)' : 'var(--ikincil)').text(o.ad);
+        g.append('line').attr('x1', x(d3.min(vals))).attr('x2', x(d3.max(vals))).attr('y1', yy).attr('y2', yy).attr('stroke', '#e0d6c8').attr('stroke-width', 10).attr('stroke-linecap', 'round');
+        if (o.S.tr != null) g.append('rect').attr('x', x(o.S.tr) - 1.5).attr('y', yy - 10).attr('width', 3).attr('height', 20).attr('fill', '#2f2f2f');
+        const v = o.S.d.get(k);
+        g.append('circle').attr('cx', x(v)).attr('cy', yy).attr('r', 7).attr('fill', '#a8502e').attr('stroke', '#f9f9f3').attr('stroke-width', 2);
+        g.append('text').attr('x', x(v)).attr('y', yy - 13).attr('text-anchor', 'middle').style('font-family', 'var(--es-aralik)').style('font-size', '11px').style('fill', 'var(--metin)').text(nf(v, 3));
+        g.append('rect').attr('x', m.l).attr('y', yy - sat / 2).attr('width', W - m.l - m.r).attr('height', sat).attr('fill', 'transparent')
+          .on('mousemove', (e) => OK.ipGoster(e, `<b>${o.ad}</b><br><span class="s">${A.il.get(k)}: ${nf(v, 3)}<br>Türkiye: ${nf(o.S.tr, 3)}<br>81 il: ${nf(d3.min(vals), 3)}–${nf(d3.max(vals), 3)}</span>`)).on('mouseleave', OK.ipGizle);
+      });
+      const [t, ys, eg, ge] = BOY.map((o) => o.S.d.get(k));
+      const sira = [...BOY[0].S.d].filter(([kk]) => kk.length === 5).sort((a, c) => c[1] - a[1]).findIndex(([kk]) => kk === k) + 1;
+      const alt = [['yaşam beklentisi', ys], ['eğitim', eg], ['gelir', ge]].sort((a, c) => a[1] - c[1])[0];
+      document.getElementById('bk-cumle').innerHTML = `${A.il.get(k)}, ${yil} yılında <strong>${nf(t, 3)}</strong> endeks değeriyle 81 il arasında <strong>${sira}.</strong> sıradadır; en zayıf boyutu <strong>${alt[0]}</strong> alt endeksidir (${nf(alt[1], 3)}). Üç alt endeksin aritmetik ortalaması ${nf((ys + eg + ge) / 3, 3)}, geometrik ortalaması ${nf(Math.cbrt(ys * eg * ge), 3)} düzeyindedir.`;
+    }
+    sel.addEventListener('change', ciz); ciz();
+  } catch (e) { OK.hata('#bk-cumle', e); }
+})();
+
+/* ===== 3. Gini ===== */
+(async function () {
+  try {
+    const [eko, nuf, gel, A] = await Promise.all([OK.kat('ekonomi'), OK.kat('nufus'), OK.kat('gelir-ve-yasam-kosullari'), OK.adlar()]);
+    const lorenz = (yil) => {
+      const G = OK.seri(eko, 'gayrisafi-yurt-ici-hasila-gsyh-bin-tl', 'il', yil), N = OK.seri(nuf, 'toplam-nufus', 'il', yil);
+      const v = [...G.d.keys()].filter((k) => N.d.has(k) && A.il.has(k)).map((k) => ({ g: G.d.get(k), n: N.d.get(k) })).sort((a, b) => a.g / a.n - b.g / b.n);
+      const tg = d3.sum(v, (d) => d.g), tn = d3.sum(v, (d) => d.n); let X = 0, Y = 0, gini = 1; const p = [[0, 0]];
+      for (const d of v) { const x2 = X + d.n / tn, y2 = Y + d.g / tg; gini -= (x2 - X) * (y2 + Y); X = x2; Y = y2; p.push([X, Y]); }
+      return { p, gini, yil };
+    };
+    const nYil = Object.keys(nuf['toplam-nufus']).sort(), gYil = Object.keys(eko['gayrisafi-yurt-ici-hasila-gsyh-bin-tl']).sort();
+    const ortak = nYil.filter((y) => gYil.includes(y));
+    const L1 = lorenz(ortak[0]), L2 = lorenz(ortak[ortak.length - 1]);
+    const svg = d3.select('#gn-lorenz'); const W = 520, H = 360, m = { t: 12, r: 16, b: 40, l: 50 };
+    svg.attr('viewBox', `0 0 ${W} ${H}`);
+    const x = d3.scaleLinear().range([m.l, W - m.r]), y = d3.scaleLinear().range([H - m.b, m.t]);
+    svg.append('g').attr('class', 'izgara').selectAll('line').data(y.ticks(5)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y);
+    svg.append('g').attr('class', 'eksen').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(5).tickFormat((t) => `%${nf(t * 100)}`).tickSizeOuter(0));
+    svg.append('g').attr('class', 'eksen').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat((t) => `%${nf(t * 100)}`).tickSize(0)).call((g) => g.select('.domain').remove());
+    svg.append('text').attr('class', 'eksen-ad').attr('x', W - m.r).attr('y', H - 6).attr('text-anchor', 'end').text('Nüfusun birikimli payı');
+    svg.append('text').attr('class', 'eksen-ad').attr('x', m.l + 4).attr('y', m.t + 10).text('GSYH\'nin birikimli payı');
+    svg.append('line').attr('x1', x(0)).attr('y1', y(0)).attr('x2', x(1)).attr('y2', y(1)).attr('stroke', '#8c8c8c').attr('stroke-dasharray', '4 3');
+    svg.append('text').attr('class', 'etiket').attr('x', x(0.52)).attr('y', y(0.58)).attr('transform', `rotate(-34 ${x(0.52)} ${y(0.58)})`).style('fill', 'var(--ikincil)').text('Tam eşitlik');
+    const ln = d3.line().x((d) => x(d[0])).y((d) => y(d[1]));
+    svg.append('path').attr('d', d3.area().x((d) => x(d[0])).y0((d) => y(d[0])).y1((d) => y(d[1]))(L2.p)).attr('fill', '#cc8058').attr('fill-opacity', 0.18);
+    svg.append('path').attr('d', ln(L1.p)).attr('fill', 'none').attr('stroke', '#7fa9bb').attr('stroke-width', 2);
+    svg.append('path').attr('d', ln(L2.p)).attr('fill', 'none').attr('stroke', '#a8502e').attr('stroke-width', 2);
+    document.getElementById('gn-lejant').innerHTML = `<span><i style="background:#7fa9bb"></i>${L1.yil} (Gini ${nf(L1.gini, 3)})</span><span><i style="background:#a8502e"></i>${L2.yil} (Gini ${nf(L2.gini, 3)})</span><span><i style="background:#cc8058;opacity:.35"></i>Eşitsizlik alanı, ${L2.yil}</span>`;
+    const G2 = OK.seri(gel, 'gini-katsayisi', 'd2');
+    document.getElementById('gn-b2').textContent = `Hanehalkı Gelirinde Gini Katsayısı, Düzey 2, ${G2.yil}`;
+    const cub = [...G2.d].map(([k, v]) => ({ ad: A.d2kisa.get(k) ?? k, deger: v, k })).sort((a, b) => b.deger - a.deger);
+    OK.cubuk('#gn-cubuk', cub, { W: 520, satir: 14.5, bicim: (v) => nf(v, 3), ref: G2.tr, renk: () => '#cc8058', m: { t: 4, r: 78, b: 16, l: 170 },
+      ip: (d) => `<b>${A.d2.get(d.k)}</b><br><span class="s">Gini katsayısı: ${nf(d.deger, 3)}</span>` });
+    d3.selectAll('#gn-cubuk text').style('font-size', '10.5px');
+    document.getElementById('gn-cumle').innerHTML = `İller arası kişi başı GSYH dağılımında Gini katsayısı ${L1.yil} yılında <strong>${nf(L1.gini, 3)}</strong>, ${L2.yil} yılında <strong>${nf(L2.gini, 3)}</strong> olarak hesaplanmıştır. Kişiler arasındaki gelir eşitsizliğini ölçen Türkiye Gini katsayısı ise ${G2.yil} yılında <strong>${nf(G2.tr, 3)}</strong> düzeyindedir.`;
+  } catch (e) { OK.hata('#gn-cumle', e); }
+})();
+
+/* ===== 4. Theil ===== */
+(async function () {
+  try {
+    const esit = await OK.json('veri/esitsizlik.json');
+    const S = esit.seriler;
+    const yillar = Object.keys(S.theil_il).filter((y) => S.arasi[y] != null && S.ici[y] != null).sort();
+    const seri = yillar.map((y) => ({ y: +y, arasi: S.arasi[y], ici: S.ici[y], top: S.theil_il[y] }));
+    const ilk = seri[0], son = seri[seri.length - 1];
+    document.getElementById('th-cumle').innerHTML = `İller arası kişi başı GSYH eşitsizliği ${ilk.y}–${son.y} döneminde <strong>%${nf(100 * (1 - son.top / ilk.top))}</strong> azalmıştır. ${son.y} yılında Düzey 1 bölgeleri arasındaki farkın toplam eşitsizlik içindeki payı <strong>%${nf(100 * son.arasi / son.top)}</strong> düzeyindedir.`;
+    const alan = d3.select('#th-alan'); const W = 520, H = 300, m = { t: 14, r: 16, b: 26, l: 46 };
+    alan.attr('viewBox', `0 0 ${W} ${H}`);
+    const x = d3.scaleLinear().domain(d3.extent(seri, (d) => d.y)).range([m.l, W - m.r]);
+    const y = d3.scaleLinear().domain([0, d3.max(seri, (d) => d.top) * 1.08]).nice().range([H - m.b, m.t]);
+    alan.append('g').attr('class', 'izgara').selectAll('line').data(y.ticks(5)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y);
+    alan.append('g').attr('class', 'eksen').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('d')).tickSizeOuter(0));
+    alan.append('g').attr('class', 'eksen').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat((v) => nf(v, 2)).tickSize(0)).call((g) => g.select('.domain').remove());
+    const RK = { arasi: '#8f3418', ici: '#e0b49b' };
+    alan.selectAll('path.k').data(d3.stack().keys(['arasi', 'ici'])(seri)).join('path').attr('class', 'k').attr('fill', (k) => RK[k.key]).attr('stroke', '#f9f9f3')
+      .attr('d', d3.area().x((d) => x(d.data.y)).y0((d) => y(d[0])).y1((d) => y(d[1])));
+    const imlec = alan.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', '#2f2f2f').style('opacity', 0);
+    const cub = d3.select('#th-cubuk'); const CW = 520, CH = 300, cm = { t: 6, r: 52, b: 6, l: 138 };
+    cub.attr('viewBox', `0 0 ${CW} ${CH}`);
+    const D1 = esit.haritalar.d1_theil;
+    const cx = d3.scaleLinear().domain([0, d3.max(Object.values(D1), (o) => d3.max(Object.values(o)))]).range([cm.l, CW - cm.r]);
+    function cubuk(yil) {
+      const o = D1[yil]; if (!o) return;
+      document.getElementById('th-cubuk-a').textContent = `Her bölgenin kendi illeri arasındaki Theil endeksi, ${yil}`;
+      const d = Object.entries(o).map(([k, v]) => ({ k, v })).sort((a, b) => b.v - a.v);
+      const cy = d3.scaleBand().domain(d.map((a) => a.k)).range([cm.t, CH - cm.b]).padding(0.28);
+      const g = cub.selectAll('g.s').data(d, (a) => a.k).join((en) => { const g = en.append('g').attr('class', 's'); g.append('rect'); g.append('text').attr('class', 'ad'); g.append('text').attr('class', 'dg'); return g; });
+      g.select('rect').attr('x', cx(0)).attr('y', (a) => cy(a.k)).attr('height', cy.bandwidth()).attr('rx', 2).attr('width', (a) => cx(a.v) - cx(0)).attr('fill', '#cc8058');
+      g.select('text.ad').attr('x', cm.l - 8).attr('y', (a) => cy(a.k) + cy.bandwidth() / 2).attr('dy', '0.35em').attr('text-anchor', 'end').style('font-size', '12.5px').style('fill', 'var(--ikincil)').text((a) => OK.D1AD[a.k] ?? a.k);
+      g.select('text.dg').attr('x', (a) => cx(a.v) + 6).attr('y', (a) => cy(a.k) + cy.bandwidth() / 2).attr('dy', '0.35em').style('font-family', 'var(--es-aralik)').style('font-size', '11px').style('fill', 'var(--ikincil)').text((a) => (a.v === 0 ? '0 (tek il)' : nf(a.v, 3)));
+    }
+    const bas = d3.bisector((d) => d.y).center;
+    alan.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('mousemove', function (e) { const [px] = d3.pointer(e, this); const d = seri[bas(seri, x.invert(px))];
+        imlec.attr('x1', x(d.y)).attr('x2', x(d.y)).style('opacity', 0.6);
+        OK.ipGoster(e, `<b>${d.y}</b><br><span class="s">Theil endeksi: ${nf(d.top, 3)}<br>Bölgeler arası: ${nf(d.arasi, 3)} (%${nf(100 * d.arasi / d.top)})<br>Bölgeler içi: ${nf(d.ici, 3)} (%${nf(100 * d.ici / d.top)})</span>`); cubuk(String(d.y)); })
+      .on('mouseleave', () => { imlec.style('opacity', 0); OK.ipGizle(); cubuk(String(son.y)); });
+    cubuk(String(son.y));
+  } catch (e) { OK.hata('#th-cumle', e); }
+})();
+
+/* ===== 5. Endeks, medyan, ortalama ===== */
+(async function () {
+  try {
+    const [eko, A] = await Promise.all([OK.kat('ekonomi'), OK.adlar()]);
+    const OLC = [
+      { ad: 'Kişi Başına GSYH', slug: 'kisi-basina-gsyh-tl', b: (v) => `${nf(v / 1000)} bin TL`, adC: "kişi başına GSYH'de" },
+      { ad: 'Kişi Başına Mevduat', slug: 'kisi-basina-toplam-mevduat-tl', b: (v) => `${nf(v / 1000)} bin TL`, adC: 'kişi başına mevduatta' },
+    ];
+    function ciz(o) {
+      const S = OK.seri(eko, o.slug); const v = [...S.d].filter(([k]) => A.il.has(k)).map(([k, x]) => ({ k, ad: A.il.get(k), x }));
+      const ort = d3.mean(v, (d) => d.x), med = d3.median(v, (d) => d.x), tr = S.tr;
+      const svg = d3.select('#or-grafik'); const W = 760, H = 320, m = { t: 40, r: 20, b: 40, l: 44 };
+      svg.attr('viewBox', `0 0 ${W} ${H}`).selectAll('*').remove();
+      const x = d3.scaleLinear().domain([d3.min(v, (d) => d.x) * 0.85, d3.max(v, (d) => d.x)]).nice().range([m.l, W - m.r]);
+      const kutu = d3.bin().domain(x.domain()).thresholds(x.ticks(24)).value((d) => d.x)(v);
+      const y = d3.scaleLinear().domain([0, d3.max(kutu, (b) => b.length)]).nice().range([H - m.b, m.t]);
+      svg.append('g').attr('class', 'izgara').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y);
+      svg.append('g').attr('class', 'eksen').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(8).tickFormat(o.b).tickSizeOuter(0));
+      svg.append('g').attr('class', 'eksen').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSize(0)).call((g) => g.select('.domain').remove());
+      svg.append('text').attr('class', 'eksen-ad').attr('x', m.l).attr('y', m.t - 26).text('İl sayısı');
+      // üst eksen: endeks
+      const xi = d3.scaleLinear().domain(x.domain().map((d) => (100 * d) / tr)).range(x.range());
+      svg.append('g').attr('class', 'eksen').attr('transform', `translate(0,${m.t - 8})`).call(d3.axisTop(xi).ticks(8).tickSize(3).tickFormat((t) => nf(t))).call((g) => g.select('.domain').remove());
+      svg.append('text').attr('class', 'eksen-ad').attr('x', W - m.r).attr('y', m.t - 26).attr('text-anchor', 'end').text('Endeks (Türkiye=100)');
+      svg.selectAll('rect').data(kutu).join('rect').attr('x', (b) => x(b.x0) + 1).attr('width', (b) => Math.max(0, x(b.x1) - x(b.x0) - 2)).attr('y', (b) => y(b.length)).attr('height', (b) => y(0) - y(b.length)).attr('rx', 2)
+        .attr('fill', '#e2b48f').on('mousemove', (e, b) => OK.ipGoster(e, `<b>${o.b(b.x0)}–${o.b(b.x1)}</b><br><span class="s">${b.length} il${b.length ? ': ' + b.map((d) => d.ad).slice(0, 8).join(', ') + (b.length > 8 ? '…' : '') : ''}</span>`)).on('mouseleave', OK.ipGizle);
+      const cizgiler = [[tr, '#2f2f2f', 'Türkiye'], [ort, '#b0401f', 'Ortalama'], [med, '#1f5f7a', 'Medyan']].sort((a, b) => a[0] - b[0]);
+      cizgiler.forEach(([val, renk, ad], i) => {
+        svg.append('line').attr('x1', x(val)).attr('x2', x(val)).attr('y1', m.t).attr('y2', H - m.b).attr('stroke', renk).attr('stroke-width', 2);
+        svg.append('text').attr('class', 'etiket').attr('x', x(val) + 5).attr('y', m.t + 12 + i * 15).style('fill', renk).style('font-weight', 600).text(`${ad} ${o.b(val)}`);
+      });
+      const alt = v.filter((d) => d.x < tr).length;
+      document.getElementById('or-cumle').innerHTML = `${S.yil} yılında ${o.adC} Türkiye değeri <strong>${o.b(tr)}</strong>, illerin basit ortalaması <strong>${o.b(ort)}</strong>, medyanı <strong>${o.b(med)}</strong> düzeyindedir. 81 ilin <strong>${alt}</strong> tanesi Türkiye değerinin altında, yani endeksi 100'ün altındadır.`;
+      document.getElementById('or-kaynak').textContent = o.slug.includes('mevduat') ? 'Kaynak: BDDK, TÜİK; Hesaplama: Platform' : 'Kaynak: TÜİK Bölgesel Hesaplar; Hesaplama: Platform';
+    }
+    OK.secim('#or-secim', OLC, ciz);
+  } catch (e) { OK.hata('#or-cumle', e); }
+})();
+</script>
+</body>
+</html>

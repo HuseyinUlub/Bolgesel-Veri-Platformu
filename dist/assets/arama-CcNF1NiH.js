@@ -1,0 +1,1 @@
+const i={ç:"c",ğ:"g",ı:"i",i̇:"i",ö:"o",ş:"s",ü:"u",â:"a",î:"i",û:"u"},r=a=>(a??"").toLocaleLowerCase("tr").replace(/[çğıöşüâîû]/g,e=>i[e]??e).replace(/i̇/g,"i").replace(/[^a-z0-9%]+/g," ").trim();export{r as s};

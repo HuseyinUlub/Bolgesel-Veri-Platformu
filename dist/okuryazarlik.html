@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkınma Okuryazarlığı · Türkiye Bölgesel Veri Analizleri</title>
+<meta name="description" content="Bölgesel kalkınma göstergelerini doğru okumak için kavramlar, ölçme yöntemleri, veri okuma tuzakları, bölgesel politika ve planlamada veri kullanımı.">
+<link rel="icon" href="./img/logo.png">
+<link rel="stylesheet" href="./ok/site.css">
+<link rel="stylesheet" href="./ok/ortak.css">
+<style>
+  .ko-sutun h2 a{color:inherit;text-decoration:none}.ko-sutun h2 a:hover{color:var(--vurgu)}
+  .ko-sutun .tumu{display:inline-block;margin-top:10px;font-family:var(--es-aralik);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--vurgu);text-decoration:none}
+  .ko-sutun li a{font-weight:400}
+  .ko-yol-bas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:0 0 48px}
+  .ko-yol-bas a{display:block;background:#fffdf6;border:1px solid #e3dcc8;padding:14px 16px;text-decoration:none;color:var(--metin)}
+  .ko-yol-bas a:hover{border-color:var(--vurgu)}
+  .ko-yol-bas b{display:block;font-size:16px;margin-bottom:4px}
+  .ko-yol-bas span{font-size:14px;color:var(--ikincil);line-height:1.45;display:block}
+  .ko-yol-bas small{display:block;font-family:var(--es-aralik);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--vurgu);margin-bottom:6px}
+  .ko-bolum-bas{font-size:20px;font-weight:600;margin:0 0 12px}
+</style>
+</head>
+<body>
+<header id="ust"></header>
+<main class="ko">
+  <section class="ko-acilis">
+    <p class="ust-etiket">Göstergeleri Doğru Okumak</p>
+    <h1>Kalkınma Okuryazarlığı</h1>
+    <p class="giris">Bölgesel kalkınma göstergeleri; plan hazırlığında, kaynak tahsisinde ve politikaların izlenmesinde karar
+      dayanağı olarak kullanılmaktadır. Bu bölüm, göstergelerin ne ölçtüğünü, nasıl hesaplandığını ve hangi durumlarda yanıltıcı
+      olabileceğini platformdaki verilerle örnekleyerek açıklamaktadır.</p>
+    <div class="ko-katman" aria-label="Sayfaların yapısı">
+      <span><i style="background:var(--vurgu)"></i><b>Kısaca:</b>&nbsp;teknik terim kullanmadan özet ve canlı örnek</span>
+      <span><i style="background:#e3dcc8"></i><b>Uzman notu:</b>&nbsp;yöntem, kaynak ve kullanımda dikkat edilecekler</span>
+    </div>
+  </section>
+
+  <h2 class="ko-bolum-bas">Nereden Başlamalı?</h2>
+  <div class="ko-yol-bas">
+    <a href="ok-tuzaklar.html"><small>Herkes için</small><b>Veri Okuma Tuzakları</b><span>Haritalar, sıralamalar ve ortalamalar okunurken en sık yapılan altı hata, canlı örneklerle.</span></a>
+    <a href="ok-planlama.html"><small>Ajans ve kamu uzmanları için</small><b>Planlamada Veri Kullanımı</b><span>Gösterge seçimi, karşılaştırma grubu ve hedef belirleme araçları.</span></a>
+    <a href="ok-kavramlar.html"><small>Kavramlara yeni başlayanlar için</small><b>Temel Kavramlar</b><span>GSYH'den göreli yoksulluğa on iki temel kavram, kısa tanımlar ve örneklerle.</span></a>
+  </div>
+
+  <div class="ko-sutunlar">
+    <section class="ko-sutun"><p class="no">01</p><h2><a href="ok-kavramlar.html">Temel Kavramlar</a></h2>
+      <p>Bölgesel istatistiklerde en sık karşılaşılan ölçüler ve birimler.</p>
+      <ul>
+        <li><a href="ok-kavramlar.html#gsyh">GSYH ve Kişi Başına GSYH</a></li>
+        <li><a href="ok-kavramlar.html#cari-hacim">Cari Fiyatlar ve Zincirlenmiş Hacim</a></li>
+        <li><a href="ok-kavramlar.html#sgp">Satın Alma Gücü Paritesi</a></li>
+        <li><a href="ok-kavramlar.html#ibbs">İstatistiki Bölge Birimleri</a></li>
+        <li><a href="ok-kavramlar.html#kent-kir">Kent–Kır Sınıflaması ve İşlevsel Kentsel Alan</a></li>
+        <li><a href="ok-kavramlar.html#sektor">Katma Değer ve Sektör Payları</a></li>
+        <li><a href="ok-kavramlar.html#isgucu">İşgücüne Katılım, İstihdam ve İşsizlik</a></li>
+        <li><a href="ok-kavramlar.html#goc">Net Göç Hızı</a></li>
+        <li><a href="ok-kavramlar.html#demografi">Doğurganlık ve Ortanca Yaş</a></li>
+        <li><a href="ok-kavramlar.html#yakinsama">Yakınsama</a></li>
+        <li><a href="ok-kavramlar.html#yigilma">Yığılma ve Yoğunlaşma</a></li>
+        <li><a href="ok-kavramlar.html#yoksulluk">Göreli Yoksulluk ve Medyan Gelir</a></li>
+      </ul></section>
+    <section class="ko-sutun"><p class="no">02</p><h2><a href="ok-olcme.html">Ölçme ve Yöntem</a></h2>
+      <p>Bileşik endeksler, eşitsizlik ölçüleri ve göreli göstergeler.</p>
+      <ul>
+        <li><a href="ok-olcme.html#sege">Bileşik Endeks Nasıl Kurulur: SEGE</a> <span class="ko-etiket hazir">Araç</span></li>
+        <li><a href="ok-olcme.html#bke">Beşeri Kalkınma Endeksi</a></li>
+        <li><a href="ok-olcme.html#gini">Gini Katsayısı</a></li>
+        <li><a href="ok-olcme.html#theil">Theil Endeksi</a></li>
+        <li><a href="ok-olcme.html#ortalama">Endeks, Medyan ve Ortalama</a></li>
+      </ul></section>
+    <section class="ko-sutun"><p class="no">03</p><h2><a href="ok-tuzaklar.html">Veri Okuma Tuzakları</a></h2>
+      <p>Aynı verinin farklı sonuçlara götürebildiği durumlar, platform verisiyle canlı olarak.</p>
+      <ul>
+        <li><a href="ok-tuzaklar.html#toplam-kisi-basi">Toplam mı, Kişi Başı mı?</a></li>
+        <li><a href="ok-tuzaklar.html#kucuk-nufus">Küçük Nüfusun Oynaklığı</a></li>
+        <li><a href="ok-tuzaklar.html#buyuk-alan">Büyük Alan, Az Nüfus</a></li>
+        <li><a href="ok-tuzaklar.html#korelasyon">Korelasyon Nedensellik Değildir</a></li>
+        <li><a href="ok-tuzaklar.html#bolge-ortalamasi">Bölge Ortalaması ve İl Gerçeği</a></li>
+        <li><a href="ok-tuzaklar.html#seri-kirilmasi">Seri Kırılmaları, Baz Yılı ve Birim Seçimi</a></li>
+      </ul></section>
+    <section class="ko-sutun"><p class="no">04</p><h2><a href="ok-politika.html">Bölgesel Kalkınma Politikası</a></h2>
+      <p>Türkiye'de bölgesel politikanın gelişimi, kurumları ve araçları.</p>
+      <ul>
+        <li><a href="ok-politika.html#tarihce">Bölgesel Politikanın Kısa Tarihçesi</a></li>
+        <li><a href="ok-politika.html#ajanslar">Kalkınma Ajansları ve Bölge Planları</a></li>
+        <li><a href="ok-politika.html#sege-tesvik">SEGE ve Teşvik Sistemi</a></li>
+      </ul></section>
+    <section class="ko-sutun"><p class="no">05</p><h2><a href="ok-planlama.html">Planlamada Veri Kullanımı</a></h2>
+      <p>Bölge planı ve raporlarında gösterge seçimi, karşılaştırma ve hedef belirleme.</p>
+      <ul>
+        <li><a href="ok-planlama.html#gosterge-secimi">Durum Analizinde Gösterge Seçimi</a> <span class="ko-etiket hazir">Araç</span></li>
+        <li><a href="ok-planlama.html#karsilastirma">Karşılaştırma Grubu Seçimi</a> <span class="ko-etiket hazir">Araç</span></li>
+        <li><a href="ok-planlama.html#hedef">Hedef ve İzleme Göstergesi</a> <span class="ko-etiket hazir">Araç</span></li>
+        <li><a href="ok-planlama.html#vekil">Veri Yoksa: Vekil Göstergeler</a></li>
+      </ul></section>
+  </div>
+</main>
+<footer id="alt"></footer>
+<script src="./ok/d3.min.js"></script>
+<script src="./ok/ortak.js"></script>
+<script>OK.iskelet('');</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analiz Masası · Türkiye Bölgesel Veri Analizleri</title>
+    <meta name="description" content="İl göstergelerini haritada inceleyin; bölgeler arası farkı, coğrafi kümelenmeyi, zaman içindeki değişimi ve göstergeler arası ilişkileri veriden hesaplanan bulgularla görün.">
+    <link rel="icon" href="/img/logo.png">
+</head>
+
+<body>
+    <header class="ust-cubuk">
+        <a class="marka" href="./">
+            <img src="/img/logo.png" alt="T.C. Sanayi ve Teknoloji Bakanlığı">
+            <span id="site-baslik"></span>
+        </a>
+        <nav class="ust-nav">
+            <a href="./">Ana Sayfa</a>
+            <a href="analiz.html" aria-current="page">Analiz Masası</a>
+            <a href="okuryazarlik.html">Kalkınma Okuryazarlığı</a>
+            <a href="katalog.html">Veri Kataloğu</a>
+            <details class="araclar-menu">
+                <summary>Araçlar</summary>
+                <nav id="araclar"></nav>
+            </details>
+            <a href="hakkinda.html">Hakkında</a>
+        </nav>
+    </header>
+
+<main class="analiz">
+  <section class="am-ust">
+    <p class="etiket">Bölgesel analiz</p>
+    <h1>Analiz Masası</h1>
+    <p class="giris">Bir göstergeyi haritada inceleyin, iki göstergeyi karşılaştırın ya da bir ilin bütün göstergelerdeki yerini görün. Bulgular veriden hesaplanır.</p>
+    <dl class="am-rakam">
+      <div><dt>Gösterge</dt><dd id="g-sayi">…</dd><small>il, Düzey 2, Düzey 1, OECD kentleri ve Türkiye</small></div>
+      <div><dt>Karşılaştırmaya uygun</dt><dd id="g-sayi-analiz">…</dd><small>81 ilde en az beş yıllık seri (◆)</small></div>
+      <div><dt>Düzey 2'de karşılaştırma</dt><dd id="g-sayi-d2">…</dd><small>istihdam, yoksulluk gibi bölge göstergeleri dahil</small></div>
+    </dl>
+  </section>
+
+  <div class="sekmeler am-kartlar" role="tablist" aria-label="Analiz türü">
+    <button class="sekme" role="tab" id="s-gosterge" aria-controls="p-gosterge" aria-selected="true">
+      <svg class="am-svg" viewBox="0 0 110 60" aria-hidden="true"><rect x="4" y="6" width="11" height="11" rx="2" fill="#f3e3d3"/><rect x="17" y="6" width="11" height="11" rx="2" fill="#e2b48f"/><rect x="30" y="6" width="11" height="11" rx="2" fill="#cc8058"/><rect x="43" y="6" width="11" height="11" rx="2" fill="#cc8058"/><rect x="56" y="6" width="11" height="11" rx="2" fill="#e2b48f"/><rect x="69" y="6" width="11" height="11" rx="2" fill="#a8502e"/><rect x="82" y="6" width="11" height="11" rx="2" fill="#a8502e"/><rect x="95" y="6" width="11" height="11" rx="2" fill="#6e2a14"/><rect x="4" y="19" width="11" height="11" rx="2" fill="#e2b48f"/><rect x="17" y="19" width="11" height="11" rx="2" fill="#e2b48f"/><rect x="30" y="19" width="11" height="11" rx="2" fill="#cc8058"/><rect x="43" y="19" width="11" height="11" rx="2" fill="#a8502e"/><rect x="56" y="19" width="11" height="11" rx="2" fill="#a8502e"/><rect x="69" y="19" width="11" height="11" rx="2" fill="#a8502e"/><rect x="82" y="19" width="11" height="11" rx="2" fill="#6e2a14"/><rect x="95" y="19" width="11" height="11" rx="2" fill="#6e2a14"/><rect x="4" y="32" width="11" height="11" rx="2" fill="#f3e3d3"/><rect x="17" y="32" width="11" height="11" rx="2" fill="#e2b48f"/><rect x="30" y="32" width="11" height="11" rx="2" fill="#e2b48f"/><rect x="43" y="32" width="11" height="11" rx="2" fill="#cc8058"/><rect x="56" y="32" width="11" height="11" rx="2" fill="#a8502e"/><rect x="69" y="32" width="11" height="11" rx="2" fill="#6e2a14"/><rect x="82" y="32" width="11" height="11" rx="2" fill="#6e2a14"/><rect x="95" y="32" width="11" height="11" rx="2" fill="#6e2a14"/><rect x="4" y="45" width="11" height="11" rx="2" fill="#f3e3d3"/><rect x="17" y="45" width="11" height="11" rx="2" fill="#f3e3d3"/><rect x="30" y="45" width="11" height="11" rx="2" fill="#e2b48f"/><rect x="43" y="45" width="11" height="11" rx="2" fill="#cc8058"/><rect x="56" y="45" width="11" height="11" rx="2" fill="#cc8058"/><rect x="69" y="45" width="11" height="11" rx="2" fill="#cc8058"/><rect x="82" y="45" width="11" height="11" rx="2" fill="#a8502e"/><rect x="95" y="45" width="11" height="11" rx="2" fill="#a8502e"/></svg>
+      <span class="am-ad">Gösterge</span><small>Harita, bölgelere göre dağılım, değişim ve bulgular</small></button>
+    <button class="sekme" role="tab" id="s-iliski" aria-controls="p-iliski" aria-selected="false">
+      <svg class="am-svg" viewBox="0 0 100 56" aria-hidden="true"><line x1="6" y1="48" x2="94" y2="10" stroke="#2f2f2f" stroke-dasharray="3 3" stroke-width="1"/><circle cx="10" cy="46" r="5.2" fill="#1f5f7a" fill-opacity=".8"/><circle cx="18" cy="40" r="3.6" fill="#1f5f7a" fill-opacity=".8"/><circle cx="24" cy="44" r="3.6" fill="#1f5f7a" fill-opacity=".8"/><circle cx="30" cy="34" r="3.6" fill="#a8502e" fill-opacity=".8"/><circle cx="38" cy="36" r="5.2" fill="#1f5f7a" fill-opacity=".8"/><circle cx="44" cy="28" r="3.6" fill="#1f5f7a" fill-opacity=".8"/><circle cx="52" cy="30" r="3.6" fill="#1f5f7a" fill-opacity=".8"/><circle cx="58" cy="22" r="3.6" fill="#1f5f7a" fill-opacity=".8"/><circle cx="66" cy="24" r="5.2" fill="#1f5f7a" fill-opacity=".8"/><circle cx="74" cy="16" r="3.6" fill="#a8502e" fill-opacity=".8"/><circle cx="80" cy="18" r="3.6" fill="#1f5f7a" fill-opacity=".8"/><circle cx="88" cy="12" r="3.6" fill="#1f5f7a" fill-opacity=".8"/><circle cx="34" cy="42" r="5.2" fill="#1f5f7a" fill-opacity=".8"/><circle cx="62" cy="30" r="3.6" fill="#1f5f7a" fill-opacity=".8"/><circle cx="48" cy="22" r="3.6" fill="#1f5f7a" fill-opacity=".8"/></svg>
+      <span class="am-ad">İlişki</span><small>İki göstergeyi iller ya da bölgeler arasında karşılaştırın</small></button>
+    <button class="sekme" role="tab" id="s-yer" aria-controls="p-yer" aria-selected="false">
+      <svg class="am-svg" viewBox="0 0 100 56" aria-hidden="true"><line x1="6" x2="94" y1="10" y2="10" stroke="#e3e3e0" stroke-width="5" stroke-linecap="round"/><circle cx="28.0" cy="10" r="2.2" fill="#c9c3b6"/><circle cx="53.7" cy="10" r="2.2" fill="#c9c3b6"/><circle cx="39.1" cy="10" r="2.2" fill="#c9c3b6"/><circle cx="58.7" cy="10" r="2.2" fill="#c9c3b6"/><circle cx="60.6" cy="10" r="2.2" fill="#c9c3b6"/><circle cx="13.5" cy="10" r="2.2" fill="#c9c3b6"/><circle cx="9.1" cy="10" r="2.2" fill="#c9c3b6"/><circle cx="78.3" cy="10" r="2.2" fill="#c9c3b6"/><circle cx="29.8" cy="10" r="2.2" fill="#c9c3b6"/><circle cx="70" cy="10" r="4.6" fill="#a8502e" stroke="#f9f9f3" stroke-width="1.5"/><line x1="6" x2="94" y1="22" y2="22" stroke="#e3e3e0" stroke-width="5" stroke-linecap="round"/><circle cx="27.7" cy="22" r="2.2" fill="#c9c3b6"/><circle cx="91.6" cy="22" r="2.2" fill="#c9c3b6"/><circle cx="47.5" cy="22" r="2.2" fill="#c9c3b6"/><circle cx="78.3" cy="22" r="2.2" fill="#c9c3b6"/><circle cx="48.0" cy="22" r="2.2" fill="#c9c3b6"/><circle cx="61.7" cy="22" r="2.2" fill="#c9c3b6"/><circle cx="20.7" cy="22" r="2.2" fill="#c9c3b6"/><circle cx="61.3" cy="22" r="2.2" fill="#c9c3b6"/><circle cx="80.9" cy="22" r="2.2" fill="#c9c3b6"/><circle cx="34" cy="22" r="4.6" fill="#a8502e" stroke="#f9f9f3" stroke-width="1.5"/><line x1="6" x2="94" y1="34" y2="34" stroke="#e3e3e0" stroke-width="5" stroke-linecap="round"/><circle cx="51.9" cy="34" r="2.2" fill="#c9c3b6"/><circle cx="70.3" cy="34" r="2.2" fill="#c9c3b6"/><circle cx="64.4" cy="34" r="2.2" fill="#c9c3b6"/><circle cx="13.4" cy="34" r="2.2" fill="#c9c3b6"/><circle cx="71.7" cy="34" r="2.2" fill="#c9c3b6"/><circle cx="57.7" cy="34" r="2.2" fill="#c9c3b6"/><circle cx="33.3" cy="34" r="2.2" fill="#c9c3b6"/><circle cx="10.6" cy="34" r="2.2" fill="#c9c3b6"/><circle cx="80.7" cy="34" r="2.2" fill="#c9c3b6"/><circle cx="82" cy="34" r="4.6" fill="#a8502e" stroke="#f9f9f3" stroke-width="1.5"/><line x1="6" x2="94" y1="46" y2="46" stroke="#e3e3e0" stroke-width="5" stroke-linecap="round"/><circle cx="47.7" cy="46" r="2.2" fill="#c9c3b6"/><circle cx="68.4" cy="46" r="2.2" fill="#c9c3b6"/><circle cx="81.8" cy="46" r="2.2" fill="#c9c3b6"/><circle cx="68.0" cy="46" r="2.2" fill="#c9c3b6"/><circle cx="85.4" cy="46" r="2.2" fill="#c9c3b6"/><circle cx="41.2" cy="46" r="2.2" fill="#c9c3b6"/><circle cx="75.3" cy="46" r="2.2" fill="#c9c3b6"/><circle cx="45.3" cy="46" r="2.2" fill="#c9c3b6"/><circle cx="86.6" cy="46" r="2.2" fill="#c9c3b6"/><circle cx="52" cy="46" r="4.6" fill="#a8502e" stroke="#f9f9f3" stroke-width="1.5"/></svg>
+      <span class="am-ad">Yer</span><small>Bir ilin bütün göstergelerde 81 il arasındaki konumu</small></button>
+  </div>
+  <p class="am-not">Haritada bir birime tıklandığında karşılaştırma paneli açılır. Göstergelerin listesi ve CSV indirme için <a href="katalog.html">Veri Kataloğu</a>.</p>
+
+  <!-- GÖSTERGE -->
+  <section class="panel" id="p-gosterge" role="tabpanel" aria-labelledby="s-gosterge">
+    <div class="denetim">
+      <div class="alan-k genis-k gsec-k"><span class="lbl" id="g-sec-lbl">Gösterge</span><div id="g-sec" aria-labelledby="g-sec-lbl"></div></div>
+      <div class="alan-k"><label for="g-duzey">Düzey</label><select id="g-duzey"></select></div>
+      <div class="alan-k" id="g-mod-k"><span class="lbl">Görünüm</span><div class="dilim" id="g-mod"><button type="button" data-k="duzey" aria-pressed="true">Düzey</button><button type="button" data-k="degisim" aria-pressed="false">Değişim</button></div></div>
+      <div class="alan-k" id="g-taban-k" hidden><label for="g-taban">Başlangıç yılı</label><select id="g-taban"></select></div>
+      <div class="alan-k" id="g-yil-k"><label for="g-yil" id="g-yil-lbl">Yıl</label><select id="g-yil"></select></div>
+    </div>
+    <div class="duzen">
+      <div class="calisma">
+        <div class="am-arac" id="g-arac" data-k="g"><button type="button" class="am-ozel-ac" aria-expanded="false" aria-controls="g-ozel"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h7M12 4h2M2 12h3M8 12h6"/><circle cx="10.5" cy="4" r="1.6"/><circle cx="6.5" cy="12" r="1.6"/></svg>Özelleştir</button><span class="am-indir"><span class="am-indir-lbl">İndir</span><button type="button" data-indir="png">PNG</button><button type="button" data-indir="csv">CSV</button><button type="button" data-indir="txt">Bulgular</button><button type="button" data-indir="kopya">Bulguları Kopyala</button></span><span class="am-durum" role="status" aria-live="polite"></span></div>
+        <div class="am-ozel" id="g-ozel" hidden>
+          <label class="am-o-genis">Başlık<input id="g-o-baslik" type="text" autocomplete="off"></label>
+          <label class="am-o-genis">Alt başlık<input id="g-o-alt" type="text" autocomplete="off"></label>
+          <label class="am-o-renk">Renk paleti<select id="g-o-palet"></select></label>
+          <label class="am-o-sinif">Sınıflama<select id="g-o-yontem"><option value="dilim">Dilimler (eşit sayıda birim)</option><option value="esit">Eşit aralıklar</option><option value="tr">Türkiye değerine göre</option></select></label>
+          <label class="am-o-sinif am-o-sayi">Sınıf sayısı<select id="g-o-sinif"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option></select></label>
+          <div class="am-o-alt"><span class="am-o-not" id="g-o-not"></span><button type="button" class="bag" id="g-o-sifirla">Varsayılana dön</button></div>
+        </div>
+        <div class="fig-baslik" id="g-baslik"></div><div class="fig-alt" id="g-alt"></div>
+        <div id="g-harita-kap">
+          <div class="harita-kap" id="g-harita"><div class="ipucu"></div></div>
+          <div class="lejant" id="g-lejant"></div>
+          <div class="alt-bas"><div><div class="fig-baslik" id="g-serit-baslik">Coğrafi bölgelere göre dağılım</div><div class="fig-alt" id="g-serit-alt"></div></div>
+            <div class="dilim" id="g-alt-gorunum"><button type="button" data-k="bolge" aria-pressed="true">Bölgelere Göre</button><button type="button" data-k="sira" aria-pressed="false">Sıralama</button></div></div>
+          <div class="grafik-kap" id="g-serit"><div class="ipucu"></div></div>
+        </div>
+        <div id="g-trend-kap" hidden><div class="grafik-kap" id="g-trend"><div class="ipucu"></div></div></div>
+        <p class="not kaynak-satiri" id="g-kaynak"></p>
+      </div>
+      <div class="bulgular" id="g-bulgular" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- İLİŞKİ -->
+  <section class="panel" id="p-iliski" role="tabpanel" aria-labelledby="s-iliski" hidden>
+    <div class="denetim">
+      <div class="alan-k"><span class="lbl">Düzey</span><div class="dilim" id="i-duzey"><button type="button" data-k="il" aria-pressed="true">İl (81)</button><button type="button" data-k="d2" aria-pressed="false">Düzey 2 (26)</button></div></div>
+      <div class="alan-k genis-k gsec-k"><span class="lbl">Dikey eksen</span><div id="i-y"></div></div>
+      <div class="alan-k genis-k gsec-k"><span class="lbl">Yatay eksen</span><div id="i-x"></div></div>
+      <div class="alan-k"><label for="i-yil">Yıl</label><select id="i-yil"></select></div>
+      <div class="alan-k"><span class="lbl">Renk</span><div class="dilim" id="i-renk"><button type="button" data-k="bolge" aria-pressed="true">Bölge</button><button type="button" data-k="oecd" aria-pressed="false">Kentsel–Kırsal</button></div></div>
+      <div class="alan-k"><label for="i-boyut">Balon boyutu</label><select id="i-boyut"></select></div>
+      <div class="alan-k"><span class="lbl">Türkiye çizgileri</span><div class="dilim" id="i-capraz"><button type="button" data-k="acik" aria-pressed="true">Göster</button><button type="button" data-k="kapali" aria-pressed="false">Gizle</button></div></div>
+      <div class="alan-k"><span class="lbl">Ölçek</span><div class="dilim" id="i-olcek"><button type="button" data-k="dog" aria-pressed="true">Doğrusal</button><button type="button" data-k="log" aria-pressed="false">Logaritmik</button></div></div>
+    </div>
+    <div class="duzen">
+      <div class="calisma">
+        <div class="am-arac" id="i-arac" data-k="i"><button type="button" class="am-ozel-ac" aria-expanded="false" aria-controls="i-ozel"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h7M12 4h2M2 12h3M8 12h6"/><circle cx="10.5" cy="4" r="1.6"/><circle cx="6.5" cy="12" r="1.6"/></svg>Özelleştir</button><span class="am-indir"><span class="am-indir-lbl">İndir</span><button type="button" data-indir="png">PNG</button><button type="button" data-indir="csv">CSV</button><button type="button" data-indir="txt">Bulgular</button><button type="button" data-indir="kopya">Bulguları Kopyala</button></span><span class="am-durum" role="status" aria-live="polite"></span></div>
+        <div class="am-ozel" id="i-ozel" hidden>
+          <label class="am-o-genis">Başlık<input id="i-o-baslik" type="text" autocomplete="off"></label>
+          <label class="am-o-genis">Alt başlık<input id="i-o-alt" type="text" autocomplete="off"></label>
+          <label class="am-o-renk">Nokta renkleri<select id="i-o-palet"></select></label>
+          <div class="am-o-alt"><span class="am-o-not">Renklendirme ölçütü (bölge ya da kentsel–kırsal) yukarıdaki Renk seçiminden belirlenir.</span><button type="button" class="bag" id="i-o-sifirla">Varsayılana dön</button></div>
+        </div>
+        <div class="fig-baslik" id="i-baslik"></div><div class="fig-alt" id="i-alt"></div>
+        <div class="grafik-kap" id="i-grafik"><div class="ipucu"></div></div>
+        <div class="lejant" id="i-lejant"></div>
+      </div>
+      <div class="bulgular" id="i-bulgular" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- YER -->
+  <section class="panel" id="p-yer" role="tabpanel" aria-labelledby="s-yer" hidden>
+    <div class="denetim">
+      <div class="alan-k"><label for="y-il">İl</label><select id="y-il"></select></div>
+    </div>
+    <div class="duzen">
+      <div class="calisma">
+        <div class="am-arac" id="y-arac" data-k="y"><span class="am-indir"><span class="am-indir-lbl">İndir</span><button type="button" data-indir="csv">CSV</button><button type="button" data-indir="txt">Bulgular</button><button type="button" data-indir="kopya">Bulguları Kopyala</button></span><span class="am-durum" role="status" aria-live="polite"></span></div>
+        <div class="fig-baslik" id="y-baslik"></div><div class="fig-alt">Her göstergede son yıl · sıra 1 = en yüksek değer · şerit: 81 ilin dağılımı, nokta: seçili il · sıra değişimi: son 5 yıl, yeşil iyileşme, kırmızı kötüleşme</div>
+        <div class="tablo-kap" id="y-tablo"></div>
+      </div>
+      <div class="bulgular" id="y-bulgular" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <p class="not" style="margin-top:36px;max-width:80ch">Kaynak: TÜİK, BDDK, MEB ve Sağlık Bakanlığı verileri (platform veritabanı); Hesaplama: Platform. Kümelenme: kraliçe komşuluğu,
+    satır standartlaştırılmış ağırlıklarla Moran I ve yerel Moran (LISA), 499 permütasyon, %5 anlamlılık. TL cinsinden göstergelerde değişim, Türkiye = 100 kabul
+    edilen göreli düzey üzerinden hesaplanır. Eşitsizlik ölçüleri illerin ağırlıksız dağılımına dayanır. İlişki katsayıları nedensellik göstermez.</p>
+</main>
+
+    <footer class="alt-bilgi">
+        T.C. Sanayi ve Teknoloji Bakanlığı, Kalkınma Ajansları Genel Müdürlüğü.
+    </footer>
+
+    <script type="module" src="/src/pages/analiz.js"></script>
+</body>
+
+</html>

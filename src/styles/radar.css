@@ -1,0 +1,119 @@
+/* Bölge radarı: Veri Gezgini'nde haritada bir birime tıklayınca sağdan açılan karşılaştırma paneli */
+.radar {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 1200;
+    width: min(400px, 100vw);
+    background: #fbfbf7; border-left: 1px solid var(--cizgi, #e3e3e0);
+    box-shadow: -12px 0 32px rgba(0, 0, 0, 0.08);
+    overflow-y: auto; overscroll-behavior: contain;
+    color: var(--text-dark, #2f2f2f);
+    animation: radar-gir 0.22s ease-out;
+}
+.radar[hidden] { display: none; }
+@keyframes radar-gir { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .radar { animation: none; } }
+
+.radar-ust {
+    position: sticky; top: 0; z-index: 2;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px; background: #fbfbf7; border-bottom: 1px solid var(--cizgi, #e3e3e0);
+}
+.radar-etiket { margin: 0; font-family: var(--es-aralik); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8c8c8c; }
+.radar-kapat {
+    width: 32px; height: 32px; border: 1px solid var(--cizgi, #e3e3e0); background: #fff; cursor: pointer;
+    font-size: 20px; line-height: 1; color: var(--text-dark, #2f2f2f);
+}
+.radar-kapat:hover { background: var(--text-dark, #2f2f2f); color: #fff; }
+.radar-govde { padding: 18px 20px 28px; }
+
+.radar-ad { font-size: 22px; font-weight: 600; margin: 0 0 4px; line-height: 1.2; }
+.radar-gosterge { margin: 0 0 6px; font-size: 13.5px; color: var(--text-muted, #6b6b6b); line-height: 1.4; }
+.radar-yok { margin: 18px 0; color: var(--text-muted, #6b6b6b); }
+
+.radar-bolum { border-top: 1px solid var(--cizgi, #e3e3e0); margin-top: 18px; padding-top: 14px; }
+.radar-bolum h3 {
+    margin: 0 0 6px; font-family: var(--es-aralik); font-size: 11.5px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dark, #2f2f2f);
+}
+.radar-aciklama { margin: 0 0 10px; font-size: 13.5px; line-height: 1.45; color: #4a4a4a; }
+
+/* Türkiye içindeki yeri */
+.radar-gosterge-kap { display: flex; align-items: flex-end; gap: 14px; }
+.radar-kadran { width: 190px; flex: none; }
+.radar-kadran-uc { font-family: var(--es-aralik); font-size: 9px; fill: #8c8c8c; }
+.radar-deger { padding-bottom: 8px; }
+.radar-deger strong { display: block; font-size: 26px; font-weight: 600; line-height: 1.1; }
+.radar-birim { font-size: 12px; color: var(--text-muted, #6b6b6b); }
+.radar-tr { display: block; margin-top: 4px; font-size: 12.5px; color: var(--text-muted, #6b6b6b); }
+
+/* komşu çubukları */
+.radar-cubuklar { display: flex; flex-direction: column; gap: 5px; }
+.radar-cubuk { display: grid; grid-template-columns: 118px 1fr 58px; align-items: center; gap: 8px; font-size: 13px; }
+.radar-cubuk[data-kod] { cursor: pointer; }
+.radar-cubuk[data-kod]:hover .radar-cubuk-ad { text-decoration: underline; }
+.radar-cubuk-ad { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #4a4a4a; }
+.radar-cubuk-iz { position: relative; height: 14px; }
+.radar-cubuk-iz i { position: absolute; top: 0; bottom: 0; background: #c9c6bd; border-radius: 0 3px 3px 0; }
+.radar-cubuk-deger { text-align: right; font-family: var(--es-aralik); font-size: 11.5px; color: #4a4a4a; }
+.radar-cubuk--secili .radar-cubuk-ad, .radar-cubuk--secili .radar-cubuk-deger { font-weight: 700; color: #1f1f1f; }
+.radar-cubuk--secili .radar-cubuk-iz i { background: #c24a28; }
+.radar-cubuk--tr .radar-cubuk-iz i { background: #2f2f2f; }
+.radar-cubuk--tr .radar-cubuk-ad { font-style: italic; }
+
+/* sıralama */
+.radar-tablo { width: 100%; border-collapse: collapse; font-size: 13px; }
+.radar-tablo th { text-align: left; font-family: var(--es-aralik); font-size: 10.5px; font-weight: 500; color: #8c8c8c; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 6px; border-bottom: 1px solid var(--cizgi, #e3e3e0); }
+.radar-tablo td { padding: 5px 6px; border-bottom: 1px solid #efeee8; }
+.radar-tablo td:first-child { width: 42px; font-family: var(--es-aralik); font-size: 11.5px; color: #8c8c8c; }
+.radar-tablo td:last-child, .radar-tablo th:last-child { text-align: right; font-family: var(--es-aralik); font-size: 11.5px; }
+.radar-tablo tr[data-kod] { cursor: pointer; }
+.radar-tablo tr[data-kod]:hover td { background: #f1efe8; }
+.radar-tablo tr.secili td { background: #f6e3da; font-weight: 700; color: #1f1f1f; }
+.radar-tablo tr.radar-bosluk td { text-align: center; color: #b0aea7; padding: 0; border-bottom: 1px solid #efeee8; }
+
+/* zaman grafiği */
+.radar-zaman svg { width: 100%; height: auto; display: block; }
+.radar-eksen { font-family: var(--es-aralik); font-size: 9.5px; fill: #8c8c8c; }
+.radar-seri-etiket { font-size: 11px; font-weight: 600; }
+.radar-ipucu {
+    position: absolute; pointer-events: none; opacity: 0; z-index: 3;
+    transform: translate(-50%, calc(-100% - 12px));
+    background: #fff; border: 1px solid var(--cizgi, #e3e3e0); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    padding: 6px 10px; font-size: 12.5px; line-height: 1.45; white-space: nowrap;
+}
+.radar-ipucu i { display: inline-block; width: 10px; height: 3px; margin-right: 6px; vertical-align: middle; }
+.radar { position: fixed; } /* ipucunun konumlandırma kabı */
+
+.radar-not { margin: 22px 0 0; font-size: 12px; color: #8c8c8c; line-height: 1.45; }
+
+/* haritada seçili birim ve komşuları */
+.map-path { cursor: pointer; }
+.map-path.is-komsu { stroke: #2f2f2f; stroke-width: 1.2px; stroke-dasharray: 3 2; }
+.map-path.is-secili { stroke: #1f1f1f; stroke-width: 2.6px; stroke-dasharray: none; }
+.tooltip-ipucu { font-size: 10.5px; color: #8c8c8c; }
+
+/* dar ekran: alttan açılan panel */
+@media (max-width: 768px) {
+    .radar {
+        top: auto; left: 0; width: 100vw; height: 72vh;
+        border-left: 0; border-top: 1px solid var(--cizgi, #e3e3e0);
+        box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.12);
+        animation-name: radar-gir-alt;
+    }
+    @keyframes radar-gir-alt { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+    .radar-cubuk { grid-template-columns: 104px 1fr 54px; }
+}
+
+/* OECD sınıfı (iller) */
+.radar-tip-sec { display: inline-flex; border: 1px solid var(--cizgi, #e3e3e0); margin: 2px 0 10px; }
+.radar-tip-sec button {
+    border: 0; background: #fff; padding: 5px 10px; font: inherit; font-size: 12px; cursor: pointer; color: #4a4a4a;
+}
+.radar-tip-sec button + button { border-left: 1px solid var(--cizgi, #e3e3e0); }
+.radar-tip-sec button[aria-pressed="true"] { background: var(--text-dark, #2f2f2f); color: #fff; }
+.radar-serit { width: 100%; height: auto; display: block; }
+.radar-serit circle[data-kod] { cursor: pointer; }
+.radar-serit circle[data-kod]:hover { fill: #2f2f2f; fill-opacity: 1; }
+.radar-tip-etiket { font-size: 11.5px; fill: #4a4a4a; }
+.radar-tip-etiket.secili { font-weight: 700; fill: #1f1f1f; }
+.radar-tip-n { font-family: var(--es-aralik); font-size: 9px; fill: #8c8c8c; font-weight: 400; }
+.radar-tip-tanim { margin: 8px 0 0; font-size: 11.5px; line-height: 1.45; color: #8c8c8c; }

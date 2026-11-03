@@ -1,0 +1,32 @@
+node_modules/
+# dist/ depoda tutulur: Node kurulu olmayan bilgisayarda site doğrudan dist'ten açılır
+build/
+public/veri/
+__pycache__/
+*.pyc
+*.log
+
+# TÜİK SDMX API anahtarı (yayına ve sürüm denetimine girmez)
+.tuik-api-key
+tuik-api-key.txt
+# güncelleme çalışma klasörü
+build/guncelleme/
+
+# Veri Masası raporları (her çalıştırmada yeniden üretilir)
+veri-masasi/raporlar/
+# Excel'in açık dosya kilitleri
+~$*
+
+# Kök klasörde kalmış eski derleme kopyaları (asılları src/ altında; temizlenince bu blok silinebilir)
+/analiz-*.js
+/arac-*.js
+/atlas.js
+/data-*.js
+/data-*.css
+/giris.js
+/grafik-*.js
+/hakkinda-*.js
+/harita-*.js
+/index-*.js
+/hikaye.css
+/vitrin.css

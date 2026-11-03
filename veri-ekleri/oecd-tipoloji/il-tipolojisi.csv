@@ -1,0 +1,82 @@
+﻿kod;il;kentsel_kirsal_kod;kentsel_kirsal;kentsel_kirsal_ayrintili_kod;kentsel_kirsal_ayrintili;kente_erisim_kod;kente_erisim;metropol_bolge_kod;metropol_bolge
+TR621;Adana;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_M;Metropole yakın;;
+TRC12;Adıyaman;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR332;Afyonkarahisar;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR712;Aksaray;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR834;Amasya;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR510;Ankara;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;MR_L;Büyük metropol;TR001M;Ankara
+TR611;Antalya;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;MR_M;Orta ölçekli metropol;TR003M;Antalya
+TRA24;Ardahan;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR905;Artvin;PRR;Ağırlıklı kırsal – uzak;PRR;Ağırlıklı kırsal – uzak;NMR_R;Uzak (kentten uzak);;
+TR321;Aydın;IN;Ara (geçiş);IN;Ara (yakın/uzak ayrımı yok);NMR_R;Uzak (kentten uzak);;
+TRA21;Ağrı;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR221;Balıkesir;IN;Ara (geçiş);IN;Ara (yakın/uzak ayrımı yok);NMR_M;Metropole yakın;;
+TR813;Bartın;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TRC32;Batman;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TRA13;Bayburt;PRR;Ağırlıklı kırsal – uzak;PRR;Ağırlıklı kırsal – uzak;NMR_R;Uzak (kentten uzak);;
+TR413;Bilecik;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TRB13;Bingöl;PRC;Ağırlıklı kırsal – kente yakın;PRC;Ağırlıklı kırsal – kente yakın;NMR_R;Uzak (kentten uzak);;
+TRB23;Bitlis;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR424;Bolu;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR613;Burdur;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR411;Bursa;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;MR_L;Büyük metropol;TR005M;Bursa
+TR322;Denizli;IN;Ara (geçiş);IN;Ara (yakın/uzak ayrımı yok);MR_M;Orta ölçekli metropol;TR006M;Denizli
+TRC22;Diyarbakır;IN;Ara (geçiş);INC;Ara – kente yakın;MR_M;Orta ölçekli metropol;TR007M;Diyarbakır
+TR423;Düzce;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_R;Uzak (kentten uzak);;
+TR212;Edirne;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TRB12;Elazığ;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TRA12;Erzincan;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TRA11;Erzurum;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_M;Metropole yakın;;
+TR412;Eskişehir;IN;Ara (geçiş);IN;Ara (yakın/uzak ayrımı yok);NMR_R;Uzak (kentten uzak);;
+TRC11;Gaziantep;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;MR_L;Büyük metropol;TR010M;Gaziantep
+TR903;Giresun;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR906;Gümüşhane;PRR;Ağırlıklı kırsal – uzak;PRR;Ağırlıklı kırsal – uzak;NMR_R;Uzak (kentten uzak);;
+TRB24;Hakkâri;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR631;Hatay;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_M;Metropole yakın;;
+TR612;Isparta;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TRA23;Iğdır;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR632;Kahramanmaraş;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR812;Karabük;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR522;Karaman;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TRA22;Kars;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_S;Küçük kente yakın;;
+TR821;Kastamonu;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_S;Küçük kente yakın;;
+TR721;Kayseri;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;MR_M;Orta ölçekli metropol;TR016M;Kayseri
+TRC13;Kilis;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_M;Metropole yakın;;
+TR421;Kocaeli;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_M;Metropole yakın;;
+TR521;Konya;IN;Ara (geçiş);INC;Ara – kente yakın;MR_M;Orta ölçekli metropol;TR018M;Konya
+TR333;Kütahya;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR213;Kırklareli;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR711;Kırıkkale;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_R;Uzak (kentten uzak);;
+TR715;Kırşehir;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TRB11;Malatya;IN;Ara (geçiş);INC;Ara – kente yakın;MR_M;Orta ölçekli metropol;TR019M;Malatya
+TR331;Manisa;IN;Ara (geçiş);IN;Ara (yakın/uzak ayrımı yok);NMR_M;Metropole yakın;;
+TRC31;Mardin;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR622;Mersin;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_M;Metropole yakın;;
+TR323;Muğla;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TRB22;Muş;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR714;Nevşehir;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_S;Küçük kente yakın;;
+TR713;Niğde;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR902;Ordu;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR633;Osmaniye;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_R;Uzak (kentten uzak);;
+TR904;Rize;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR422;Sakarya;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_M;Metropole yakın;;
+TR831;Samsun;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_M;Metropole yakın;;
+TRC34;Siirt;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_S;Küçük kente yakın;;
+TR823;Sinop;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR722;Sivas;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR211;Tekirdağ;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR832;Tokat;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR901;Trabzon;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_M;Metropole yakın;;
+TRB14;Tunceli;PRC;Ağırlıklı kırsal – kente yakın;PRC;Ağırlıklı kırsal – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR334;Uşak;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TRB21;Van;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_M;Metropole yakın;;
+TR425;Yalova;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_R;Uzak (kentten uzak);;
+TR723;Yozgat;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR811;Zonguldak;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;NMR_S;Küçük kente yakın;;
+TR222;Çanakkale;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;
+TR822;Çankırı;PRC;Ağırlıklı kırsal – kente yakın;PRC;Ağırlıklı kırsal – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR833;Çorum;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TR100;İstanbul;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;MR_L;Büyük metropol;TR012M;İstanbul
+TR310;İzmir;PU;Ağırlıklı kentsel;PU;Ağırlıklı kentsel;MR_L;Büyük metropol;TR013M;İzmir
+TRC21;Şanlıurfa;IN;Ara (geçiş);INC;Ara – kente yakın;NMR_R;Uzak (kentten uzak);;
+TRC33;Şırnak;IN;Ara (geçiş);INR;Ara – uzak;NMR_R;Uzak (kentten uzak);;

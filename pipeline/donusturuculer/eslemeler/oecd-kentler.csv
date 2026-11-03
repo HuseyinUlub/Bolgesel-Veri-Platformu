@@ -1,0 +1,44 @@
+﻿dosya;olcu;birim;filtre;duzey;gosterge;kategori;carpan;eksik_kabul;not
+DSD_FUA_DEMO_DF_AGE_SEX;POP;PS;AGE=_T,SEX=_T;FUA;Kent Nüfusu (OECD);Kentler (OECD);;;
+DSD_FUA_TERR_DF_DENSITY;POP_DEN;PS_KM2;;FUA;Nüfus Yoğunluğu (OECD Kent) (Kişi/km²);Kentler (OECD);;;2030'a kadar projeksiyon içerir
+DSD_FUA_DEMO_DF_DEPEND;DEPEND_RATIO;PT_POP_Y15T64;AGE=Y_GE65;FUA;Yaşlı Bağımlılık Oranı (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_ECO_DF_ECONOMY;GDP;PT_NAT;;FUA;GSYH'nin Ulusal Paydaki Payı (OECD Kent) (%);Kentler (OECD);;evet;OECD yalnızca 20 FUA için yayımlıyor; Edirne, Kars, Kastamonu, Nevşehir, Siirt ve Zonguldak yok
+DSD_FUA_ECO_DF_ECONOMY;GDP;USD_PPP_PS;;FUA;Kişi Başına GSYH, SGP (OECD Kent) ($);Kentler (OECD);;evet;OECD yalnızca 20 FUA için yayımlıyor; Edirne, Kars, Kastamonu, Nevşehir, Siirt ve Zonguldak yok
+DSD_FUA_LAB_DF_LABOUR;UNE_RATE;PT_LF_SUB;AGE=Y_GE15;FUA;İşsizlik Oranı (OECD Kent) (%);Kentler (OECD);;evet;OECD yalnızca 20 FUA için yayımlıyor; Edirne, Kars, Kastamonu, Nevşehir, Siirt ve Zonguldak yok
+DSD_FUA_LAB_DF_LABOUR;EMP_RATIO;PT_POP_SUB;AGE=Y15T64;FUA;İstihdam Oranı 15-64 Yaş (OECD Kent) (%);Kentler (OECD);;evet;OECD yalnızca 20 FUA için yayımlıyor; Edirne, Kars, Kastamonu, Nevşehir, Siirt ve Zonguldak yok
+DSD_FUA_ENV_DF_POLLUTION;PM25_POP_EXP;MCG_M3;;FUA;;Kentler (OECD);;;"ALINMADI: İstanbul için ~85 µg/m³ (ölçümlerin 3 katı civarı) ve 2023 değerleri ~1/500 ölçekte; OECD kaynağında doğrulanana kadar dışarıda"
+DSD_FUA_ENV_DF_UHI;UHI;C;TIME_SEASON=NIGHT_SUMMER;FUA;Kentsel Isı Adası, Yaz Geceleri (OECD Kent) (°C);Kentler (OECD);;;
+DSD_FUA_ENV_DF_GREEN_AREA;GREEN_AREA;M2_PS;;FUA;Kişi Başına Yeşil Alan (OECD Kent) (m²);Kentler (OECD);;;yalnızca 2021
+DSD_FUA_CLIM_DF_TEMPERATURES;HOT_DAYS;D_Y;;FUA;Sıcak Gün Sayısı (OECD Kent) (Gün);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_TEMPERATURES;TROP_NIGHTS;D_Y;;FUA;Tropikal Gece Sayısı (OECD Kent) (Gün);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_HEAT_STRESS;UTCI_POP_EXP;D_Y;HEAT_STRESS=GE32;FUA;Güçlü Isı Stresi Günleri (OECD Kent) (Gün);Kentler (OECD);;;UTCI ≥ 32 °C, nüfus ağırlıklı
+DSD_FUA_CLIM_DF_DROUGHT;LAND_MOIST_ANOM;PC;;FUA;Toprak Nemi Anomalisi (OECD Kent) (%);Kentler (OECD);;;negatif = kuraklık
+DSD_FUA_CLIM_DF_RIVER_FLOOD;RF_POP_EXP;PT_POP;RET_PERIOD=Y_100;FUA;Nehir Taşkınına Maruz Nüfus, 100 Yıllık (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_COASTAL_FLOOD;CF_POP_EXP;PT_POP;RET_PERIOD=Y_100;FUA;Kıyı Taşkınına Maruz Nüfus, 100 Yıllık (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_DIGI_DF_INTERNET_SPEED;DOWN_SPEED;PT_NAT;NETWORK_TYPE=FBB;FUA;Sabit İnternet İndirme Hızı (OECD Kent) (Türkiye=100);Kentler (OECD);;;
+DSD_FUA_DIGI_DF_INTERNET_SPEED;DOWN_SPEED;PT_NAT;NETWORK_TYPE=MBB;FUA;Mobil İnternet İndirme Hızı (OECD Kent) (Türkiye=100);Kentler (OECD);;;
+DSD_FUA_ENV_DF_GHG;GHG_TOTAL;T_CO2E_PS;;FUA;Kişi Başına Sera Gazı Emisyonu (OECD Kent) (t CO2e);Kentler (OECD);;;havacılık ve denizcilik hariç
+DSD_FUA_ENV_DF_LAND_COVER;TOTAL_BUILT;PT_LAR;;FUA;Yapılaşmış Alan Payı (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_TRAN_DF_SERVICE_ACCESS;POP_WITH_ACCESS;PT_POP;TRAVEL_TIME=MN_LE15;FUA;15 Dakikada Hizmete Erişen Nüfus (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_TEMPERATURES;AIR_TEMP2M;C;;FUA;Ortalama Hava Sıcaklığı (OECD Kent) (°C);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_TEMPERATURES;AIR_TEMP2M_CHG_1981_2010;C;;FUA;Hava Sıcaklığındaki Değişim, 1981-2010 Ortalamasına Göre (OECD Kent) (°C);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_TEMPERATURES;HOT_DAYS_CHG_1981_2010;D_Y;;FUA;Sıcak Gün Sayısındaki Değişim, 1981-2010'a Göre (OECD Kent) (Gün);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_TEMPERATURES;ICING_DAYS;D_Y;;FUA;Buzlu Gün Sayısı (OECD Kent) (Gün);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_PRECIP;PRECIP_SUM;MM;;FUA;Toplam Yağış (OECD Kent) (mm);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_PRECIP;EXT_PRECIP_DAYS;D_Y;;FUA;Aşırı Yağışlı Gün Sayısı (OECD Kent) (Gün);Kentler (OECD);;;
+DSD_FUA_ENER_DF_CDD_HDD;HDD;DD;;FUA;Isıtma Derece Gün (OECD Kent) (Derece-Gün);Kentler (OECD);;;
+DSD_FUA_ENER_DF_CDD_HDD;CDD;DD;;FUA;Soğutma Derece Gün (OECD Kent) (Derece-Gün);Kentler (OECD);;;
+DSD_FUA_CLIM_DF_WIND;WIND_EXP;PT_AR;;FUA;Rüzgâr Tehdidine Maruz Alan (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_ENV_DF_GHG;GHG_TOTAL;T_CO2E;;FUA;Toplam Sera Gazı Emisyonu (OECD Kent) (t CO2e);Kentler (OECD);;;
+DSD_FUA_ENV_DF_GHG;GHG_ROAD_TRANSPORT;T_CO2E_PS;;FUA;Kişi Başına Karayolu Ulaşımı Kaynaklı Sera Gazı (OECD Kent) (t CO2e);Kentler (OECD);;;
+DSD_FUA_ENV_DF_GHG;GHG_MANUFACT;T_CO2E_PS;;FUA;Kişi Başına İmalat Kaynaklı Sera Gazı (OECD Kent) (t CO2e);Kentler (OECD);;;
+DSD_FUA_ENV_DF_POLLUTION;NO2_POP_EXP;MCG_M3;POLLUTANT_CONCENTRATION=_Z;FUA;Nüfus Ağırlıklı NO2 Maruziyeti (OECD Kent) (µg/m³);Kentler (OECD);;;
+DSD_FUA_ENV_DF_UHI;UHI;C;TIME_SEASON=DAY_SUMMER;FUA;Kentsel Isı Adası, Yaz Gündüzleri (OECD Kent) (°C);Kentler (OECD);;;
+DSD_FUA_ENV_DF_LAND_COVER;LC_CRO;PT_LAR;;FUA;Tarım Arazisi Payı (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_ENV_DF_LAND_COVER;LC_NAT;PT_LAR;;FUA;Doğal ve Yarı Doğal Alan Payı (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_TERR_DF_DENSITY;URB_AREA;M2_PS;;FUA;Kişi Başına Kentleşmiş Alan (OECD Kent, 2025-2030 Tahmin) (m²);Kentler (OECD);;;GHSL dönemleri 2015-2020-2025-2030, son ikisi OECD tahmini
+DSD_FUA_DEMO_DF_DEPEND;DEPEND_RATIO;PT_POP_Y15T64;AGE=Y_LT15;FUA;Genç Bağımlılık Oranı (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_DEMO_DF_DEPEND;DEPEND_RATIO;PT_POP_Y15T64;AGE=Y_LT15_GE65;FUA;Toplam Bağımlılık Oranı (OECD Kent) (%);Kentler (OECD);;;
+DSD_FUA_LAB_DF_LABOUR;LF_RATE;PT_POP_SUB;AGE=Y15T64;FUA;İşgücüne Katılma Oranı 15-64 Yaş (OECD Kent) (%);Kentler (OECD);;evet;OECD 20 FUA için yayımlıyor
+DSD_FUA_ECO_DF_ECONOMY;GDP;USD_PPP;;FUA;GSYH, SGP (OECD Kent) (Milyon $);Kentler (OECD);0,000001;evet;OECD 20 FUA için yayımlıyor
+DSD_FUA_DIGI_DF_INTERNET_SPEED;UP_SPEED;PT_NAT;NETWORK_TYPE=FBB;FUA;Sabit İnternet Yükleme Hızı (OECD Kent) (Türkiye=100);Kentler (OECD);;;

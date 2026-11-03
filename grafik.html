@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafik Oluşturma · Türkiye Bölgesel Veri Analizleri</title>
+    <meta name="description" content="Türkiye, Düzey 1, Düzey 2, il ve ilçe düzeyinde sıralama ve zaman serisi grafikleri oluşturun; PNG ve CSV olarak indirin.">
+    <link rel="icon" href="/img/logo.png">
+</head>
+
+<body class="arac-sayfasi">
+    <header class="ust-cubuk">
+        <a class="marka" href="./">
+            <img src="/img/logo.png" alt="T.C. Sanayi ve Teknoloji Bakanlığı">
+            <span id="site-baslik"></span>
+        </a>
+        <nav class="ust-nav">
+            <a href="./">Ana Sayfa</a>
+            <a href="analiz.html">Analiz Masası</a>
+            <a href="okuryazarlik.html">Kalkınma Okuryazarlığı</a>
+            <a href="katalog.html">Veri Kataloğu</a>
+            <details class="araclar-menu">
+                <summary aria-current="page">Araçlar</summary>
+                <nav id="araclar"></nav>
+            </details>
+            <a href="hakkinda.html">Hakkında</a>
+        </nav>
+    </header>
+
+    <main class="arac">
+        <aside class="arac-panel" aria-label="Grafik ayarları">
+            <p class="ust-etiket">Araçlar</p>
+            <h1>Grafik Oluşturma</h1>
+
+            <fieldset class="arac-grup">
+                <legend>Veri</legend>
+                <div class="duzey-secici" role="radiogroup" aria-label="Düzey" id="duzey">
+                    <button type="button" data-duzey="tr" role="radio">Türkiye</button>
+                    <button type="button" data-duzey="duzey1" role="radio">Düzey 1</button>
+                    <button type="button" data-duzey="duzey2" role="radio">Düzey 2</button>
+                    <button type="button" data-duzey="il" role="radio">İl</button>
+                    <button type="button" data-duzey="ilce" role="radio">İlçe</button>
+                </div>
+                <label>Kategori <select id="kategori"></select></label>
+                <label>Gösterge <select id="gosterge"></select></label>
+            </fieldset>
+
+            <fieldset class="arac-grup">
+                <legend>Grafik</legend>
+                <div class="duzey-secici" role="radiogroup" aria-label="Grafik türü" id="tur">
+                    <button type="button" data-tur="sirali" role="radio">Sıralama</button>
+                    <button type="button" data-tur="cizgi" role="radio">Zaman (çizgi)</button>
+                    <button type="button" data-tur="sutun" role="radio">Zaman (sütun)</button>
+                </div>
+
+                <div data-gorunur="sirali" class="arac-grup-ic">
+                    <div class="yan-yana">
+                        <label>Yıl <select id="yil"></select></label>
+                        <label>Alan <select id="kapsam"></select></label>
+                    </div>
+                    <div class="yan-yana">
+                        <label>Gösterilecek
+                            <select id="adet">
+                                <option value="0">Tümü</option>
+                                <option value="10">En yüksek 10</option>
+                                <option value="20" selected>En yüksek 20</option>
+                                <option value="-10">En düşük 10</option>
+                                <option value="-20">En düşük 20</option>
+                            </select>
+                        </label>
+                        <label>Yön
+                            <select id="yon">
+                                <option value="y">Yatay çubuk</option>
+                                <option value="x">Dikey sütun</option>
+                            </select>
+                        </label>
+                    </div>
+                    <label>Vurgula <select id="vurgu"></select></label>
+                    <label class="kutu"><input type="checkbox" id="tr-cizgi" checked> Türkiye değerini çizgiyle göster</label>
+                </div>
+
+                <div data-gorunur="zaman" class="arac-grup-ic" hidden>
+                    <label>Birim ekle (en fazla 8)
+                        <input type="text" id="birim-ara" placeholder="Ad yazarak arayın…" autocomplete="off">
+                    </label>
+                    <div class="birim-listesi" id="birim-listesi"></div>
+                    <div class="secili-birimler" id="secili-birimler" aria-label="Seçili birimler"></div>
+                    <label class="kutu"><input type="checkbox" id="tr-seri" checked> Türkiye'yi de göster</label>
+                    <div class="yan-yana">
+                        <label>İlk yıl <select id="yil1"></select></label>
+                        <label>Son yıl <select id="yil2"></select></label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="arac-grup">
+                <legend>Görünüm</legend>
+                <label>Başlık <input type="text" id="baslik" placeholder="Göstergenin adı"></label>
+                <div class="kutular">
+                    <label class="kutu"><input type="checkbox" id="degerler"> Değerleri yaz</label>
+                    <label class="kutu"><input type="checkbox" id="sifir" checked> Eksen sıfırdan başlasın</label>
+                </div>
+            </fieldset>
+
+            <div class="indir-dugmeleri">
+                <button type="button" class="dugme dugme--ana" id="indir-png">PNG indir</button>
+                <button type="button" class="dugme" id="indir-csv">Tablo (CSV)</button>
+            </div>
+        </aside>
+
+        <section class="arac-sahne" aria-live="polite">
+            <div class="grafik-kap">
+                <div class="grafik-tuval"><canvas id="grafik" role="img"></canvas></div>
+            </div>
+            <p class="arac-durum" id="durum" role="status"></p>
+            <div class="tablo-kap">
+                <table class="arac-tablo" id="tablo"></table>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="/src/pages/grafik.js"></script>
+</body>
+
+</html>

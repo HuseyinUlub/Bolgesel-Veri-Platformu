@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye Bölge/İl Veri Analizi</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@4.2.0/build/index.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --bg: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 25px;
+        }
+
+        .controls,
+        .chart-box,
+        .table-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button.main-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-png {
+            background: #e67e22;
+        }
+
+        .btn-xls {
+            background: #27ae60;
+        }
+
+        .chart-box {
+            height: 500px;
+            position: relative;
+        }
+
+        .table-box {
+            max-height: 500px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            text-align: left;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #eee;
+        }
+
+        td:nth-last-child(2) {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        td:last-child {
+            width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        th:nth-last-child(2) {
+            text-align: right;
+        }
+
+        /* Loading */
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #eee;
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .ts-control {
+            border-radius: 6px;
+            padding: 8px;
+        }
+
+        .ts-wrapper.multi .ts-control>div.item {
+            background-color: #3498db !important;
+            color: #ffffff !important;
+            border: 1px solid #2980b9 !important;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-weight: normal;
+            font-size: 0.75rem;
+        }
+
+        .ts-wrapper.multi .ts-control>div.item .remove {
+            color: #ffffff !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
+
+        optgroup {
+            font-weight: bold;
+            color: var(--primary);
+            background-color: #f8f9fa;
+        }
+
+        optgroup option {
+            font-weight: normal;
+            color: #333;
+            background-color: #fff;
+        }
+
+        @media (max-width: 1000px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <div id="loadMain" style="font-weight:bold; font-size:1.2rem;">Başlatılıyor...</div>
+        <div id="loadSub" style="color:#666;">Lütfen bekleyin</div>
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <h2>Ayarlar</h2>
+
+            <div class="control-group">
+                <label>1. Bölge / İl Seçimi</label>
+                <select id="selLocations" multiple placeholder="Seçiniz..."></select>
+                <button onclick="tomLocations.clear()"
+                    style="margin-top:5px; font-size:0.8rem; cursor:pointer;">Temizle</button>
+            </div>
+
+            <div class="control-group">
+                <label>2. Kategori</label>
+                <select id="selCategory"></select>
+            </div>
+
+            <div class="control-group">
+                <label>3. Veri Adı</label>
+                <select id="selType"></select>
+            </div>
+
+            <div class="control-group">
+                <label>4. Yıl</label>
+                <select id="selYears" multiple placeholder="Yıl seçin..."></select>
+                <div style="margin-top:5px;">
+                    <button onclick="tomYears.clear()" style="font-size:0.8rem; cursor:pointer;">Temizle</button>
+                    <button onclick="selectAllYears()" style="font-size:0.8rem; cursor:pointer; color:green;">Hepsini
+                        Seç</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>5. Grafik Tipi</label>
+                <select id="selChartType">
+                    <option value="line">Çizgi</option>
+                    <option value="bar">Sütun</option>
+                    <option value="bar-stacked">Yığılmış Sütun</option>
+                    <option value="bar-horizontal">Yatay Çubuk</option>
+                    <option value="bar-horizontal-stacked">Yatay YığılmışÇubuk</option>
+                    <option value="area">Alan</option>
+                    <option value="density">Yoğunluk</option>
+                    <option value="scatter">Dağılım</option>
+                    <option value="bubble">Kabarcık</option>
+                    <option value="lollipop">Lolipop</option>
+                    <option value="histogram">Histogram</option>
+                    <option value="radar">Radar</option>
+                    <option value="boxplot">Kutu</option>
+                    <option value="pie" disabled>Pasta</option>
+                    <option value="doughnut" disabled>Halka</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>6. Vurgula (Bölge veya Yıl)</label>
+                <select id="selHighlight">
+                    <option value="">Vurgulama Yok</option>
+                </select>
+            </div>
+
+            <div class="btn-group">
+                <button class="main-btn btn-png" onclick="downloadChart()">Grafiği İndir</button>
+                <button class="main-btn btn-xls" onclick="downloadTable()">Tabloyu İndir</button>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="chart-box">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="table-box">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Bölge/İl</th>
+                            <th>Kategori</th>
+                            <th>Veri Adı</th>
+                            <th>Yıl</th>
+                            <th>Değer</th>
+                            <th width="200">Veri Kaynağı</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script id="worker-script" type="javascript/worker">
+    self.onmessage = function(e) {
+        const { fileBuffer, type } = e.data;
+        
+        if (type === 'PARSE') {
+            try {
+                self.postMessage({ type: 'STATUS', msg: 'Kütüphaneler yükleniyor...' });
+                importScripts(
+                    'https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js',
+                    'https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js'
+                );
+
+                let csvText;
+                try {
+                    self.postMessage({ type: 'STATUS', msg: 'Veri işleniyor...' });
+                    const compressed = new Uint8Array(fileBuffer);
+                    const decompressed = pako.ungzip(compressed);
+                    const decoder = new TextDecoder('utf-8');
+                    csvText = decoder.decode(decompressed);
+                } catch (err) {
+                    const decoder = new TextDecoder('utf-8');
+                    csvText = decoder.decode(fileBuffer);
+                }
+
+                self.postMessage({ type: 'STATUS', msg: 'Tablo oluşturuluyor...' });
+                
+                Papa.parse(csvText, {
+                    header: true,
+                    delimiter: ";",
+                    skipEmptyLines: true,
+                    transformHeader: function(h) {
+                        return h.trim().replace(/^[\uFEFF\xEF\xBB\xBF]*/, "").replace(/['"]+/g, '');
+                    },
+                    complete: function(results) {
+                        const rawData = results.data;
+                        const fields = results.meta.fields;
+                        const findKey = (search) => fields.find(f => f.toLowerCase() === search.toLowerCase());
+
+                        const keyIl = findKey('il') || findKey('bolge') || findKey('bölge') || fields[0];
+                        const keyKat = findKey('kategori');
+                        const keyVeri = findKey('veri');
+                        const keyYil = findKey('yil') || findKey('yıl') || findKey('year');
+                        const keyDeger = findKey('deger') || findKey('değer') || findKey('value');
+
+                        if (!keyDeger || !keyYil) {
+                             self.postMessage({ type: 'ERROR', msg: 'Gerekli sütunlar (Yıl/Değer) bulunamadı.' });
+                             return;
+                        }
+
+                        const locSet = new Set();
+                        const catSet = new Set();
+                        const yearSet = new Set();
+                        
+                        const processedData = rawData.map(d => {
+                            const il = d[keyIl];
+                            const kat = d[keyKat];
+                            const ver = d[keyVeri];
+                            const yil = d[keyYil];
+                            const kaynak = d["Veri Kaynağı"];
+                            let val = d[keyDeger];
+
+                            if (typeof val === 'string') {
+                                val = val.trim();
+                                if(val === '') val = 0;
+                                else val = parseFloat(val.replace(/\./g, '').replace(',', '.'));
+                            } else {
+                                val = parseFloat(val);
+                            }
+
+                            if (il) locSet.add(il);
+                            if (kat) catSet.add(kat);
+                            if (yil) yearSet.add(yil);
+
+                            return {
+                                il: il,
+                                kategori: kat,
+                                veri: ver,
+                                yil: yil,
+                                deger: val || 0,
+                                kaynak: kaynak
+                            };
+                        }).filter(item => item.il && item.yil);
+
+                        self.postMessage({
+                            type: 'DONE',
+                            data: processedData,
+                            uniqueLocs: Array.from(locSet).sort(),
+                            uniqueCats: Array.from(catSet).sort(),
+                            uniqueYears: Array.from(yearSet).sort((a,b)=>a-b)
+                        });
+                    }
+                });
+            } catch (err) {
+                self.postMessage({ type: 'ERROR', msg: 'İşlem Hatası: ' + err.message });
+            }
+        }
+    };
+    </script>
+
+    <script>
+        const FILENAME = "./data/trveriler.csv.gz";
+
+        Chart.register(ChartDataLabels);
+
+        let worker;
+        let rawData = [];
+        let tomLocations, tomYears;
+        let chartInstance = null;
+        let uniqueLocs = [], uniqueYears = [];
+        let currentFilteredData = [];
+
+        const els = {
+            loading: document.getElementById('loading'),
+            loadMain: document.getElementById('loadMain'),
+            loadSub: document.getElementById('loadSub'),
+            cat: document.getElementById('selCategory'),
+            type: document.getElementById('selType'),
+            chartType: document.getElementById('selChartType'),
+            highlight: document.getElementById('selHighlight'),
+            tableBody: document.querySelector('#dataTable tbody')
+        };
+
+        window.onload = function () {
+            initWorker();
+            fetchData();
+        };
+
+        function initWorker() {
+            const blob = new Blob([document.getElementById('worker-script').textContent], { type: "text/javascript" });
+            worker = new Worker(window.URL.createObjectURL(blob));
+
+            worker.onmessage = function (e) {
+                const msg = e.data;
+                if (msg.type === 'STATUS') {
+                    els.loadSub.textContent = msg.msg;
+                } else if (msg.type === 'DONE') {
+                    els.loadMain.textContent = "Arayüz Hazırlanıyor...";
+                    rawData = msg.data;
+                    uniqueLocs = msg.uniqueLocs;
+                    uniqueYears = msg.uniqueYears;
+
+                    initUI(msg.uniqueCats);
+                    els.loading.classList.add('hidden');
+                } else if (msg.type === 'ERROR') {
+                    alert("HATA: " + msg.msg);
+                    els.loadMain.textContent = "Yükleme Başarısız";
+                }
+            };
+        }
+
+        async function fetchData() {
+            try {
+                els.loadMain.textContent = "Dosya İndiriliyor...";
+                let response = await fetch(FILENAME);
+                if (!response.ok) throw new Error("Dosya bulunamadı!");
+                const buffer = await response.arrayBuffer();
+                els.loadSub.textContent = "Veriler işleniyor...";
+                worker.postMessage({ type: 'PARSE', fileBuffer: buffer }, [buffer]);
+            } catch (err) {
+                alert("Hata: " + err.message);
+            }
+        }
+
+        function initUI(cats) {
+            const locSelect = document.getElementById('selLocations');
+            locSelect.innerHTML = uniqueLocs.map(l => `<option value="${l}">${l}</option>`).join('');
+
+            tomLocations = new TomSelect('#selLocations', {
+                plugins: ['remove_button', 'checkbox_options'],
+                maxOptions: 2000,
+                onItemAdd: () => { updateHighlightCombinedOptions(); updateViz(); },
+                onItemRemove: () => { updateHighlightCombinedOptions(); updateViz(); },
+                onDelete: () => { updateHighlightCombinedOptions(); updateViz(); }
+            });
+
+            if (uniqueLocs.includes("Türkiye")) tomLocations.addItem("Türkiye");
+            else if (uniqueLocs.length > 0) tomLocations.addItem(uniqueLocs[0]);
+
+            els.cat.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
+            els.cat.value = "Nüfus";
+            els.cat.addEventListener('change', () => { updateTypeFilter(); updateViz(); });
+
+            els.type.addEventListener('change', updateViz);
+            updateTypeFilter();
+
+            const yearSelect = document.getElementById('selYears');
+            yearSelect.innerHTML = uniqueYears.map(y => `<option value="${y}" selected>${y}</option>`).join('');
+
+            tomYears = new TomSelect('#selYears', {
+                plugins: ['remove_button'],
+                onItemAdd: () => { updateHighlightCombinedOptions(); updateViz(); },
+                onItemRemove: () => { updateHighlightCombinedOptions(); updateViz(); },
+                onDelete: () => { updateHighlightCombinedOptions(); updateViz(); }
+            });
+
+            els.chartType.addEventListener('change', updateViz);
+            els.highlight.addEventListener('change', updateViz);
+
+            // TomSelect'ler başlatıldıktan ve değerleri dolduktan sonra vurgulama menüsünü oluştur
+            updateHighlightCombinedOptions();
+            updateViz();
+        }
+
+        function updateHighlightCombinedOptions() {
+            let currentVal = els.highlight.value;
+            let optionsHTML = '<option value="">Vurgulama Yok</option>';
+
+            // TomSelect'ten değerleri güvenli şekilde alma
+            let rawLocs = tomLocations ? tomLocations.getValue() : [];
+            let locArr = Array.isArray(rawLocs) ? rawLocs : (rawLocs ? [rawLocs] : []);
+
+            if (locArr.length > 0) {
+                optionsHTML += '<optgroup label="Bölge / İl">';
+                locArr.forEach(l => {
+                    optionsHTML += `<option value="L_${l}">${l}</option>`;
+                });
+                optionsHTML += '</optgroup>';
+            }
+
+            let rawYears = tomYears ? tomYears.getValue() : [];
+            let yearArr = Array.isArray(rawYears) ? rawYears : (rawYears ? [rawYears] : []);
+
+            if (yearArr.length > 0) {
+                optionsHTML += '<optgroup label="Yıl">';
+                yearArr.map(Number).sort((a, b) => a - b).forEach(y => {
+                    optionsHTML += `<option value="Y_${y}">${y}</option>`;
+                });
+                optionsHTML += '</optgroup>';
+            }
+
+            els.highlight.innerHTML = optionsHTML;
+
+            if (optionsHTML.includes(`value="${currentVal}"`)) {
+                els.highlight.value = currentVal;
+            } else {
+                els.highlight.value = "";
+            }
+        }
+
+        function updateTypeFilter() {
+            const currentCat = els.cat.value;
+            const types = [...new Set(rawData.filter(d => d.kategori == currentCat).map(d => d.veri))].sort();
+            els.type.innerHTML = types.map(t => `<option value="${t}">${t}</option>`).join('');
+        }
+
+        function selectAllYears() {
+            tomYears.setValue(uniqueYears.map(String));
+        }
+
+        function splitTitle(text, maxLineLength = 60) {
+            if (text.length <= maxLineLength) return text;
+            const words = text.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length < maxLineLength) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        function createDiagonalPattern(ctx, color) {
+            const shape = document.createElement('canvas');
+            shape.width = 10;
+            shape.height = 10;
+            const c = shape.getContext('2d');
+            c.strokeStyle = color;
+            c.lineWidth = 2;
+            c.beginPath();
+            c.moveTo(0, 10);
+            c.lineTo(10, 0);
+            c.stroke();
+            return ctx.createPattern(shape, 'repeat');
+        }
+
+        function updateViz() {
+            if (!tomLocations || !tomYears) return;
+
+            const sLocs = tomLocations.getValue();
+            const sYears = tomYears.getValue();
+
+            const canUsePie = (sLocs.length === 1 || sYears.length === 1);
+            const pieOpt = els.chartType.querySelector('option[value="pie"]');
+            const dogOpt = els.chartType.querySelector('option[value="doughnut"]');
+
+            if (pieOpt && dogOpt) {
+                pieOpt.disabled = !canUsePie;
+                dogOpt.disabled = !canUsePie;
+
+                if (!canUsePie && (els.chartType.value === 'pie' || els.chartType.value === 'doughnut')) {
+                    els.chartType.value = 'bar';
+                }
+            }
+
+            const sCat = els.cat.value;
+            const sType = els.type.value;
+
+            if (sLocs.length === 0) {
+                els.tableBody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Lütfen bir Bölge/İl seçin.</td></tr>";
+                if (chartInstance) chartInstance.destroy();
+                return;
+            }
+
+            currentFilteredData = rawData.filter(d =>
+                d.kategori == sCat &&
+                d.veri == sType &&
+                sLocs.includes(d.il) &&
+                sYears.includes(String(d.yil))
+            );
+
+            const titleLines = splitTitle(sType);
+
+            renderTable(currentFilteredData);
+            renderChart(currentFilteredData, sLocs, sYears, titleLines);
+        }
+
+        function renderTable(data) {
+            const limit = 100;
+            let html = "";
+            if (data.length === 0) {
+                html = "<tr><td colspan='5' style='text-align:center;'>Veri yok.</td></tr>";
+            } else {
+                for (let i = 0; i < Math.min(data.length, limit); i++) {
+                    const row = data[i];
+                    html += `<tr>
+                        <td>${row.il}</td>
+                        <td>${row.kategori}</td>
+                        <td>${row.veri}</td>
+                        <td>${row.yil}</td>
+                        <td><strong>${Number(row.deger).toLocaleString('tr-TR')}</strong></td>
+                        <td>${row.kaynak}</td>
+                    </tr>`;
+                }
+                if (data.length > limit) html += `<tr><td colspan="5" style="text-align:center;">... ${data.length - limit} satır daha ...</td></tr>`;
+            }
+            els.tableBody.innerHTML = html;
+        }
+
+        function renderChart(data, locs, years, titleLines) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            years.sort((a, b) => a - b);
+            const rawChartType = document.getElementById('selChartType').value;
+
+            const rawHighlight = els.highlight.value;
+            let highlightVal = "";
+            let highlightYearVal = "";
+
+            if (rawHighlight.startsWith('L_')) {
+                highlightVal = rawHighlight.substring(2);
+            } else if (rawHighlight.startsWith('Y_')) {
+                highlightYearVal = rawHighlight.substring(2);
+            }
+
+            let chartType = rawChartType;
+            let stacked = false;
+            let fill = false;
+            let tension = 0.3;
+            let indexAxis = 'x';
+            let datasets = [];
+            let chartLabels = years;
+
+            if (rawChartType === 'bar-stacked') { chartType = 'bar'; stacked = true; }
+            if (rawChartType === 'bar-horizontal') { chartType = 'bar'; indexAxis = 'y'; }
+            if (rawChartType === 'bar-horizontal-stacked') { chartType = 'bar'; indexAxis = 'y'; stacked = true; }
+            if (rawChartType === 'area') { chartType = 'line'; fill = true; }
+            if (rawChartType === 'density') { chartType = 'line'; fill = true; tension = 0.5; }
+            if (rawChartType === 'histogram') { chartType = 'bar'; }
+
+            if (rawChartType === 'pie' || rawChartType === 'doughnut') {
+                chartType = rawChartType;
+                let pieData = [];
+                let pieBgColors = [];
+                let pieOffsets = [];
+                let pieBorderColors = [];
+                let pieBorderWidths = [];
+
+                if (locs.length === 1) {
+                    chartLabels = years;
+                    const locData = data.filter(d => d.il === locs[0]);
+                    years.forEach((y, i) => {
+                        const rec = locData.find(d => String(d.yil) === String(y));
+                        pieData.push(rec ? rec.deger : 0);
+
+                        const isHighlighted = (String(y) === String(highlightYearVal));
+
+                        pieBgColors.push(`hsla(${(i * 137) % 360}, 70%, 50%, ${isHighlighted ? 1 : 0.7})`);
+                        pieOffsets.push(isHighlighted ? 15 : 0);
+                        pieBorderColors.push(isHighlighted ? '#2c3e50' : '#ffffff');
+                        pieBorderWidths.push(isHighlighted ? 3 : 1);
+                    });
+
+                    datasets = [{
+                        label: locs[0],
+                        data: pieData,
+                        backgroundColor: pieBgColors,
+                        borderColor: pieBorderColors,
+                        borderWidth: pieBorderWidths,
+                        offset: pieOffsets
+                    }];
+                } else {
+                    chartLabels = locs;
+                    locs.forEach((loc, i) => {
+                        const rec = data.find(d => d.il === loc && String(d.yil) === String(years[0]));
+                        pieData.push(rec ? rec.deger : 0);
+
+                        const isHighlighted = (loc === highlightVal);
+
+                        pieBgColors.push(`hsla(${(i * 137) % 360}, 70%, 50%, ${isHighlighted ? 1 : 0.7})`);
+                        pieOffsets.push(isHighlighted ? 15 : 0);
+                        pieBorderColors.push(isHighlighted ? '#2c3e50' : '#ffffff');
+                        pieBorderWidths.push(isHighlighted ? 3 : 1);
+                    });
+
+                    datasets = [{
+                        label: years[0],
+                        data: pieData,
+                        backgroundColor: pieBgColors,
+                        borderColor: pieBorderColors,
+                        borderWidth: pieBorderWidths,
+                        offset: pieOffsets
+                    }];
+                }
+            }
+            else if (rawChartType === 'boxplot') {
+                chartLabels = locs;
+                const boxplotData = locs.map(loc => {
+                    return data.filter(d => d.il === loc).map(d => d.deger);
+                });
+
+                const backgroundColors = locs.map((loc, i) => {
+                    return (loc === highlightVal) ? '#e74c3c' : `hsla(${(i * 137) % 360}, 70%, 50%, 0.5)`;
+                });
+                const borderColors = locs.map((loc, i) => `hsla(${(i * 137) % 360}, 70%, 50%, 1)`);
+
+                datasets = [{
+                    label: titleLines[0] || 'Dağılım',
+                    data: boxplotData,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1,
+                    outlierColor: '#999999',
+                    padding: 10,
+                    itemRadius: 2
+                }];
+            }
+            else {
+                datasets = locs.map((loc, i) => {
+                    const locData = data.filter(d => d.il === loc);
+                    const isLocHighlighted = (loc === highlightVal);
+
+                    const hue = (i * 137) % 360;
+                    const baseColor = `hsla(${hue}, 70%, 50%, 1)`;
+                    const baseBg = `hsla(${hue}, 70%, 50%, 0.5)`;
+                    const patternBg = createDiagonalPattern(ctx, baseColor);
+
+                    let finalBgColor = isLocHighlighted && chartType === 'bar' ? patternBg : baseBg;
+                    let finalBorderColor = isLocHighlighted ? `hsla(${hue}, 100%, 40%, 1)` : baseColor;
+                    let finalBorderWidth = isLocHighlighted ? (chartType === 'line' || rawChartType === 'radar' ? 5 : 2) : (rawChartType === 'histogram' ? 1 : 2);
+
+                    let barBgColors = [];
+                    let barBorderColors = [];
+                    let barBorderWidths = [];
+                    let pointRadii = [];
+                    let pointBgColors = [];
+
+                    const dataPoints = years.map(y => {
+                        const rec = locData.find(d => String(d.yil) === String(y));
+                        const isYearHighlighted = (String(y) === String(highlightYearVal));
+
+                        if (isLocHighlighted || isYearHighlighted) {
+                            barBgColors.push(patternBg);
+                            barBorderColors.push(`hsla(${hue}, 100%, 30%, 1)`);
+                            barBorderWidths.push((isLocHighlighted && isYearHighlighted) ? 4 : 2);
+                        } else {
+                            barBgColors.push(baseBg);
+                            barBorderColors.push(baseColor);
+                            barBorderWidths.push(rawChartType === 'histogram' ? 1 : 1);
+                        }
+
+                        if (isYearHighlighted) {
+                            pointRadii.push(isLocHighlighted ? 10 : 7);
+                            pointBgColors.push('#e74c3c');
+                        } else {
+                            pointRadii.push(isLocHighlighted ? 5 : 3);
+                            pointBgColors.push(baseBg);
+                        }
+
+                        if (!rec) return null;
+                        if (rawChartType === 'bubble') {
+                            return {
+                                x: y,
+                                y: rec.deger,
+                                r: Math.min(Math.max(Math.sqrt(rec.deger), 5), 30)
+                            };
+                        }
+                        return rec.deger;
+                    });
+
+                    let datasetConfig = {
+                        label: loc,
+                        data: (rawChartType === 'bubble' || rawChartType === 'scatter') ? dataPoints.filter(dp => dp !== null) : dataPoints,
+                        borderColor: finalBorderColor,
+                        backgroundColor: chartType === 'bar' ? barBgColors : finalBgColor,
+                        fill: fill,
+                        tension: tension,
+                        borderWidth: chartType === 'bar' ? barBorderWidths : finalBorderWidth,
+
+                        pointRadius: pointRadii,
+                        pointBackgroundColor: pointBgColors,
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 1,
+                        pointHoverRadius: 8
+                    };
+
+                    if (rawChartType === 'histogram') {
+                        datasetConfig.barPercentage = 1.0;
+                        datasetConfig.categoryPercentage = 1.0;
+                    }
+
+                    if (rawChartType === 'lollipop') {
+                        datasetConfig.type = 'bar';
+                        datasetConfig.barPercentage = 0.05;
+                        datasetConfig.categoryPercentage = 0.8;
+                        datasetConfig.backgroundColor = baseColor;
+                        if (isLocHighlighted) datasetConfig.barPercentage = 0.15;
+                    }
+
+                    return datasetConfig;
+                });
+
+                if (rawChartType === 'lollipop') {
+                    const scatterDatasets = locs.map((loc, i) => {
+                        const locData = data.filter(d => d.il === loc);
+                        const isLocHighlighted = (loc === highlightVal);
+
+                        let pointRadii = [];
+                        let pointBgColors = [];
+
+                        const dataPoints = years.map(y => {
+                            const isYearHighlighted = (String(y) === String(highlightYearVal));
+
+                            if (isYearHighlighted) {
+                                pointRadii.push(isLocHighlighted ? 12 : 10);
+                                pointBgColors.push('#e74c3c');
+                            } else {
+                                pointRadii.push(isLocHighlighted ? 8 : 5);
+                                pointBgColors.push(`hsla(${(i * 137) % 360}, 70%, 50%, 1)`);
+                            }
+
+                            const rec = locData.find(d => String(d.yil) === String(y));
+                            return rec ? rec.deger : null;
+                        });
+
+                        return {
+                            label: loc + " (Nokta)",
+                            type: 'scatter',
+                            data: dataPoints,
+                            backgroundColor: pointBgColors,
+                            borderColor: 'transparent',
+                            radius: pointRadii,
+                            order: 0
+                        };
+                    });
+                    datasets = [...datasets, ...scatterDatasets];
+                }
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: chartType,
+                data: { labels: chartLabels, datasets: datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: indexAxis,
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    scales: {
+                        y: {
+                            stacked: stacked,
+                            display: (rawChartType !== 'pie' && rawChartType !== 'doughnut')
+                        },
+                        x: {
+                            stacked: stacked,
+                            display: (rawChartType !== 'pie' && rawChartType !== 'doughnut')
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: (rawChartType === 'pie' || rawChartType === 'doughnut'),
+                            color: '#fff',
+                            textAlign: 'center',
+                            anchor: 'end',
+                            align: 'start',
+                            offset: 20,
+                            textShadowColor: 'rgba(0, 0, 0, 0.75)',
+                            textShadowBlur: 5,
+                            font: {
+                                weight: 'bold',
+                                size: 12
+                            },
+                            formatter: (value, context) => {
+                                if (value === 0) return null;
+                                const label = context.chart.data.labels[context.dataIndex];
+                                return label + '\n' + Number(value).toLocaleString('tr-TR');
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: titleLines,
+                            font: { size: 16, weight: 'bold' },
+                            color: '#2c3e50',
+                            padding: { top: 10, bottom: 20 }
+                        },
+                        legend: {
+                            display: (rawChartType !== 'boxplot' && rawChartType !== 'pie' && rawChartType !== 'doughnut'),
+                            position: 'right',
+                            align: 'end',
+                            labels: {
+                                boxWidth: 12,
+                                boxHeight: 12,
+                                usePointStyle: false,
+                                padding: 15,
+                                filter: function (item, chart) {
+                                    return !item.text.includes('(Nokta)');
+                                },
+                                generateLabels: (chart) => {
+                                    const defaults = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                                    return defaults.map(lbl => {
+                                        lbl.lineWidth = 0;
+                                        return lbl;
+                                    });
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => {
+                                    if (rawChartType === 'boxplot') return ctx.label;
+
+                                    let val = ctx.raw;
+                                    if (typeof val === 'object' && val !== null) val = val.y;
+
+                                    if (rawChartType === 'pie' || rawChartType === 'doughnut') {
+                                        return ctx.label + ": " + Number(val).toLocaleString('tr-TR');
+                                    }
+
+                                    return ctx.dataset.label + ": " + Number(val).toLocaleString('tr-TR');
+                                }
+                            }
+                        }
+                    }
+                },
+                plugins: [{
+                    id: 'custom_bg',
+                    beforeDraw: (chart) => {
+                        const ctx = chart.canvas.getContext('2d');
+                        ctx.save();
+                        ctx.globalCompositeOperation = 'destination-over';
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, chart.width, chart.height);
+                        ctx.restore();
+                    }
+                }]
+            });
+        }
+
+        window.downloadChart = () => {
+            const link = document.createElement('a');
+            link.download = 'Grafik.png';
+            link.href = document.getElementById('myChart').toDataURL();
+            link.click();
+        };
+
+        window.downloadTable = () => {
+            if (!currentFilteredData || currentFilteredData.length === 0) {
+                alert("İndirilecek veri yok.");
+                return;
+            }
+
+            const exportData = currentFilteredData.map(item => ({
+                "Bölge/İl": item.il,
+                "Kategori": item.kategori,
+                "Veri Adı": item.veri,
+                "Yıl": parseInt(item.yil),
+                "Değer": item.deger,
+                "Veri Kaynağı": item.kaynak
+            }));
+
+            const ws = XLSX.utils.json_to_sheet(exportData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Veriler");
+            XLSX.writeFile(wb, 'Rapor.xlsx');
+        };
+    </script>
+</body>
+
+</html>

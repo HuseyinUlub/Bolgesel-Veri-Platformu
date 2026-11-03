@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analiz Masası'na yönlendiriliyor · Türkiye Bölgesel Veri Analizleri</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="/img/logo.png">
+    <!-- Veri Gezgini kaldırıldı; işlevleri Analiz Masası'na taşındı. Eski bağlantılar
+         (gezgin.html?kategori=…&gosterge=…&duzey=…) aynı göstergeyle Analiz Masası'nda açılır. -->
+    <script>
+        (function () {
+            var p = new URLSearchParams(location.search), q = new URLSearchParams();
+            ['gosterge', 'kategori', 'duzey', 'yil'].forEach(function (k) { if (p.get(k)) q.set(k, p.get(k)); });
+            location.replace('analiz.html' + (q.toString() ? '?' + q.toString() : '') + '#gosterge');
+        })();
+    </script>
+</head>
+
+<body style="font-family: system-ui, sans-serif; padding: 32px;">
+    <p>Veri Gezgini'nin işlevleri <a href="analiz.html">Analiz Masası</a>'na taşınmıştır. Yönlendirme gerçekleşmezse bağlantıyı kullanınız.</p>
+</body>
+
+</html>

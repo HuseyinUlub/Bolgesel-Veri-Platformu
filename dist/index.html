@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye Bölgesel Veri Analizleri</title>
+    <meta name="description" content="Türkiye'nin bölgelerini Avrupa'nın Düzey 2 bölgeleriyle karşılaştıran göstergeler: gelir, ülke içi farklılık, yakınsama, yaş yapısı, nüfus ve kadın istihdamı.">
+    <link rel="icon" href="./img/logo.png">
+  <script type="module" crossorigin src="./assets/index-bB9QYRc1.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/data-B3yXcaFA.js">
+  <link rel="modulepreload" crossorigin href="./assets/rgb-DXzo8kLL.js">
+  <link rel="modulepreload" crossorigin href="./assets/line-Dbmr-pGg.js">
+  <link rel="modulepreload" crossorigin href="./assets/chart-CBvRO6Be.js">
+  <link rel="modulepreload" crossorigin href="./assets/mercator-hIVB87-V.js">
+  <link rel="stylesheet" crossorigin href="./assets/data-TMpkceY5.css">
+  <link rel="stylesheet" crossorigin href="./assets/line-By6ATAKY.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-b9uATAzH.css">
+  <link rel="stylesheet" crossorigin href="./assets/latin-ext-500-Dl550LbO.css">
+</head>
+
+<body class="ana-sayfa">
+    <header class="ust-cubuk">
+        <a class="marka" href="./">
+            <img src="./img/logo.png" alt="T.C. Sanayi ve Teknoloji Bakanlığı">
+            <span id="site-baslik"></span>
+        </a>
+        <nav class="ust-nav">
+            <a href="#" aria-current="page">Ana Sayfa</a>
+            <a href="analiz.html">Analiz Masası</a>
+            <a href="okuryazarlik.html">Kalkınma Okuryazarlığı</a>
+            <a href="katalog.html">Veri Kataloğu</a>
+            <details class="araclar-menu">
+                <summary>Araçlar</summary>
+                <nav id="araclar"></nav>
+            </details>
+            <a href="hakkinda.html">Hakkında</a>
+        </nav>
+    </header>
+
+    <main>
+        <div id="giris-gorsel" class="giris-gorsel">
+            <picture class="giris-resim">
+                <source srcset="img/giris-kolaj.webp" type="image/webp">
+                <img src="img/giris-kolaj.jpg" alt="Türkiye'nin illerine, ilçelerine, bölgelerine ve kentlerine ait harita ve grafiklerden kolaj" width="3200" height="740">
+            </picture>
+            <svg id="kolaj" class="kolaj" aria-hidden="true" hidden></svg>
+        </div>
+        <section id="atlas-kapak" class="atlas-hero" aria-labelledby="atlas-baslik">
+            <div class="atlas-hero-ic">
+                <div class="atlas-hero-metin">
+                    <p class="ust-etiket">Bölgesel Kalkınma Atlası</p>
+                    <h1 id="atlas-baslik">Türkiye'de Bölgesel Farklılıklar</h1>
+                    <p class="atlas-hero-giris">81 il ve 26 bölgenin verileriyle Türkiye'nin bölgesel görünümü.</p>
+                    <div class="atlas-hero-dugmeler">
+                        <a class="atlas-dugme" href="#atlas-kartlar">Atlası Keşfedin <span aria-hidden="true">↓</span></a>
+                        <a class="atlas-dugme ikincil" href="analiz.html">Analiz Masası</a>
+                    </div>
+                </div>
+                <figure class="atlas-hero-harita" id="atlas-hero-harita">
+                    <figcaption><span class="ahh-ad"></span><span class="ahh-alt"></span></figcaption>
+                    <svg role="img" aria-label="İllere göre seçili göstergenin haritası"></svg>
+                    <div class="ahh-alt-satir">
+                        <div class="ahh-lejant"></div>
+                        <div class="ahh-noktalar" role="group" aria-label="Haritadaki gösterge"></div>
+                    </div>
+                </figure>
+            </div>
+        </section>
+
+        <section class="atlas-rakam-bant" aria-label="Türkiye özet rakamları">
+            <dl class="vt-rakamlar" id="vt-rakamlar"></dl>
+        </section>
+
+        <nav class="atlas-kartlar" id="atlas-kartlar" aria-label="Atlas bölümleri">
+            <a href="#bolum-yogunlasma"><span class="atlas-kart-gorsel" data-kart-gorsel="yogunlasma"></span><span class="atlas-kart-no">01</span><span class="atlas-kart-tema">Ekonomik Yoğunlaşma</span>
+                <b>Ekonomik Faaliyet Birkaç İlde Yoğunlaşıyor</b><span class="atlas-kart-olgu" data-olgu-kisa="yogunlasma"></span></a>
+            <a href="#bolum-farklar"><span class="atlas-kart-gorsel" data-kart-gorsel="farklar"></span><span class="atlas-kart-no">02</span><span class="atlas-kart-tema">Bölgesel Farklar</span>
+                <b>İller Arasındaki Fark Kapanıyor, Ancak Yavaş</b><span class="atlas-kart-olgu" data-olgu-kisa="farklar"></span></a>
+            <a href="#bolum-donusum"><span class="atlas-kart-gorsel" data-kart-gorsel="donusum"></span><span class="atlas-kart-no">03</span><span class="atlas-kart-tema">Toplumsal Dönüşüm</span>
+                <b>Türkiye Yaşlanıyor, Toplumsal Yapı Hızla Değişiyor</b><span class="atlas-kart-olgu" data-olgu-kisa="donusum"></span></a>
+            <a href="#bolum-iller"><span class="atlas-kart-gorsel" data-kart-gorsel="iller"></span><span class="atlas-kart-no">04</span><span class="atlas-kart-tema">İllerin Özgün Yapısı</span>
+                <b>Her İlin Öne Çıktığı Bir Alan Var</b><span class="atlas-kart-olgu" data-olgu-kisa="iller"></span></a>
+            <a href="#bolum-avrupa"><span class="atlas-kart-gorsel" data-kart-gorsel="avrupa"></span><span class="atlas-kart-no">05</span><span class="atlas-kart-tema">Uluslararası Karşılaştırma</span>
+                <b>Avrupa'nın 291 Bölgesi Arasında Türkiye</b><span class="atlas-kart-olgu">Gelir, ülke içi farklılık, yaş yapısı ve kadın istihdamı</span></a>
+        </nav>
+
+        <nav class="atlas-menu" id="atlas-menu" aria-label="Bölümler arasında gezinme">
+            <a href="#bolum-yogunlasma"><span>1</span>Yoğunlaşma</a>
+            <a href="#bolum-farklar"><span>2</span>Bölgesel Farklar</a>
+            <a href="#bolum-donusum"><span>3</span>Toplumsal Dönüşüm</a>
+            <a href="#bolum-iller"><span>4</span>İllerin Yapısı</a>
+            <a href="#bolum-avrupa"><span>5</span>Avrupa'da Türkiye</a>
+        </nav>
+
+        <div class="vitrin" id="vitrin">
+            <section class="atlas-bolum" id="bolum-yogunlasma">
+                <header class="atlas-bas">
+                    <p class="atlas-no">Bölüm 1 · Ekonomik Yoğunlaşma</p>
+                    <h2>Ekonomik Faaliyet Birkaç İlde Yoğunlaşıyor</h2>
+                    <p class="atlas-olgu" data-olgu="yogunlasma"></p>
+                </header>
+<article class="vt-bolum" id="vt-pasta" aria-label="İllerin Türkiye toplamındaki payları" style="border-top:0;padding-top:4px">
+                <header>
+                    <p class="vt-giris">Her kutu bir ili temsil eder; kutunun büyüklüğü, ilin seçilen göstergedeki Türkiye payıdır.</p>
+                </header>
+                <div class="vt-secim" role="group" aria-label="Ölçü"></div>
+                <p class="vt-cumle" aria-live="polite"></p>
+                <div class="vt-alan"></div>
+                <div class="vt-lejant-yer"></div>
+                <p class="vt-kaynak">Kaynak: TÜİK, Hesaplama: Platform</p>
+                <details class="yontem"><summary>Veri ve Yöntem</summary><div class="yontem-metin">
+                    <p class="vt-yontem-veri"></p>
+                    <p><b>Yöntem:</b> Pay, ilin değerinin 81 il toplamına bölünmesiyle hesaplanır.<span class="vt-yontem-ek"></span> "Yarısı N ilde" ifadesi, toplamın yarısına ulaşmak için gereken il sayısını gösterir.</p>
+                </div></details>
+            </article>
+                <aside class="atlas-son"><span>Bu bölümle ilgili:</span><a href="ok-tuzaklar.html#toplam-kisi-basi">Toplam mı, kişi başı mı?</a><a href="ok-kavramlar.html#yigilma">Yığılma ve yoğunlaşma</a><a href="analiz.html">Analiz Masası</a></aside>
+            </section>
+            <section class="atlas-bolum" id="bolum-farklar">
+                <header class="atlas-bas">
+                    <p class="atlas-no">Bölüm 2 · Bölgesel Farklar</p>
+                    <h2>İller Arasındaki Fark Kapanıyor, Ancak Yavaş</h2>
+                    <p class="atlas-olgu" data-olgu="farklar"></p>
+                </header>
+<article class="vt-bolum" id="vt-sege">
+                <header>
+                    <p class="vt-no">2.1</p>
+                    <h3>İllerin Sosyo-Ekonomik Gelişmişlik Sıralamasındaki Değişim, 1963–2025</h3>
+                    <p class="vt-giris">Devlet Planlama Teşkilatının 1960'lı yıllardaki ilk çalışmalarından Bakanlığın son SEGE
+                        araştırmasına kadar illerin sosyo-ekonomik gelişmişlik sıralaması gösterilmektedir. Her çizgi bir ili
+                        temsil etmekte olup üst sıralar daha yüksek gelişmişlik düzeyini ifade etmektedir. İl sayısı dönem
+                        içinde 67'den 81'e yükseldiğinden çizgiler, ilin ilgili yıldaki il sayısı içindeki göreli konumunu göstermektedir.</p>
+                </header>
+                <div class="vt-ust-satir">
+                    <div class="vt-secim" role="group" aria-label="Vurgu"></div>
+                    <select class="vt-il-sec" aria-label="İl seç"></select>
+                </div>
+                <p class="vt-cumle" aria-live="polite"></p>
+                <div class="vt-alan"></div>
+                <p class="vt-kaynak">Kaynak: DPT ve Sanayi ve Teknoloji Bakanlığı SEGE Çalışmaları; Hesaplama: Platform</p>
+                <details class="yontem"><summary>Veri ve Yöntem</summary><div class="yontem-metin">
+                    <p><b>Veri:</b> İllerin sosyo-ekonomik gelişmişlik sıralaması: 1963 ve 1970 Tolan (1972) endeksi; 1980, 1985,
+                    1991, 1996 ve 2003 DPT çalışmaları (taranmış yayınlardan okundu); 2011, 2017 ve 2025 Bakanlık SEGE
+                    çalışmaları. İl sayısı 1963–1985'te 67, 1991'de 73, 1996'da 76, 2003'ten beri 81.</p>
+                    <p><b>Yöntem:</b> Dikey konum = (sıra − 1) / (o yılki il sayısı − 1); 0 en gelişmiş, 1 en az gelişmiş. Yeni
+                    kurulan illerin çizgisi ilk yer aldıkları çalışmada başlar. "Yükselenler" ve "gerileyenler", 1963'ten 2025'e
+                    konum değişimi en büyük olan altışar il (yalnızca 1963'te var olan 67 il). Çalışmaların göstergeleri ve
+                    yöntemleri farklı olduğu için sıralar arasındaki küçük değişimler yöntem farkından kaynaklanabilir.
+                    "Hep zirvede": bütün çalışmalarda ilk beşte yer alan iller.</p>
+                </div></details>
+            </article>
+                <div class="atlas-yer" id="yer-esitsizlik"></div>
+                <aside class="atlas-son"><span>Bu bölümle ilgili:</span><a href="ok-olcme.html#theil">Theil endeksi</a><a href="ok-kavramlar.html#yakinsama">Yakınsama</a><a href="ok-olcme.html#sege">SEGE nasıl hesaplanır?</a></aside>
+            </section>
+            <section class="atlas-bolum" id="bolum-donusum">
+                <header class="atlas-bas">
+                    <p class="atlas-no">Bölüm 3 · Toplumsal Dönüşüm</p>
+                    <h2>Türkiye Yaşlanıyor, Toplumsal Yapı Hızla Değişiyor</h2>
+                    <p class="atlas-olgu" data-olgu="donusum"></p>
+                </header>
+<article class="vt-bolum" id="vt-yuz">
+                <header>
+                    <p class="vt-no">3.1</p>
+                    <h3>Yüz Kişilik Temsille Türkiye Nüfusunun Yapısı</h3>
+                    <p class="vt-giris">Türkiye nüfusu yüz kişilik bir toplulukla temsil edilmektedir; her figür nüfusun yüzde birine karşılık
+                        gelmektedir. Gösterim; yaş grubu, yerleşim yeri, eğitim düzeyi, medeni durum ve hane tipine ilişkin
+                        toplumsal yapı ile istihdam durumu, sektörel istihdam, kayıt dışı istihdam ve göreli yoksulluğa ilişkin
+                        işgücü ve gelir göstergelerini ortaya koymaktadır. Eğitim, medeni durum ve kayıt dışı istihdam dağılımları kadın
+                        ve erkek nüfus için ayrı ayrı incelenebilir.</p>
+                </header>
+                <div class="vt-ust-satir">
+                    <div class="vt-secim" role="group" aria-label="Konu"></div>
+                    <div class="vt-secim vt-cinsiyet" role="group" aria-label="Cinsiyet" hidden></div>
+                </div>
+                <p class="vt-cumle" aria-live="polite"></p>
+                <div class="vt-yuz-ikili">
+                    <div class="vt-alan"></div>
+                    <div class="vt-yuz-lejant"></div>
+                </div>
+                <p class="vt-kaynak">Kaynak: TÜİK (ADNKS, Ulusal Eğitim İstatistikleri, Hanehalkı İşgücü Araştırması, Gelir ve Yaşam Koşulları Araştırması, SKA Göstergeleri), Hesaplama: Platform</p>
+                <details class="yontem"><summary>Veri ve Yöntem</summary><div class="yontem-metin">
+                    <p><b>Veri:</b> TÜİK 2025: yaş grupları ve medeni durum (ADNKS), yoğun kent / orta yoğun kent / kır nüfus
+                    oranları (TÜİK kent-kır sınıflaması), 15 yaş ve üstü nüfusun eğitim durumu, istihdam ve işgücüne katılma
+                    oranları ile istihdamın tarım, sanayi (inşaat dahil) ve hizmetler sektörlerine dağılımı (HİA), türüne göre hanehalkı
+                    sayıları (ADNKS); TÜİK 2024: sosyal güvenlik kuruluşuna kayıtlı olmadan çalışanların toplam istihdamdaki oranı
+                    (SKA 8.3.1); TÜİK 2025: medyan eşdeğer hanehalkı kullanılabilir gelirinin %60'ına göre göreli yoksulluk oranı
+                    (GYKA). Bölge dağılımı il nüfuslarının coğrafi bölgelere göre toplamıdır.</p>
+                    <p><b>Yöntem:</b> Paylar 100'e yuvarlanır; yuvarlama sonrası toplam 100 olsun diye kalanı en büyük olanlar bir
+                    üst sayıya tamamlanır (en büyük kalan yöntemi). Eğitim, iş ve medeni durum 15 yaş ve üstü nüfusa, sektör ve sosyal güvence dağılımları istihdam edilen
+                    nüfusa, hane tipi ise hanehalkı sayısına göredir;
+                    eğitimde "bilinmeyen" dışarıda bırakılır. İşsiz = işgücüne katılma oranı − istihdam oranı.</p>
+                </div></details>
+            </article>
+<section class="avrupa-sahne tr-esitsizlik dm-sahne" id="dm-donusum">
+                    <div class="es-giris">
+                        <p class="vt-no">3.2</p>
+                        <h3 class="es-giris-baslik">Demografik Dönüşüm Adım Adım</h3>
+                        <p class="giris">Doğurganlık geriliyor, nüfus yaşlanıyor, haneler küçülüyor. Aşağıdaki adımlar bu dönüşümü önce Türkiye geneli, ardından iller için göstermektedir.</p>
+                    </div>
+                </section>
+                <aside class="atlas-son"><span>Bu bölümle ilgili:</span><a href="ok-kavramlar.html#demografi">Doğurganlık ve ortanca yaş</a><a href="ok-kavramlar.html#goc">Net göç hızı</a><a href="ok-tuzaklar.html#seri-kirilmasi">Seri kırılmaları</a></aside>
+            </section>
+            <section class="atlas-bolum" id="bolum-iller">
+                <header class="atlas-bas">
+                    <p class="atlas-no">Bölüm 4 · İllerin Özgün Yapısı</p>
+                    <h2>Her İlin Öne Çıktığı Bir Alan Var</h2>
+                    <p class="atlas-olgu" data-olgu="iller"></p>
+                </header>
+<article class="vt-bolum" id="vt-birinci">
+                <header>
+                    <p class="vt-no">4.1</p>
+                    <h3>İllerin Ön Sıralarda Yer Aldığı Göstergeler</h3>
+                    <p class="vt-giris">Türkiye haritası her ilin bir karo ile gösterildiği sade bir biçimde düzenlenmiştir. Her karoda,
+                        ilin 81 il arasında en üst sırada yer aldığı gösterge yer almaktadır (Ordu'da bal üretimi, Van'da koyun
+                        sayısı, Antalya'da örtü altı tarım, Sinop'ta ortanca yaş gibi).</p>
+                </header>
+                <div class="vt-secim vt-filtre" role="group" aria-label="Kategori"></div>
+                <p class="vt-cumle"></p>
+                <div class="vt-ikili">
+                    <div class="vt-alan"></div>
+                    <aside class="vt-kart" aria-live="polite"></aside>
+                </div>
+                <div class="vt-lejant-yer"></div>
+                <p class="vt-kaynak">Kaynak: TÜİK, Hesaplama: Platform</p>
+                <details class="yontem"><summary>Veri ve Yöntem</summary><div class="yontem-metin">
+                    <p><b>Veri:</b> TÜİK il düzeyi göstergeleri arasından seçilmiş 111 gösterge (tarım, hayvancılık, ekonomi,
+                    sanayi, nüfus, sağlık, eğitim, kültür, turizm, ulaşım, çevre…), her birinin en son yılı. Bazı sayılar
+                    (üniversite öğrencisi, tiyatro seyircisi, turist gecelemesi gibi) bin kişi başına çevrilir.</p>
+                    <p><b>Yöntem:</b> Her gösterge için 81 il sıralanır; "yüksek iyi" olanlarda büyükten küçüğe, bebek ölüm hızı ya
+                    da işsizlik gibi "düşük iyi" olanlarda küçükten büyüğe. Her ile, en üst sırada yer aldığı gösterge atanır;
+                    aynı gösterge iki ile verilmez (Macar yöntemiyle, sıranın karesini en küçükleyen atama). Ankara ve Kocaeli
+                    için birinci oldukları göstergeler arasından en tanıtıcı olanı elle seçildi. Karo yerleşimi, il merkezlerinin
+                    16×8'lik ızgaraya toplam uzaklığı en küçük olacak şekilde yerleştirilmesiyle bulunur.</p>
+                </div></details>
+            </article>
+<article class="vt-bolum" id="vt-suru">
+                <header>
+                    <p class="vt-no">4.2</p>
+                    <h3>İllerin Nüfus Büyüklüğüne Göre Karşılaştırmalı Konumu</h3>
+                    <p class="vt-giris">Her daire bir ili, dairenin büyüklüğü ise ilin nüfusunu temsil etmektedir. Ekonomi ve üretim, nüfus ve aile, eğitim ve
+                        sağlık ile yaşam ve çevre başlıkları altındaki 20 göstergeden biri seçildiğinde iller yeni değerlerine göre
+                        konumlanır. Doğurganlık hızında genç nüfuslu Güneydoğu Anadolu illeri, ortanca yaşta ise
+                        nüfusu yaşlanan Karadeniz illeri dağılımın uçlarında yer almaktadır. Renkler, illerin OECD kentsel–kırsal
+                        sınıflamasındaki yerini göstermektedir.</p>
+                </header>
+                <div class="vt-secim" role="group" aria-label="Eksen"></div>
+                <p class="vt-cumle" aria-live="polite"></p>
+                <div class="vt-alan"></div>
+                <div class="vt-lejant-yer"></div>
+                <p class="vt-kaynak">Kaynak: TÜİK, BDDK, MEB, OECD Territorial Correspondence TL2024, Hesaplama: Platform</p>
+                <details class="yontem"><summary>Veri ve Yöntem</summary><div class="yontem-metin">
+                    <p><b>Veri:</b> İl düzeyinde, her gösterge için yayımlanan en güncel yıl esas alınmıştır. Ekonomi ve üretim:
+                    kişi başına GSYH ile sanayi ve tarımın cari fiyatlarla katma değerdeki payları (TÜİK, 2024), kişi başına toplam
+                    mevduat (BDDK, 2025), kişi başına toplam elektrik tüketimi (TÜİK, 2023). Nüfus ve aile: ortanca yaş, yıllık nüfus
+                    artış hızı, net göç hızı, ortalama hanehalkı büyüklüğü (ADNKS, 2025), toplam doğurganlık hızı (2024), kaba boşanma
+                    hızı (2025). Eğitim ve sağlık: 15 yaş ve üstü nüfusta ve kadın nüfusta yükseköğretim mezunu oranı (2025), okul
+                    öncesi net okullaşma oranı, 3–5 yaş (MEB, 2024), doğuşta beklenen yaşam süresi (2023), bebek ölüm hızı ve bin kişiye
+                    düşen hekim sayısı (2024). Yaşam ve çevre: bin kişiye düşen otomobil (2025), atık su arıtma tesisiyle hizmet verilen
+                    belediye nüfusunun payı ve kişi başı belediye atığı (2024). Balon büyüklüğü: ADNKS nüfusu (2025). Kişi başına
+                    mevduatta Türkiye değeri, toplam mevduatın ADNKS nüfusuna bölünmesiyle hesaplanmıştır. Renk: OECD TL2024 kentsel–kırsal sınıfı ("ağırlıklı kırsal" iki alt sınıfı birleştirildi).</p>
+                    <p><b>Yöntem:</b> Balonların yatay konumu göstergenin değeri; dikey konum yalnızca balonların üst üste
+                    binmemesi içindir ve anlam taşımaz (kuvvet yönlendirmeli arı sürüsü yerleşimi). Alan nüfusla orantılıdır.
+                    Kesikli çizgi Türkiye değeri.</p>
+                </div></details>
+            </article>
+<article class="vt-bolum" id="vt-profil">
+                <header>
+                    <p class="vt-no">4.3</p>
+                    <h3>İl ve Bölge Profili: Seçilen Birimin Göstergelerdeki Konumu</h3>
+                    <p class="vt-giris">Önce istatistiki düzey (il ya da Düzey 2) seçilir; seçim kutusu bu düzeye göre güncellenir. Seçilen ilin
+                        81 il, seçilen Düzey 2 bölgesinin 26 bölge arasındaki konumu her satırda bir nokta ile gösterilmektedir. Gri noktalar
+                        aynı düzeydeki diğer birimleri, kesikli çizgi Türkiye değerini ifade etmektedir. Bir noktaya tıklandığında ilgili birimin profili açılır.</p>
+                </header>
+                <div class="vt-ust-satir">
+                    <div class="vt-secim"><select class="vt-il-sec" aria-label="İl seç"></select></div>
+                </div>
+                <div class="vt-profil-ozet" aria-live="polite"></div>
+                <div class="vt-alan"></div>
+                <p class="vt-kaynak">Kaynak: TÜİK, Hesaplama: Platform</p>
+                <details class="yontem"><summary>Veri ve Yöntem</summary><div class="yontem-metin">
+                    <p><b>Veri:</b> TÜİK il göstergelerinin en son yılı: ortanca yaş, ortalama hanehalkı büyüklüğü, net göç hızı,
+                    üniversite mezunu oranı ve bin kişiye otomobil (2025); doğurganlık, kişi başı GSYH, kişi başı ihracat, okul
+                    öncesi okullaşma, bin kişiye hekim ve sabit genişbant aboneliği (2024); doğuşta beklenen yaşam süresi (2023).</p>
+                    <p><b>Yöntem:</b> Sıra, değeri büyükten küçüğe dizilmiş 81 il içindeki yerdir; "yüksek iyi" yargısı taşımaz.
+                    Kişi başı ihracat çok çarpık dağıldığı için logaritmik ölçekte çizilir. Türkiye değeri TÜİK'in ülke değeridir;
+                    kişi başı ihracatta toplam ihracat ÷ toplam nüfus. Benzer iller: on iki gösterge standartlaştırılır (ihracat
+                    log alınarak) ve iller arasındaki Öklid uzaklığına göre en yakın üç il seçilir.</p>
+                    <p><b>Düzey 2:</b> Aynı göstergelerin TÜİK'in Düzey 2 bölgeleri için yayımladığı değerleri kullanılmaktadır. Doğuşta
+                    beklenen yaşam süresi Düzey 2 için yayımlanmadığından bu düzeyde on bir gösterge yer almaktadır. Benzer bölgeler aynı
+                    yöntemle 26 bölge arasından seçilmektedir; renkler bölgenin bağlı olduğu coğrafi bölgeyi göstermektedir.</p>
+                </div></details>
+            </article>
+                <aside class="atlas-son"><span>Bu bölümle ilgili:</span><a href="ok-planlama.html#karsilastirma">Karşılaştırma grubu seçimi</a><a href="ok-tuzaklar.html#bolge-ortalamasi">Bölge ortalaması ve il gerçeği</a><a href="analiz.html">Analiz Masası</a></aside>
+            </section>
+        </div>
+
+        <section class="acilis acilis-ara atlas-bas-avrupa" id="bolum-avrupa">
+            <p class="ust-etiket atlas-no">Bölüm 5 · Uluslararası Karşılaştırma</p>
+            <h2>Avrupa'nın 291 Bölgesi Arasında Türkiye</h2>
+            <p class="giris">
+                Avrupa ve Türkiye'deki Düzey 2 bölgelerinin her biri bir noktayla gösterilmektedir. Sayfa aşağı kaydırıldıkça aynı
+                noktalar gelir düzeyi, ülke içi farklılık, yakınsama, yaş yapısı, nüfus değişimi ve kadın istihdamına göre yeniden
+                dizilmektedir. Türkiye'nin 26 bölgesi kiremit renginde sabit kalır; seçilen bölge bütün adımlarda izlenebilir.
+            </p>
+            <p class="giris">
+                Platformdaki tüm bölgesel göstergelere <a href="analiz.html">Analiz Masası</a> üzerinden erişilebilir.
+            </p>
+        </section>
+
+        <div id="bolumler"></div>
+    </main>
+
+    <footer class="alt-bilgi">
+        T.C. Sanayi ve Teknoloji Bakanlığı, Kalkınma Ajansları Genel Müdürlüğü.
+        Veriler: TÜİK, Eurostat, OECD ve ilgili kurumlar.
+    </footer>
+
+</body>
+
+</html>

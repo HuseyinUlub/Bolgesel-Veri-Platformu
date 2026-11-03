@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkında · Türkiye Bölgesel Veri Analizleri</title>
+    <meta name="description" content="Bölgesel Veri Platformu: kalkınma ajansları ekosisteminin veri bileşeni. Kurumsal çerçeve, bölgesel kalkınma politikası, İBBS ve veri altyapısı.">
+    <link rel="icon" href="/img/logo.png">
+  <script type="module" crossorigin src="./assets/hakkinda-CM4zjgng.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/data-B3yXcaFA.js">
+  <link rel="modulepreload" crossorigin href="./assets/mercator-hIVB87-V.js">
+  <link rel="stylesheet" crossorigin href="./assets/data-TMpkceY5.css">
+  <link rel="stylesheet" crossorigin href="./assets/hakkinda-BVEPbbft.css">
+  <link rel="stylesheet" crossorigin href="./assets/latin-ext-500-Dl550LbO.css">
+</head>
+
+<body>
+    <header class="ust-cubuk">
+        <a class="marka" href="./">
+            <img src="/img/logo.png" alt="T.C. Sanayi ve Teknoloji Bakanlığı">
+            <span id="site-baslik"></span>
+        </a>
+        <nav class="ust-nav">
+            <a href="./">Ana Sayfa</a>
+            <a href="analiz.html">Analiz Masası</a>
+            <a href="okuryazarlik.html">Kalkınma Okuryazarlığı</a>
+            <a href="katalog.html">Veri Kataloğu</a>
+            <details class="araclar-menu">
+                <summary>Araçlar</summary>
+                <nav id="araclar"></nav>
+            </details>
+            <a href="hakkinda.html" aria-current="page">Hakkında</a>
+        </nav>
+    </header>
+
+    <main class="hakkinda">
+        <section class="acilis">
+            <p class="ust-etiket">Kalkınma Ajansları Genel Müdürlüğü</p>
+            <h1>Hakkında</h1>
+            <p class="giris">Bölgesel Veri Platformu; bölgesel
+                kalkınma politikalarının tasarımına, izlenmesine ve değerlendirilmesine; ajansların, kamu kurumlarının,
+                araştırmacıların ve kamuoyunun aynı kanıt tabanı üzerinden çalışmasına hizmet eder.</p>
+        </section>
+
+        <div class="hakkinda-duzen">
+            <nav class="hakkinda-icindekiler" aria-label="Hakkında alt başlıkları">
+                <a href="#biz-kimiz">Biz kimiz?</a>
+                <a href="#ibbs">İstatistiki bölge birimleri</a>
+                <a href="#kent-kir">Kent ve kır tanımları</a>
+                <a href="#veri">Veri altyapısı</a>
+                <a href="#platform">Platformda neler var?</a>
+            </nav>
+
+            <article class="hakkinda-metin">
+                <section id="biz-kimiz">
+                    <p class="bolum-no">01</p>
+                    <h2>Biz Kimiz?</h2>
+                    <p>Kalkınma ajansları; yerel kalkınma dinamiklerini harekete geçirmeyi, bölgelerin kaynak ve
+                        potansiyellerini en iyi şekilde değerlendirmeyi, kalkınmanın ülkenin tamamını dengeli biçimde
+                        kapsamasını ve vatandaşların fırsatlara erişiminin mümkün olduğunca eşitlenmesini hedefler. 26
+                        Düzey 2 bölgesinde görev yapan 26 kalkınma ajansı, merkezi ve yerel paydaşlar arasında bir arayüz işlevi
+                        üstlenir: ulusal politika ve hedefleri yerelde hayata geçirirken, bölge planlarıyla bölgelerin
+                        ulusal kalkınmaya katkısını artırmaya çalışır.</p>
+                    <p>Bölgesel Veri Platformu bu ekosistemin veri bileşenidir. Ülkemizde bölgesel politikanın
+                        yürütülmesinden ve kalkınma ajanslarının koordinasyonundan sorumlu Sanayi ve Teknoloji Bakanlığı
+                        Kalkınma Ajansları Genel Müdürlüğü tarafından geliştirilen platform; bölgeler arası farkları ve
+                        bölgelerin potansiyelini il, ilçe ve bölge düzeyinde, karşılaştırılabilir göstergelerle görünür
+                        kılar.</p>
+                </section>
+
+                <section id="ibbs">
+                    <p class="bolum-no">02</p>
+                    <h2>İstatistiki Bölge Birimleri Sınıflandırması</h2>
+                    <p>İstatistiki Bölge Birimleri Sınıflandırması (İBBS), Avrupa Birliği'nde bölgesel istatistiklerin
+                        ortak bir mekânsal çerçevede üretilmesi için geliştirilen NUTS sınıflandırmasının Türkiye'deki
+                        karşılığıdır ve 2002'den beri yürürlüktedir. İller Düzey 3 olarak kabul edilir; komşu illerin
+                        gruplanmasıyla 26 Düzey 2 ve 12 Düzey 1 bölgesi oluşur. Düzey 2 bölgeleri, bölgesel politikanın
+                        temel planlama birimidir ve her birinde bir kalkınma ajansı görev yapar.</p>
+                    <p>Platformdaki veriler bu sınıflandırmaya göre düzenlenmiştir: her gösterge, kaynağın izin verdiği
+                        ölçüde il, Düzey 2 ve Düzey 1 bölgeleri için sunulur. Haritada bir bölgenin üzerine gelerek
+                        ajansını ve kapsadığı illeri görebilirsiniz.</p>
+                    <figure class="ibbs-harita">
+                        <svg id="ibbs-harita" role="img" aria-label="26 Düzey 2 bölgesi ve kalkınma ajansları haritası"></svg>
+                        <figcaption id="ibbs-bilgi" aria-live="polite">Bir bölgenin üzerine gelin.</figcaption>
+                    </figure>
+                    <details class="ibbs-tablo">
+                        <summary>26 bölgenin listesi</summary>
+                        <table>
+                            <thead>
+                                <tr><th>Düzey 1</th><th>Düzey 2</th><th>İller</th><th>Kalkınma ajansı</th></tr>
+                            </thead>
+                            <tbody id="ibbs-satirlar"></tbody>
+                        </table>
+                    </details>
+                </section>
+
+                <section id="kent-kir">
+                    <p class="bolum-no">03</p>
+                    <h2>Kent ve Kır Tanımları: Kentleşme Derecesi ve İşlevsel Kentsel Alanlar</h2>
+                    <p>İl ve bölge sınırları idari sınırlardır; bir ilin içinde yoğun bir metropol ile seyrek nüfuslu
+                        köyler bir arada bulunabilir. Kentleşmeyi ülkeler arasında karşılaştırılabilir biçimde ölçmek
+                        için Avrupa Birliği, OECD, Dünya Bankası, FAO, ILO ve BM-Habitat birlikte
+                        <b>Kentleşme Derecesi</b> (Degree of Urbanisation, DEGURBA) yöntemini geliştirmiştir. Yöntem
+                        2020'de BM İstatistik Komisyonu tarafından uluslararası karşılaştırmalar için kabul edilmiştir.</p>
+                    <p>DEGURBA idari sınırlar yerine 1 km²'lik nüfus gridini kullanır ve ülkenin tamamını üç sınıfa
+                        ayırır:</p>
+                    <ul class="tanim-listesi">
+                        <li><b>Kentler</b> km² başına en az 1.500 kişinin yaşadığı ve toplamda en az 50.000 nüfusa
+                            ulaşan bitişik grid hücreleri.</li>
+                        <li><b>Kasabalar ve yarı yoğun alanlar</b> km² başına en az 300 kişinin yaşadığı ve toplamda en az
+                            5.000 nüfusa ulaşan alanlar.</li>
+                        <li><b>Kırsal alanlar</b> bu eşiklerin altında kalan hücrelerin çoğunlukta olduğu alanlar.</li>
+                    </ul>
+                    <p>TÜİK bu yöntemi 2022 yılından itibaren Kent-Kır Nüfus İstatistikleri ile uygulamaktadır. Sınıflar
+                        TÜİK'te <em>yoğun kent</em>, <em>orta yoğun kent</em> ve <em>kır</em> olarak adlandırılır. 2025 yılında
+                        Türkiye nüfusunun %67,5'i yoğun kentte, %15,8'i orta yoğun kentte, %16,8'i kırda yaşamaktadır. Bu
+                        oranlar platformda il ve bölge düzeyinde yer alır. Aşağıdaki harita TÜİK'in 2022 sınıflamasında her
+                        mahalle ve köyün sınıfını gösterir; bu haritadan hesaplanan yüzölçümü payları il ve ilçe düzeyinde
+                        "… Alan Payı" göstergeleri olarak sunulur.</p>
+                    <figure class="ibbs-harita kent-kir">
+                        <svg id="kent-kir-harita" role="img" aria-label="TÜİK kent-kır sınıflamasına göre yerleşim yerleri haritası, 2022"></svg>
+                        <ul class="kk-lejant" aria-hidden="true">
+                            <li><i class="kk-yogun"></i>Yoğun kent</li>
+                            <li><i class="kk-orta"></i>Orta yoğun kent</li>
+                            <li><i class="kk-kir"></i>Kır</li>
+                        </ul>
+                        <figcaption id="kent-kir-bilgi" aria-live="polite">Mahalle ve köylerin sınıfı, 2022 (TÜİK). Bir ilin üzerine gelin.</figcaption>
+                    </figure>
+                    <p>Kentin ekonomik etki alanını ölçmek için OECD ve Avrupa Komisyonu <b>İşlevsel Kentsel Alan</b>
+                        (Functional Urban Area, FUA) tanımını kullanır. Bir FUA, DEGURBA'ya göre belirlenen kent ile
+                        çalışanlarının en az %15'i bu kente işe gidip gelen çevre yerleşimlerden (işe gidiş alanı)
+                        oluşur. FUA'lar il sınırlarını aşabilir; bu yüzden kentlerin nüfus, ekonomi, işgücü ve iklim
+                        verileri il verisinden farklı bir resim sunar. OECD, Türkiye'de nüfusu 50.000'in üzerindeki
+                        kentlere göre 26 işlevsel kentsel alan tanımlamıştır; 2024 yılında bu alanlarda Türkiye nüfusunun
+                        yaklaşık %46'sı yaşamaktadır. Platformdaki "Kentler (OECD)" göstergeleri bu
+                        alanlar için sunulur.</p>
+                    <figure class="ibbs-harita">
+                        <svg id="fua-harita" role="img" aria-label="OECD işlevsel kentsel alanları haritası"></svg>
+                        <figcaption id="fua-bilgi" aria-live="polite">Bir kentsel alanın üzerine gelin.</figcaption>
+                    </figure>
+                </section>
+
+                <section id="veri">
+                    <p class="bolum-no">04</p>
+                    <h2>Bütünleşik Veri Altyapısı ve Gösterge Seti</h2>
+                    <p>Platformumuz; başta Türkiye İstatistik Kurumu (TÜİK) olmak üzere OECD, Sanayi ve Teknoloji
+                        Bakanlığı, Sağlık Bakanlığı, Kültür ve Turizm Bakanlığı, Çalışma ve Sosyal Güvenlik Bakanlığı,
+                        Sosyal Güvenlik Kurumu, Bilgi Teknolojileri ve İletişim Kurumu, Bankacılık Düzenleme ve Denetleme
+                        Kurumu ile Enerji Piyasası Düzenleme Kurumu verilerini bütünleşik bir veri tabanında bir araya
+                        getirmektedir. Nüfus ve demografiden eğitime, işgücünden ekonomi ve sanayiye, tarımdan sağlık,
+                        turizm, enerji, haberleşme, çevre ve dış ticarete uzanan 24 kategoride 900'ü aşkın gösterge; 81
+                        il, 26 Düzey 2 ve 12 Düzey 1 bölgesi için, seçili göstergelerde ise 973 ilçe için
+                        izlenebilmektedir.</p>
+                    <p>Sosyo-Ekonomik Gelişmişlik Sıralaması (SEGE) sonuçları ve OECD gösterge setleri de bu yapının
+                        parçasıdır. OECD'nin bölgesel refah göstergeleri yaşam memnuniyeti, sosyal destek, sağlık ve hava
+                        kalitesi gibi boyutlarla gelirin ötesindeki refahı ölçer. İşlevsel kentsel alanlara ilişkin
+                        kentsel ısı adası, aşırı sıcak gün sayısı ve kişi başına yeşil alan gibi göstergeler ise
+                        kentlerimizin iklim değişikliği karşısındaki durumunu okumaya imkân verir. Kaynaklardan derlenen
+                        veriler il ve bölge düzeyleri arasında tutarlılık kontrollerinden geçirilir; yapılan her düzeltme
+                        kayıt altına alınır.</p>
+                </section>
+
+                <section id="platform">
+                    <p class="bolum-no">05</p>
+                    <h2>Platformda Neler Var?</h2>
+                    <ul class="platform-kartlari">
+                        <li><a href="./"><b>Ana Sayfa</b><span>İllerin öne çıkan özellikleri ve Türkiye'nin 26 bölgesinin Avrupa'nın Düzey 2
+                                    bölgeleri arasındaki yeri: gelir, ülke içi farklılık, yakınsama, yaş yapısı, nüfus ve
+                                    kadın istihdamı.</span></a></li>
+                        <li><a href="analiz.html"><b>Analiz Masası</b><span>Bir göstergeyi il haritasında inceleyin; bölgeler arası fark,
+                                    coğrafi kümelenme, zaman içindeki değişim, göstergeler arası ilişki ve bir ilin bütün
+                                    göstergelerdeki konumu veriden hesaplanarak yorumlanır. Bütün göstergeler il, Düzey 2, Düzey 1, OECD kentleri
+                                    ve Türkiye zaman serisi olarak incelenebilir; haritada bir birime tıklandığında karşılaştırma paneli açılır.</span></a></li>
+                        <li><a href="katalog.html"><b>Veri Kataloğu</b><span>Bütün göstergeler yedi üst başlık altında tek
+                                    listede: kaynağa, bölge düzeyine ve yıla göre süzün, haritada açın ya da CSV olarak indirin.</span></a></li>
+                    </ul>
+                    <p>Bu yapısıyla platformumuz, bölgesel potansiyeli verilerle görünür kılma ve küresel eğilimlerle
+                        birlikte okuma vizyonumuzun stratejik bir taşıyıcısıdır.</p>
+                    <p class="kaynak-not">Kaynaklar: kalkınma ajansları ve İBBS için <a
+                            href="https://ka.gov.tr/sayfalar/biz-kimiz--20" target="_blank" rel="noopener">ka.gov.tr</a>;
+                        kentleşme derecesi ve işlevsel kentsel alanlar için OECD, <a
+                            href="https://www.oecd.org/en/publications/applying-the-degree-of-urbanisation_4bc1c502-en.html"
+                            target="_blank" rel="noopener"><em>Applying the Degree of Urbanisation</em></a> (2021) ve
+                        TÜİK <a href="https://data.tuik.gov.tr/Bulten/Index?p=Kent-Kir-Nufus-Istatistikleri-2022-49755"
+                            target="_blank" rel="noopener">Kent-Kır Nüfus İstatistikleri</a>.</p>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer class="alt-bilgi">
+        T.C. Sanayi ve Teknoloji Bakanlığı, Kalkınma Ajansları Genel Müdürlüğü.
+        Veriler: TÜİK, OECD ve ilgili kurumlar.
+    </footer>
+
+</body>
+
+</html>

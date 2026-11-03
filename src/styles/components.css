@@ -1,0 +1,183 @@
+/*
+ * Ortak bileşenler — orijinal sayfada satır içi (inline) yazılmış stillerin
+ * sınıflara taşınmış hâli + v2'de eklenen küçük parçalar.
+ */
+
+/* --- Metin yardımcıları --- */
+.topic-section p + p { margin-top: 0; }
+.soft-rule { border: 0; height: 1px; background: rgba(0, 0, 0, 0.1); margin: 25px 0 20px; }
+.sub-heading { font-size: 1.1rem; color: var(--text-dark); margin-bottom: 12px; position: relative; z-index: 1; }
+
+/* --- İnfografik tanıtım kutusu --- */
+.infographic-promo p { margin-bottom: 12px; font-weight: 500; color: var(--text-dark); }
+.btn-green {
+    background-color: var(--green);
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; color: #fff; text-decoration: none;
+    border-radius: 6px; font-weight: 500; font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(20, 184, 166, 0.3);
+    transition: all 0.3s ease;
+}
+.btn-green:hover { filter: brightness(1.05); transform: translateY(-1px); }
+
+/* --- Harita --- */
+.map-label {
+    pointer-events: none;
+    fill: #000;
+    font-weight: 600;
+    text-shadow: 0 0 3px #fff, 0 0 3px #fff;
+}
+#turkey-map { filter: drop-shadow(3px 8px 8px rgba(0, 0, 0, 0.35)); }
+.map-path { stroke-width: 0.8px; }
+#turkey-map[data-state='duz'] .map-path { stroke-width: 1.5px; opacity: 0.95; }
+.map-path.is-highlight { stroke: var(--map-highlight); stroke-width: 2.5px; }
+.tooltip-body { font-size: 0.75rem; line-height: 1.4; }
+.tooltip-body .unit { color: var(--text-muted); }
+.tooltip-soft { color: #fff; font-size: 11px; text-align: center; padding: 2px; }
+
+/* --- Hakkında görseli --- */
+.hakkinda-visual {
+    position: relative; width: 100%; margin-top: 15px;
+    border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden; line-height: 0;
+}
+.hakkinda-visual img { width: 100%; height: auto; opacity: 0.5; display: block; }
+
+/* --- İstatistik kutuları: Türkiye referansı eklendiğinde 3 sütun --- */
+.stats-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.stat-box--ref { border-style: dashed; opacity: 0.9; }
+
+/* --- Kaynak notu --- */
+.source-note { font-size: 0.75rem; color: var(--text-muted); margin: 6px 4px 0; text-align: right; }
+.gosterge-not { font-size: 0.75rem; color: var(--text-muted); margin: 4px 4px 0; line-height: 1.45; }
+
+/* --- Araçlar menüsü (eski sayfalara bağlantı) --- */
+.tools-menu { position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 1100; }
+.tools-menu summary {
+    list-style: none; cursor: pointer; user-select: none;
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 0.85rem; font-weight: 600; color: var(--text-dark);
+    white-space: nowrap;
+}
+.tools-menu summary::-webkit-details-marker { display: none; }
+.tools-menu[open] summary { background: var(--primary); color: #fff; }
+.tools-menu nav {
+    position: absolute; right: 0; margin-top: 8px; min-width: 220px;
+    display: grid; padding: 8px; border-radius: 12px;
+    background: rgba(255, 255, 255, 0.97); box-shadow: var(--glass-shadow), 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+.tools-menu nav a {
+    padding: 8px 12px; border-radius: 8px; font-size: 0.9rem;
+    color: var(--text-dark); text-decoration: none;
+}
+.tools-menu nav a:hover { background: rgba(37, 99, 235, 0.08); color: var(--primary); }
+header.scrolled .tools-menu { position: static; transform: none; margin: 0 16px; flex-shrink: 0; }
+
+@media (max-width: 768px) {
+    .tools-menu { position: static; transform: none; margin-top: 8px; }
+    .tools-menu nav { left: 50%; right: auto; transform: translateX(-50%); }
+}
+
+/* --- Kategori notu (veri kapsamı / kaynak uyarısı) --- */
+.topic-section .category-note {
+    position: relative; z-index: 1;
+    font-size: 0.8rem; line-height: 1.5; color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.6); border-left: 3px solid var(--warning);
+    padding: 8px 12px; border-radius: 6px; margin: -6px 0 20px;
+}
+.topic-section .category-note i { color: var(--warning); margin-right: 4px; }
+
+/* Verisi olmayan düzey seçenekleri */
+.control-group select option:disabled { color: #94a3b8; }
+
+/* --- Kaydırılmış başlıkta kategori menüsü ---
+ * Orijinalde justify-content:flex-end + overflow-x:auto birlikte kullanılıyordu; bu durumda
+ * taşan ilk sekmeler (Hakkında, Nüfus) sola kayıp kaydırılamaz hâle geliyordu.
+ * Çözüm: flex-start + ilk öğeye margin-left:auto (sığdığında sağa yaslanır, sığmadığında kaydırılır). */
+header.scrolled .header-nav {
+    justify-content: flex-start;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
+    gap: 6px;
+    padding-bottom: 2px;
+}
+header.scrolled .header-nav > :first-child { margin-left: auto; }
+header.scrolled .nav-pill { padding: 5px 10px; font-size: 0.82rem; white-space: nowrap; flex-shrink: 0; }
+/* Kaydırılmış başlıkta alt başlık gizlenir; 10 kategori sekmesine yer açılır */
+header.scrolled .header-text p { display: none; }
+
+/* OECD kentleri gibi Türkiye'yi kaplamayan birimlerde gri il zemini */
+.map-base-path { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 0.5px; pointer-events: none; }
+header.scrolled h1 { white-space: nowrap; }
+
+/* "Diğer" bölümündeki kategori seçici */
+.topic-section .diger-secici { position: relative; z-index: 1; margin: -6px 0 16px; max-width: 360px; }
+.topic-section .diger-secici select { font-weight: 600; }
+
+/* --- Bölgesel Eşitsizlik (scrollytelling adımları) --- */
+.map-container[hidden], .trend-panel[hidden] { display: none; }
+.trend-panel {
+    flex: 1; display: flex; flex-direction: column; min-height: 0;
+    background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 16px; padding: 18px 18px 12px; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+.trend-baslik { font-size: 1rem; font-weight: 600; color: var(--text-dark); margin: 0 0 8px; line-height: 1.35; }
+.trend-canvas { position: relative; flex: 1; min-height: 320px; }
+.esitsizlik-adim .adim-ust {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--primary, #2563eb); margin: 0 0 6px;
+}
+.esitsizlik-adim .adim-no { font-size: 0.75rem; color: var(--text-muted); margin: -4px 0 10px; }
+.yontem-notu {
+    font-size: 0.8rem; color: var(--text-muted); border-left: 3px solid rgba(0, 0, 0, 0.12);
+    padding-left: 10px; margin-top: 14px;
+}
+.esitsizlik-adim .topic-header h2 { text-align: left; font-size: 1.75rem; line-height: 1.2; }
+.sticky-panel[data-mod^='esitsizlik'] .source-note { white-space: normal; }
+
+/* --- Veri Gezgini: ana sayfaya (hikâyeler) dönüş --- */
+.hikaye-donus {
+    position: absolute; right: 118px; top: 50%; transform: translateY(-50%); z-index: 1100;
+    padding: 8px 14px; border-radius: 999px; white-space: nowrap;
+    background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 0.85rem; font-weight: 600; color: var(--text-dark); text-decoration: none;
+}
+header.scrolled .hikaye-donus, .hikaye-donus { }
+@media (max-width: 900px) { .hikaye-donus { position: static; transform: none; margin-top: 8px; display: inline-block; } }
+
+/* Araçlar menüsü (Veri Gezgini): başlık + kısa açıklama */
+.tools-menu nav { min-width: 280px; }
+.tools-menu nav a.arac-bag { display: flex; flex-direction: column; gap: 1px; }
+.tools-menu nav a.arac-bag .arac-ad { font-weight: 600; }
+.tools-menu nav a.arac-bag small { font-size: 0.75rem; color: var(--text-muted); font-weight: 400; }
+.tools-menu nav a.arac-bag--kucuk { padding-top: 5px; padding-bottom: 5px; font-size: 0.85rem; }
+.tools-menu nav .arac-ayrac { margin: 6px 14px 2px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+
+/* Kaynak türü etiketi (explorer.js kaynakYaz) */
+.kaynak-etiket { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .03em; padding: 1px 7px; border-radius: 999px; margin-left: 4px; vertical-align: 1px; cursor: help; }
+.kaynak-oecd-ozgun, .kaynak-oecd-ulusal { background: #e6eefb; color: #1d4f91; border: 1px solid #b9cdee; }
+.kaynak-platform { background: #f1efe7; color: #5f5d55; border: 1px solid #dcd9cf; }
+.kaynak-aciklama { color: inherit; opacity: .85; }
+
+/* --- Üst başlık bölümleri: kategori / SKA amaç düğmeleri --- */
+.ust-bolum .topic-header h2 i { color: var(--bolum-renk, var(--green)); margin-right: 6px; font-size: 0.9em; }
+.ust-bolum .ust-aciklama { position: relative; z-index: 1; margin: -4px 0 12px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+.ust-bolum .ust-sayi { white-space: nowrap; font-weight: 600; color: var(--text-dark); }
+.alt-secici { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; }
+.alt-dugme {
+    display: inline-flex; align-items: center; gap: 6px;
+    font: inherit; font-size: 0.85rem; font-weight: 600; color: var(--text-dark);
+    background: rgba(255, 255, 255, 0.75); border: 1px solid rgba(15, 23, 42, 0.12);
+    border-radius: 999px; padding: 6px 12px; cursor: pointer; transition: background .15s, border-color .15s;
+}
+.alt-dugme i { color: var(--text-muted); font-size: 0.85em; }
+.alt-dugme .alt-n { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; font-weight: 500; color: var(--text-muted); }
+.alt-dugme:hover { border-color: var(--bolum-renk, var(--green)); background: #fff; }
+.alt-dugme:focus-visible { outline: 2px solid var(--bolum-renk, var(--green)); outline-offset: 2px; }
+.alt-dugme[aria-pressed="true"] { background: var(--text-dark); border-color: var(--text-dark); color: #fff; }
+.alt-dugme[aria-pressed="true"] i, .alt-dugme[aria-pressed="true"] .alt-n { color: rgba(255, 255, 255, 0.75); }
+/* SKA: 17 amaç, daha sıkı */
+.alt-secici--amac { gap: 4px; }
+.alt-secici--amac .alt-dugme { font-size: 0.78rem; padding: 4px 10px; font-weight: 500; }

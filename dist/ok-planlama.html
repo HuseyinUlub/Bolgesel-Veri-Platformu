@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planlamada Veri Kullanımı · Kalkınma Okuryazarlığı</title>
+<meta name="description" content="Bölge planı ve raporlarında gösterge seçimi, karşılaştırma grubu, hedef ve izleme göstergesi, vekil göstergeler.">
+<link rel="icon" href="./img/logo.png">
+<link rel="stylesheet" href="./ok/site.css">
+<link rel="stylesheet" href="./ok/ortak.css">
+<style>
+  .ko-kart-sonuc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;margin:10px 0 0}
+  .ko-kart-sonuc div{background:#fff;border:1px solid var(--cizgi);padding:10px 12px;font-size:14px}
+  .ko-kart-sonuc b{display:block;font-family:var(--es-aralik);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--soluk);font-weight:400;margin-bottom:2px}
+  .ok{color:#2f6b3a;font-weight:600}.uyari{color:#a8502e;font-weight:600}
+  .gs-kutu{position:relative;width:min(560px,100%)}
+  #gs-ara{width:100%;box-sizing:border-box}
+  .gs-liste{position:absolute;left:0;right:0;top:calc(100% + 2px);z-index:20;max-height:320px;overflow:auto;margin:0;padding:4px 0;list-style:none;background:#fff;border:1px solid #d9d7cf;border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.12);font-size:14px}
+  .gs-liste[hidden]{display:none}
+  .gs-liste .grup{padding:6px 12px 3px;font-family:var(--es-aralik,monospace);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7a776e}
+  .gs-liste li[role=option]{padding:6px 12px;cursor:pointer;line-height:1.35}
+  .gs-liste li[role=option] small{display:block;color:#7a776e;font-size:12.5px}
+  .gs-liste li[role=option][aria-selected=true],.gs-liste li[role=option]:hover{background:#f3ece4}
+  .gs-liste .bos{padding:6px 12px;color:#7a776e}
+</style>
+</head>
+<body>
+<header id="ust"></header>
+<main class="ko">
+  <section class="ko-sayfa-ust">
+    <p class="ko-yol"><a href="okuryazarlik.html">Kalkınma Okuryazarlığı</a> › 05</p>
+    <h1>Planlamada Veri Kullanımı</h1>
+    <p class="giris">Bu başlık, kalkınma ajansı ve kamu uzmanlarının bölge planı, faaliyet raporu ve analiz çalışmalarında
+      veriyi nasıl seçip kullanabileceğine ilişkin uygulamalı rehberlik sunmaktadır. Her yazıda platform verisiyle çalışan bir araç yer almaktadır.</p>
+    <nav id="icindekiler" aria-label="Bu sayfadaki yazılar"></nav>
+  </section>
+
+  <article class="ko-yazi" id="gosterge-secimi">
+    <p class="ust">Planlamada Veri Kullanımı · 01</p>
+    <h2>Durum Analizinde Gösterge Seçimi</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>İyi bir durum analizi çok sayıda göstergeyle değil, doğru seçilmiş
+      göstergelerle yapılır. Her gösterge; sorulan soruyla ilgili, ilgili düzeyde yayımlanan, güncel, düzenli ve
+      karşılaştırılabilir olmalıdır.</p></div>
+    <div class="ko-metin">
+      <table class="ko-tablo-duz">
+        <thead><tr><th>Ölçüt</th><th>Sorulacak soru</th></tr></thead>
+        <tbody>
+          <tr><td>İlgililik</td><td>Gösterge, plan önceliğiyle doğrudan ilgili mi; bir sonucu mu, girdiyi mi ölçüyor?</td></tr>
+          <tr><td>Düzey</td><td>İl ve Düzey 2 düzeyinde yayımlanıyor mu? Yalnız bölge düzeyindeyse illere aktarılmamalıdır.</td></tr>
+          <tr><td>Güncellik</td><td>Son yıl, plan döneminin başlangıcına ne kadar yakın?</td></tr>
+          <tr><td>Süreklilik</td><td>Plan dönemi boyunca düzenli yayımlanacak mı? İzleme için yıllık seri gerekir.</td></tr>
+          <tr><td>Karşılaştırılabilirlik</td><td>Türkiye ve diğer bölgelerle aynı tanım ve yöntemle karşılaştırılabiliyor mu?</td></tr>
+          <tr><td>Yorumlanabilirlik</td><td>Değerin artması iyi mi kötü mü, açık mı? Toplam değil oran ya da kişi başı mı?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ko-sekil">
+      <div class="ko-grafik"><h4>Gösterge Uygunluk Kontrolü</h4><p class="alt">Platformdaki bir göstergeyi seçin; düzey, güncellik ve süreklilik ölçütlerine göre değerlendirilir</p></div>
+      <div class="ko-kontrol"><div class="gs-kutu"><input id="gs-ara" role="combobox" aria-expanded="false" aria-controls="gs-liste" aria-autocomplete="list" autocomplete="off" placeholder="Gösterge adı yazın ya da listeden örnek seçin" aria-label="Gösterge"><ul class="gs-liste" id="gs-liste" role="listbox" hidden></ul></div></div>
+      <div id="gs-sonuc"></div>
+    </div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Erişilebilir her göstergeyi analize eklemek. Gösterge sayısı
+      arttıkça mesaj dağılır; aynı olguyu ölçen göstergeler (ör. birbirine çok yakın üç okullaşma oranı) tekrar oluşturur.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Mantıksal çerçeve.</b> Göstergeler girdi (kaynak), çıktı (doğrudan ürün), sonuç (kısa ve orta vadeli değişim) ve
+        etki (uzun vadeli değişim) olarak sınıflandırılabilir. Bölge planlarında sonuç ve etki göstergeleri öncelikli olmalı;
+        çıktı göstergeleri faaliyet izlemesinde kullanılmalıdır.</p>
+      <p><b>Kontrol aracının ölçütleri:</b> il düzeyinde yayımlanma, son yılın içinde bulunulan yıldan en çok iki yıl geride
+        olması ve serinin en az on yıl kapsaması. Bu ölçütler genel bir yol göstericidir; bazı önemli göstergeler (ör. SEGE)
+        düzenli aralıklarla değil, dönemsel olarak yayımlanır.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: Platform veri kataloğu</p><a class="kesfet" href="katalog.html">Veri Kataloğu</a></div>
+  </article>
+
+  <article class="ko-yazi" id="karsilastirma">
+    <p class="ust">Planlamada Veri Kullanımı · 02</p>
+    <h2>Karşılaştırma Grubu Seçimi</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Bir değerin iyi ya da kötü olduğu, neyle karşılaştırıldığına bağlıdır.
+      Türkiye ortalaması tek başına yeterli değildir; benzer gelişmişlik düzeyindeki iller, aynı bölgedeki iller ve benzer
+      büyüklükteki iller farklı ve çoğu zaman daha anlamlı referanslar sunar.</p></div>
+    <div class="ko-sekil">
+      <div class="ko-kontrol"><label>İl <select id="kg-il"></select></label><label>Gösterge <select id="kg-gos"></select></label></div>
+      <p class="ko-cumle" id="kg-cumle" aria-live="polite"></p>
+      <div class="ko-grafik"><svg id="kg-grafik" role="img" aria-label="Seçilen ilin farklı karşılaştırma gruplarına göre konumu"></svg></div>
+    </div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Gelişmişlik düzeyi düşük bir il, Türkiye ortalamasının altında kalırken
+      kendi kademesindeki iller arasında öne çıkabilir. Hedef belirlerken ulaşılabilir bir referans seçmek, hem gerçekçi
+      hedefleri hem de doğru başarı değerlendirmesini sağlar.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Karşılaştırma grubunu, ilin iyi görüneceği şekilde
+      sonradan seçmek. Grup, analizden önce ve gerekçesiyle belirlenmeli; bütün göstergelerde aynı grup kullanılmalıdır.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Gruplar:</b> SEGE kademesi grubu, ilin en son SEGE çalışmasındaki kademesindeki illerdir. Nüfus grubu, nüfusu seçilen
+        ile en yakın on ildir. Bölge değerleri TÜİK'in Düzey 2 ve Düzey 1 değerleridir. Grup değerlerinde medyan kullanılmıştır.</p>
+      <p>Daha gelişmiş bir yöntem olarak, birden çok göstergede standartlaştırılmış uzaklığa göre "benzer iller" belirlenebilir
+        (ana sayfadaki il profili bu yöntemi kullanır).</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK, Sanayi ve Teknoloji Bakanlığı; Hesaplama: Platform</p><a class="kesfet" href="./#vt-profil">İl ve Bölge Profili</a></div>
+  </article>
+
+  <article class="ko-yazi" id="hedef">
+    <p class="ust">Planlamada Veri Kullanımı · 03</p>
+    <h2>Hedef ve İzleme Göstergesi</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Bir hedefin gerçekçi olup olmadığı, mevcut eğilimle karşılaştırılarak
+      anlaşılır. "Bu hızla devam edilirse plan dönemi sonunda nereye ulaşılır?" sorusu, hedef belirlemenin başlangıç noktasıdır.</p></div>
+    <div class="ko-sekil">
+      <div class="ko-kontrol">
+        <label>İl <select id="hd-il"></select></label>
+        <label>Gösterge <select id="hd-gos"></select></label>
+        <label>Eğilim dönemi <select id="hd-n"><option value="5">Son 5 yıl</option><option value="10" selected>Son 10 yıl</option></select></label>
+        <label>Hedef yılı <select id="hd-yil"><option>2028</option><option>2030</option><option>2035</option></select></label>
+        <label>Hedef değer <input id="hd-hedef" type="number" step="any"></label>
+      </div>
+      <p class="alt" id="hd-not" style="font-family:var(--es-aralik);font-size:11.5px;color:var(--soluk);margin:-4px 0 8px">Başlangıçta görünen hedef resmî bir hedef değildir; araç, eğilim projeksiyonu ile Türkiye değerinden büyük olanın %5 fazlasını örnek olarak önerir. Kendi plan hedefinizi kutuya yazabilirsiniz.</p>
+      <div class="ko-sonuc" id="hd-sonuc" aria-live="polite"></div>
+      <div class="ko-grafik" style="margin-top:12px"><svg id="hd-grafik" role="img" aria-label="Göstergenin geçmiş seyri ve eğilim projeksiyonu"></svg>
+        <div class="ko-lejant"><span><i style="background:#a8502e"></i>İl</span><span><i style="background:#8c8c8c"></i>Türkiye</span><span><i style="background:transparent;border-top:2px dashed #a8502e;height:0;width:14px"></i>Eğilim projeksiyonu</span><span><i style="background:#1f5f7a;border-radius:50%"></i>Hedef</span></div></div>
+    </div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Mevcut eğilimin altında kalan bir hedef, hiçbir müdahale olmasa da
+      tutturulabilir ve politika etkisini göstermez; eğilimin çok üzerindeki bir hedef ise ulaşılamaz olabilir. Hedefler; başlangıç
+      değeri, hedef değeri, hedef yılı ve veri kaynağıyla birlikte tanımlanmalıdır.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Başlangıç değeri belirtilmeden yalnızca "artırılacaktır"
+      şeklinde hedef koymak; ya da hedef yılında yayımlanmamış olacak bir veriyle izleme planlamak. İl verisi çoğu zaman bir
+      ila iki yıl gecikmeyle yayımlanır.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Yöntem.</b> Yıllık değişim hızı, seçilen dönemdeki değerlere doğrusal regresyon uygulanarak hesaplanır; bu hız son
+        gözlenen değerden başlayarak hedef yılına uzatılır. Hedefe ulaşma yılı, aynı doğrusal eğilimle hedef değerin aşıldığı ilk yıldır. Bu basit bir eğilim
+        uzatmasıdır; doygunluk (ör. okullaşmada %100 sınırı), politika değişiklikleri ve şoklar hesaba katılmaz.</p>
+      <p><b>Kişi başı GSYH</b> cari fiyatlı olduğundan eğilim enflasyonu içerir; hedeflerde endeks (Türkiye=100) ya da reel
+        büyüme oranı kullanılması daha uygundur. Araçta bu nedenle kişi başı GSYH endeksi yer almaktadır.</p>
+      <p><b>Hedef tablosu önerisi:</b> Gösterge · Birim · Kaynak · Başlangıç yılı ve değeri · Ara hedef · Dönem sonu hedefi ·
+        Türkiye ve karşılaştırma grubu değeri · Güncelleme sıklığı.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK, MEB, Sağlık Bakanlığı; Hesaplama: Platform</p></div>
+  </article>
+
+  <article class="ko-yazi" id="vekil">
+    <p class="ust">Planlamada Veri Kullanımı · 04</p>
+    <h2>Veri Yoksa: Vekil Göstergeler</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Her soru için doğrudan bir gösterge yayımlanmaz. Bu durumda olguyla
+      güçlü biçimde ilişkili, düzenli yayımlanan başka bir gösterge vekil olarak kullanılabilir; ancak vekilin neyi ölçüp neyi
+      ölçmediği açıkça belirtilmelidir.</p></div>
+    <div class="ko-metin">
+      <table class="ko-tablo-duz">
+        <thead><tr><th>İhtiyaç</th><th>Doğrudan veri durumu</th><th>Platformdaki olası vekiller</th><th>Dikkat</th></tr></thead>
+        <tbody>
+          <tr><td>İl düzeyinde hanehalkı geliri</td><td>Gelir ve yoksulluk Düzey 2 düzeyinde yayımlanır</td><td>Kişi başı GSYH, kişi başı mevduat, SEGE</td><td>GSYH üretim yerini, mevduat şube yerini yansıtır</td></tr>
+          <tr><td>İl düzeyinde istihdam</td><td>İşgücü istatistikleri Düzey 2 düzeyindedir</td><td>SGK kayıtlı sigortalı sayıları, sektörel istihdam payları</td><td>Kayıt dışı istihdamı kapsamaz</td></tr>
+          <tr><td>İlçe düzeyinde gelişmişlik</td><td>İlçe GSYH'si yayımlanmaz</td><td>İlçe SEGE, sosyoekonomik seviye (SES) skoru, eğitim durumu</td><td>Dönemsel yayımlanır; yıllık izleme için uygun değildir</td></tr>
+          <tr><td>Yenilikçilik</td><td>Ar-Ge harcaması il düzeyinde sınırlıdır</td><td>Ar-Ge göstergeleri (Düzey 2), PCT patent başvuruları (OECD), yükseköğretim mezunu oranı</td><td>Patent, yenilikçiliğin yalnızca bir boyutudur</td></tr>
+          <tr><td>Kentleşme</td><td>İdari "il ve ilçe merkezi" tanımı büyükşehir düzenlemesinden etkilenmiştir</td><td>Kent–kır sınıflaması (yoğun kent, orta yoğun kent, kır)</td><td>2022 öncesi için seri yoktur</td></tr>
+          <tr><td>Erişilebilirlik</td><td>Hizmetlere erişim süresi yayımlanmaz</td><td>Bin kişiye hekim, yatak, okul öncesi okullaşma, genişbant aboneliği</td><td>Kapasiteyi gösterir; fiili erişimi değil</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Düzey 2 değerini bölgedeki her ilin değeri gibi kullanmak
+      ya da il değerlerinin basit ortalamasıyla bölge değeri üretmek. Bölge değeri, toplanabilir göstergelerde illerin toplamı,
+      oranlarda pay ve paydanın ayrı ayrı toplanmasıyla hesaplanmalıdır.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Vekil seçerken:</b> Olguyla teorik bağlantı kurulmalı; mümkünse vekil ile doğrudan göstergenin yayımlandığı düzeyde
+        (ör. Düzey 2) korelasyonu kontrol edilmeli; vekil raporda açıkça "yaklaşık gösterge" olarak adlandırılmalıdır.</p>
+      <p><b>Küçük alan tahmini.</b> İstatistik kurumları, bölge düzeyindeki anket verisini il düzeyindeki idari kayıtlarla
+        birleştiren küçük alan tahmin yöntemleri kullanabilir. Bu tür tahminler resmî istatistik olarak yayımlanmadıkça plan
+        hedeflerinde kullanılmamalıdır.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: Platform veri kataloğu</p><a class="kesfet" href="katalog.html">Veri Kataloğu</a></div>
+  </article>
+
+  <nav id="sonraki"></nav>
+</main>
+<footer id="alt"></footer>
+
+<script src="./ok/d3.min.js"></script>
+<script src="./ok/ortak.js"></script>
+<script>
+OK.iskelet('planlama');
+const nf = OK.nf;
+
+/* ===== 1. Gösterge uygunluk kontrolü ===== */
+(async function () {
+  try {
+    const M = await OK.json('veri/manifest.json');
+    const tum = M.kategoriler.flatMap((k) => k.gostergeler.map((g) => ({ ...g, kat: k.ad })));
+    const byAd = new Map(tum.map((g) => [g.ad, g]));
+    const DZ = { country: 'Türkiye', region12: 'Düzey 1', region26: 'Düzey 2', province: 'İl', district: 'İlçe', fua: 'Kent (FUA)' };
+    const buYil = new Date().getFullYear();
+    const goster = (g) => {
+      const ys = g.yillar || [], son = ys[ys.length - 1], uz = ys.length, il = (g.duzeyler || []).includes('province'), d2 = (g.duzeyler || []).includes('region26');
+      const satir = (ok, t) => `<span class="${ok ? 'ok' : 'uyari'}">${ok ? '✓' : '!'}</span> ${t}`;
+      const bosluk = ys.length > 1 ? d3.max(d3.pairs(ys).map(([a, b]) => b - a)) : 0;
+      document.getElementById('gs-sonuc').innerHTML = `<div class="ko-kart-sonuc">
+        <div><b>Gösterge</b>${g.ad}</div><div><b>Tema</b>${g.kat}</div><div><b>Kaynak</b>${g.kaynak ?? g.kaynakKisa ?? '–'}</div>
+        <div><b>Düzeyler</b>${(g.duzeyler || []).map((d) => DZ[d] ?? d).join(', ')}</div>
+        <div><b>Yıllar</b>${ys[0] ?? '–'}–${son ?? '–'} (${uz} yıl)</div><div><b>Birim</b>${g.birim ?? '–'}</div></div>
+        <div class="ko-sonuc">${satir(il, il ? 'İl düzeyinde yayımlanıyor.' : d2 ? 'İl düzeyinde yok, Düzey 2 düzeyinde yayımlanıyor; illere aktarılmamalıdır.' : 'İl ve Düzey 2 düzeyinde yayımlanmıyor.')}<br>
+        ${satir(son >= buYil - 2, son >= buYil - 2 ? `Güncel: son yıl ${son}.` : `Son yıl ${son}; güncel veri gerektiren analizlerde dikkatli kullanılmalıdır.`)}<br>
+        ${satir(uz >= 10 && bosluk <= 1, uz >= 10 ? (bosluk <= 1 ? `Seri ${uz} yıl kapsıyor ve kesintisiz; eğilim analizi ve izleme için uygun.` : `Seri ${uz} yıl kapsıyor, ancak yıllar arasında boşluk var (en uzun ${bosluk} yıl).`) : `Seri ${uz} yıl kapsıyor; eğilim analizi için kısa.`)}<br>
+        ${satir(!/Sayısı|\((Bin TL|1000 \$|Ton|Kişi|Adet)\)/.test(g.ad) || /Başına|Oran|%|Hızı|Bin Kişi/.test(g.ad), /Sayısı|\((Bin TL|1000 \$|Ton|Kişi|Adet)\)/.test(g.ad) && !/Başına|Oran|%|Hızı|Bin Kişi/.test(g.ad) ? 'Toplam değer: iller arası karşılaştırmada nüfusa ya da ilgili paydaya bölünmelidir.' : 'Oran, kişi başı ya da endeks biçiminde; iller arası karşılaştırmaya uygun.')}</div>`;
+    };
+    const inp = document.getElementById('gs-ara');
+    const ilk = byAd.get('Doğurganlık Hızı (Çocuk Sayısı) (TÜİK)') || tum.find((g) => /Doğurganlık/.test(g.ad)) || tum[0];
+    // her biri farklı bir ölçütte uyarı veren örnekler: düzey, güncellik, toplam değer
+    const ORNEK = [
+      ['Uygun bir gösterge', ilk],
+      ['Yalnız bölge düzeyinde', byAd.get("Ar-Ge Harcamasının GSYH'ye Oranı (%) (TÜİK)")],
+      ['Son yılı eski', byAd.get('Kişi Başına Bitkisel Üretim Değeri (TL) (TÜİK)')],
+      ['Oran değil tutar', byAd.get('Toplam Mevduat (Bin TL) (BDDK)')],
+    ].filter(([, g]) => g);
+    // tek seçim kutusu: kutuya tıklanınca örnekler, yazınca eşleşen göstergeler listelenir
+    const liste = document.getElementById('gs-liste');
+    const sade = (t) => t.toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ı/g, 'i');
+    const tumS = tum.map((g) => [sade(g.ad), g]);
+    const qx = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    let secenek = [], imlec = -1, secili = ilk;
+    const ac = (acik) => { liste.hidden = !acik; inp.setAttribute('aria-expanded', String(acik)); };
+    function doldur(metin) {
+      const q = sade(metin.trim());
+      const ornekler = ORNEK.map(([etiket, g]) => ({ g, ust: etiket }));
+      let eslesen = [];
+      if (q && !(secili && metin === secili.ad)) {
+        const k = q.split(/\s+/);
+        eslesen = tumS.filter(([a]) => k.every((x) => a.includes(x))).slice(0, 40).map(([, g]) => ({ g }));
+      }
+      const gruplar = eslesen.length || (q && !(secili && metin === secili.ad)) ? [['Eşleşen göstergeler', eslesen]] : [['Farklı sonuç veren örnekler', ornekler]];
+      secenek = []; let html = '';
+      for (const [baslik, l] of gruplar) {
+        html += `<li class="grup" role="presentation">${baslik}</li>`;
+        if (!l.length) html += '<li class="bos" role="presentation">Eşleşen gösterge bulunamadı</li>';
+        l.forEach((o) => { html += `<li role="option" id="gs-o${secenek.length}" data-i="${secenek.length}">${o.ust ? `${qx(o.ust)}<small>${qx(o.g.ad)}</small>` : qx(o.g.ad)}</li>`; secenek.push(o.g); });
+      }
+      liste.innerHTML = html; imlec = -1; inp.removeAttribute('aria-activedescendant');
+    }
+    function imlecKoy(i) {
+      liste.querySelectorAll('[role=option]').forEach((li) => li.setAttribute('aria-selected', String(+li.dataset.i === i)));
+      imlec = i; const li = liste.querySelector(`[data-i="${i}"]`);
+      if (li) { inp.setAttribute('aria-activedescendant', li.id); li.scrollIntoView({ block: 'nearest' }); }
+    }
+    const sec = (g) => { secili = g; inp.value = g.ad; goster(g); ac(false); };
+    inp.addEventListener('focus', () => { inp.select(); doldur(inp.value); ac(true); });
+    inp.addEventListener('click', () => { if (liste.hidden) { if (secili && inp.value === secili.ad) inp.select(); doldur(inp.value); ac(true); } });
+    inp.addEventListener('input', () => { doldur(inp.value); ac(true); });
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (liste.hidden) { doldur(inp.value); ac(true); } if (secenek.length) imlecKoy((imlec + (e.key === 'ArrowDown' ? 1 : secenek.length - 1) + (imlec < 0 && e.key === 'ArrowUp' ? 1 : 0)) % secenek.length); }
+      else if (e.key === 'Enter') { const g = secenek[imlec] ?? byAd.get(inp.value) ?? (secenek.length === 1 ? secenek[0] : null); if (g) { e.preventDefault(); sec(g); } }
+      else if (e.key === 'Escape') { ac(false); if (secili) inp.value = secili.ad; }
+    });
+    liste.addEventListener('mousedown', (e) => { const li = e.target.closest('[role=option]'); if (li) { e.preventDefault(); sec(secenek[+li.dataset.i]); } });
+    inp.addEventListener('blur', () => { setTimeout(() => { ac(false); if (secili && !byAd.has(inp.value)) inp.value = secili.ad; }, 120); });
+    inp.value = ilk.ad; goster(ilk);
+  } catch (e) { OK.hata('#gs-sonuc', e); }
+})();
+
+/* ortak gösterge seti */
+const GOSTER = [
+  { ad: 'Kişi başına GSYH (TL)', kat: 'ekonomi', slug: 'kisi-basina-gsyh-tl', b: (v) => `${nf(v / 1000)} bin TL`, yon: 1 },
+  { ad: 'Kişi başına GSYH endeksi (Türkiye=100)', kat: 'ekonomi', slug: 'kisi-basina-gsyh-endeksi-turkiye-100', b: (v) => nf(v, 1), yon: 1, tr100: true },
+  { ad: 'Yükseköğretim mezunu oranı (%)', kat: 'egitim', slug: '15-yas-ve-uzeri-yuksekokul-veya-fakulte-mezunu-orani', b: (v) => `%${nf(v, 1)}`, yon: 1 },
+  { ad: 'Okul öncesi net okullaşma, 3–5 yaş (%)', kat: 'egitim', slug: 'okul-oncesi-net-okullasma-orani-3-5-yas', b: (v) => `%${nf(v, 1)}`, yon: 1, ust: 100 },
+  { ad: 'Bin kişiye hekim', kat: 'saglik', slug: 'bin-kisi-basina-dusen-toplam-hekim-sayisi', b: (v) => nf(v, 2), yon: 1 },
+  { ad: 'Bebek ölüm hızı (binde)', kat: 'demografi', slug: 'bebek-olum-hizi-binde', b: (v) => nf(v, 1), yon: -1 },
+  { ad: 'Net göç hızı (binde)', kat: 'goc', slug: 'net-goc-hizi-binde', b: (v) => nf(v, 1), yon: 1 },
+];
+
+/* ===== 2. Karşılaştırma grubu ===== */
+(async function () {
+  try {
+    const [A, seg, nuf] = await Promise.all([OK.adlar(), OK.kat('sosyo-ekonomik-gelismislik'), OK.kat('nufus')]);
+    const kats = Object.fromEntries(await Promise.all([...new Set(GOSTER.map((g) => g.kat))].map(async (k) => [k, await OK.kat(k)])));
+    const K = OK.seri(seg, 'sosyo-ekonomik-gelismislik-kademesi'), N = OK.seri(nuf, 'toplam-nufus');
+    const selIl = document.getElementById('kg-il'), selG = document.getElementById('kg-gos');
+    const iller = [...A.il.keys()].sort((a, b) => A.il.get(a).localeCompare(A.il.get(b), 'tr'));
+    selIl.innerHTML = iller.map((k) => `<option value="${k}">${A.il.get(k)}</option>`).join(''); selIl.value = 'TRB11';
+    const liste = GOSTER.filter((g) => !g.tr100);
+    selG.innerHTML = liste.map((g, i) => `<option value="${i}">${g.ad}</option>`).join('');
+    function ciz() {
+      const k = selIl.value, g = liste[+selG.value], kat = kats[g.kat];
+      const I = OK.seri(kat, g.slug), D2 = OK.seri(kat, g.slug, 'd2', I.yil), D1 = OK.seri(kat, g.slug, 'd1', I.yil);
+      const kd = K.d.get(k);
+      const kademe = [...K.d].filter(([kk, v]) => kk.length === 5 && v === kd && kk !== k && I.d.has(kk)).map(([kk]) => I.d.get(kk));
+      const yakin = [...N.d].filter(([kk]) => kk.length === 5 && kk !== k && I.d.has(kk)).sort((a, b) => Math.abs(a[1] - N.d.get(k)) - Math.abs(b[1] - N.d.get(k))).slice(0, 10).map(([kk]) => I.d.get(kk));
+      const v = I.d.get(k);
+      const ref = [
+        { ad: A.il.get(k), deger: v, vurgu: true },
+        { ad: 'Türkiye', deger: I.tr },
+        { ad: `Düzey 2: ${A.d2kisa.get(k.slice(0, 4))}`, deger: D2?.d.get(k.slice(0, 4)) },
+        { ad: `Düzey 1: ${OK.D1AD[k.slice(0, 3)]}`, deger: D1?.d.get(k.slice(0, 3)) },
+        { ad: `SEGE ${kd}. kademe illeri (medyan)`, deger: d3.median(kademe) },
+        { ad: 'Nüfusça en yakın 10 il (medyan)', deger: d3.median(yakin) },
+        { ad: '81 il medyanı', deger: d3.median([...I.d.values()]) },
+      ].filter((r) => r.deger != null);
+      OK.cubuk('#kg-grafik', ref, { W: 760, satir: 30, bicim: g.b, renk: (d) => (d.vurgu ? '#a8502e' : '#d9cbb8'), m: { t: 6, r: 90, b: 6, l: 250 } });
+      const iyi = (r) => g.yon * (v - r.deger) > 0;
+      const ust = ref.slice(1).filter(iyi).length;
+      document.getElementById('kg-cumle').innerHTML = `${I.yil} yılında ${A.il.get(k)} (${g.b(v)}), altı karşılaştırma değerinin <strong>${ust}</strong> tanesinden daha ${g.yon > 0 ? 'yüksek' : 'düşük (daha iyi)'} değere sahiptir. Türkiye değerine göre ${iyi(ref[1]) ? 'önde' : 'geride'}, kendi SEGE kademesindeki illerin medyanına göre ${iyi(ref[4] ?? ref[1]) ? 'önde' : 'geride'} görünmektedir.`;
+    }
+    selIl.addEventListener('change', ciz); selG.addEventListener('change', ciz); ciz();
+  } catch (e) { OK.hata('#kg-cumle', e); }
+})();
+
+/* ===== 3. Hedef hesaplayıcı ===== */
+(async function () {
+  try {
+    const A = await OK.adlar();
+    const kats = Object.fromEntries(await Promise.all([...new Set(GOSTER.map((g) => g.kat))].map(async (k) => [k, await OK.kat(k)])));
+    const selIl = document.getElementById('hd-il'), selG = document.getElementById('hd-gos'), selN = document.getElementById('hd-n'), selY = document.getElementById('hd-yil'), inpH = document.getElementById('hd-hedef');
+    const iller = [...A.il.keys()].sort((a, b) => A.il.get(a).localeCompare(A.il.get(b), 'tr'));
+    selIl.innerHTML = iller.map((k) => `<option value="${k}">${A.il.get(k)}</option>`).join(''); selIl.value = 'TRB11';
+    const liste = GOSTER.filter((g) => g.slug !== 'kisi-basina-gsyh-tl' && g.slug !== 'net-goc-hizi-binde');
+    selG.innerHTML = liste.map((g, i) => `<option value="${i}">${g.ad}</option>`).join(''); selG.value = String(liste.findIndex((g) => g.slug.startsWith('okul-oncesi')));
+    let elle = false;
+    inpH.addEventListener('input', () => { elle = true; ciz(); });
+    [selIl, selG].forEach((s) => s.addEventListener('change', () => { elle = false; ciz(); }));
+    [selN, selY].forEach((s) => s.addEventListener('change', ciz));
+    function ciz() {
+      const k = selIl.value, g = liste[+selG.value], s = kats[g.kat][g.slug];
+      const ser = Object.keys(s).filter((y) => s[y]?.[k] != null).sort().map((y) => ({ x: +y, y: s[y][k] }));
+      const tr = g.tr100 ? ser.map((d) => ({ x: d.x, y: 100 })) : Object.keys(s).filter((y) => s[y]?.TR != null).sort().map((y) => ({ x: +y, y: s[y].TR }));
+      const n = +selN.value, son = ser[ser.length - 1], hY = +selY.value;
+      const pen = ser.filter((d) => d.x > son.x - n);
+      const reg = OK.regresyon(pen.map((d) => [d.x, d.y]));
+      const f = (x) => { let v = son.y + reg.b * (x - son.x); if (g.ust) v = Math.min(v, g.ust); return v; };
+      const proj = d3.range(son.x, hY + 1).map((x) => ({ x, y: f(x) }));
+      if (!elle) { const trSon = tr[tr.length - 1]?.y; const oneri = g.yon > 0 ? Math.max(f(hY), trSon ?? 0) : Math.min(f(hY), trSon ?? Infinity);
+        inpH.value = +(g.yon > 0 ? oneri * 1.05 : oneri * 0.95).toFixed(2); if (g.ust) inpH.value = Math.min(+inpH.value, g.ust); }
+      const hedef = +inpH.value;
+      // hedefe ulaşma yılı
+      let ulas = null; if (Math.sign(reg.b) === g.yon && reg.b !== 0) { const xx = son.x + (hedef - son.y) / reg.b; ulas = Math.max(son.x, Math.ceil(xx)); }
+      const zatenUlasti = g.yon * (son.y - hedef) >= 0;
+      const svg = d3.select('#hd-grafik'); const W = 760, H = 300, m = { t: 16, r: 30, b: 26, l: 56 };
+      svg.attr('viewBox', `0 0 ${W} ${H}`).selectAll('*').remove();
+      const x = d3.scaleLinear().domain([d3.min(ser, (d) => d.x), hY]).range([m.l, W - m.r]);
+      const tumY = ser.concat(proj, tr.filter((d) => d.x >= ser[0].x)).map((d) => d.y).concat(hedef);
+      const y = d3.scaleLinear().domain(d3.extent(tumY)).nice().range([H - m.b, m.t]);
+      svg.append('g').attr('class', 'izgara').selectAll('line').data(y.ticks(5)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y);
+      svg.append('g').attr('class', 'eksen').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(8).tickFormat(d3.format('d')).tickSizeOuter(0));
+      svg.append('g').attr('class', 'eksen').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(g.b).tickSize(0)).call((gg) => gg.select('.domain').remove());
+      svg.append('rect').attr('x', x(son.x - n + 0.5)).attr('width', x(son.x) - x(son.x - n + 0.5)).attr('y', m.t).attr('height', H - m.t - m.b).attr('fill', '#efe9dd');
+      svg.append('text').attr('class', 'eksen-ad').attr('x', x(son.x - n + 0.5) + 4).attr('y', m.t + 12).text('Eğilim dönemi');
+      const ln = d3.line().x((d) => x(d.x)).y((d) => y(d.y));
+      svg.append('path').attr('d', ln(tr.filter((d) => d.x >= ser[0].x && d.x <= son.x))).attr('fill', 'none').attr('stroke', '#8c8c8c').attr('stroke-width', 1.5);
+      svg.append('path').attr('d', ln(ser)).attr('fill', 'none').attr('stroke', '#a8502e').attr('stroke-width', 2.2);
+      svg.append('path').attr('d', ln(proj)).attr('fill', 'none').attr('stroke', '#a8502e').attr('stroke-width', 2).attr('stroke-dasharray', '6 4');
+      svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(hedef)).attr('y2', y(hedef)).attr('stroke', '#1f5f7a').attr('stroke-dasharray', '2 3');
+      svg.append('circle').attr('cx', x(hY)).attr('cy', y(hedef)).attr('r', 6).attr('fill', '#1f5f7a').attr('stroke', '#f9f9f3').attr('stroke-width', 2);
+      svg.append('text').attr('class', 'etiket').attr('x', x(hY) - 8).attr('y', y(hedef) - 10).attr('text-anchor', 'end').style('fill', '#1f5f7a').style('font-weight', 600).text(`${elle ? 'Hedef' : 'Örnek hedef'} ${g.b(hedef)}`);
+      svg.append('text').attr('class', 'etiket').attr('x', x(hY) - 8).attr('y', y(f(hY)) + 16).attr('text-anchor', 'end').style('fill', '#a8502e').text(`Eğilimle ${g.b(f(hY))}`);
+      const pts = ser.concat(proj.slice(1).map((d) => ({ ...d, p: 1 })));
+      svg.append('g').selectAll('circle').data(pts).join('circle').attr('cx', (d) => x(d.x)).attr('cy', (d) => y(d.y)).attr('r', 9).attr('fill', 'transparent')
+        .on('mousemove', (e, d) => OK.ipGoster(e, `<b>${d.x}${d.p ? ' (eğilim)' : ''}</b><br><span class="s">${A.il.get(k)}: ${g.b(d.y)}</span>`)).on('mouseleave', OK.ipGizle);
+      const yillik = reg.b;
+      let metin = `<div class="buyuk">${g.b(f(hY))}</div>${A.il.get(k)} için ${g.ad.toLocaleLowerCase('tr').replace(/\s*\(.*\)$/, '')} göstergesi ${son.x} yılında <strong>${g.b(son.y)}</strong>. Son ${n} yılın eğilimi (yılda ${yillik >= 0 ? '+' : '−'}${nf(Math.abs(yillik), 2)}) sürerse ${hY} yılında beklenen değer yukarıdaki gibidir. `;
+      if (zatenUlasti) metin += `${elle ? "Girilen" : "Örnek"} hedef (${g.b(hedef)}) mevcut değerle zaten sağlanmaktadır; politika etkisini gösterecek daha iddialı bir hedef düşünülebilir.`;
+      else if (ulas == null) metin += `Mevcut eğilim hedefin ters yönündedir; hedefe ulaşmak için eğilimin değişmesi gerekir.`;
+      else if (ulas <= hY) metin += `Bu eğilimle <strong>${g.b(hedef)}</strong> hedefine <strong>${ulas}</strong> yılında ulaşılabilir; hedef mevcut eğilimin içinde kalmaktadır.`;
+      else metin += `Bu eğilimle <strong>${g.b(hedef)}</strong> hedefine ancak <strong>${ulas}</strong> yılında ulaşılabilir; ${hY} hedefi için eğilimin hızlanması gerekir.`;
+      document.getElementById('hd-sonuc').innerHTML = metin;
+    }
+    ciz();
+  } catch (e) { OK.hata('#hd-sonuc', e); }
+})();
+</script>
+</body>
+</html>

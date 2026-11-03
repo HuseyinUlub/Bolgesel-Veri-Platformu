@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veri Kataloğu · Türkiye Bölgesel Veri Analizleri</title>
+    <meta name="description" content="Platformdaki bütün göstergeler tek listede: tema, kategori, kaynak, bölge düzeyi ve yıla göre süzün; haritada açın ya da CSV olarak indirin.">
+    <link rel="icon" href="/img/logo.png">
+  <script type="module" crossorigin src="./assets/katalog-B4zeqp6B.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/data-B3yXcaFA.js">
+  <link rel="modulepreload" crossorigin href="./assets/indir-DtewI3rI.js">
+  <link rel="modulepreload" crossorigin href="./assets/arama-CcNF1NiH.js">
+  <link rel="stylesheet" crossorigin href="./assets/data-TMpkceY5.css">
+  <link rel="stylesheet" crossorigin href="./assets/katalog-BFAOZNOM.css">
+  <link rel="stylesheet" crossorigin href="./assets/latin-ext-500-Dl550LbO.css">
+</head>
+
+<body>
+    <header class="ust-cubuk">
+        <a class="marka" href="./">
+            <img src="/img/logo.png" alt="T.C. Sanayi ve Teknoloji Bakanlığı">
+            <span id="site-baslik"></span>
+        </a>
+        <nav class="ust-nav">
+            <a href="./">Ana Sayfa</a>
+            <a href="analiz.html">Analiz Masası</a>
+            <a href="okuryazarlik.html">Kalkınma Okuryazarlığı</a>
+            <a href="katalog.html" aria-current="page">Veri Kataloğu</a>
+            <details class="araclar-menu">
+                <summary>Araçlar</summary>
+                <nav id="araclar"></nav>
+            </details>
+            <a href="hakkinda.html">Hakkında</a>
+        </nav>
+    </header>
+
+    <main class="katalog">
+        <section class="acilis">
+            <p class="ust-etiket">Veri Kataloğu</p>
+            <h1>Platformdaki Tüm Göstergeler</h1>
+            <p class="giris">Platformdaki göstergeler TÜİK'in istatistiksel tema başlıklarına göre sınıflandırılmıştır. Göstergelere adıyla arama yapılarak
+                ya da kaynak, bölge düzeyi ve yıl ölçütlerine göre süzülerek erişilebilir. Her gösterge Analiz Masası'nda
+                haritada görüntülenebilir veya CSV biçiminde indirilebilir.</p>
+            <dl class="sayaclar" id="sayaclar"></dl>
+        </section>
+
+        <div class="katalog-duzen">
+            <aside class="filtreler" aria-label="Süzgeçler">
+                <div class="filtre-arama">
+                    <label for="k-ara" class="filtre-baslik">Ara</label>
+                    <input id="k-ara" type="search" placeholder="ör. işsizlik, konut, patent" autocomplete="off" spellcheck="false">
+                </div>
+                <fieldset>
+                    <legend class="filtre-baslik">Tema</legend>
+                    <div id="f-ust" class="filtre-liste"></div>
+                </fieldset>
+                <details class="ek-suzgec" id="ek-suzgec" open>
+                <summary>Düzey, kaynak ve güncellik</summary>
+                <fieldset>
+                    <legend class="filtre-baslik">Bölge düzeyi</legend>
+                    <div id="f-duzey" class="filtre-liste"></div>
+                </fieldset>
+                <fieldset>
+                    <legend class="filtre-baslik">Kaynak</legend>
+                    <div id="f-kaynak" class="filtre-liste"></div>
+                </fieldset>
+                <fieldset>
+                    <legend class="filtre-baslik">Güncellik</legend>
+                    <div id="f-yil" class="filtre-liste"></div>
+                </fieldset>
+                </details>
+                <button type="button" id="f-temizle" class="filtre-temizle" hidden>Süzgeçleri temizle</button>
+            </aside>
+
+            <div class="sonuc">
+                <div class="sonuc-ust">
+                    <p id="sonuc-durum" class="sonuc-durum" aria-live="polite"></p>
+                    <div class="sonuc-dugmeler">
+                        <button type="button" id="hepsini-ac">Hepsini aç</button>
+                        <button type="button" id="hepsini-kapat">Hepsini kapat</button>
+                    </div>
+                </div>
+                <div id="ust-kartlar" class="ust-kartlar"></div>
+                <div id="liste"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="alt-bilgi">
+        T.C. Sanayi ve Teknoloji Bakanlığı, Kalkınma Ajansları Genel Müdürlüğü.
+    </footer>
+
+</body>
+
+</html>

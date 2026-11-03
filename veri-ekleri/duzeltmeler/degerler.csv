@@ -1,0 +1,7 @@
+﻿kod;gosterge;yil;deger;gerekce
+TR;Kültür ve Turizm Bakanlığına Bağlı Müze ve Ören Yeri Ziyaretçi Sayısı;2015;28122934;Kaynakta ondalık kayması (2,812293381). Birleşik Excel'deki 28.122.933.812 değeri de aynı sayının ondalık kaybı; doğru değer ~28,1 milyon
+TR71;Kültür ve Turizm Bakanlığına Bağlı Müze ve Ören Yeri Ziyaretçi Sayısı;2015;;Kaynakta 3,15 milyon ile 3,15 milyar arasında belirsiz; il toplamından yeniden hesaplanır
+*d2;İlkokullarda Net Okullaşma Oranı (%);2019;;Kaynakta Düzey 2 satırları karışmış (önceki ve sonraki yılla sıra korelasyonu ~0)
+*d2;İlkokullarda Kız Net Okullaşma Oranı (%);2019;;Kaynakta Düzey 2 satırları karışmış
+*d2;İlkokullarda Erkek Net Okullaşma Oranı (%);2019;;Kaynakta Düzey 2 satırları karışmış
+*d2;İlkokullarda Erkek Net Okullaşma Oranı (%);2023;;Kaynakta Düzey 2 satırları karışmış (sıra korelasyonu 0,39)

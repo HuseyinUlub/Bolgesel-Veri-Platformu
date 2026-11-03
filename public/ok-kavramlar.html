@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temel Kavramlar · Kalkınma Okuryazarlığı</title>
+<meta name="description" content="Bölgesel istatistiklerde sık karşılaşılan kavramlar: GSYH, cari ve reel değer, SGP, İBBS, kent–kır, sektör payları, işgücü, göç, demografi, yakınsama, yığılma, yoksulluk.">
+<link rel="icon" href="./img/logo.png">
+<link rel="stylesheet" href="./ok/site.css">
+<link rel="stylesheet" href="./ok/ortak.css">
+</head>
+<body>
+<header id="ust"></header>
+<main class="ko">
+  <section class="ko-sayfa-ust">
+    <p class="ko-yol"><a href="okuryazarlik.html">Kalkınma Okuryazarlığı</a> › 01</p>
+    <h1>Temel Kavramlar</h1>
+    <p class="giris">Bölgesel istatistiklerde en sık karşılaşılan on iki kavram, kısa tanımları ve platform verisiyle hazırlanmış
+      birer örnekle açıklanmaktadır. Her kartın sonundaki uzman notu, kavramın hesaplanışına ve kullanımına ilişkin ayrıntıları içerir.</p>
+    <nav id="icindekiler" aria-label="Bu sayfadaki kavramlar"></nav>
+  </section>
+
+  <article class="ko-yazi" id="gsyh">
+    <p class="ust">Temel Kavramlar · 01</p>
+    <h2>GSYH ve Kişi Başına GSYH</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Gayrisafi yurt içi hasıla (GSYH), bir yılda üretilen bütün mal ve
+      hizmetlerin piyasa değeridir. Kişi başına GSYH, bu değerin nüfusa bölünmesiyle bulunur ve ortalama üretim ya da gelir
+      düzeyinin en yaygın ölçüsüdür.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="gs-cumle"></p>
+      <div class="ko-grafik"><h4>Türkiye'nin Kişi Başına GSYH'si (ABD Doları)</h4><p class="alt">Piyasa kuruyla dolara çevrilmiş değerler</p>
+        <svg id="gs-grafik" role="img" aria-label="Türkiye kişi başına GSYH, dolar"></svg></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Kişi başı GSYH; illerin ekonomik düzeyini karşılaştırmanın, bölgesel
+      eşitsizliği ölçmenin ve yakınsamayı izlemenin temel göstergesidir. TÜİK il ve bölge düzeyinde GSYH'yi Bölgesel Hesaplar
+      kapsamında yayımlar.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Kişi başı GSYH'yi il halkının ortalama geliri olarak okumak.
+      GSYH üretimin yapıldığı yere göre hesaplanır; ildeki şirket kârları, başka illerde yaşayan çalışanların ürettiği değer ve
+      kamu hizmetleri de GSYH'ye dahildir.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p>Bölgesel hesaplarda katma değer, faaliyetin yapıldığı yerel birime göre illere dağıtılır. Bu nedenle sanayi tesisi
+        yoğun, nüfusu az illerde kişi başı GSYH yüksek çıkabilir. Hanehalkı refahı için "hanehalkı kullanılabilir geliri"
+        (OECD bölgesel verileri) ya da Gelir ve Yaşam Koşulları Araştırmasının medyan gelir göstergeleri daha uygundur.</p>
+      <p>Dolar cinsinden seriler kur dalgalanmalarından etkilenir; uzun dönemli karşılaştırmada zincirlenmiş hacim ya da SGP
+        cinsinden değerler tercih edilmelidir.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Bölgesel Hesaplar</p></div>
+  </article>
+
+  <article class="ko-yazi" id="cari-hacim">
+    <p class="ust">Temel Kavramlar · 02</p>
+    <h2>Cari Fiyatlar ve Zincirlenmiş Hacim</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Cari fiyatlı GSYH, her yılın kendi fiyatlarıyla hesaplanır; enflasyon
+      değeri büyütür. Zincirlenmiş hacim ise fiyat değişimlerinden arındırılmış, gerçek (reel) üretim artışını gösterir.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="ch-cumle"></p>
+      <div class="ko-kontrol"><div class="vt-secim" role="group" aria-label="Ölçek" id="ch-olcek" style="margin:0"></div></div>
+      <div class="ko-grafik"><h4>Türkiye GSYH: Cari Fiyatlar ve Zincirlenmiş Hacim</h4><p class="alt">2009=100 olarak endekslenmiştir</p>
+        <svg id="ch-grafik" role="img" aria-label="Türkiye GSYH cari fiyatlar ve zincirlenmiş hacim endeksi"></svg></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Büyüme oranı, ekonomi büyüklüğü ve illerin büyüme performansı
+      karşılaştırılırken mutlaka zincirlenmiş hacim serileri kullanılmalıdır. Cari fiyatlı seriler ise payların (bir ilin
+      Türkiye GSYH'sindeki payı, sektör payları) hesaplanmasında kullanılır.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Cari fiyatlı GSYH'deki yıllık artışı büyüme oranı olarak
+      sunmak; ya da zincirlenmiş hacim değerlerini toplayarak bölge toplamı elde etmek.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Zincirleme yöntemi.</b> Her yıl bir önceki yılın fiyatlarıyla hesaplanan büyüme oranları birbirine bağlanarak seri
+        oluşturulur. Bu yöntem, sabit baz yılı yönteminin fiyat yapısı değiştikçe ortaya çıkan sapmasını azaltır.</p>
+      <p><b>Toplanabilirlik.</b> Zincirlenmiş hacim değerleri, referans yılı dışında toplanabilir değildir: illerin zincirlenmiş
+        hacim değerlerinin toplamı Türkiye değerine eşit olmayabilir. Bölge büyüme oranları için TÜİK'in bölge serileri kullanılmalıdır.</p>
+      <p><b>Örtük fiyat deflatörü</b> = cari değer / hacim değeri. İki serinin oranı, üretimin fiyat düzeyindeki değişimi gösterir.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Bölgesel Hesaplar; Hesaplama: Platform</p></div>
+  </article>
+
+  <article class="ko-yazi" id="sgp">
+    <p class="ust">Temel Kavramlar · 03</p>
+    <h2>Satın Alma Gücü Paritesi</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Satın alma gücü paritesi (SGP), ülkeler arasındaki fiyat düzeyi
+      farkını gideren bir çevrim oranıdır. Aynı mal sepetinin farklı ülkelerde ne kadara alınabildiğini esas alır; böylece gelirler
+      gerçek alım gücüyle karşılaştırılabilir.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="sp-cumle"></p>
+      <div class="ko-grafik"><h4>Türkiye'nin Kişi Başına GSYH'si: Piyasa Kuru ve SGP</h4><p class="alt">ABD doları</p>
+        <svg id="sp-grafik" role="img" aria-label="Kişi başına GSYH piyasa kuru ve SGP ile"></svg></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Türkiye'de fiyat düzeyi ABD ve Avrupa ortalamasından düşük olduğundan,
+      SGP ile hesaplanan gelir piyasa kuruyla hesaplanandan yüksektir. Türkiye'nin bölgelerini Avrupa bölgeleriyle karşılaştırırken
+      (ana sayfadaki Avrupa karşılaştırması gibi) SGP esas alınır.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Piyasa kuruyla dolara çevrilmiş geliri, refah karşılaştırması
+      için kullanmak. Piyasa kuru kısa dönemde sert dalgalanabilir ve fiyat düzeyi farklarını yansıtmaz.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p>Platformdaki il SGP değerleri, Türkiye için tek bir ulusal SGP çevrim oranıyla hesaplanmıştır; Türkiye içindeki
+        bölgesel fiyat farkları yansıtılmaz. Bölgeler arası fiyat farkı için TÜİK'in bölgesel fiyat düzeyi endeksleri
+        (Düzey 2) kullanılabilir.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK, OECD; Hesaplama: Platform</p></div>
+  </article>
+
+  <article class="ko-yazi" id="ibbs">
+    <p class="ust">Temel Kavramlar · 04</p>
+    <h2>İstatistiki Bölge Birimleri</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>İstatistiki Bölge Birimleri Sınıflandırması (İBBS), bölgesel
+      istatistiklerin üretildiği mekânsal çerçevedir. İller Düzey 3'tür; komşu iller gruplanarak 26 Düzey 2 ve 12 Düzey 1
+      bölgesi oluşturulmuştur. Avrupa Birliği'nin NUTS sınıflamasının Türkiye'deki karşılığıdır.</p></div>
+    <div class="ko-sekil"><div class="vt-secim" role="group" aria-label="Düzey" id="ib-secim"></div>
+      <p class="ko-cumle" id="ib-cumle"></p>
+      <div class="ko-harita"><svg id="ib-harita" role="img" aria-label="İstatistiki bölge birimleri haritası"></svg></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Her göstergenin hangi düzeyde yayımlandığı, yapılabilecek analizi belirler.
+      İşgücü ve gelir istatistikleri örneklem araştırmalarına dayandığı için il düzeyinde değil, Düzey 2 düzeyinde yayımlanır.
+      Düzey 2 bölgeleri aynı zamanda kalkınma ajanslarının görev alanlarıdır.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>İBBS bölgelerini coğrafi bölgelerle (Marmara, Ege…)
+      karıştırmak. Coğrafi bölgeler istatistik birimi değildir; illerin bir kısmı birden fazla coğrafi bölgeye yayılır.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p>Sınıflama 2002 yılında yürürlüğe girmiştir. Kodlar hiyerarşiktir: TR42 (Kocaeli, Sakarya, Düzce, Bolu, Yalova) Düzey 1
+        bölgesi TR4'ün (Doğu Marmara) parçasıdır; TR421 ise Kocaeli ilidir. Bu yapı, bir il kodundan bağlı olduğu bölgelerin
+        doğrudan çıkarılmasını sağlar.</p>
+      <p>Bölge büyüklükleri dengeli değildir: İstanbul hem Düzey 1 hem Düzey 2 bölgesidir ve tek başına Türkiye nüfusunun
+        yaklaşık beşte birini barındırır.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK</p><a class="kesfet" href="hakkinda.html#ibbs">Ayrıntılı Bilgi: Hakkında</a></div>
+  </article>
+
+  <article class="ko-yazi" id="kent-kir">
+    <p class="ust">Temel Kavramlar · 05</p>
+    <h2>Kent–Kır Sınıflaması ve İşlevsel Kentsel Alan</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>İdari sınırlar kentleşmeyi doğru göstermez: bir ilçe merkezi kırsal
+      nitelikte, bir köy ise metropolün parçası olabilir. Kentleşme Derecesi yöntemi, nüfus yoğunluğuna göre her yerleşimi yoğun
+      kent, orta yoğun kent ya da kır olarak sınıflandırır.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="kk-cumle"></p>
+      <div class="ko-grafik"><h4 id="kk-b">Düzey 2 Bölgelerinde Nüfusun Kent–Kır Dağılımı</h4><p class="alt">Yoğun kentte yaşayan nüfus payına göre sıralanmıştır</p>
+        <svg id="kk-grafik" role="img" aria-label="Düzey 2 bölgelerinde yoğun kent, orta yoğun kent ve kır nüfus payları"></svg>
+        <div class="ko-lejant"><span><i style="background:#6e2a14"></i>Yoğun kent</span><span><i style="background:#cc8058"></i>Orta yoğun kent</span><span><i style="background:#9bb5a0"></i>Kır</span></div></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Kırsal kalkınma programlarının hedeflenmesi, hizmet erişimi analizleri ve
+      uluslararası karşılaştırmalar kentleşmenin tutarlı bir tanımını gerektirir. 2012 sonrası büyükşehir düzenlemeleriyle köylerin
+      mahalleye dönüşmesi, idari tanıma dayalı "il ve ilçe merkezi nüfusu" göstergesini kentleşme ölçüsü olarak kullanılamaz hâle getirmiştir.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Büyükşehir illerinde "köy nüfusu" ya da "il ve ilçe merkezi
+      nüfusu" göstergelerinden kentleşme oranı çıkarmak.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p>Yöntem 1 km²'lik nüfus gridine dayanır: en az 1.500 kişi/km² yoğunluk ve 50.000 toplam nüfus yoğun kenti; en az 300
+        kişi/km² ve 5.000 nüfus orta yoğun kenti tanımlar. TÜİK yöntemi 2022'den itibaren uygulamaktadır.</p>
+      <p>İşlevsel kentsel alan (FUA), kent ile işe gidip gelme ilişkisiyle bağlı çevresinden oluşur ve il sınırlarını aşabilir.
+        Platformdaki "Kentler (OECD)" göstergeleri bu tanıma dayanır.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Kent-Kır Nüfus İstatistikleri</p><a class="kesfet" href="hakkinda.html#kent-kir">Ayrıntılı Bilgi: Hakkında</a></div>
+  </article>
+
+  <article class="ko-yazi" id="sektor">
+    <p class="ust">Temel Kavramlar · 06</p>
+    <h2>Katma Değer ve Sektör Payları</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Katma değer, bir faaliyetin ürettiği değerden kullandığı ara mal ve
+      hizmetlerin düşülmesiyle bulunur. Sektör payları, toplam katma değerin tarım, sanayi ve hizmetler arasında nasıl
+      paylaştığını; yani ilin ekonomik yapısını gösterir.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="sk-cumle"></p>
+      <div class="ko-grafik"><h4 id="sk-b">Düzey 2 Bölgelerinde Katma Değerin Sektörel Dağılımı</h4><p class="alt">Cari fiyatlarla, sanayi payına göre sıralanmıştır</p>
+        <svg id="sk-grafik" role="img" aria-label="Düzey 2 bölgelerinde tarım, sanayi ve hizmetler payı"></svg>
+        <div class="ko-lejant"><span><i style="background:#9bb5a0"></i>Tarım</span><span><i style="background:#a8502e"></i>Sanayi</span><span><i style="background:#c9c3b6"></i>Hizmetler</span></div></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Sektör yapısı; bir bölgenin hangi şoklara (tarımsal kuraklık, sanayi
+      talebindeki düşüş, turizm sezonu) duyarlı olduğunu ve hangi politika araçlarının öne çıktığını gösterir. Bölge planlarında
+      öncelikli sektörlerin belirlenmesinde ilk bakılan göstergelerden biridir.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Sektör payının azalmasını sektörün küçülmesi olarak
+      yorumlamak. Tarımın payı, tarım üretimi artarken de diğer sektörler daha hızlı büyüdüğü için düşebilir.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p>Paylar cari fiyatlarla hesaplanır; sektörler arasındaki göreli fiyat değişimleri payları etkiler. Sektörün bölgedeki
+        göreli ağırlığını Türkiye ile karşılaştırmak için yoğunlaşma katsayısı (yerelleşme katsayısı, LQ) kullanılır:
+        LQ = (bölgede sektör payı) / (Türkiye'de sektör payı). LQ 1'in üzerindeyse sektör bölgede Türkiye ortalamasından yoğundur.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Bölgesel Hesaplar</p></div>
+  </article>
+
+  <article class="ko-yazi" id="isgucu">
+    <p class="ust">Temel Kavramlar · 07</p>
+    <h2>İşgücüne Katılım, İstihdam ve İşsizlik Oranları</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>İşgücü; çalışanlar ile iş arayan işsizlerden oluşur. İşgücüne
+      katılma oranı, 15 yaş ve üzeri nüfusun ne kadarının işgücünde olduğunu; istihdam oranı ne kadarının çalıştığını; işsizlik
+      oranı ise işgücünün ne kadarının iş aradığı hâlde iş bulamadığını gösterir.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="ig-cumle"></p>
+      <div class="ko-grafik"><h4 id="ig-b">Düzey 2 Bölgelerinde İşgücü Göstergeleri</h4><p class="alt">15 yaş ve üzeri, istihdam oranına göre sıralanmıştır</p>
+        <svg id="ig-grafik" role="img" aria-label="Düzey 2 bölgelerinde işgücüne katılma, istihdam ve işsizlik oranları"></svg>
+        <div class="ko-lejant"><span><i style="background:#1f5f7a;border-radius:50%"></i>İşgücüne katılma oranı</span><span><i style="background:#a8502e;border-radius:50%"></i>İstihdam oranı</span><span><i style="background:#2f2f2f;border-radius:50%"></i>İşsizlik oranı</span></div></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Düşük işsizlik oranı her zaman güçlü bir işgücü piyasasına işaret etmez:
+      iş bulma umudunu yitirenler ve işgücüne hiç katılmayanlar işsiz sayılmaz. Özellikle kadınların işgücüne katılımının düşük
+      olduğu bölgelerde işsizlik oranı düşük, istihdam oranı da düşük olabilir. Bu nedenle üç oran birlikte okunmalıdır.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Yalnızca işsizlik oranına bakarak bölgelerin işgücü
+      piyasasını sıralamak; Düzey 2 değerlerini illere aynen aktarmak.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p>İşsizlik oranı = işsiz / işgücü; istihdam oranı = istihdam / 15 yaş ve üzeri nüfus; işgücüne katılma oranı = işgücü /
+        15 yaş ve üzeri nüfus. Buradan istihdam oranı ≈ katılma oranı × (1 − işsizlik oranı) ilişkisi çıkar.</p>
+      <p>Veriler Hanehalkı İşgücü Araştırmasından elde edilir ve Düzey 2 düzeyinde örneklem hatası içerir. Kayıtlı istihdam
+        için SGK il verileri kullanılabilir; ancak kayıt dışı çalışanları kapsamaz.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Hanehalkı İşgücü Araştırması</p></div>
+  </article>
+
+  <article class="ko-yazi" id="goc">
+    <p class="ust">Temel Kavramlar · 08</p>
+    <h2>Net Göç Hızı</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Net göç, bir ilin aldığı göç ile verdiği göç arasındaki farktır.
+      Net göç hızı bu farkı nüfusa oranlar ve binde olarak ifade eder: binde 10, il nüfusunun yılda yüzde biri kadar göç aldığı
+      anlamına gelir. Eksi değer, ilin göç verdiğini gösterir.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="gc-cumle"></p>
+      <div class="ko-harita"><h4 id="gc-b">İllerin Net Göç Hızı</h4><p class="alt">Binde; mavi tonlar göç veren, kiremit tonları göç alan illeri gösterir</p>
+        <svg id="gc-harita" role="img" aria-label="İllerin net göç hızı haritası"></svg><div class="ko-lejant" id="gc-lejant"></div></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Göç, bölgelerin cazibesinin ve fırsat eşitsizliğinin en açık
+      göstergelerinden biridir. Sürekli göç veren iller genç ve eğitimli nüfusunu kaybeder; göç alan illerde ise konut,
+      altyapı ve kamu hizmeti ihtiyacı hızla artar.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Tek yılın net göç hızına dayanarak eğilim belirlemek. Afetler,
+      atamalar, üniversite yerleşmeleri ve seçim dönemlerinde adres değişiklikleri tek yıllık değerleri belirgin biçimde etkileyebilir.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p>İç göç istatistikleri ADNKS'deki adres değişikliklerinden üretilir; kayıtlı ikamet adresini yansıtır. Mevsimlik
+        tarım işçileri, öğrenciler ve geçici çalışanların fiili yaşam yeri kayıtlı adreslerinden farklı olabilir.</p>
+      <p>Net göç hızı = (aldığı göç − verdiği göç) / dönem ortası nüfus × 1.000.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK İç Göç İstatistikleri</p></div>
+  </article>
+
+  <article class="ko-yazi" id="demografi">
+    <p class="ust">Temel Kavramlar · 09</p>
+    <h2>Toplam Doğurganlık Hızı ve Ortanca Yaş</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Toplam doğurganlık hızı, bir kadının doğurganlık çağı boyunca
+      sahip olması beklenen ortalama çocuk sayısıdır; 2,1 nüfusun kendini yenileme düzeyi kabul edilir. Ortanca yaş, nüfusu yaşa
+      göre iki eşit gruba ayıran yaştır ve nüfusun ne kadar yaşlı olduğunu gösterir.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="dm-cumle"></p>
+      <div class="ko-grafik"><svg id="dm-grafik" role="img" aria-label="İllerde ortanca yaş ve toplam doğurganlık hızı"></svg></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Demografik yapı; okul, sağlık ve bakım hizmetleri ihtiyacını, işgücü arzını
+      ve gelecekteki nüfusu belirler. Doğurganlığı yüksek illerde eğitim yatırımları, ortanca yaşı yüksek illerde yaşlı bakım
+      hizmetleri öncelik kazanır.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Ortanca yaşı yüksek ilin doğurganlığı düşük olduğu için
+      yaşlandığını varsaymak; genç nüfusun göçü de ortanca yaşı yükseltir.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p>Toplam doğurganlık hızı, 15–49 yaş aralığındaki yaşa özel doğurganlık hızlarının toplamıdır; dönemsel bir ölçüdür ve
+        doğumların ertelenmesi gibi zamanlama etkilerinden etkilenir. Kaba doğum hızı ise yaş yapısından etkilendiği için iller
+        arası karşılaştırmada daha az uygundur.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Doğum İstatistikleri, ADNKS</p></div>
+  </article>
+
+  <article class="ko-yazi" id="yakinsama">
+    <p class="ust">Temel Kavramlar · 10</p>
+    <h2>Yakınsama</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Yakınsama, başlangıçta geride olan bölgelerin öndekilerden daha hızlı
+      gelişerek aradaki farkı kapatmasıdır. İller arası eşitsizliğin zaman içinde azalması da yakınsamanın bir göstergesidir.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="yk-cumle"></p>
+      <div class="ko-grafik"><h4 id="yk-b">Başlangıç Düzeyi ve Göreli Değişim</h4><p class="alt" id="yk-a"></p>
+        <svg id="yk-grafik" role="img" aria-label="İllerin başlangıçtaki kişi başı GSYH endeksi ve sonraki değişimi"></svg></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Bölgesel politikanın temel hedeflerinden biri bölgeler arası gelişmişlik
+      farklarını azaltmaktır. Yakınsama analizi, bu hedefe ne ölçüde ulaşıldığını ve hangi illerin genel eğilimden ayrıştığını gösterir.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Ortalamada yakınsama görülmesini, bütün geri kalmış illerin
+      yetiştiği şeklinde yorumlamak. Eğilim çizgisinin altında kalan iller, genel yakınsamaya katılmamaktadır.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Beta yakınsaması:</b> başlangıç gelir düzeyi ile sonraki büyüme arasında negatif ilişki. <b>Sigma yakınsaması:</b>
+        gelirin dağılımının (değişim katsayısı, Theil) zaman içinde daralması. Beta yakınsaması sigma yakınsamasının gerekli
+        ama yeterli olmayan koşuludur.</p>
+      <p>Grafikte kişi başı GSYH endeksi (Türkiye=100) kullanılmıştır; bu nedenle gösterilen, Türkiye ortalamasına göre göreli
+        yakınsamadır. Endeksin logaritması alınarak eğilim çizgisi çizilmiştir. Ortalamaya dönüş etkisi nedeniyle başlangıç
+        yılındaki geçici dalgalanmalar sonucu abartabilir; farklı başlangıç yıllarıyla sınamak önerilir.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Bölgesel Hesaplar; Hesaplama: Platform</p><a class="kesfet" href="ok-olcme.html#theil">Eşitsizliğin Seyri: Theil Endeksi</a></div>
+  </article>
+
+  <article class="ko-yazi" id="yigilma">
+    <p class="ust">Temel Kavramlar · 11</p>
+    <h2>Yığılma ve Yoğunlaşma</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Ekonomik faaliyet mekânda eşit dağılmaz; firmalar ve nitelikli
+      işgücü büyük kentlerde bir araya gelir. Bu yığılma verimliliği artırırken bölgeler arası farkı da büyütebilir.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="yg-cumle"></p>
+      <div class="ko-grafik"><h4>En Büyük İllerin Türkiye Toplamındaki Birikimli Payı</h4><p class="alt">İller her göstergede büyükten küçüğe sıralanmıştır</p>
+        <svg id="yg-grafik" role="img" aria-label="İllerin birikimli payları"></svg></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Yoğunlaşma düzeyi; ulusal ekonominin birkaç bölgeye ne kadar bağımlı olduğunu,
+      küçük illerin hangi alanlarda ölçek sorunu yaşadığını ve dengeli kalkınma politikasının ne kadar zorlu olduğunu gösterir.
+      Banka mevduatı ve ekonomik üretim, nüfusa göre çok daha yoğun dağılmaktadır.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Yığılmayı yalnızca olumsuz bir olgu olarak görmek. Yığılma
+      ekonomileri verimlilik kaynağıdır; politika sorusu yığılmayı engellemek değil, faydasının yayılmasını sağlamaktır.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p>Yoğunlaşma; en büyük N birimin payı, Herfindahl-Hirschman endeksi (payların karelerinin toplamı) ya da nüfusa göre
+        düzeltilmiş Gini ve Theil ölçüleriyle izlenir. Faaliyetin kayıt yerine göre derlendiği göstergelerde (mevduat, ihracat)
+        genel merkez etkisi yoğunlaşmayı olduğundan yüksek gösterebilir.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK, BDDK; Hesaplama: Platform</p></div>
+  </article>
+
+  <article class="ko-yazi" id="yoksulluk">
+    <p class="ust">Temel Kavramlar · 12</p>
+    <h2>Göreli Yoksulluk ve Medyan Gelir</h2>
+    <div class="ko-kisaca"><b class="baslik">Kısaca</b><p>Göreli yoksulluk, kişinin gelirini toplumun tipik gelirine göre ölçer.
+      TÜİK'in bölgesel yoksulluk göstergelerinde, eşdeğer hanehalkı kullanılabilir geliri medyan gelirin %60'ının altında kalanlar
+      yoksul kabul edilir.</p></div>
+    <div class="ko-sekil"><p class="ko-cumle" id="yo-cumle"></p>
+      <div class="ko-grafik"><h4 id="yo-b">Düzey 2 Bölgelerinde Göreli Yoksulluk Oranı</h4><p class="alt">Her bölgenin kendi medyan gelirinin %60'ına göre</p>
+        <svg id="yo-grafik" role="img" aria-label="Düzey 2 bölgelerinde göreli yoksulluk oranı"></svg></div></div>
+    <div class="ko-metin"><h3>Neden Önemli?</h3><p>Bölgesel yoksulluk oranları her bölgenin kendi medyan gelirine göre
+      hesaplandığından, bölge içindeki gelir farkını gösterir; bölgeler arası refah farkını göstermez. Geliri düşük bir bölgede
+      yoksulluk sınırı da düşüktür. Bu nedenle bölgeler karşılaştırılırken yoksulluk oranıyla birlikte medyan gelir düzeyine de bakılmalıdır.</p></div>
+    <div class="ko-hata"><b class="baslik">Sık Yapılan Hata</b><p>Bölge yoksulluk oranlarını, bölgeler arasında "en yoksul
+      bölge" sıralaması yapmak için kullanmak.</p></div>
+    <details class="ko-uzman"><summary>Uzman notu</summary><div class="ic">
+      <p><b>Eşdeğer gelir.</b> Hanehalkı geliri, hane büyüklüğü ve bileşimine göre eşdeğerlik ölçeğiyle düzeltilir; böylece
+        farklı büyüklükteki hanelerin refahı karşılaştırılabilir.</p>
+      <p><b>Medyan gelir.</b> Platformda Düzey 2 medyan gelir düzeyi, TÜİK'in yayımladığı yoksulluk sınırının 0,6'ya
+        bölünmesiyle elde edilmiştir (Hesaplama: Platform). İmleçle bir bölgenin üzerine gelindiğinde yoksulluk sınırı ve medyan
+        gelir görülebilir.</p>
+      <p><b>Örneklem.</b> Veriler Gelir ve Yaşam Koşulları Araştırmasına dayanır; bölgeler arasındaki küçük farklar istatistiksel
+        olarak anlamlı olmayabilir.</p></div></details>
+    <div class="ko-alt"><p class="vt-kaynak">Kaynak: TÜİK Gelir ve Yaşam Koşulları Araştırması; Hesaplama: Platform</p></div>
+  </article>
+
+  <nav id="sonraki"></nav>
+</main>
+<footer id="alt"></footer>
+
+<script src="./ok/d3.min.js"></script>
+<script src="./ok/ortak.js"></script>
+<script>
+OK.iskelet('kavramlar');
+const nf = OK.nf;
+const yaz = (id, h) => { document.getElementById(id).innerHTML = h; };
+/* yığılmış yatay çubuk */
+function yigin(svgSel, satirlar, anahtarlar, renkler, { W = 760, sat = 18, l = 190, bicim = (v) => `%${nf(v, 1)}`, ip } = {}) {
+  const m = { t: 6, r: 16, b: 22, l }, H = m.t + m.b + sat * satirlar.length;
+  const svg = d3.select(svgSel).attr('viewBox', `0 0 ${W} ${H}`); svg.selectAll('*').remove();
+  const x = d3.scaleLinear().domain([0, 100]).range([m.l, W - m.r]);
+  const y = d3.scaleBand().domain(satirlar.map((r) => r.ad)).range([m.t, H - m.b]).padding(0.18);
+  svg.append('g').attr('class', 'eksen').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(5).tickFormat((t) => `%${t}`).tickSizeOuter(0));
+  const yg = d3.stack().keys(anahtarlar)(satirlar.map((r) => { const t = d3.sum(anahtarlar, (k) => r[k]); const o = { ad: r.ad, ham: r }; anahtarlar.forEach((k) => (o[k] = (100 * r[k]) / t)); return o; }));
+  svg.selectAll('g.k').data(yg).join('g').attr('class', 'k').attr('fill', (d, i) => renkler[i])
+    .selectAll('rect').data((d) => d.map((v) => Object.assign(v, { key: d.key }))).join('rect')
+    .attr('x', (d) => x(d[0])).attr('width', (d) => Math.max(0, x(d[1]) - x(d[0]) - 1)).attr('y', (d) => y(d.data.ad)).attr('height', y.bandwidth())
+    .on('mousemove', (e, d) => ip && OK.ipGoster(e, ip(d.data.ham))).on('mouseleave', OK.ipGizle);
+  svg.append('g').selectAll('text').data(satirlar).join('text').attr('x', m.l - 8).attr('y', (r) => y(r.ad) + y.bandwidth() / 2).attr('dy', '0.35em').attr('text-anchor', 'end')
+    .style('font-size', '12px').style('fill', (r) => (r.vurgu ? 'var(--metin)' : 'var(--ikincil)')).style('font-weight', (r) => (r.vurgu ? 600 : 400)).text((r) => r.ad);
+}
+
+(async function () {
+  const [eko, nuf, isg, goc, dem, gel, A, geoIl, geo26, geo12] = await Promise.all(['ekonomi', 'nufus', 'isgucu', 'goc', 'demografi', 'gelir-ve-yasam-kosullari'].map(OK.kat)
+    .concat(OK.adlar(), OK.geo('province'), OK.geo('region26'), OK.geo('region12'))).catch((e) => { OK.hata('#gs-cumle', e); return []; });
+  if (!eko) return;
+  const guvenli = (ad, f) => { try { f(); } catch (e) { console.error(ad, e); } };
+
+  /* 1 GSYH */
+  guvenli('gsyh', () => {
+    const s = OK.trSeri(eko, 'kisi-basina-gsyh'); const ilk = s[0], son = s[s.length - 1];
+    const dip = s.filter((d) => d.x >= 2010 && d.x < son.x).reduce((a, b) => (b.y < a.y ? b : a)), tepe = s.filter((d) => d.x < dip.x).reduce((a, b) => (b.y > a.y ? b : a));
+    yaz('gs-cumle', `Türkiye'nin kişi başına GSYH'si ${ilk.x} yılında <strong>${nf(ilk.y)}</strong> dolar, ${son.x} yılında <strong>${nf(son.y)}</strong> dolardır. Dolar cinsinden seri kur hareketlerinden etkilenir: ${tepe.x} yılında ${nf(tepe.y)} dolara ulaştıktan sonra ${dip.x} yılında ${nf(dip.y)} dolara gerilemiştir.`);
+    OK.cizgi('#gs-grafik', [{ ad: 'Türkiye', renk: '#a8502e', d: s }], { W: 760, H: 260, sifir: true, yBicim: (v) => nf(v), m: { t: 14, r: 90, b: 26, l: 56 } });
+  });
+  /* 2 Cari / hacim */
+  guvenli('cari', () => {
+    const c = OK.trSeri(eko, 'gayrisafi-yurt-ici-hasila-gsyh-bin-tl'), h = OK.trSeri(eko, 'gsyh-zincirlenmis-hacim-2009-100-bin-tl');
+    const ix = (s) => { const b = s.find((d) => d.x === 2009).y; return s.map((d) => ({ x: d.x, y: (100 * d.y) / b })); };
+    const C = ix(c), Hh = ix(h); const sc = C[C.length - 1], sh = Hh.find((d) => d.x === sc.x) || Hh[Hh.length - 1];
+    let logY = true;
+    const ciz = () => OK.cizgi('#ch-grafik', [{ ad: 'Cari fiyatlar', renk: '#b0401f', d: C }, { ad: 'Zincirlenmiş hacim', renk: '#1f5f7a', d: Hh }],
+      { W: 760, H: 280, referans: 100, logY, yBicim: (v) => nf(v), ipBicim: (v) => nf(v, 1), m: { t: 14, r: 150, b: 26, l: 56 } });
+    OK.secim('#ch-olcek', [{ ad: 'Logaritmik ölçek', l: true }, { ad: 'Doğrusal ölçek', l: false }], (o) => { logY = o.l; ciz(); });
+    yaz('ch-cumle', `2009–${sc.x} döneminde Türkiye GSYH'si cari fiyatlarla <strong>${nf(sc.y / 100, 1)} kat</strong> artmış; fiyat etkisinden arındırılmış hacim artışı ise <strong>%${nf(sh.y - 100)}</strong> düzeyinde kalmıştır.`);
+  });
+  /* 3 SGP */
+  guvenli('sgp', () => {
+    const p = OK.trSeri(eko, 'kisi-basina-gsyh-satin-alma-gucu-paritesiyle-sgp'), k = OK.trSeri(eko, 'kisi-basina-gsyh').filter((d) => d.x >= p[0].x);
+    OK.cizgi('#sp-grafik', [{ ad: 'SGP ile', renk: '#1f5f7a', d: p }, { ad: 'Piyasa kuruyla', renk: '#b0401f', d: k }], { W: 760, H: 260, sifir: true, yBicim: (v) => nf(v), m: { t: 14, r: 120, b: 26, l: 56 } });
+    const sp = p[p.length - 1], sk = k.find((d) => d.x === sp.x);
+    yaz('sp-cumle', `${sp.x} yılında Türkiye'nin kişi başına GSYH'si piyasa kuruyla <strong>${nf(sk.y)}</strong> dolar, satın alma gücü paritesiyle <strong>${nf(sp.y)}</strong> dolardır; SGP ile hesaplanan değer, piyasa kuruyla hesaplananın yaklaşık <strong>${nf(sp.y / sk.y, 1)} katıdır</strong>.`);
+  });
+  /* 4 İBBS */
+  guvenli('ibbs', () => {
+    const D1R = ['#6e2a14', '#a8502e', '#cc8058', '#e2b48f', '#7fa9bb', '#1f5f7a', '#9bb5a0', '#5f7d64', '#c9c3b6', '#8c8577', '#d8b56a', '#a07f3a'];
+    const d1kod = Object.keys(OK.D1AD); const r1 = (k) => D1R[d1kod.indexOf(k.slice(0, 3))];
+    const DUZ = [
+      { ad: 'Düzey 1 (12 bölge)', kisa: 'Düzey 1 bölge', geo: geo12, ip: (k) => `<b>${k} ${OK.D1AD[k]}</b><br><span class="s">${[...A.d2iller.keys()].filter((d) => d.startsWith(k)).length} Düzey 2 bölgesi</span>` },
+      { ad: 'Düzey 2 (26 bölge)', kisa: 'Düzey 2 bölge', geo: geo26, ip: (k) => `<b>${A.d2.get(k)}</b><br><span class="s">Düzey 1: ${k.slice(0, 3)} ${OK.D1AD[k.slice(0, 3)]}</span>` },
+      { ad: 'Düzey 3 (81 il)', kisa: 'il', geo: geoIl, ip: (k) => `<b>${k} ${A.il.get(k)}</b><br><span class="s">Düzey 2: ${A.d2kisa.get(k.slice(0, 4))}<br>Düzey 1: ${OK.D1AD[k.slice(0, 3)]}</span>` },
+    ];
+    OK.secim('#ib-secim', DUZ, (o) => {
+      d3.select('#ib-harita').selectAll('*').remove();
+      OK.harita('#ib-harita', o.geo, { dolgu: (k) => r1(k), ipucu: o.ip, W: 760, H: 330 });
+      yaz('ib-cumle', `Renkler 12 Düzey 1 bölgesini gösterir; ${o.kisa} sınırları beyaz çizgilerle ayrılmıştır. Bir birimin üzerine gelerek kodunu ve bağlı olduğu üst bölgeleri görebilirsiniz.`);
+    });
+  });
+  /* 5 kent-kır */
+  guvenli('kentkir', () => {
+    const Y = OK.seri(nuf, 'yogun-kent-nufus-orani', 'd2'), O = OK.seri(nuf, 'orta-yogun-kent-nufus-orani', 'd2', Y.yil), K = OK.seri(nuf, 'kir-nufus-orani', 'd2', Y.yil);
+    const sat = [...Y.d.keys()].map((k) => ({ ad: A.d2kisa.get(k), k, y: Y.d.get(k), o: O.d.get(k), r: K.d.get(k) })).sort((a, b) => b.y - a.y);
+    sat.push({ ad: 'Türkiye', y: Y.tr, o: O.tr, r: K.tr, vurgu: true });
+    document.getElementById('kk-b').textContent = `Düzey 2 Bölgelerinde Nüfusun Kent–Kır Dağılımı, ${Y.yil}`;
+    yigin('#kk-grafik', sat, ['y', 'o', 'r'], ['#6e2a14', '#cc8058', '#9bb5a0'], { ip: (r) => `<b>${r.k ? A.d2.get(r.k) : 'Türkiye'}</b><br><span class="s">Yoğun kent: %${nf(r.y, 1)}<br>Orta yoğun kent: %${nf(r.o, 1)}<br>Kır: %${nf(r.r, 1)}</span>` });
+    const enKir = sat.filter((r) => r.k).sort((a, b) => b.r - a.r)[0];
+    yaz('kk-cumle', `${Y.yil} yılında Türkiye nüfusunun <strong>%${nf(Y.tr, 1)}</strong> kadarı yoğun kentte, <strong>%${nf(K.tr, 1)}</strong> kadarı kırda yaşamaktadır. Kır nüfus payının en yüksek olduğu bölge ${enKir.ad} bölgesidir (%${nf(enKir.r, 1)}).`);
+  });
+  /* 6 sektör */
+  guvenli('sektor', () => {
+    const T = OK.seri(eko, 'tarimin-sektorunun-ekonomi-icindeki-payi-cari-fiyatlarla', 'd2'), S = OK.seri(eko, 'sanayi-sektorunun-ekonomi-icindeki-payi-cari-fiyatlarla', 'd2', T.yil), H = OK.seri(eko, 'hizmetler-sektorunun-ekonomi-icindeki-payi-cari-fiyatlarla', 'd2', T.yil);
+    const sat = [...S.d.keys()].map((k) => ({ ad: A.d2kisa.get(k), k, t: T.d.get(k), s: S.d.get(k), h: H.d.get(k) })).sort((a, b) => b.s - a.s);
+    sat.push({ ad: 'Türkiye', t: T.tr, s: S.tr, h: H.tr, vurgu: true });
+    document.getElementById('sk-b').textContent = `Düzey 2 Bölgelerinde Katma Değerin Sektörel Dağılımı, ${T.yil}`;
+    yigin('#sk-grafik', sat, ['t', 's', 'h'], ['#9bb5a0', '#a8502e', '#c9c3b6'], { ip: (r) => `<b>${r.k ? A.d2.get(r.k) : 'Türkiye'}</b><br><span class="s">Tarım: %${nf(r.t, 1)}<br>Sanayi: %${nf(r.s, 1)}<br>Hizmetler: %${nf(r.h, 1)}${r.k ? `<br>Sanayi yoğunlaşma katsayısı: ${nf(r.s / S.tr, 2)}` : ''}</span>` });
+    const ust = sat[0], tar = sat.filter((r) => r.k).sort((a, b) => b.t - a.t)[0];
+    yaz('sk-cumle', `${T.yil} yılında sanayinin katma değerdeki payı Türkiye'de <strong>%${nf(S.tr, 1)}</strong>, ${ust.ad} bölgesinde <strong>%${nf(ust.s, 1)}</strong> düzeyindedir. Tarımın payının en yüksek olduğu bölge ${tar.ad} bölgesidir (%${nf(tar.t, 1)}).`);
+  });
+  /* 7 işgücü */
+  guvenli('isgucu', () => {
+    const K = OK.seri(isg, 'isgucune-katilma-orani-15-yas', 'd2'), I = OK.seri(isg, 'istihdam-orani-15-yas', 'd2', K.yil), S = OK.seri(isg, 'issizlik-orani-15-yas', 'd2', K.yil);
+    document.getElementById('ig-b').textContent = `Düzey 2 Bölgelerinde İşgücü Göstergeleri, ${K.yil}`;
+    const sat = [...I.d.keys()].map((k) => ({ k, ad: A.d2kisa.get(k), ka: K.d.get(k), is: I.d.get(k), sz: S.d.get(k) })).sort((a, b) => b.is - a.is);
+    const svg = d3.select('#ig-grafik'); const W = 760, s = 19, m = { t: 22, r: 20, b: 26, l: 190 }, H = m.t + m.b + s * sat.length;
+    svg.attr('viewBox', `0 0 ${W} ${H}`).selectAll('*').remove();
+    const x = d3.scaleLinear().domain([0, d3.max(sat, (r) => r.ka) * 1.05]).nice().range([m.l, W - m.r]);
+    const y = d3.scaleBand().domain(sat.map((r) => r.k)).range([m.t, H - m.b]);
+    svg.append('g').attr('class', 'izgara').selectAll('line').data(x.ticks(6)).join('line').attr('x1', x).attr('x2', x).attr('y1', m.t).attr('y2', H - m.b);
+    svg.append('g').attr('class', 'eksen').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat((t) => `%${t}`).tickSizeOuter(0));
+    svg.append('g').attr('class', 'eksen').attr('transform', `translate(0,${m.t - 4})`).call(d3.axisTop(x).ticks(6).tickFormat((t) => `%${t}`).tickSize(0)).call((g) => g.select('.domain').remove());
+    const g = svg.selectAll('g.s').data(sat).join('g').attr('class', 's').attr('transform', (r) => `translate(0,${y(r.k) + y.bandwidth() / 2})`);
+    g.append('text').attr('x', m.l - 8).attr('dy', '0.35em').attr('text-anchor', 'end').style('font-size', '12px').style('fill', 'var(--ikincil)').text((r) => r.ad);
+    g.append('line').attr('x1', (r) => x(r.is)).attr('x2', (r) => x(r.ka)).attr('stroke', '#d9d7cf').attr('stroke-width', 2);
+    [['sz', '#2f2f2f'], ['is', '#a8502e'], ['ka', '#1f5f7a']].forEach(([k, c]) => g.append('circle').attr('cx', (r) => x(r[k])).attr('r', 5).attr('fill', c).attr('stroke', '#f9f9f3'));
+    g.append('rect').attr('x', m.l).attr('y', -s / 2).attr('width', W - m.l - m.r).attr('height', s).attr('fill', 'transparent')
+      .on('mousemove', (e, r) => OK.ipGoster(e, `<b>${A.d2.get(r.k)}</b><br><span class="s">İşgücüne katılma: %${nf(r.ka, 1)}<br>İstihdam: %${nf(r.is, 1)}<br>İşsizlik: %${nf(r.sz, 1)}</span>`)).on('mouseleave', OK.ipGizle);
+    const dusukIssiz = [...sat].sort((a, b) => a.sz - b.sz)[0];
+    yaz('ig-cumle', `${K.yil} yılında Türkiye'de işgücüne katılma oranı <strong>%${nf(K.tr, 1)}</strong>, istihdam oranı <strong>%${nf(I.tr, 1)}</strong>, işsizlik oranı <strong>%${nf(S.tr, 1)}</strong> düzeyindedir. İşsizlik oranının en düşük olduğu ${dusukIssiz.ad} bölgesinde istihdam oranı %${nf(dusukIssiz.is, 1)} düzeyindedir.`);
+  });
+  /* 8 göç */
+  guvenli('goc', () => {
+    const G = OK.seri(goc, 'net-goc-hizi-binde');
+    document.getElementById('gc-b').textContent = `İllerin Net Göç Hızı, ${G.yil}`;
+    const sinir = [-10, -5, -1, 1, 5, 10];
+    const renk = d3.scaleThreshold().domain(sinir).range(['#1f5f7a', '#5f8fa4', '#a9c3cf', '#e6e4dc', '#e2b48f', '#cc8058', '#8f3418']);
+    OK.harita('#gc-harita', geoIl, { dolgu: (k) => (G.d.has(k) ? renk(G.d.get(k)) : null), W: 760, H: 330, ipucu: (k) => G.d.has(k) && `<b>${A.il.get(k)}</b><br><span class="s">Net göç hızı: binde ${nf(G.d.get(k), 1)}</span>` });
+    const et = ['−10 altı', '−10 / −5', '−5 / −1', '−1 / 1', '1 / 5', '5 / 10', '10 üstü'];
+    yaz('gc-lejant', '<span style="color:var(--soluk)">Binde:</span>' + renk.range().map((c, i) => `<span><i style="background:${c}"></i>${et[i]}</span>`).join(''));
+    const alan = [...G.d.values()].filter((v) => v > 0).length;
+    const ust = [...G.d].sort((a, b) => b[1] - a[1])[0], alt = [...G.d].sort((a, b) => a[1] - b[1])[0];
+    yaz('gc-cumle', `${G.yil} yılında 81 ilin <strong>${alan}</strong> tanesi net göç almıştır. Net göç hızının en yüksek olduğu il ${A.il.get(ust[0])} (binde ${nf(ust[1], 1)}), en düşük olduğu il ${A.il.get(alt[0])} (binde ${nf(alt[1], 1)}) olmuştur.`);
+  });
+  /* 9 demografi */
+  guvenli('demografi', () => {
+    const D = OK.seri(dem, 'dogurganlik-hizi-cocuk-sayisi'), O = OK.seri(nuf, 'ortanca-yas', 'il', D.yil) || OK.seri(nuf, 'ortanca-yas');
+    const v = [...D.d.keys()].filter((k) => O.d.has(k) && A.il.has(k)).map((k) => ({ ad: A.il.get(k), x: O.d.get(k), y: D.d.get(k) }));
+    const r = OK.regresyon(v.map((d) => [d.x, d.y])).r;
+    OK.nokta('#dm-grafik', v, { W: 760, H: 360, xAd: `Ortanca yaş, ${O.yil}`, yAd: `Toplam doğurganlık hızı (çocuk), ${D.yil}`, xBicim: (t) => nf(t), yBicim: (t) => nf(t, 1), egilim: true, etiket: 7, refY: 2.1 });
+    const yeni = v.filter((d) => d.y >= 2.1).length;
+    yaz('dm-cumle', `${D.yil} yılında doğurganlık hızı nüfusun kendini yenileme düzeyinin (2,1) üzerinde olan il sayısı <strong>${yeni}</strong>; Türkiye değeri <strong>${nf(D.tr, 2)}</strong>. İller arasında ortanca yaş ile doğurganlık arasındaki korelasyon ${nf(r, 2)} düzeyindedir. Kesikli yatay çizgi yenilenme düzeyini gösterir.`);
+  });
+  /* 10 yakınsama */
+  guvenli('yakinsama', () => {
+    const s = eko['kisi-basina-gsyh-endeksi-turkiye-100']; const yillar = Object.keys(s).sort();
+    const b = yillar.includes('2004') ? '2004' : yillar[0], e = yillar[yillar.length - 1];
+    const v = [...A.il.keys()].filter((k) => s[b]?.[k] && s[e]?.[k]).map((k) => ({ ad: A.il.get(k), x: s[b][k], y: s[e][k] - s[b][k] }));
+    document.getElementById('yk-b').textContent = `Başlangıç Düzeyi ve Göreli Değişim, ${b}–${e}`;
+    document.getElementById('yk-a').textContent = `Yatay eksen ${b} yılındaki kişi başı GSYH endeksi (Türkiye=100, logaritmik), dikey eksen ${e} yılına kadar endeksteki değişim (puan)`;
+    const h = OK.nokta('#yk-grafik', v, { W: 760, H: 380, logX: true, xAd: `Kişi başı GSYH endeksi, ${b}`, yAd: 'Endeksteki değişim (puan)', xBicim: (t) => nf(t), yBicim: (t) => nf(t), egilim: true, etiket: 7, refY: 0, refX: 100 });
+    const yuk = v.filter((d) => d.x < 100 && d.y > 0).length, gerAlt = v.filter((d) => d.x < 100).length;
+    yaz('yk-cumle', `${b} yılında Türkiye ortalamasının altında olan <strong>${gerAlt}</strong> ilin <strong>${yuk}</strong> tanesi ${e} yılına kadar Türkiye ortalamasına yaklaşmıştır. Eğilim çizgisinin ${h.reg.b < 0 ? 'aşağı yönlü olması göreli yakınsamaya' : 'yukarı yönlü olması ıraksamaya'} işaret etmektedir.`);
+  });
+  /* 11 yığılma */
+  guvenli('yigilma', () => {
+    const kaynak = [['GSYH', 'gayrisafi-yurt-ici-hasila-gsyh-bin-tl', eko, '#a8502e'], ['Banka mevduatı', 'toplam-mevduat-bin-tl', eko, '#6e2a14'], ['Nüfus', 'toplam-nufus', nuf, '#1f5f7a']];
+    const ser = kaynak.map(([ad, slug, kat, renk]) => { const S = OK.seri(kat, slug, 'il', '2024') || OK.seri(kat, slug); const v = [...S.d].filter(([k]) => A.il.has(k)).map(([, x]) => x).sort((a, b) => b - a);
+      const t = d3.sum(v); let c = 0; return { ad, renk, d: v.map((x, i) => ({ x: i + 1, y: (100 * (c += x)) / t })), yil: S.yil }; });
+    OK.cizgi('#yg-grafik', ser, { W: 760, H: 300, yBicim: (v) => `%${nf(v)}`, ipBicim: (v) => `%${nf(v, 1)}`, m: { t: 14, r: 130, b: 34, l: 52 } });
+    d3.select('#yg-grafik').append('text').attr('class', 'eksen-ad').attr('x', 760 - 130).attr('y', 296).attr('text-anchor', 'end').text('İl sayısı (büyükten küçüğe)');
+    const p = (s, n) => s.d[n - 1].y;
+    yaz('yg-cumle', `${ser[0].yil} yılında en büyük beş il Türkiye nüfusunun <strong>%${nf(p(ser[2], 5))}</strong>, GSYH'sinin <strong>%${nf(p(ser[0], 5))}</strong>, banka mevduatının <strong>%${nf(p(ser[1], 5))}</strong> kadarını oluşturmaktadır.`);
+  });
+  /* 12 yoksulluk */
+  guvenli('yoksulluk', () => {
+    const Y = OK.seri(gel, 'yoksulluk-orani-medyan-gelirin-60-ina-gore', 'd2'), S = OK.seri(gel, 'yoksulluk-siniri-tl-medyan-gelirin-60-ina-gore', 'd2', Y.yil);
+    document.getElementById('yo-b').textContent = `Düzey 2 Bölgelerinde Göreli Yoksulluk Oranı, ${Y.yil}`;
+    const sat = [...Y.d].map(([k, v]) => ({ k, ad: A.d2kisa.get(k), deger: v, sinir: S.d.get(k) })).sort((a, b) => b.deger - a.deger);
+    OK.cubuk('#yo-grafik', sat, { W: 760, satir: 18, bicim: (v) => `%${nf(v, 1)}`, ref: Y.tr, m: { t: 4, r: 80, b: 18, l: 190 },
+      ip: (d) => `<b>${A.d2.get(d.k)}</b><br><span class="s">Yoksulluk oranı: %${nf(d.deger, 1)}<br>Yoksulluk sınırı: ${nf(d.sinir)} TL (yıllık)<br>Medyan gelir: ${nf(d.sinir / 0.6)} TL (yıllık)</span>` });
+    const ms = [...S.d].sort((a, b) => b[1] - a[1]); const ust = ms[0], alt = ms[ms.length - 1];
+    yaz('yo-cumle', `${Y.yil} yılında Türkiye'de göreli yoksulluk oranı <strong>%${nf(Y.tr, 1)}</strong> düzeyindedir. Bölgelerin yoksulluk sınırları arasında belirgin fark vardır: yıllık eşdeğer gelir olarak en yüksek sınır ${A.d2kisa.get(ust[0])} bölgesinde <strong>${nf(ust[1])} TL</strong>, en düşük sınır ${A.d2kisa.get(alt[0])} bölgesinde <strong>${nf(alt[1])} TL</strong> düzeyindedir.`);
+  });
+})();
+</script>
+</body>
+</html>

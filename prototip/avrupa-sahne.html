@@ -1,0 +1,468 @@
+<title>Avrupa'nın 291 Bölgesi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Düzen: solda kaydırılan anlatı kartları, sağda yapışkan tek sahne; 291 nokta her adımda yeniden dizilir. */
+:root {
+  --zemin: #f9f9f3; --kart: #efeee6; --metin: #2f2f2f; --ikincil: #5f5f5f; --soluk: #8c8c8c; --cizgi: #e3e3e0;
+  --vurgu: #b0401f; --vurgu-acik: #e9b9a6; --avrupa: #8f9aa1; --secili: #1f1f1f; --halo: #f9f9f3;
+  --yazi: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --es-aralik: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --zemin: #1b1c1a; --kart: #252623; --metin: #ecebe5; --ikincil: #b9b8b1; --soluk: #8a8983; --cizgi: #34352f;
+  --vurgu: #e2724c; --vurgu-acik: #6b3423; --avrupa: #79848b; --secili: #ffffff; --halo: #1b1c1a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --zemin: #1b1c1a; --kart: #252623; --metin: #ecebe5; --ikincil: #b9b8b1; --soluk: #8a8983; --cizgi: #34352f;
+  --vurgu: #e2724c; --vurgu-acik: #6b3423; --avrupa: #79848b; --secili: #ffffff; --halo: #1b1c1a; color-scheme: dark }
+body { background: var(--zemin); color: var(--metin); font-family: var(--yazi); font-size: 17px; line-height: 1.55; }
+.sayfa { max-width: 1320px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px; }
+.etiket { font-family: var(--es-aralik); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--vurgu); margin: 0 0 10px; }
+h1 { font-size: clamp(30px, 4.2vw, 46px); line-height: 1.12; margin: 0 0 14px; text-wrap: balance; font-weight: 700; letter-spacing: -.01em; }
+.giris { max-width: 68ch; color: var(--ikincil); margin: 0 0 22px; }
+.kontrol { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 14px; background: var(--kart); border-radius: 10px; max-width: 760px; }
+.kontrol label { font-family: var(--es-aralik); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ikincil); }
+.kontrol select { font: inherit; font-size: 16px; padding: 6px 10px; border: 1px solid var(--cizgi); border-radius: 8px; background: var(--zemin); color: var(--metin); max-width: 100%; min-width: 0; }
+.kontrol .not { font-size: 14px; color: var(--soluk); flex: 1 1 220px; min-width: 0; }
+
+.sahne-kap { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 40px; margin-top: 36px; }
+.adimlar { position: relative; z-index: 2; grid-column: 1; grid-row: 1; }
+.sahne-kap > .sahne { grid-column: 2; grid-row: 1; }
+.adim { min-height: 78vh; display: flex; align-items: center; }
+.adim:first-child { min-height: 60vh; align-items: flex-start; padding-top: 8vh; }
+.adim:last-child { min-height: 90vh; }
+.adim-ic { background: var(--zemin); border: 1px solid var(--cizgi); border-radius: 12px; padding: 20px 22px; opacity: .45; transition: opacity .35s, border-color .35s; }
+.adim.aktif .adim-ic { opacity: 1; border-color: var(--vurgu-acik); }
+.adim-no { font-family: var(--es-aralik); font-size: 12px; color: var(--soluk); letter-spacing: .06em; }
+.adim h2 { font-size: 22px; line-height: 1.25; margin: 4px 0 10px; text-wrap: balance; }
+.adim p { margin: 0 0 10px; font-size: 16.5px; }
+.adim p:last-child { margin-bottom: 0; }
+.adim strong { color: var(--vurgu); font-weight: 600; }
+.secili-satir { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--cizgi); font-size: 15px; color: var(--ikincil); }
+.secili-satir b { color: var(--metin); }
+
+.sahne { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); height: calc(100vh - 32px); max-height: 760px; display: flex; flex-direction: column; min-width: 0; }
+.sahne-ust { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; min-height: 44px; }
+.sahne-baslik { font-weight: 600; font-size: 16px; }
+.sahne-alt { font-family: var(--es-aralik); font-size: 11.5px; color: var(--soluk); }
+.ilerleme { display: flex; gap: 6px; flex: none; }
+.ilerleme button { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--cizgi); background: var(--zemin); color: var(--soluk); font: 500 11px var(--es-aralik); cursor: pointer; padding: 0; }
+.ilerleme button[aria-current="step"] { background: var(--vurgu); border-color: var(--vurgu); color: var(--zemin); }
+.ilerleme button:focus-visible, .kontrol select:focus-visible { outline: 2px solid var(--vurgu); outline-offset: 2px; }
+#alan { position: relative; flex: 1; min-height: 0; }
+#alan svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.lejant { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13.5px; color: var(--ikincil); padding-top: 6px; }
+.lejant i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+
+svg text { font-family: var(--yazi); fill: var(--ikincil); }
+.eksen text { font-family: var(--es-aralik); font-size: 11px; fill: var(--soluk); }
+.eksen line, .eksen path { stroke: var(--cizgi); }
+.eksen-ad { font-family: var(--es-aralik); font-size: 11px; fill: var(--ikincil); }
+.ref line { stroke: var(--ikincil); stroke-dasharray: 3 4; stroke-width: 1; }
+.ref text { font-family: var(--es-aralik); font-size: 11px; fill: var(--ikincil); }
+.nokta { stroke: var(--halo); stroke-width: 1; }
+.nokta.tr { fill: var(--vurgu); }
+.nokta.eu { fill: var(--avrupa); }
+.halka { fill: none; stroke: var(--secili); stroke-width: 2; pointer-events: none; }
+.secili-ad { font-weight: 700; font-size: 13px; fill: var(--metin); paint-order: stroke; stroke: var(--halo); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+.ulke-ad { font-family: var(--es-aralik); font-size: 10.5px; fill: var(--soluk); }
+.ulke-ad.tr { fill: var(--vurgu); font-weight: 500; }
+.iz { stroke: var(--vurgu); stroke-opacity: .5; stroke-width: 1.4; fill: none; }
+.bag { stroke: var(--vurgu); stroke-opacity: .28; fill: none; stroke-width: 1.2; }
+.bag.secili { stroke-opacity: 1; stroke-width: 2.2; }
+
+.ipucu { position: absolute; pointer-events: none; background: var(--metin); color: var(--zemin); font-size: 13.5px; line-height: 1.4; padding: 7px 10px; border-radius: 6px; max-width: 240px; opacity: 0; transition: opacity .12s; z-index: 5; }
+.ipucu small { opacity: .75; font-family: var(--es-aralik); font-size: 11px; }
+
+.ikiz-kart { margin-top: 12px; display: grid; gap: 8px; }
+.ikiz-baslik { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-weight: 600; }
+.ikiz-baslik span { color: var(--soluk); font-weight: 400; }
+.ikiz-satir { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px; align-items: center; font-size: 13.5px; }
+.ikiz-cubuk { display: grid; gap: 3px; }
+.ikiz-cubuk div { height: 8px; border-radius: 0 4px 4px 0; }
+.ikiz-cubuk .c-tr { background: var(--vurgu); }
+.ikiz-cubuk .c-eu { background: var(--avrupa); }
+.ikiz-deger { font-family: var(--es-aralik); font-size: 11px; color: var(--soluk); font-variant-numeric: tabular-nums; }
+
+.yontem { margin-top: 48px; max-width: 78ch; font-size: 15px; color: var(--ikincil); border-top: 1px solid var(--cizgi); padding-top: 18px; }
+.yontem h3 { font-family: var(--es-aralik); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--metin); margin: 0 0 8px; font-weight: 500; }
+.yontem p { margin: 0 0 8px; }
+
+@media (max-width: 900px) {
+  .sahne-kap { display: block; margin-top: 24px; }
+  .sahne { position: sticky; top: env(safe-area-inset-top, 0px); height: 52vh; max-height: none; background: var(--zemin); z-index: 1; padding-top: 6px; }
+  .adim, .adim:first-child { min-height: 85vh; align-items: flex-end; padding-top: 0; padding-bottom: 4vh; }
+  .adim:last-child { min-height: 100vh; }
+  .adim-ic { padding: 16px 18px; }
+  .adim p { font-size: 15.5px; }
+  .adim-ic { opacity: .96; box-shadow: 0 6px 24px rgb(0 0 0 / .08); }
+  .ilerleme { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .adim-ic { transition: none; } }
+</style>
+
+<div class="sayfa">
+  <p class="etiket">Uluslararası karşılaştırma · Tek sahne prototipi</p>
+  <h1>Avrupa'nın 291 Bölgesi Arasında Türkiye</h1>
+  <p class="giris">Avrupa ve Türkiye'deki Düzey 2 bölgelerinin her biri bir noktayla gösterilmektedir. Sayfa kaydırıldıkça aynı noktalar
+    gelir düzeyi, ülke içi farklılık, yakınsama, yaş yapısı, nüfus değişimi ve kadın istihdamına göre yeniden dizilmektedir.
+    Türkiye'nin 26 bölgesi kiremit renginde sabit kalır; seçilen bölge bütün adımlarda izlenebilir.</p>
+  <div class="kontrol">
+    <label for="bolge-sec">İzlenen bölge</label>
+    <select id="bolge-sec"></select>
+    <span class="not">Seçilen bölge her adımda halkayla işaretlenir ve kartlarda değeriyle birlikte anılır.</span>
+  </div>
+
+  <div class="sahne-kap">
+    <div class="sahne" aria-live="polite">
+      <div class="sahne-ust">
+        <div><div class="sahne-baslik" id="sahne-baslik"></div><div class="sahne-alt" id="sahne-alt"></div></div>
+        <nav class="ilerleme" id="ilerleme" aria-label="Adımlar"></nav>
+      </div>
+      <div id="alan"><div class="ipucu" id="ipucu"></div></div>
+      <div class="lejant"><span><i style="background:var(--vurgu)"></i>Türkiye bölgeleri</span><span><i style="background:var(--avrupa)"></i>Avrupa bölgeleri</span><span><i style="border:2px solid var(--secili);width:8px;height:8px"></i>İzlenen bölge</span></div>
+    </div>
+    <div class="adimlar" id="adimlar"></div>
+  </div>
+
+  <section class="yontem">
+    <h3>Veri ve Yöntem</h3>
+    <p><b>Veri:</b> Eurostat ve TÜİK; Düzey 2 (NUTS 2) bölgeleri. Satın alma gücü paritesine göre kişi başına GSYH, AB-27 = 100
+      (2004 ve 2024; nama_10r_2gdp); yaşlı bağımlılık oranı, 65+ / 15–64 (2024; demo_r_pjanind2); yıllık ortalama nüfus değişimi,
+      2008–2025 (demo_r_d2jan); 20–64 yaş kadın istihdam oranı (2019 ve 2024; lfst_r_lfe2emprt).</p>
+    <p><b>Kapsam:</b> Haritadaki 291 bölge AB-27, EFTA ve aday ülkeleri kapsar. Kanarya Adaları, Azorlar, Madeira ve Fransa'nın
+      denizaşırı bölgeleri gösterimden çıkarılmıştır. Bir göstergede verisi bulunmayan bölge o adımda gösterilmez.</p>
+    <p><b>Gelir ikizi:</b> Her Türkiye bölgesi için 2024 yılı kişi başı GSYH düzeyi en yakın Avrupa bölgesi seçilmiştir (Ceuta ve
+      Melilla hariç). İkiz bölgeler gelirde benzer olsa da yaş yapısı ve kadın istihdamında ayrışabilmektedir.</p>
+    <p>Bu sayfa, ana sayfadaki uluslararası karşılaştırma bölümü için hazırlanmış bir tasarım prototipidir. Hesaplama: Platform.</p>
+  </section>
+</div>
+
+<script id="veri" type="application/json">{"bolgeler":[{"k":"ES64","a":"Ciudad de Melilla","u":"ES","x":3137,"y":1460,"g":59.0,"g4":84.0,"ya":18.1,"n":1.19,"k19":45.8,"k24":49.4},{"k":"ES63","a":"Ciudad de Ceuta","u":"ES","x":2931,"y":1565,"g":64.0,"g4":82.0,"ya":19.1,"n":0.62,"k19":44.9,"k24":45.9},{"k":"ES61","a":"Andalucía","u":"ES","x":3041,"y":1727,"g":69.0,"g4":78.0,"ya":27.8,"n":0.39,"k19":51.2,"k24":57.2},{"k":"ES62","a":"Región de Murcia","u":"ES","x":3296,"y":1743,"g":75.0,"g4":86.0,"ya":24.7,"n":0.66,"k19":57.0,"k24":62.3},{"k":"PT15","a":"Algarve","u":"PT","x":2710,"y":1767,"g":89.0,"g4":88.0,"ya":38.8,"n":0.74,"k19":75.9,"k24":77.5},{"k":"ES53","a":"Illes Balears","u":"ES","x":3708,"y":1861,"g":101.0,"g4":115.0,"ya":23.9,"n":1.07,"k19":66.5,"k24":69.9},{"k":"ES52","a":"Comunitat Valenciana ","u":"ES","x":3391,"y":1858,"g":77.0,"g4":94.0,"ya":30.4,"n":0.57,"k19":60.4,"k24":65.1},{"k":"PT1C","a":"Alentejo","u":"PT","x":2754,"y":1895,"g":77.0,"g4":75.0,"ya":45.6,"n":-0.41,"k19":71.5,"k24":76.9},{"k":"PT1B","a":"Península de Setúbal","u":"PT","x":2686,"y":1935,"g":55.0,"g4":62.0,"ya":36.4,"n":0.71,"k19":73.3,"k24":76.3},{"k":"ES42","a":"Castilla-La Mancha","u":"ES","x":3206,"y":1928,"g":73.0,"g4":82.0,"ya":29.7,"n":0.27,"k19":56.0,"k24":60.0},{"k":"ES43","a":"Extremadura","u":"ES","x":2937,"y":1950,"g":70.0,"g4":68.0,"ya":34.4,"n":-0.2,"k19":50.5,"k24":59.0},{"k":"PT1A","a":"Grande Lisboa","u":"PT","x":2664,"y":1964,"g":129.0,"g4":141.0,"ya":34.3,"n":0.55,"k19":76.5,"k24":79.2},{"k":"PT1D","a":"Oeste e Vale do Tejo","u":"PT","x":2719,"y":2001,"g":65.0,"g4":74.0,"ya":41.6,"n":0.41,"k19":72.3,"k24":73.5},{"k":"ES30","a":"Comunidad de Madrid","u":"ES","x":3152,"y":2045,"g":125.0,"g4":132.0,"ya":27.5,"n":0.79,"k19":69.9,"k24":73.5},{"k":"PT19","a":"Centro (PT)","u":"PT","x":2817,"y":2108,"g":71.0,"g4":70.0,"ya":46.1,"n":0.06,"k19":73.7,"k24":76.0},{"k":"ES24","a":"Aragón","u":"ES","x":3412,"y":2098,"g":103.0,"g4":109.0,"ya":34.7,"n":0.17,"k19":67.4,"k24":70.7},{"k":"ES51","a":"Cataluña","u":"ES","x":3633,"y":2110,"g":105.0,"g4":120.0,"ya":29.3,"n":0.62,"k19":69.5,"k24":71.4},{"k":"ITG2","a":"Sardegna","u":"IT","x":4242,"y":1896,"g":73.0,"g4":80.0,"ya":42.5,"n":-0.32,"k19":50.4,"k24":53.8},{"k":"ITI4","a":"Lazio","u":"IT","x":4526,"y":2107,"g":113.0,"g4":149.0,"ya":36.4,"n":0.33,"k19":57.4,"k24":60.1},{"k":"FRM0","a":"Corse","u":"FR","x":4245,"y":2125,"g":86.0,"g4":88.0,"ya":42.2,"n":1.06,"k19":58.8,"k24":67.5},{"k":"ITI2","a":"Umbria","u":"IT","x":4520,"y":2221,"g":85.0,"g4":108.0,"ya":43.9,"n":-0.13,"k19":61.9,"k24":66.3},{"k":"ITI1","a":"Toscana","u":"IT","x":4424,"y":2251,"g":103.0,"g4":120.0,"ya":42.5,"n":0.01,"k19":64.8,"k24":68.3},{"k":"ITH5","a":"Emilia-Romagna","u":"IT","x":4411,"y":2371,"g":117.0,"g4":136.0,"ya":39.0,"n":0.29,"k19":68.6,"k24":68.0},{"k":"ITC4","a":"Lombardia","u":"IT","x":4296,"y":2509,"g":132.0,"g4":152.0,"ya":36.8,"n":0.31,"k19":64.8,"k24":67.1},{"k":"ITH3","a":"Veneto","u":"IT","x":4486,"y":2517,"g":109.0,"g4":128.0,"ya":38.5,"n":0.07,"k19":63.2,"k24":67.3},{"k":"ITH2","a":"Provincia Autonoma di Trento","u":"IT","x":4412,"y":2560,"g":125.0,"g4":145.0,"ya":37.4,"n":0.4,"k19":66.9,"k24":70.8},{"k":"ITH1","a":"Provincia Autonoma di Bolzano/Bozen","u":"IT","x":4429,"y":2618,"g":161.0,"g4":162.0,"ya":32.0,"n":0.55,"k19":72.8,"k24":74.0},{"k":"ES41","a":"Castilla y León","u":"ES","x":3121,"y":2189,"g":86.0,"g4":92.0,"ya":43.3,"n":-0.33,"k19":63.2,"k24":67.9},{"k":"ES23","a":"La Rioja","u":"ES","x":3287,"y":2219,"g":95.0,"g4":109.0,"ya":34.3,"n":0.19,"k19":69.9,"k24":69.3},{"k":"PT11","a":"Norte","u":"PT","x":2859,"y":2226,"g":71.0,"g4":65.0,"ya":37.1,"n":-0.04,"k19":70.4,"k24":73.9},{"k":"ES22","a":"Comunidad Foral de Navarra","u":"ES","x":3361,"y":2242,"g":109.0,"g4":126.0,"ya":31.9,"n":0.61,"k19":68.8,"k24":71.9},{"k":"ES21","a":"País Vasco","u":"ES","x":3298,"y":2295,"g":115.0,"g4":123.0,"ya":37.4,"n":0.22,"k19":69.1,"k24":72.0},{"k":"FRJ1","a":"Languedoc-Roussillon","u":"FR","x":3819,"y":2312,"g":76.0,"g4":92.0,"ya":42.3,"n":0.88,"k19":61.2,"k24":68.0},{"k":"ES13","a":"Cantabria","u":"ES","x":3181,"y":2330,"g":84.0,"g4":94.0,"ya":37.4,"n":0.16,"k19":62.9,"k24":68.1},{"k":"FRJ2","a":"Midi-Pyrénées","u":"FR","x":3644,"y":2341,"g":89.0,"g4":97.0,"ya":37.4,"n":0.72,"k19":70.1,"k24":73.9},{"k":"ES11","a":"Galicia","u":"ES","x":2870,"y":2349,"g":84.0,"g4":82.0,"ya":42.6,"n":-0.09,"k19":64.4,"k24":68.0},{"k":"ES12","a":"Principado de Asturias","u":"ES","x":3024,"y":2391,"g":83.0,"g4":86.0,"ya":45.1,"n":-0.32,"k19":59.6,"k24":66.5},{"k":"FRL0","a":"Provence-Alpes-Côte d’Azur","u":"FR","x":4019,"y":2339,"g":96.0,"g4":106.0,"ya":41.0,"n":0.47,"k19":67.1,"k24":69.5},{"k":"ITC3","a":"Liguria","u":"IT","x":4285,"y":2354,"g":102.0,"g4":121.0,"ya":47.9,"n":-0.28,"k19":59.9,"k24":64.2},{"k":"ITC1","a":"Piemonte","u":"IT","x":4149,"y":2465,"g":101.0,"g4":121.0,"ya":43.0,"n":-0.15,"k19":63.5,"k24":67.1},{"k":"FRK2","a":"Rhône-Alpes","u":"FR","x":3991,"y":2477,"g":100.0,"g4":114.0,"ya":32.5,"n":0.71,"k19":71.1,"k24":73.7},{"k":"ITC2","a":"Valle d’Aosta/Vallée d’Aoste","u":"IT","x":4117,"y":2519,"g":125.0,"g4":154.0,"ya":40.3,"n":-0.15,"k19":68.8,"k24":73.5},{"k":"CH07","a":"Ticino","u":"CH","x":4230,"y":2567,"g":null,"g4":null,"ya":37.1,"n":0.52,"k19":67.7,"k24":69.1},{"k":"CH01","a":"Région lémanique","u":"CH","x":4168,"y":2592,"g":null,"g4":null,"ya":26.1,"n":1.31,"k19":73.3,"k24":72.8},{"k":"CH06","a":"Zentralschweiz","u":"CH","x":4200,"y":2643,"g":null,"g4":null,"ya":29.2,"n":1.05,"k19":82.9,"k24":83.0},{"k":"CH02","a":"Espace Mittelland","u":"CH","x":4129,"y":2648,"g":null,"g4":null,"ya":32.3,"n":0.79,"k19":80.8,"k24":82.1},{"k":"FRC2","a":"Franche-Comté","u":"FR","x":4032,"y":2686,"g":74.0,"g4":98.0,"ya":37.9,"n":0.06,"k19":67.2,"k24":76.5},{"k":"FRI1","a":"Aquitaine","u":"FR","x":3506,"y":2403,"g":87.0,"g4":99.0,"ya":40.1,"n":0.79,"k19":70.5,"k24":77.2},{"k":"FRK1","a":"Auvergne","u":"FR","x":3788,"y":2527,"g":79.0,"g4":90.0,"ya":44.0,"n":0.12,"k19":70.5,"k24":71.7},{"k":"FRI2","a":"Limousin","u":"FR","x":3667,"y":2548,"g":74.0,"g4":89.0,"ya":48.8,"n":-0.09,"k19":69.7,"k24":72.0},{"k":"FRI3","a":"Poitou-Charentes","u":"FR","x":3540,"y":2609,"g":81.0,"g4":93.0,"ya":46.5,"n":0.31,"k19":70.3,"k24":70.9},{"k":"FRC1","a":"Bourgogne","u":"FR","x":3886,"y":2702,"g":83.0,"g4":97.0,"ya":44.4,"n":-0.06,"k19":69.9,"k24":72.7},{"k":"FRG0","a":"Pays de la Loire","u":"FR","x":3489,"y":2762,"g":87.0,"g4":99.0,"ya":36.7,"n":0.69,"k19":70.3,"k24":75.8},{"k":"FRB0","a":"Centre — Val de Loire","u":"FR","x":3688,"y":2764,"g":82.0,"g4":99.0,"ya":40.5,"n":0.13,"k19":69.7,"k24":76.7},{"k":"FRH0","a":"Bretagne","u":"FR","x":3377,"y":2865,"g":84.0,"g4":97.0,"ya":40.3,"n":0.6,"k19":72.0,"k24":76.4},{"k":"FR10","a":"Ile-de-France","u":"FR","x":3773,"y":2870,"g":160.0,"g4":173.0,"ya":24.6,"n":0.43,"k19":71.4,"k24":74.1},{"k":"CH05","a":"Ostschweiz","u":"CH","x":4276,"y":2650,"g":null,"g4":null,"ya":31.3,"n":0.9,"k19":80.2,"k24":81.7},{"k":"LI00","a":"Liechtenstein","u":"LI","x":4287,"y":2672,"g":null,"g4":null,"ya":31.0,"n":null,"k19":null,"k24":null},{"k":"AT34","a":"Vorarlberg","u":"AT","x":4312,"y":2678,"g":125.0,"g4":133.0,"ya":28.1,"n":0.7,"k19":74.7,"k24":74.2},{"k":"AT33","a":"Tirol","u":"AT","x":4409,"y":2678,"g":128.0,"g4":130.0,"ya":29.2,"n":0.62,"k19":75.3,"k24":77.7},{"k":"AT32","a":"Salzburg","u":"AT","x":4566,"y":2715,"g":146.0,"g4":145.0,"ya":30.6,"n":0.5,"k19":76.6,"k24":78.6},{"k":"DE14","a":"Tübingen","u":"DE","x":4287,"y":2770,"g":122.0,"g4":128.0,"ya":33.0,"n":0.31,"k19":79.8,"k24":79.1},{"k":"DE27","a":"Schwaben","u":"DE","x":4356,"y":2780,"g":109.0,"g4":118.0,"ya":33.4,"n":0.46,"k19":78.2,"k24":81.5},{"k":"DE21","a":"Oberbayern","u":"DE","x":4471,"y":2792,"g":170.0,"g4":181.0,"ya":30.2,"n":0.59,"k19":80.8,"k24":80.9},{"k":"DE22","a":"Niederbayern","u":"DE","x":4523,"y":2844,"g":113.0,"g4":115.0,"ya":34.1,"n":0.31,"k19":78.2,"k24":81.7},{"k":"DE12","a":"Karlsruhe","u":"DE","x":4217,"y":2879,"g":124.0,"g4":142.0,"ya":33.0,"n":0.23,"k19":77.4,"k24":78.5},{"k":"CH03","a":"Nordwestschweiz","u":"CH","x":4185,"y":2698,"g":null,"g4":null,"ya":30.7,"n":1.06,"k19":78.3,"k24":79.7},{"k":"CH04","a":"Zürich","u":"CH","x":4219,"y":2702,"g":null,"g4":null,"ya":25.6,"n":1.27,"k19":80.6,"k24":81.9},{"k":"DE13","a":"Freiburg","u":"DE","x":4186,"y":2783,"g":105.0,"g4":119.0,"ya":34.0,"n":0.34,"k19":79.0,"k24":81.6},{"k":"FRF1","a":"Alsace","u":"FR","x":4125,"y":2789,"g":89.0,"g4":108.0,"ya":33.1,"n":0.33,"k19":71.2,"k24":74.0},{"k":"FRF3","a":"Lorraine","u":"FR","x":4041,"y":2843,"g":72.0,"g4":91.0,"ya":36.4,"n":-0.09,"k19":65.3,"k24":69.1},{"k":"FRF2","a":"Champagne-Ardenne","u":"FR","x":3894,"y":2874,"g":87.0,"g4":103.0,"ya":38.2,"n":-0.19,"k19":63.4,"k24":69.8},{"k":"DEC0","a":"Saarland","u":"DE","x":4101,"y":2923,"g":95.0,"g4":116.0,"ya":40.0,"n":-0.14,"k19":73.0,"k24":73.4},{"k":"DEB3","a":"Rheinhessen-Pfalz","u":"DE","x":4166,"y":2933,"g":107.0,"g4":118.0,"ya":35.4,"n":0.15,"k19":74.1,"k24":77.3},{"k":"LU00","a":"Luxembourg","u":"LU","x":4039,"y":2976,"g":245.0,"g4":248.0,"ya":21.7,"n":2.04,"k19":68.1,"k24":71.4},{"k":"DEB2","a":"Trier","u":"DE","x":4087,"y":2983,"g":88.0,"g4":98.0,"ya":34.9,"n":0.11,"k19":79.5,"k24":82.1},{"k":"DE11","a":"Stuttgart","u":"DE","x":4286,"y":2891,"g":153.0,"g4":159.0,"ya":32.1,"n":0.23,"k19":78.7,"k24":79.5},{"k":"DE25","a":"Mittelfranken","u":"DE","x":4373,"y":2906,"g":126.0,"g4":136.0,"ya":33.1,"n":0.27,"k19":76.9,"k24":81.5},{"k":"DE23","a":"Oberpfalz","u":"DE","x":4475,"y":2928,"g":122.0,"g4":118.0,"ya":33.4,"n":0.19,"k19":77.1,"k24":79.1},{"k":"DE71","a":"Darmstadt","u":"DE","x":4226,"y":2985,"g":148.0,"g4":181.0,"ya":31.4,"n":0.39,"k19":75.7,"k24":76.1},{"k":"DE26","a":"Unterfranken","u":"DE","x":4314,"y":2991,"g":115.0,"g4":121.0,"ya":36.8,"n":-0.07,"k19":78.1,"k24":77.8},{"k":"DE24","a":"Oberfranken","u":"DE","x":4429,"y":2992,"g":109.0,"g4":107.0,"ya":37.3,"n":-0.18,"k19":80.9,"k24":80.4},{"k":"DE72","a":"Gießen","u":"DE","x":4241,"y":3062,"g":100.0,"g4":110.0,"ya":34.4,"n":-0.07,"k19":72.4,"k24":76.0},{"k":"DED4","a":"Chemnitz","u":"DE","x":4527,"y":3068,"g":82.0,"g4":82.0,"ya":52.3,"n":-0.59,"k19":80.5,"k24":80.6},{"k":"DEG0","a":"Thüringen","u":"DE","x":4410,"y":3089,"g":83.0,"g4":82.0,"ya":46.0,"n":-0.51,"k19":80.0,"k24":78.5},{"k":"DE73","a":"Kassel","u":"DE","x":4272,"y":3099,"g":108.0,"g4":115.0,"ya":38.1,"n":-0.18,"k19":76.6,"k24":77.7},{"k":"BE34","a":"Prov. Luxembourg (BE)","u":"BE","x":3991,"y":2986,"g":72.0,"g4":82.0,"ya":27.6,"n":0.75,"k19":67.1,"k24":68.3},{"k":"DEB1","a":"Koblenz","u":"DE","x":4145,"y":3017,"g":95.0,"g4":102.0,"ya":37.9,"n":0.09,"k19":76.2,"k24":77.2},{"k":"BE35","a":"Prov. Namur","u":"BE","x":3953,"y":3027,"g":80.0,"g4":84.0,"ya":31.1,"n":0.54,"k19":63.6,"k24":69.4},{"k":"BE33","a":"Prov. Liège","u":"BE","x":4020,"y":3047,"g":86.0,"g4":89.0,"ya":31.1,"n":0.42,"k19":60.2,"k24":59.5},{"k":"BE31","a":"Prov. Brabant wallon","u":"BE","x":3938,"y":3075,"g":155.0,"g4":125.0,"ya":32.6,"n":0.64,"k19":68.3,"k24":72.0},{"k":"DEA2","a":"Köln","u":"DE","x":4098,"y":3080,"g":118.0,"g4":138.0,"ya":32.2,"n":0.13,"k19":74.0,"k24":75.6},{"k":"BE10","a":"Région de Bruxelles-Capitale/ Brussels Hoofdstedelijk Gewest","u":"BE","x":3926,"y":3095,"g":190.0,"g4":249.0,"ya":18.7,"n":1.14,"k19":56.0,"k24":57.6},{"k":"BE24","a":"Prov. Vlaams-Brabant","u":"BE","x":3955,"y":3098,"g":127.0,"g4":127.0,"ya":32.0,"n":0.76,"k19":73.6,"k24":70.6},{"k":"BE22","a":"Prov. Limburg (BE)","u":"BE","x":4001,"y":3110,"g":94.0,"g4":101.0,"ya":35.3,"n":0.56,"k19":69.3,"k24":72.8},{"k":"BE23","a":"Prov. Oost-Vlaanderen","u":"BE","x":3888,"y":3121,"g":110.0,"g4":109.0,"ya":32.5,"n":0.7,"k19":73.0,"k24":75.5},{"k":"EL43","a":"Kriti","u":"EL","x":5667,"y":1479,"g":60.0,"g4":88.0,"ya":32.7,"n":0.08,"k19":58.4,"k24":62.0},{"k":"EL42","a":"Notio Aigaio","u":"EL","x":5933,"y":1643,"g":70.0,"g4":104.0,"ya":31.8,"n":-0.04,"k19":55.0,"k24":58.3},{"k":"EL30","a":"Attiki","u":"EL","x":5516,"y":1768,"g":96.0,"g4":124.0,"ya":33.5,"n":-0.34,"k19":53.2,"k24":64.4},{"k":"EL65","a":"Peloponnisos","u":"EL","x":5415,"y":1673,"g":57.0,"g4":76.0,"ya":44.3,"n":-0.6,"k19":55.5,"k24":62.5},{"k":"CY00","a":"Kýpros","u":"CY","x":6443,"y":1681,"g":99.0,"g4":100.0,"ya":26.5,"n":1.4,"k19":70.7,"k24":75.0},{"k":"TR32","a":"Aydın, Denizli, Muğla","u":"TR","x":5942,"y":1813,"g":61.0,"g4":40.0,"ya":20.0,"n":1.38,"k19":46.8,"k24":45.8,"ikiz":"ITG1"},{"k":"TR61","a":"Antalya, Isparta, Burdur","u":"TR","x":6167,"y":1824,"g":72.0,"g4":49.0,"ya":15.5,"n":2.0,"k19":40.7,"k24":47.5,"ikiz":"FRF3"},{"k":"EL64","a":"Sterea Elláda","u":"EL","x":5401,"y":1828,"g":60.0,"g4":93.0,"ya":42.8,"n":-0.53,"k19":45.3,"k24":53.5},{"k":"EL41","a":"Voreio Aigaio","u":"EL","x":5715,"y":1939,"g":42.0,"g4":71.0,"ya":38.6,"n":0.27,"k19":54.2,"k24":59.7},{"k":"TR31","a":"İzmir","u":"TR","x":5796,"y":1904,"g":76.0,"g4":51.0,"ya":18.3,"n":1.09,"k19":37.8,"k24":42.9,"ikiz":"FRJ1"},{"k":"EL63","a":"Dytiki Elláda","u":"EL","x":5336,"y":1722,"g":49.0,"g4":73.0,"ya":38.5,"n":-0.51,"k19":41.9,"k24":53.9},{"k":"EL62","a":"Ionia Nisia","u":"EL","x":5247,"y":1748,"g":63.0,"g4":94.0,"ya":39.4,"n":-0.26,"k19":54.3,"k24":56.0},{"k":"EL54","a":"Ipeiros","u":"EL","x":5243,"y":1906,"g":45.0,"g4":68.0,"ya":47.2,"n":-0.36,"k19":52.4,"k24":60.3},{"k":"EL61","a":"Thessalia","u":"EL","x":5365,"y":1917,"g":53.0,"g4":76.0,"ya":41.9,"n":-0.56,"k19":49.0,"k24":51.8},{"k":"AL03","a":"Jug","u":"AL","x":5180,"y":1979,"g":null,"g4":null,"ya":24.8,"n":-2.28,"k19":null,"k24":null},{"k":"EL53","a":"Dytiki Makedonia","u":"EL","x":5301,"y":1997,"g":48.0,"g4":84.0,"ya":42.4,"n":-0.95,"k19":43.9,"k24":53.6},{"k":"EL52","a":"Kentriki Makedonia","u":"EL","x":5399,"y":2050,"g":55.0,"g4":78.0,"ya":36.5,"n":-0.43,"k19":48.6,"k24":58.4},{"k":"AL02","a":"Qender","u":"AL","x":5162,"y":2054,"g":null,"g4":null,"ya":23.6,"n":-1.5,"k19":null,"k24":null},{"k":"MK00","a":"Severna Makedonija ","u":"MK","x":5300,"y":2134,"g":42.0,"g4":28.0,"ya":27.8,"n":-0.68,"k19":48.4,"k24":53.7},{"k":"AL01","a":"Veri","u":"AL","x":5149,"y":2146,"g":null,"g4":null,"ya":25.1,"n":-2.97,"k19":null,"k24":null},{"k":"MT00","a":"Malta","u":"MT","x":4724,"y":1437,"g":110.0,"g4":83.0,"ya":26.5,"n":2.03,"k19":63.9,"k24":75.2},{"k":"ITG1","a":"Sicilia","u":"IT","x":4664,"y":1620,"g":61.0,"g4":72.0,"ya":36.5,"n":-0.27,"k19":32.4,"k24":37.7},{"k":"ITF6","a":"Calabria","u":"IT","x":4898,"y":1791,"g":57.0,"g4":69.0,"ya":37.8,"n":-0.44,"k19":32.6,"k24":35.8},{"k":"ITF5","a":"Basilicata","u":"IT","x":4845,"y":1955,"g":74.0,"g4":80.0,"ya":40.0,"n":-0.59,"k19":40.6,"k24":46.2},{"k":"ITF3","a":"Campania","u":"IT","x":4729,"y":1977,"g":64.0,"g4":76.0,"ya":31.9,"n":-0.21,"k19":32.0,"k24":35.0},{"k":"ITF4","a":"Puglia","u":"IT","x":4892,"y":2005,"g":64.0,"g4":73.0,"ya":38.1,"n":-0.29,"k19":35.7,"k24":40.5},{"k":"ITF2","a":"Molise","u":"IT","x":4707,"y":2081,"g":72.0,"g4":89.0,"ya":42.8,"n":-0.58,"k19":46.4,"k24":50.7},{"k":"ITF1","a":"Abruzzo","u":"IT","x":4641,"y":2139,"g":84.0,"g4":93.0,"ya":40.9,"n":-0.19,"k19":50.3,"k24":56.1},{"k":"ITI3","a":"Marche","u":"IT","x":4586,"y":2256,"g":89.0,"g4":108.0,"ya":42.2,"n":-0.17,"k19":61.8,"k24":66.2},{"k":"HR03","a":"Jadranska Hrvatska","u":"HR","x":4776,"y":2374,"g":73.0,"g4":55.0,"ya":39.4,"n":-0.38,"k19":59.6,"k24":70.4},{"k":"TR62","a":"Adana, Mersin","u":"TR","x":6529,"y":1923,"g":54.0,"g4":32.0,"ya":14.8,"n":0.96,"k19":32.6,"k24":36.7,"ikiz":"SK04"},{"k":"TR52","a":"Konya, Karaman","u":"TR","x":6307,"y":1952,"g":55.0,"g4":32.0,"ya":15.7,"n":1.01,"k19":32.6,"k24":35.1,"ikiz":"EL52"},{"k":"TR33","a":"Manisa, Afyonkarahisar, Kütahya, Uşak","u":"TR","x":6040,"y":1975,"g":57.0,"g4":32.0,"ya":19.0,"n":0.45,"k19":38.5,"k24":43.8,"ikiz":"EL65"},{"k":"TR63","a":"Hatay, Kahramanmaraş, Osmaniye","u":"TR","x":6620,"y":1984,"g":47.0,"g4":26.0,"ya":13.5,"n":0.8,"k19":26.5,"k24":29.9,"ikiz":"HU31"},{"k":"TR22","a":"Balıkesir, Çanakkale","u":"TR","x":5825,"y":2033,"g":64.0,"g4":40.0,"ya":24.8,"n":0.86,"k19":37.1,"k24":46.7,"ikiz":"ITF3"},{"k":"TRC1","a":"Gaziantep, Adıyaman, Kilis","u":"TR","x":6732,"y":2051,"g":43.0,"g4":23.0,"ya":10.2,"n":1.6,"k19":24.3,"k24":27.9,"ikiz":"BG42"},{"k":"TR71","a":"Kırıkkale, Aksaray, Niğde, Nevşehir, Kırşehir","u":"TR","x":6419,"y":2080,"g":53.0,"g4":28.0,"ya":17.5,"n":0.66,"k19":34.3,"k24":34.8,"ikiz":"EL61"},{"k":"TR41","a":"Bursa, Eskişehir, Bilecik","u":"TR","x":6026,"y":2088,"g":69.0,"g4":50.0,"ya":15.9,"n":1.57,"k19":34.4,"k24":40.3,"ikiz":"ES61"},{"k":"EL51","a":"Anatoliki Makedonia, Thraki","u":"EL","x":5584,"y":2143,"g":45.0,"g4":69.0,"ya":38.3,"n":-0.4,"k19":51.4,"k24":56.2},{"k":"TRC2","a":"Şanlıurfa, Diyarbakır","u":"TR","x":6885,"y":2141,"g":29.0,"g4":19.0,"ya":7.8,"n":1.85,"k19":21.4,"k24":24.5,"ikiz":"RS21"},{"k":"TR51","a":"Ankara","u":"TR","x":6193,"y":2144,"g":108.0,"g4":62.0,"ya":14.0,"n":1.61,"k19":33.1,"k24":39.8,"ikiz":"SE33"},{"k":"TRC3","a":"Mardin, Batman, Şırnak, Siirt","u":"TR","x":7045,"y":2175,"g":36.0,"g4":17.0,"ya":7.9,"n":1.45,"k19":14.9,"k24":25.1,"ikiz":"RS22"},{"k":"TR21","a":"Tekirdağ, Edirne, Kırklareli","u":"TR","x":5763,"y":2183,"g":76.0,"g4":50.0,"ya":17.9,"n":1.84,"k19":41.6,"k24":44.1,"ikiz":"FRJ1"},{"k":"TR72","a":"Kayseri, Sivas, Yozgat","u":"TR","x":6510,"y":2188,"g":51.0,"g4":32.0,"ya":17.5,"n":0.51,"k19":26.0,"k24":32.6,"ikiz":"BG33"},{"k":"TR42","a":"Kocaeli, Sakarya, Düzce, Bolu, Yalova","u":"TR","x":6057,"y":2195,"g":88.0,"g4":58.0,"ya":14.6,"n":2.03,"k19":33.8,"k24":43.3,"ikiz":"DEB2"},{"k":"TR10","a":"İstanbul","u":"TR","x":5859,"y":2200,"g":110.0,"g4":71.0,"ya":11.0,"n":1.32,"k19":35.1,"k24":42.7,"ikiz":"NL42"},{"k":"BG41","a":"Yugozapaden","u":"BG","x":5398,"y":2221,"g":107.0,"g4":52.0,"ya":32.6,"n":-0.3,"k19":77.7,"k24":78.0},{"k":"BG42","a":"Yuzhen tsentralen","u":"BG","x":5570,"y":2228,"g":43.0,"g4":27.0,"ya":39.2,"n":-0.85,"k19":69.4,"k24":69.2},{"k":"TRB1","a":"Malatya, Elazığ, Bingöl, Tunceli","u":"TR","x":6787,"y":2221,"g":48.0,"g4":23.0,"ya":16.4,"n":0.45,"k19":36.0,"k24":32.7,"ikiz":"EL53"},{"k":"BG34","a":"Yugoiztochen","u":"BG","x":5667,"y":2294,"g":57.0,"g4":32.0,"ya":38.8,"n":-0.86,"k19":69.5,"k24":72.0},{"k":"ME00","a":"Crna Gora","u":"ME","x":5082,"y":2228,"g":53.0,"g4":null,"ya":25.7,"n":0.07,"k19":null,"k24":null},{"k":"XK00","a":"Kosovo","u":"XK","x":5213,"y":2228,"g":null,"g4":null,"ya":null,"n":null,"k19":null,"k24":null},{"k":"RS22","a":"Region Južne i Istočne Srbije","u":"RS","x":5301,"y":2341,"g":38.0,"g4":23.0,"ya":38.5,"n":-1.31,"k19":53.8,"k24":59.2},{"k":"BA02","a":"Republika Srpska","u":"BA","x":5064,"y":2332,"g":null,"g4":null,"ya":null,"n":null,"k19":null,"k24":null},{"k":"BA01","a":"Federacija Bosne i Hercegovine","u":"BA","x":4922,"y":2339,"g":null,"g4":null,"ya":null,"n":null,"k19":null,"k24":null},{"k":"RS21","a":"Region Šumadije i Zapadne Srbije","u":"RS","x":5162,"y":2351,"g":33.0,"g4":22.0,"ya":37.8,"n":-1.06,"k19":57.4,"k24":63.0},{"k":"RS11","a":"City of Belgrade","u":"RS","x":5149,"y":2455,"g":87.0,"g4":60.0,"ya":31.8,"n":-0.03,"k19":63.8,"k24":73.0},{"k":"BA03","a":"Brčko District BiH","u":"BA","x":5015,"y":2456,"g":null,"g4":null,"ya":null,"n":null,"k19":null,"k24":null},{"k":"RO41","a":"Sud-Vest Oltenia","u":"RO","x":5393,"y":2503,"g":60.0,"g4":null,"ya":33.6,"n":-1.2,"k19":58.6,"k24":55.1},{"k":"RS12","a":"Autonomous Province of Vojvodina","u":"RS","x":5108,"y":2530,"g":47.0,"g4":33.0,"ya":34.7,"n":-1.08,"k19":57.1,"k24":65.1},{"k":"TR81","a":"Zonguldak, Karabük, Bartın","u":"TR","x":6172,"y":2307,"g":49.0,"g4":29.0,"ya":21.7,"n":0.16,"k19":37.9,"k24":41.3,"ikiz":"EL63"},{"k":"TR83","a":"Samsun, Tokat, Çorum, Amasya","u":"TR","x":6471,"y":2327,"g":46.0,"g4":26.0,"ya":21.7,"n":0.28,"k19":42.0,"k24":42.0,"ikiz":"EL51"},{"k":"TR82","a":"Kastamonu, Çankırı, Sinop","u":"TR","x":6275,"y":2338,"g":53.0,"g4":32.0,"ya":29.1,"n":0.58,"k19":44.9,"k24":48.8,"ikiz":"EL61"},{"k":"TRB2","a":"Van, Muş, Bitlis, Hakkâri","u":"TR","x":7094,"y":2337,"g":31.0,"g4":15.0,"ya":7.9,"n":0.55,"k19":23.9,"k24":25.7,"ikiz":"RS21"},{"k":"BG31","a":"Severozapaden","u":"BG","x":5435,"y":2358,"g":42.0,"g4":27.0,"ya":47.1,"n":-1.84,"k19":61.1,"k24":67.8},{"k":"TRA1","a":"Erzurum, Erzincan, Bayburt","u":"TR","x":6908,"y":2400,"g":47.0,"g4":25.0,"ya":16.0,"n":-0.03,"k19":28.9,"k24":37.8,"ikiz":"HU31"},{"k":"BG32","a":"Severen tsentralen","u":"BG","x":5576,"y":2399,"g":43.0,"g4":27.0,"ya":45.6,"n":-1.67,"k19":69.7,"k24":72.0},{"k":"BG33","a":"Severoiztochen","u":"BG","x":5721,"y":2417,"g":51.0,"g4":31.0,"ya":37.7,"n":-1.0,"k19":64.8,"k24":73.1},{"k":"TR90","a":"Trabzon, Ordu, Giresun, Rize, Artvin, Gümüşhane","u":"TR","x":6818,"y":2482,"g":45.0,"g4":28.0,"ya":23.3,"n":0.5,"k19":49.4,"k24":45.7,"ikiz":"EL51"},{"k":"TRA2","a":"Ağrı, Kars, Iğdır, Ardahan","u":"TR","x":7082,"y":2498,"g":35.0,"g4":16.0,"ya":11.8,"n":-0.36,"k19":34.6,"k24":41.5,"ikiz":"RS21"},{"k":"HR02","a":"Panonska Hrvatska","u":"HR","x":4920,"y":2509,"g":53.0,"g4":41.0,"ya":38.6,"n":-1.69,"k19":51.8,"k24":62.9},{"k":"HR05","a":"Grad Zagreb","u":"HR","x":4785,"y":2535,"g":131.0,"g4":95.0,"ya":32.1,"n":-0.13,"k19":72.3,"k24":80.2},{"k":"SI04","a":"Zahodna Slovenija","u":"SI","x":4648,"y":2550,"g":110.0,"g4":106.0,"ya":33.1,"n":0.59,"k19":74.9,"k24":77.2},{"k":"ITH4","a":"Friuli-Venezia Giulia","u":"IT","x":4554,"y":2560,"g":102.0,"g4":118.0,"ya":44.0,"n":-0.12,"k19":62.7,"k24":68.7},{"k":"HR06","a":"Sjeverna Hrvatska","u":"HR","x":4803,"y":2563,"g":64.0,"g4":44.0,"ya":33.8,"n":-0.59,"k19":64.9,"k24":70.6},{"k":"SI03","a":"Vzhodna Slovenija","u":"SI","x":4726,"y":2575,"g":72.0,"g4":71.0,"ya":35.4,"n":0.13,"k19":71.2,"k24":73.1},{"k":"AT21","a":"Kärnten","u":"AT","x":4623,"y":2633,"g":110.0,"g4":111.0,"ya":37.2,"n":0.11,"k19":69.7,"k24":73.3},{"k":"AT22","a":"Steiermark","u":"AT","x":4686,"y":2703,"g":111.0,"g4":115.0,"ya":33.3,"n":0.32,"k19":72.8,"k24":75.0},{"k":"HU22","a":"Nyugat-Dunántúl","u":"HU","x":4838,"y":2704,"g":66.0,"g4":65.0,"ya":32.7,"n":-0.14,"k19":70.3,"k24":79.4},{"k":"AT11","a":"Burgenland","u":"AT","x":4810,"y":2733,"g":86.0,"g4":87.0,"ya":38.0,"n":0.42,"k19":70.3,"k24":73.9},{"k":"RO31","a":"Sud-Muntenia","u":"RO","x":5672,"y":2515,"g":55.0,"g4":null,"ya":33.7,"n":-0.89,"k19":59.0,"k24":56.2},{"k":"RO32","a":"Bucureşti-Ilfov","u":"RO","x":5597,"y":2519,"g":188.0,"g4":null,"ya":27.2,"n":0.18,"k19":70.2,"k24":76.6},{"k":"RO22","a":"Sud-Est","u":"RO","x":5703,"y":2599,"g":59.0,"g4":null,"ya":33.9,"n":-1.13,"k19":52.7,"k24":51.3},{"k":"RO12","a":"Centru","u":"RO","x":5478,"y":2689,"g":71.0,"g4":null,"ya":31.8,"n":-0.57,"k19":54.9,"k24":59.7},{"k":"RO21","a":"Nord-Est","u":"RO","x":5569,"y":2809,"g":48.0,"g4":null,"ya":29.7,"n":-0.85,"k19":71.1,"k24":58.2},{"k":"RO42","a":"Vest","u":"RO","x":5270,"y":2573,"g":78.0,"g4":null,"ya":32.4,"n":-0.83,"k19":54.5,"k24":57.8},{"k":"HU23","a":"Dél-Dunántúl","u":"HU","x":4939,"y":2633,"g":50.0,"g4":44.0,"ya":36.4,"n":-0.74,"k19":63.1,"k24":70.9},{"k":"HU33","a":"Dél-Alföld","u":"HU","x":5096,"y":2660,"g":52.0,"g4":44.0,"ya":35.2,"n":-0.7,"k19":67.6,"k24":76.6},{"k":"HU21","a":"Közép-Dunántúl","u":"HU","x":4930,"y":2720,"g":66.0,"g4":59.0,"ya":32.1,"n":-0.29,"k19":68.7,"k24":79.8},{"k":"HU11","a":"Budapest","u":"HU","x":5007,"y":2745,"g":168.0,"g4":129.0,"ya":31.4,"n":-0.06,"k19":71.8,"k24":84.1},{"k":"HU12","a":"Pest","u":"HU","x":5040,"y":2754,"g":64.0,"g4":55.0,"ya":27.4,"n":0.66,"k19":69.8,"k24":79.7},{"k":"RO11","a":"Nord-Vest","u":"RO","x":5329,"y":2767,"g":71.0,"g4":null,"ya":28.8,"n":-0.4,"k19":63.4,"k24":64.4},{"k":"HU32","a":"Észak-Alföld","u":"HU","x":5175,"y":2782,"g":50.0,"g4":42.0,"ya":30.3,"n":-0.5,"k19":64.3,"k24":71.5},{"k":"HU31","a":"Észak-Magyarország","u":"HU","x":5087,"y":2827,"g":47.0,"g4":40.0,"ya":32.5,"n":-0.84,"k19":63.3,"k24":69.5},{"k":"SK02","a":"Západné Slovensko","u":"SK","x":4906,"y":2853,"g":70.0,"g4":55.0,"ya":30.1,"n":-0.16,"k19":68.1,"k24":74.6},{"k":"AT31","a":"Oberösterreich","u":"AT","x":4592,"y":2784,"g":119.0,"g4":127.0,"ya":30.2,"n":0.52,"k19":76.2,"k24":76.6},{"k":"AT12","a":"Niederösterreich","u":"AT","x":4735,"y":2804,"g":98.0,"g4":106.0,"ya":33.1,"n":0.47,"k19":74.0,"k24":75.3},{"k":"AT13","a":"Wien","u":"AT","x":4795,"y":2808,"g":137.0,"g4":170.0,"ya":23.7,"n":1.15,"k19":66.4,"k24":67.7},{"k":"SK01","a":"Bratislavský kraj","u":"SK","x":4853,"y":2822,"g":153.0,"g4":135.0,"ya":28.5,"n":1.28,"k19":76.0,"k24":84.7},{"k":"CZ03","a":"Jihozápad","u":"CZ","x":4603,"y":2922,"g":75.0,"g4":74.0,"ya":33.2,"n":0.37,"k19":71.8,"k24":76.8},{"k":"CZ06","a":"Jihovýchod","u":"CZ","x":4768,"y":2918,"g":84.0,"g4":71.0,"ya":32.8,"n":0.31,"k19":72.3,"k24":76.6},{"k":"CZ07","a":"Střední Morava","u":"CZ","x":4850,"y":2972,"g":74.0,"g4":62.0,"ya":34.9,"n":-0.09,"k19":70.7,"k24":75.9},{"k":"CZ08","a":"Moravskoslezsko","u":"CZ","x":4887,"y":3005,"g":71.0,"g4":63.0,"ya":33.4,"n":-0.29,"k19":72.1,"k24":74.5},{"k":"CZ02","a":"Střední Čechy","u":"CZ","x":4597,"y":3004,"g":84.0,"g4":79.0,"ya":29.4,"n":1.18,"k19":75.7,"k24":76.4},{"k":"CZ01","a":"Praha","u":"CZ","x":4641,"y":3003,"g":192.0,"g4":174.0,"ya":28.2,"n":0.92,"k19":76.0,"k24":79.1},{"k":"SK03","a":"Stredné Slovensko","u":"SK","x":5014,"y":2903,"g":62.0,"g4":47.0,"ya":27.9,"n":-0.24,"k19":67.2,"k24":74.4},{"k":"SK04","a":"Východné Slovensko","u":"SK","x":5138,"y":2927,"g":54.0,"g4":43.0,"ya":25.3,"n":0.01,"k19":61.2,"k24":66.5},{"k":"PL21","a":"Małopolskie","u":"PL","x":5054,"y":3020,"g":70.0,"g4":46.0,"ya":28.9,"n":0.07,"k19":64.8,"k24":71.6},{"k":"PL82","a":"Podkarpackie","u":"PL","x":5185,"y":3060,"g":57.0,"g4":37.0,"ya":30.8,"n":-0.61,"k19":60.8,"k24":64.1},{"k":"PL22","a":"Śląskie","u":"PL","x":4954,"y":3056,"g":79.0,"g4":57.0,"ya":33.9,"n":-0.62,"k19":63.8,"k24":71.1},{"k":"PL72","a":"Świętokrzyskie","u":"PL","x":5077,"y":3127,"g":60.0,"g4":42.0,"ya":36.9,"n":-1.07,"k19":63.1,"k24":70.8},{"k":"PL81","a":"Lubelskie","u":"PL","x":5211,"y":3208,"g":55.0,"g4":37.0,"ya":34.1,"n":-0.95,"k19":63.0,"k24":71.1},{"k":"PL71","a":"Łódzkie","u":"PL","x":4972,"y":3212,"g":74.0,"g4":48.0,"ya":35.8,"n":-0.7,"k19":66.5,"k24":72.1},{"k":"PL91","a":"Warszawski stołeczny","u":"PL","x":5080,"y":3294,"g":157.0,"g4":108.0,"ya":28.4,"n":1.06,"k19":77.3,"k24":83.5},{"k":"PL92","a":"Mazowiecki regionalny","u":"PL","x":4990,"y":3302,"g":71.0,"g4":43.0,"ya":31.5,"n":-0.68,"k19":63.9,"k24":71.3},{"k":"CZ05","a":"Severovýchod","u":"CZ","x":4741,"y":3035,"g":75.0,"g4":67.0,"ya":34.2,"n":0.16,"k19":72.5,"k24":74.3},{"k":"CZ04","a":"Severozápad","u":"CZ","x":4585,"y":3044,"g":61.0,"g4":64.0,"ya":32.6,"n":-0.15,"k19":69.4,"k24":72.2},{"k":"PL52","a":"Opolskie","u":"PL","x":4876,"y":3083,"g":63.0,"g4":44.0,"ya":33.7,"n":-0.93,"k19":63.4,"k24":71.4},{"k":"PL51","a":"Dolnośląskie","u":"PL","x":4755,"y":3119,"g":83.0,"g4":52.0,"ya":33.2,"n":-0.17,"k19":68.8,"k24":74.8},{"k":"DED2","a":"Dresden","u":"DE","x":4608,"y":3120,"g":92.0,"g4":94.0,"ya":44.8,"n":-0.23,"k19":80.9,"k24":81.5},{"k":"PL43","a":"Lubuskie","u":"PL","x":4680,"y":3248,"g":63.0,"g4":46.0,"ya":32.3,"n":-0.39,"k19":64.1,"k24":70.1},{"k":"DE30","a":"Berlin","u":"DE","x":4551,"y":3274,"g":127.0,"g4":117.0,"ya":28.6,"n":0.45,"k19":75.0,"k24":74.0},{"k":"PL41","a":"Wielkopolskie","u":"PL","x":4828,"y":3280,"g":82.0,"g4":55.0,"ya":29.1,"n":0.08,"k19":66.8,"k24":72.5},{"k":"PL61","a":"Kujawsko-pomorskie","u":"PL","x":4890,"y":3364,"g":63.0,"g4":45.0,"ya":32.3,"n":-0.43,"k19":61.6,"k24":71.4},{"k":"PL42","a":"Zachodniopomorskie","u":"PL","x":4684,"y":3401,"g":64.0,"g4":46.0,"ya":34.2,"n":-0.43,"k19":62.5,"k24":70.1},{"k":"PL84","a":"Podlaskie","u":"PL","x":5167,"y":3437,"g":61.0,"g4":39.0,"ya":32.3,"n":-0.74,"k19":65.9,"k24":71.2},{"k":"PL62","a":"Warmińsko-mazurskie","u":"PL","x":5038,"y":3459,"g":56.0,"g4":39.0,"ya":31.4,"n":-0.61,"k19":59.7,"k24":68.9},{"k":"LT01","a":"Sostinės regionas","u":"LT","x":5293,"y":3623,"g":133.0,"g4":73.0,"ya":26.4,"n":0.35,"k19":83.4,"k24":82.0},{"k":"LT02","a":"Vidurio ir vakarų Lietuvos regionas ","u":"LT","x":5135,"y":3653,"g":68.0,"g4":43.0,"ya":33.4,"n":-0.99,"k19":74.9,"k24":76.8},{"k":"LV00","a":"Latvija","u":"LV","x":5289,"y":3845,"g":68.0,"g4":45.0,"ya":33.9,"n":-0.96,"k19":75.5,"k24":75.8},{"k":"EE00","a":"Eesti","u":"EE","x":5213,"y":4054,"g":79.0,"g4":56.0,"ya":32.2,"n":0.14,"k19":76.0,"k24":80.9},{"k":"FI1B","a":"Helsinki-Uusimaa","u":"FI","x":5123,"y":4219,"g":128.0,"g4":159.0,"ya":27.6,"n":1.08,"k19":77.4,"k24":76.7},{"k":"FI1C","a":"Etelä-Suomi","u":"FI","x":5188,"y":4302,"g":89.0,"g4":112.0,"ya":44.6,"n":0.02,"k19":76.5,"k24":77.3},{"k":"FI19","a":"Länsi-Suomi","u":"FI","x":5040,"y":4412,"g":93.0,"g4":106.0,"ya":40.5,"n":0.24,"k19":75.3,"k24":76.6},{"k":"FI1D","a":"Pohjois- ja Itä-Suomi","u":"FI","x":5098,"y":4818,"g":89.0,"g4":97.0,"ya":44.3,"n":-0.11,"k19":73.3,"k24":75.8},{"k":"PL63","a":"Pomorskie","u":"PL","x":4844,"y":3480,"g":75.0,"g4":50.0,"ya":29.3,"n":0.23,"k19":66.8,"k24":74.5},{"k":"SE22","a":"Sydsverige","u":"SE","x":4545,"y":3654,"g":96.0,"g4":117.0,"ya":32.7,"n":0.95,"k19":75.2,"k24":77.7},{"k":"SE21","a":"Småland med öarna","u":"SE","x":4617,"y":3799,"g":93.0,"g4":115.0,"ya":38.8,"n":0.53,"k19":80.9,"k24":81.1},{"k":"SE12","a":"Östra Mellansverige","u":"SE","x":4653,"y":4027,"g":97.0,"g4":112.0,"ya":34.6,"n":0.85,"k19":77.4,"k24":77.7},{"k":"SE11","a":"Stockholm","u":"SE","x":4783,"y":4069,"g":153.0,"g4":182.0,"ya":25.3,"n":1.41,"k19":83.3,"k24":82.2},{"k":"SE31","a":"Norra Mellansverige","u":"SE","x":4589,"y":4175,"g":85.0,"g4":108.0,"ya":43.0,"n":0.21,"k19":79.0,"k24":80.3},{"k":"FI20","a":"Åland","u":"FI","x":4866,"y":4162,"g":111.0,"g4":153.0,"ya":40.4,"n":0.72,"k19":82.5,"k24":87.7},{"k":"SE32","a":"Mellersta Norrland","u":"SE","x":4598,"y":4481,"g":99.0,"g4":117.0,"ya":42.0,"n":0.06,"k19":80.2,"k24":80.1},{"k":"SE33","a":"Övre Norrland","u":"SE","x":4765,"y":4821,"g":108.0,"g4":118.0,"ya":38.2,"n":0.24,"k19":78.0,"k24":81.8},{"k":"NO07","a":"Nord-Norge","u":"NO","x":4622,"y":5032,"g":null,"g4":null,"ya":33.1,"n":0.34,"k19":75.9,"k24":77.5},{"k":"DEA5","a":"Arnsberg","u":"DE","x":4188,"y":3123,"g":98.0,"g4":107.0,"ya":35.2,"n":-0.24,"k19":72.4,"k24":72.8},{"k":"NL42","a":"Limburg (NL)","u":"NL","x":4037,"y":3139,"g":110.0,"g4":119.0,"ya":41.0,"n":0.06,"k19":72.7,"k24":76.8},{"k":"BE21","a":"Prov. Antwerpen","u":"BE","x":3955,"y":3143,"g":135.0,"g4":144.0,"ya":32.1,"n":0.75,"k19":69.2,"k24":71.7},{"k":"DEA1","a":"Düsseldorf","u":"DE","x":4088,"y":3157,"g":116.0,"g4":136.0,"ya":34.4,"n":0.04,"k19":71.2,"k24":72.8},{"k":"NL41","a":"Noord-Brabant","u":"NL","x":3996,"y":3167,"g":139.0,"g4":135.0,"ya":33.3,"n":0.55,"k19":76.8,"k24":79.7},{"k":"NL34","a":"Zeeland","u":"NL","x":3901,"y":3176,"g":113.0,"g4":105.0,"ya":41.3,"n":0.19,"k19":73.8,"k24":80.3},{"k":"DEA3","a":"Münster","u":"DE","x":4146,"y":3213,"g":95.0,"g4":105.0,"ya":33.7,"n":0.1,"k19":74.6,"k24":76.0},{"k":"NL36","a":"Zuid-Holland","u":"NL","x":3939,"y":3220,"g":129.0,"g4":143.0,"ya":29.0,"n":0.79,"k19":73.8,"k24":78.3},{"k":"NL35","a":"Utrecht","u":"NL","x":3991,"y":3226,"g":162.0,"g4":170.0,"ya":27.6,"n":0.82,"k19":78.3,"k24":81.4},{"k":"NL22","a":"Gelderland","u":"NL","x":4049,"y":3235,"g":114.0,"g4":117.0,"ya":34.3,"n":0.51,"k19":75.7,"k24":80.5},{"k":"DED5","a":"Leipzig","u":"DE","x":4509,"y":3135,"g":97.0,"g4":93.0,"ya":36.2,"n":0.74,"k19":79.4,"k24":78.3},{"k":"DEA4","a":"Detmold","u":"DE","x":4231,"y":3210,"g":106.0,"g4":114.0,"ya":34.3,"n":0.04,"k19":75.7,"k24":79.2},{"k":"DEE0","a":"Sachsen-Anhalt","u":"DE","x":4436,"y":3211,"g":83.0,"g4":82.0,"ya":47.1,"n":-0.71,"k19":77.4,"k24":78.9},{"k":"DE91","a":"Braunschweig","u":"DE","x":4358,"y":3216,"g":129.0,"g4":128.0,"ya":37.4,"n":-0.16,"k19":74.5,"k24":76.0},{"k":"DE92","a":"Hannover","u":"DE","x":4294,"y":3250,"g":112.0,"g4":115.0,"ya":36.4,"n":-0.09,"k19":75.6,"k24":76.9},{"k":"DE40","a":"Brandenburg","u":"DE","x":4505,"y":3264,"g":86.0,"g4":84.0,"ya":42.8,"n":0.05,"k19":80.4,"k24":79.2},{"k":"DE93","a":"Lüneburg","u":"DE","x":4314,"y":3343,"g":84.0,"g4":85.0,"ya":38.0,"n":0.07,"k19":77.8,"k24":78.7},{"k":"DE50","a":"Bremen","u":"DE","x":4241,"y":3335,"g":132.0,"g4":166.0,"ya":32.0,"n":0.36,"k19":71.3,"k24":70.1},{"k":"DE60","a":"Hamburg","u":"DE","x":4321,"y":3389,"g":196.0,"g4":228.0,"ya":26.6,"n":0.3,"k19":77.6,"k24":76.4},{"k":"DE80","a":"Mecklenburg-Vorpommern","u":"DE","x":4481,"y":3419,"g":88.0,"g4":80.0,"ya":45.7,"n":-0.38,"k19":76.6,"k24":79.1},{"k":"FRD1","a":"Basse-Normandie ","u":"FR","x":3549,"y":2931,"g":80.0,"g4":97.0,"ya":43.5,"n":0.07,"k19":70.0,"k24":73.1},{"k":"FRD2","a":"Haute-Normandie ","u":"FR","x":3671,"y":2962,"g":83.0,"g4":101.0,"ya":35.6,"n":0.13,"k19":65.7,"k24":70.0},{"k":"FRE2","a":"Picardie","u":"FR","x":3810,"y":2968,"g":73.0,"g4":88.0,"ya":33.6,"n":0.01,"k19":64.7,"k24":68.5},{"k":"BE32","a":"Prov. Hainaut","u":"BE","x":3904,"y":3051,"g":72.0,"g4":80.0,"ya":31.0,"n":0.31,"k19":57.5,"k24":59.8},{"k":"FRE1","a":"Nord-Pas de Calais","u":"FR","x":3785,"y":3069,"g":77.0,"g4":87.0,"ya":31.2,"n":0.06,"k19":60.1,"k24":65.7},{"k":"BE25","a":"Prov. West-Vlaanderen","u":"BE","x":3829,"y":3127,"g":117.0,"g4":115.0,"ya":40.3,"n":0.42,"k19":73.2,"k24":76.6},{"k":"IE05","a":"Southern","u":"IE","x":3082,"y":3416,"g":217.0,"g4":131.0,"ya":25.8,"n":1.2,"k19":66.7,"k24":74.1},{"k":"IE06","a":"Eastern and Midland","u":"IE","x":3193,"y":3485,"g":268.0,"g4":181.0,"ya":20.8,"n":1.48,"k19":70.8,"k24":76.2},{"k":"IE04","a":"Northern and Western","u":"IE","x":3107,"y":3594,"g":100.0,"g4":98.0,"ya":27.4,"n":1.1,"k19":68.0,"k24":74.5},{"k":"IS00","a":"Ísland","u":"IS","x":3024,"y":4951,"g":null,"g4":null,"ya":23.6,"n":1.25,"k19":83.0,"k24":83.4},{"k":"DEF0","a":"Schleswig-Holstein","u":"DE","x":4314,"y":3446,"g":97.0,"g4":106.0,"ya":37.7,"n":0.25,"k19":77.2,"k24":76.0},{"k":"DK02","a":"Sjælland","u":"DK","x":4435,"y":3572,"g":90.0,"g4":92.0,"ya":39.1,"n":0.25,"k19":72.1,"k24":74.8},{"k":"DK03","a":"Syddanmark","u":"DK","x":4265,"y":3587,"g":107.0,"g4":113.0,"ya":36.8,"n":0.22,"k19":73.4,"k24":74.7},{"k":"DK01","a":"Hovedstaden","u":"DK","x":4462,"y":3639,"g":175.0,"g4":155.0,"ya":26.2,"n":0.94,"k19":77.6,"k24":80.2},{"k":"DK04","a":"Midtjylland","u":"DK","x":4275,"y":3685,"g":108.0,"g4":117.0,"ya":31.9,"n":0.62,"k19":74.1,"k24":76.5},{"k":"DK05","a":"Nordjylland","u":"DK","x":4304,"y":3782,"g":100.0,"g4":109.0,"ya":37.2,"n":0.14,"k19":72.3,"k24":73.4},{"k":"SE23","a":"Västsverige","u":"SE","x":4481,"y":3861,"g":107.0,"g4":124.0,"ya":32.8,"n":0.84,"k19":80.6,"k24":79.6},{"k":"NO08","a":"Oslo og Viken","u":"NO","x":4342,"y":4103,"g":null,"g4":null,"ya":24.8,"n":1.36,"k19":78.1,"k24":78.0},{"k":"NO02","a":"Innlandet","u":"NO","x":4346,"y":4244,"g":null,"g4":null,"ya":38.3,"n":0.07,"k19":72.9,"k24":77.6},{"k":"NO06","a":"Trøndelag/Trööndelage","u":"NO","x":4374,"y":4513,"g":null,"g4":null,"ya":29.4,"n":0.97,"k19":76.1,"k24":76.7},{"k":"NL21","a":"Overijssel","u":"NL","x":4072,"y":3272,"g":116.0,"g4":112.0,"ya":32.5,"n":0.39,"k19":76.0,"k24":79.1},{"k":"NL23","a":"Flevoland","u":"NL","x":4014,"y":3280,"g":103.0,"g4":105.0,"ya":23.4,"n":1.1,"k19":75.2,"k24":79.1},{"k":"NL32","a":"Noord-Holland","u":"NL","x":3977,"y":3292,"g":175.0,"g4":173.0,"ya":28.5,"n":0.77,"k19":77.0,"k24":81.5},{"k":"DE94","a":"Weser-Ems","u":"DE","x":4180,"y":3315,"g":105.0,"g4":106.0,"ya":34.2,"n":0.21,"k19":75.8,"k24":76.2},{"k":"NL13","a":"Drenthe","u":"NL","x":4094,"y":3315,"g":96.0,"g4":100.0,"ya":41.0,"n":0.22,"k19":73.8,"k24":77.5},{"k":"NL11","a":"Groningen","u":"NL","x":4115,"y":3342,"g":117.0,"g4":153.0,"ya":31.9,"n":0.29,"k19":72.0,"k24":79.2},{"k":"NL12","a":"Friesland (NL)","u":"NL","x":4039,"y":3342,"g":98.0,"g4":100.0,"ya":37.4,"n":0.19,"k19":76.0,"k24":80.2},{"k":"NO09","a":"Agder og Sør-Østlandet","u":"NO","x":4234,"y":3996,"g":null,"g4":null,"ya":32.6,"n":0.81,"k19":73.8,"k24":73.5},{"k":"NO0A","a":"Vestlandet","u":"NO","x":4115,"y":4179,"g":null,"g4":null,"ya":28.5,"n":0.86,"k19":78.4,"k24":78.9},{"k":"NO0B","a":"Svalbard og Jan Mayen","u":"NO","x":3657,"y":5409,"g":null,"g4":null,"ya":null,"n":null,"k19":null,"k24":null}],"ulkeler":{"BE":"Belçika","BG":"Bulgaristan","CZ":"Çekya","DK":"Danimarka","DE":"Almanya","EE":"Estonya","IE":"İrlanda","EL":"Yunanistan","ES":"İspanya","FR":"Fransa","HR":"Hırvatistan","IT":"İtalya","CY":"GKRY","LV":"Letonya","LT":"Litvanya","LU":"Lüksemburg","HU":"Macaristan","MT":"Malta","NL":"Hollanda","AT":"Avusturya","PL":"Polonya","PT":"Portekiz","RO":"Romanya","SI":"Slovenya","SK":"Slovakya","FI":"Finlandiya","SE":"İsveç","NO":"Norveç","CH":"İsviçre","IS":"İzlanda","ME":"Karadağ","MK":"K. Makedonya","AL":"Arnavutluk","RS":"Sırbistan","BA":"Bosna-Hersek","LI":"Lihtenştayn","TR":"Türkiye","UK":"Birleşik Krallık"},"ab":{"yasli":33.9,"kadin":[67.3,70.7],"nufus":0.16},"trUlke":{"g":69.0,"kadin":[34.4,39.4],"nufus":1.15,"yasli":15.0},"yil":{"gsyh":2024,"yasli":2024}}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(() => {
+  const V = JSON.parse(document.getElementById('veri').textContent);
+  const ULKE = { ...V.ulkeler, XK: 'Kosova', UK: 'Birleşik Krallık' };
+  const B = V.bolgeler.map((b) => ({ ...b, tr: b.k.startsWith('TR') }));
+  const BK = new Map(B.map((b) => [b.k, b]));
+  const TR = B.filter((b) => b.tr);
+  const AZ = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nf = (v, d = 0) => (v == null ? '–' : v.toLocaleString('tr-TR', { minimumFractionDigits: d, maximumFractionDigits: d }));
+  const isr = (v, d = 1) => (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const kisaAd = (b) => (b.tr && b.a.includes(',') ? b.a + ' bölgesi' : b.a);
+  const ulkeAd = (b) => ULKE[b.u] || b.u;
+  const sira = (b, alan, azalan = true) => {
+    const l = B.filter((x) => x[alan] != null).sort((p, q) => (azalan ? q[alan] - p[alan] : p[alan] - q[alan]));
+    return [l.indexOf(b) + 1, l.length];
+  };
+
+  let secili = BK.get('TR10');
+  const sec = document.getElementById('bolge-sec');
+  sec.innerHTML = [...TR].sort((p, q) => p.a.localeCompare(q.a, 'tr')).map((b) => `<option value="${b.k}">${esc(b.a)}</option>`).join('');
+  sec.value = secili.k;
+
+  /* ---------- sabit istatistikler ---------- */
+  const gl = B.filter((b) => b.g != null);
+  const enDusuk10 = [...gl].sort((p, q) => p.g - q.g).slice(0, 10);
+  const trG = TR.filter((b) => b.g != null).sort((p, q) => q.g - p.g);
+  const ulkeler = d3.groups(gl, (b) => b.u).filter(([, l]) => l.length >= 3)
+    .map(([u, l]) => ({ u, l, min: d3.min(l, (b) => b.g), max: d3.max(l, (b) => b.g) }))
+    .map((o) => ({ ...o, oran: o.max / o.min })).sort((p, q) => q.oran - p.oran);
+  const trUlke = ulkeler.find((o) => o.u === 'TR');
+  const yak = B.filter((b) => b.g != null && b.g4 != null).map((b) => ({ b, d: b.g - b.g4 }));
+  const yakTr = yak.filter((o) => o.b.tr), yakEu = yak.filter((o) => !o.b.tr);
+  const ilk20 = [...yak].sort((p, q) => q.d - p.d).slice(0, 20).filter((o) => o.b.tr).length;
+  const yas = B.filter((b) => b.ya != null);
+  const yasTrMax = d3.max(TR, (b) => b.ya), yasEuAlt = yas.filter((b) => !b.tr && b.ya < yasTrMax).length;
+  const nuf = B.filter((b) => b.n != null);
+  const azalanEu = nuf.filter((b) => !b.tr && b.n < 0).length, euN = nuf.filter((b) => !b.tr).length;
+  const trNufArti = TR.filter((b) => b.n > 0).length;
+  const kd = B.filter((b) => b.k24 != null);
+  const kd10 = [...kd].sort((p, q) => p.k24 - q.k24).slice(0, 10).filter((b) => b.tr).length;
+  const trKmax = TR.filter((b) => b.k24 != null).sort((p, q) => q.k24 - p.k24)[0];
+  const euKalti = kd.filter((b) => !b.tr && b.k24 < trKmax.k24).length, euK = kd.filter((b) => !b.tr).length;
+
+  /* ---------- adımlar ---------- */
+  const ADIM = [
+    { id: 'harita', baslik: 'Avrupa\'nın Düzey 2 bölgeleri', alt: 'Her nokta bir bölge · konum: bölgenin coğrafi merkezi',
+      h2: 'Aynı noktalar, farklı sorular',
+      metin: () => `<p>Haritadaki ${B.length} noktanın her biri Avrupa'da bir Düzey 2 bölgesini temsil etmektedir; bunların <strong>${TR.length}</strong> tanesi Türkiye'dedir.</p>
+        <p>İlerleyen adımlarda noktalar haritadan ayrılarak göstergelere göre yeniden dizilecektir. Türkiye bölgeleri ile izlenen bölge bütün adımlarda aynı biçimde işaretli kalacaktır.</p>`,
+      secili: (b) => `İzlenen bölge: <b>${esc(b.a)}</b>` },
+    { id: 'gelir', baslik: 'Kişi başına GSYH (SGP), AB-27 = 100', alt: `${V.yil.gsyh} · ${gl.length} bölge`,
+      h2: 'Gelir düzeyinde Türkiye bölgelerinin yeri',
+      metin: () => `<p>Satın alma gücü paritesine göre kişi başına GSYH, Türkiye genelinde AB ortalamasının <strong>${nf(V.trUlke.g)}</strong> düzeyindedir. ${esc(kisaAd(trG[0]))} (${nf(trG[0].g)}) ve ${esc(kisaAd(trG[1]))} (${nf(trG[1].g)}) AB ortalamasının üzerindedir.</p>
+        <p>Avrupa'da geliri en düşük on bölgenin <strong>${enDusuk10.filter((b) => b.tr).length}</strong> tanesi Türkiye'de yer almaktadır.</p>`,
+      secili: (b) => b.g == null ? '' : `<b>${esc(b.a)}</b>: ${nf(b.g)} · ${gl.length} bölge içinde ${sira(b, 'g')[0]}. sıra` },
+    { id: 'ulke', baslik: 'Ülke içinde bölgeler arası gelir farkı', alt: `Kişi başına GSYH (SGP), AB-27 = 100 · ${V.yil.gsyh} · en az 3 bölgeli ülkeler`,
+      h2: 'Ülke içindeki farklılık',
+      metin: () => `<p>Noktalar ülkelerine göre satırlara ayrılmış; satırlar, en zengin bölgenin en yoksul bölgeye oranına göre büyükten küçüğe sıralanmıştır.</p>
+        <p>Türkiye'de en yüksek gelirli bölgenin geliri en düşük gelirli bölgenin <strong>${nf(trUlke.oran, 1)} katıdır</strong>. Bu oran ${ulkeler.length} ülke arasında ${ulkeler.indexOf(trUlke) + 1}. sıradadır. Bu adım, ana sayfadaki Theil, Gini ve üst %10 grafiklerinin bölge düzeyindeki karşılığıdır.</p>`,
+      secili: (b) => b.g == null ? '' : `<b>${esc(b.a)}</b>: Türkiye içinde ${trG.indexOf(b) + 1}. sıra (${TR.length} bölge)` },
+    { id: 'yakinsama', baslik: 'Başlangıç düzeyi ve 20 yıllık değişim', alt: 'Yatay: 2004 düzeyi · dikey: 2004 → 2024 değişim (puan) · AB-27 = 100',
+      h2: 'AB ortalamasına yakınsama',
+      metin: () => `<p>2004 yılında geliri düşük olan bölgeler (solda) AB ortalamasına daha hızlı yaklaşmıştır. Türkiye bölgeleri bu yakınsamanın en belirgin örnekleri arasındadır.</p>
+        <p>Türkiye bölgeleri 20 yılda AB ortalamasına göre ortalama <strong>${isr(d3.mean(yakTr, (o) => o.d), 0)} puan</strong> yükselmiştir; Avrupa bölgelerinin ortalaması ${isr(d3.mean(yakEu, (o) => o.d), 0)} puandır. En çok yükselen 20 bölgenin ${ilk20} tanesi Türkiye'dedir.</p>`,
+      secili: (b) => b.g4 == null ? '' : `<b>${esc(b.a)}</b>: ${nf(b.g4)} → ${nf(b.g)} (${isr(b.g - b.g4, 0)} puan)` },
+    { id: 'yas', baslik: 'Gelir ve yaşlı bağımlılık oranı', alt: `Yatay: kişi başına GSYH, AB = 100 · dikey: 65+ / 15–64 (%) · ${V.yil.yasli}`,
+      h2: 'Genç nüfus yapısı',
+      metin: () => `<p>Yaşlı bağımlılık oranı AB-27'de <strong>%${nf(V.ab.yasli, 1)}</strong>, Türkiye'de %${nf(V.trUlke.yasli, 1)} düzeyindedir. Türkiye bölgeleri grafiğin alt kısmında ayrı bir küme oluşturmaktadır.</p>
+        <p>Türkiye'de oranın en yüksek olduğu bölgeden (%${nf(yasTrMax, 1)}) daha genç nüfus yapısına sahip yalnızca ${yasEuAlt} Avrupa bölgesi bulunmaktadır. Gelir artışı ile nüfusun yaşlanması aynı dönemde yaşanmaktadır.</p>`,
+      secili: (b) => b.ya == null ? '' : `<b>${esc(b.a)}</b>: yaşlı bağımlılık oranı %${nf(b.ya, 1)}` },
+    { id: 'nufus', baslik: 'Yaş yapısı ve nüfus değişimi', alt: 'Yatay: yaşlı bağımlılık oranı (%) · dikey: yıllık ortalama nüfus değişimi, 2008–2025 (%)',
+      h2: 'Büyüyen ve küçülen bölgeler',
+      metin: () => `<p>2008–2025 döneminde Avrupa'daki ${euN} bölgenin <strong>${azalanEu}</strong> tanesinde nüfus azalmıştır. Türkiye'de ise ${TR.length} bölgenin ${trNufArti} tanesinde nüfus artmıştır.</p>
+        <p>Nüfusu yıllık ortalama %${nf(V.trUlke.nufus, 2)} artan Türkiye, AB-27'nin (%${nf(V.ab.nufus, 2)}) yaklaşık ${nf(V.trUlke.nufus / V.ab.nufus, 0)} katı hızla büyümektedir.</p>`,
+      secili: (b) => b.n == null ? '' : `<b>${esc(b.a)}</b>: yıllık %${isr(b.n, 2)}` },
+    { id: 'kadin', baslik: 'Gelir ve kadın istihdam oranı', alt: 'Yatay: kişi başına GSYH, AB = 100 · dikey: 20–64 yaş kadın istihdam oranı (%) · çizgi: 2019 → 2024',
+      h2: 'Kadın istihdamındaki açık',
+      metin: () => `<p>20–64 yaş grubundaki kadınların istihdam oranı 2024 yılında AB-27'de <strong>%${nf(V.ab.kadin[1], 1)}</strong>, Türkiye'de %${nf(V.trUlke.kadin[1], 1)} düzeyindedir. Avrupa'da oranın en düşük olduğu on bölgenin ${kd10} tanesi Türkiye'dedir.</p>
+        <p>Türkiye'de oranın en yüksek olduğu ${esc(kisaAd(trKmax))} (%${nf(trKmax.k24, 1)}) dahi ${euK} Avrupa bölgesinin yalnızca ${euKalti} tanesini geride bırakmaktadır. Kısa çizgiler 2019'dan bu yana yaşanan artışı göstermektedir.</p>`,
+      secili: (b) => b.k24 == null ? '' : `<b>${esc(b.a)}</b>: %${nf(b.k19, 1)} → %${nf(b.k24, 1)}` },
+    { id: 'ikiz', baslik: 'Avrupa\'daki gelir ikizleri', alt: '2024 kişi başı GSYH düzeyi en yakın Avrupa bölgesi',
+      h2: 'Aynı gelir, farklı toplum',
+      metin: () => `<p>Her Türkiye bölgesi, 2024 yılında kişi başına geliri kendisine en yakın Avrupa bölgesiyle eşleştirilmiştir. Gelir düzeyi aynı olan bu bölgeler yaş yapısı ve kadın istihdamında belirgin biçimde ayrışmaktadır.</p>
+        <div class="ikiz-kart" id="ikiz-kart"></div>`,
+      secili: () => '' },
+  ];
+
+  const adimlar = document.getElementById('adimlar');
+  adimlar.innerHTML = ADIM.map((a, i) => `<section class="adim" data-i="${i}"><div class="adim-ic">
+      <div class="adim-no">${String(i + 1).padStart(2, '0')} / ${String(ADIM.length).padStart(2, '0')}</div>
+      <h2>${esc(a.h2)}</h2><div class="metin">${a.metin()}</div><div class="secili-satir"></div></div></section>`).join('');
+  const ilerleme = document.getElementById('ilerleme');
+  ilerleme.innerHTML = ADIM.map((a, i) => `<button type="button" data-i="${i}" aria-label="${i + 1}. adım: ${esc(a.h2)}">${i + 1}</button>`).join('');
+  ilerleme.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    adimlar.children[+b.dataset.i].scrollIntoView({ behavior: AZ ? 'auto' : 'smooth', block: 'center' });
+  });
+
+  /* ---------- sahne ---------- */
+  const alan = document.getElementById('alan');
+  const ipucu = document.getElementById('ipucu');
+  const svg = d3.select(alan).append('svg');
+  const gEksen = svg.append('g'), gRef = svg.append('g'), gIz = svg.append('g'), gNokta = svg.append('g'), gUst = svg.append('g');
+  let W = 0, H = 0, aktif = 0;
+  const yer = new Map(); // adım -> Map(k -> {x,y,r,o})
+  const R = () => (W < 520 ? 3.6 : 5);
+
+  function arisurusu(liste, xf, yMerkez, bant, r) {
+    const n = liste.map((b) => ({ b, x: xf(b), y: yMerkez, hx: xf(b) }));
+    const sim = d3.forceSimulation(n).force('x', d3.forceX((d) => d.hx).strength(1)).force('y', d3.forceY(yMerkez).strength(0.08))
+      .force('c', d3.forceCollide(r + 0.9)).stop();
+    for (let i = 0; i < 220; i++) sim.tick();
+    n.forEach((d) => { d.y = Math.max(yMerkez - bant, Math.min(yMerkez + bant, d.y)); });
+    return n;
+  }
+
+  function yerlesim(i) {
+    if (yer.has(i)) return yer.get(i);
+    const m = { l: W < 520 ? 34 : 46, r: 14, t: 18, b: 40 };
+    const r = R();
+    const out = new Map();
+    const id = ADIM[i].id;
+    const ekle = (b, x, y, rr = r) => out.set(b.k, { x, y, r: rr });
+    if (id === 'harita' || id === 'ikiz') {
+      const xs = d3.extent(B, (b) => b.x), ys = d3.extent(B, (b) => b.y);
+      const s = Math.min((W - 20) / (xs[1] - xs[0]), (H - 20) / (ys[1] - ys[0]));
+      const ox = (W - s * (xs[1] - xs[0])) / 2, oy = (H - s * (ys[1] - ys[0])) / 2;
+      B.forEach((b) => ekle(b, ox + (b.x - xs[0]) * s, H - oy - (b.y - ys[0]) * s, r * 0.95));
+      out.olcek = null;
+    } else if (id === 'gelir') {
+      const x = d3.scaleLinear().domain([0, d3.max(gl, (b) => b.g) * 1.02]).nice().range([m.l, W - m.r]);
+      arisurusu(gl, (b) => x(b.g), (H - m.b + m.t) / 2, (H - m.b - m.t) / 2, r).forEach((d) => ekle(d.b, d.x, d.y));
+      out.x = x; out.ref = [{ x: x(100), et: 'AB-27 = 100' }];
+    } else if (id === 'ulke') {
+      const x = d3.scaleLinear().domain([0, d3.max(gl, (b) => b.g) * 1.02]).nice().range([m.l + (W < 520 ? 52 : 70), W - m.r]);
+      const y = d3.scalePoint().domain(ulkeler.map((o) => o.u)).range([m.t + 6, H - m.b]).padding(0.4);
+      const rr = Math.min(r, y.step() * 0.42);
+      ulkeler.forEach((o) => o.l.forEach((b) => ekle(b, x(b.g), y(o.u), rr)));
+      out.x = x; out.yUlke = y; out.ref = [{ x: x(100), et: 'AB-27 = 100' }];
+    } else {
+      const tanim = {
+        yakinsama: { l: yak.map((o) => o.b), xv: (b) => b.g4, yv: (b) => b.g - b.g4, xe: 'Kişi başına GSYH 2004 (AB = 100)', ye: 'Değişim, puan', refY: 0, refYe: 'değişim yok' },
+        yas: { l: B.filter((b) => b.g != null && b.ya != null), xv: (b) => b.g, yv: (b) => b.ya, xe: 'Kişi başına GSYH (AB = 100)', ye: 'Yaşlı bağımlılık (%)', refX: 100, refY: V.ab.yasli, refYe: 'AB-27' },
+        nufus: { l: B.filter((b) => b.ya != null && b.n != null), xv: (b) => b.ya, yv: (b) => b.n, xe: 'Yaşlı bağımlılık oranı (%)', ye: 'Nüfus değişimi (%/yıl)', refY: 0, refYe: 'sabit nüfus' },
+        kadin: { l: B.filter((b) => b.g != null && b.k24 != null), xv: (b) => b.g, yv: (b) => b.k24, xe: 'Kişi başına GSYH (AB = 100)', ye: 'Kadın istihdamı (%)', refX: 100, refY: V.ab.kadin[1], refYe: 'AB-27' },
+      }[id];
+      const xd = d3.extent(tanim.l, tanim.xv), yd = d3.extent(tanim.l, tanim.yv);
+      if (id === 'kadin') yd[0] = Math.min(yd[0], d3.min(TR, (b) => b.k19 ?? 99));
+      const x = d3.scaleLinear().domain(xd).nice().range([m.l, W - m.r]);
+      const y = d3.scaleLinear().domain(yd).nice().range([H - m.b, m.t]);
+      tanim.l.forEach((b) => ekle(b, x(tanim.xv(b)), y(tanim.yv(b))));
+      out.x = x; out.y = y; out.xe = tanim.xe; out.ye = tanim.ye;
+      out.ref = []; if (tanim.refX != null) out.ref.push({ x: x(tanim.refX), et: 'AB = 100' });
+      if (tanim.refY != null) out.ref.push({ y: y(tanim.refY), et: tanim.refYe });
+    }
+    out.m = m;
+    yer.set(i, out);
+    return out;
+  }
+
+  function boyut() {
+    const r = alan.getBoundingClientRect();
+    W = Math.max(280, r.width); H = Math.max(260, r.height);
+    svg.attr('viewBox', `0 0 ${W} ${H}`);
+    yer.clear();
+  }
+
+  const sure = () => (AZ ? 0 : 900);
+  function ciz(i, ilk = false) {
+    const L = yerlesim(i);
+    const a = ADIM[i];
+    document.getElementById('sahne-baslik').textContent = a.baslik;
+    document.getElementById('sahne-alt').textContent = a.alt;
+    ilerleme.querySelectorAll('button').forEach((b, j) => (j === i ? b.setAttribute('aria-current', 'step') : b.removeAttribute('aria-current')));
+    const t = svg.transition().duration(ilk ? 0 : sure()).ease(d3.easeCubicInOut);
+
+    // eksenler
+    gEksen.selectAll('*').remove();
+    if (L.x) {
+      const m = L.m;
+      const gx = gEksen.append('g').attr('class', 'eksen').attr('transform', `translate(0,${H - m.b})`)
+        .call(d3.axisBottom(L.x).ticks(W < 520 ? 4 : 7).tickSize(L.y ? -(H - m.b - m.t) : 4).tickFormat((v) => nf(v)));
+      gx.select('.domain').remove();
+      gx.selectAll('line').attr('stroke-opacity', 0.7);
+      if (L.y) {
+        const gy = gEksen.append('g').attr('class', 'eksen').attr('transform', `translate(${m.l},0)`)
+          .call(d3.axisLeft(L.y).ticks(6).tickSize(-(W - m.l - m.r)).tickFormat((v) => nf(v)));
+        gy.select('.domain').remove(); gy.selectAll('line').attr('stroke-opacity', 0.7);
+        gEksen.append('text').attr('class', 'eksen-ad').attr('x', m.l + 4).attr('y', m.t - 4).text('↑ ' + L.ye);
+      }
+      gEksen.append('text').attr('class', 'eksen-ad').attr('x', W - m.r).attr('y', H - 6).attr('text-anchor', 'end').text((L.xe || 'Kişi başına GSYH (AB = 100)') + ' →');
+      if (L.yUlke) {
+        gEksen.selectAll('text.ulke-ad').data(ulkeler).join('text')
+          .attr('class', (o) => 'ulke-ad' + (o.u === 'TR' ? ' tr' : '')).attr('x', m.l).attr('y', (o) => L.yUlke(o.u) + 3.5)
+          .text((o) => `${(ULKE[o.u] || o.u)}`);
+      }
+      gEksen.attr('opacity', 0).transition(t).attr('opacity', 1);
+    }
+    gRef.selectAll('*').remove();
+    (L.ref || []).forEach((rf) => {
+      const g = gRef.append('g').attr('class', 'ref');
+      if (rf.x != null) { g.append('line').attr('x1', rf.x).attr('x2', rf.x).attr('y1', L.m.t).attr('y2', H - L.m.b); g.append('text').attr('x', rf.x + 4).attr('y', L.m.t + 10).text(rf.et); }
+      else { g.append('line').attr('x1', L.m.l).attr('x2', W - L.m.r).attr('y1', rf.y).attr('y2', rf.y); g.append('text').attr('x', W - L.m.r - 4).attr('y', rf.y - 5).attr('text-anchor', 'end').text(rf.et); }
+    });
+
+    // noktalar
+    const dizi = [...B].sort((p, q) => (p.tr - q.tr)); // Türkiye üstte
+    const n = gNokta.selectAll('circle.nokta').data(dizi, (b) => b.k).join((e) => e.append('circle')
+      .attr('class', (b) => 'nokta ' + (b.tr ? 'tr' : 'eu')).attr('r', 0).attr('cx', W / 2).attr('cy', H / 2));
+    n.on('pointermove', (ev, b) => ipucuGoster(ev, b, i)).on('pointerleave', () => { ipucu.style.opacity = 0; })
+      .on('click', (ev, b) => { if (b.tr) secimYap(b.k); });
+    n.transition(t).delay((b) => (ilk || AZ ? 0 : ((L.get(b.k)?.x ?? W / 2) / W) * 260))
+      .attr('cx', function (b) { return L.get(b.k)?.x ?? this.getAttribute('cx'); })
+      .attr('cy', function (b) { return L.get(b.k)?.y ?? this.getAttribute('cy'); })
+      .attr('r', (b) => (L.has(b.k) ? L.get(b.k).r : 0))
+      .attr('opacity', (b) => (L.has(b.k) ? (b.tr ? 1 : (ADIM[i].id === 'ikiz' && !ikizSet().has(b.k) ? 0.35 : 0.8)) : 0));
+
+    // izler ve bağlar
+    gIz.selectAll('*').remove();
+    if (a.id === 'kadin') {
+      const y = L.y;
+      gIz.selectAll('line').data(TR.filter((b) => L.has(b.k) && b.k19 != null)).join('line').attr('class', 'iz')
+        .attr('x1', (b) => L.get(b.k).x).attr('x2', (b) => L.get(b.k).x).attr('y1', (b) => y(b.k19)).attr('y2', (b) => y(b.k19))
+        .transition(t).delay(sure() * 0.6).attr('y2', (b) => L.get(b.k).y);
+    }
+    if (a.id === 'ikiz') {
+      const bag = TR.filter((b) => b.ikiz && L.has(b.ikiz));
+      gIz.selectAll('path').data(bag, (b) => b.k).join('path').attr('class', (b) => 'bag' + (b === secili ? ' secili' : ''))
+        .attr('d', (b) => {
+          const p = L.get(b.k), q = L.get(b.ikiz);
+          const mx = (p.x + q.x) / 2, my = Math.min(p.y, q.y) - Math.abs(p.x - q.x) * 0.28;
+          return `M${p.x},${p.y} Q${mx},${my} ${q.x},${q.y}`;
+        })
+        .attr('stroke-dasharray', function () { const l = this.getTotalLength(); return `${l} ${l}`; })
+        .attr('stroke-dashoffset', function () { return AZ ? 0 : this.getTotalLength(); })
+        .transition(t).delay(sure() * 0.7).duration(AZ ? 0 : 1100).attr('stroke-dashoffset', 0);
+    }
+    seciliCiz(i, t);
+    kartlariYaz();
+  }
+
+  const ikizSet = () => new Set(TR.map((b) => b.ikiz).filter(Boolean));
+
+  function seciliCiz(i, t) {
+    const L = yerlesim(i);
+    const p = L.get(secili.k);
+    const ikiz = ADIM[i].id === 'ikiz' && secili.ikiz ? L.get(secili.ikiz) : null;
+    const veri = [];
+    if (p) veri.push({ k: secili.k, p, ad: kisaAd(secili) });
+    if (ikiz) veri.push({ k: secili.ikiz, p: ikiz, ad: BK.get(secili.ikiz).a });
+    const g = gUst.selectAll('g.isaret').data(veri, (d) => d.k).join((e) => {
+      const k = e.append('g').attr('class', 'isaret').attr('opacity', 0);
+      k.append('circle').attr('class', 'halka');
+      k.append('text').attr('class', 'secili-ad');
+      return k;
+    });
+    g.select('circle').transition(t).attr('cx', (d) => d.p.x).attr('cy', (d) => d.p.y).attr('r', (d) => d.p.r + 4);
+    g.select('text').text((d) => d.ad).transition(t)
+      .attr('x', (d) => d.p.x).attr('y', (d) => d.p.y - d.p.r - 8)
+      .attr('text-anchor', (d) => (d.p.x > W * 0.8 ? 'end' : d.p.x < W * 0.2 ? 'start' : 'middle'));
+    g.transition(t).attr('opacity', 1);
+  }
+
+  function kartlariYaz() {
+    adimlar.querySelectorAll('.adim').forEach((el, j) => {
+      el.querySelector('.secili-satir').innerHTML = ADIM[j].secili(secili) || '';
+      el.querySelector('.secili-satir').hidden = !ADIM[j].secili(secili);
+    });
+    const kart = document.getElementById('ikiz-kart');
+    const e = secili.ikiz && BK.get(secili.ikiz);
+    if (!e) { kart.innerHTML = ''; return; }
+    const sat = (ad, a, b, max, d = 1, birim = '') => `<div class="ikiz-satir"><span>${ad}</span><div class="ikiz-cubuk">
+        <div class="c-tr" style="width:${Math.max(2, (a / max) * 100)}%"></div><div class="c-eu" style="width:${Math.max(2, (b / max) * 100)}%"></div>
+        <span class="ikiz-deger">${nf(a, d)}${birim} · ${nf(b, d)}${birim}</span></div></div>`;
+    kart.innerHTML = `<div class="ikiz-baslik">${esc(secili.a)} <span>↔</span> ${esc(e.a)} <span>(${esc(ulkeAd(e))})</span></div>
+      ${sat('Gelir (AB = 100)', secili.g, e.g, Math.max(secili.g, e.g, 100), 0)}
+      ${sat('Yaşlı bağımlılık', secili.ya, e.ya, Math.max(secili.ya, e.ya), 1, '%')}
+      ${sat('Kadın istihdamı', secili.k24, e.k24, 100, 1, '%')}
+      ${secili.n != null && e.n != null ? `<div class="ikiz-satir"><span>Nüfus değişimi</span><span class="ikiz-deger">yıllık %${isr(secili.n, 2)} · %${isr(e.n, 2)}</span></div>` : ''}`;
+  }
+
+  function ipucuGoster(ev, b, i) {
+    const id = ADIM[i].id;
+    const deger = {
+      harita: '', gelir: `AB = 100 iken ${nf(b.g)}`, ulke: `AB = 100 iken ${nf(b.g)}`,
+      yakinsama: b.g4 != null ? `${nf(b.g4)} → ${nf(b.g)} (${isr(b.g - b.g4, 0)} puan)` : '',
+      yas: `Yaşlı bağımlılık %${nf(b.ya, 1)} · gelir ${nf(b.g)}`, nufus: `Nüfus değişimi %${isr(b.n, 2)} / yıl`,
+      kadin: `Kadın istihdamı %${nf(b.k24, 1)}${b.k19 != null ? ` (2019: %${nf(b.k19, 1)})` : ''}`,
+      ikiz: b.ikiz ? `Gelir ikizi: ${BK.get(b.ikiz).a}` : `Gelir ${nf(b.g)}`,
+    }[id];
+    ipucu.innerHTML = `<strong>${esc(b.a)}</strong><br><small>${esc(ulkeAd(b))}</small>${deger ? `<br>${esc(deger)}` : ''}${b.tr ? '<br><small>Tıklayarak izleyin</small>' : ''}`;
+    const r = alan.getBoundingClientRect();
+    let x = ev.clientX - r.left + 12, y = ev.clientY - r.top + 12;
+    if (x > r.width - 230) x -= 250;
+    ipucu.style.transform = `translate(${x}px,${y}px)`; ipucu.style.left = '0'; ipucu.style.top = '0';
+    ipucu.style.opacity = 1;
+  }
+
+  function secimYap(k) {
+    secili = BK.get(k); sec.value = k;
+    const t = svg.transition().duration(AZ ? 0 : 500);
+    seciliCiz(aktif, t); kartlariYaz();
+    gIz.selectAll('path.bag').attr('class', (b) => 'bag' + (b === secili ? ' secili' : ''));
+  }
+  sec.addEventListener('change', () => secimYap(sec.value));
+
+  function adimaGec(i) {
+    if (i === aktif) return;
+    aktif = i;
+    adimlar.querySelectorAll('.adim').forEach((el, j) => el.classList.toggle('aktif', j === i));
+    ciz(i);
+  }
+  const io = new IntersectionObserver((ents) => {
+    ents.forEach((e) => { if (e.isIntersecting) adimaGec(+e.target.dataset.i); });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  adimlar.querySelectorAll('.adim').forEach((el) => io.observe(el));
+
+  boyut();
+  adimlar.children[0].classList.add('aktif');
+  ciz(0, true);
+  let zt;
+  new ResizeObserver(() => { clearTimeout(zt); zt = setTimeout(() => { const w = W, h = H; boyut(); if (Math.abs(w - W) > 4 || Math.abs(h - H) > 4) ciz(aktif, true); }, 150); }).observe(alan);
+})();
+</script>

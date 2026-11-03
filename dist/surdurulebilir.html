@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sürdürülebilir Kalkınma Analiz Paneli</title>
+    <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --secondary: #18BC9C;
+            --bg-color: #f8f9fa;
+            --box-bg: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .filters {
+            background: var(--box-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* Choices.js Tasarım Ayarları */
+        .choices__inner {
+            background-color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            min-height: auto;
+            padding: 2px 4px;
+        }
+
+        .choices[data-type*="select-multiple"] .choices__button,
+        .choices[data-type*="text"] .choices__button {
+            border-left: 1px solid rgba(255, 255, 255, 0.5);
+            margin-left: 4px;
+        }
+
+        .choices__button {
+            padding: 3px;
+        }
+
+        .choices__button:hover {
+            background-color: #2980b9;
+        }
+
+        .choices__list--multiple .choices__item {
+            background-color: #3498db;
+            border: 1px solid #2980b9;
+            padding: 2px 6px;
+            margin: 2px;
+            font-size: 12px;
+            border-radius: 3px;
+            font-weight: 100;
+        }
+
+        .info-panel {
+            margin-top: auto;
+            padding: 15px;
+            background-color: #eef2f5;
+            border: 1px solid #dce4ec;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .info-panel-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .chart-container {
+            background: var(--box-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            position: relative;
+            height: 520px;
+        }
+
+        .table-container {
+            background: var(--box-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            justify-content: flex-end;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #128f76;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading" class="loading-overlay">Veriler Yükleniyor ve İşleniyor... Lütfen Bekleyin.</div>
+
+    <div class="container">
+        <div class="dashboard">
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Amaç</label>
+                    <select id="f_amac" onchange="updateFilters('amac')"></select>
+                </div>
+                <div class="filter-group">
+                    <label>Hedef</label>
+                    <select id="f_hedef" onchange="updateFilters('hedef')"></select>
+                </div>
+                <div class="filter-group">
+                    <label>Gösterge</label>
+                    <select id="f_gosterge" onchange="updateFilters('gosterge')"></select>
+                </div>
+                <div class="filter-group">
+                    <label>Alt Gösterge</label>
+                    <select id="f_altgosterge" onchange="updateFilters('altgosterge')"></select>
+                </div>
+                <div class="filter-group">
+                    <label>Yıllar</label>
+                    <select id="f_yillar" multiple></select>
+                </div>
+                <div class="filter-group">
+                    <label>Bölge / Şehir</label>
+                    <select id="f_bolge" onchange="updateChartAndTable()"></select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Grafik Türü</label>
+                    <select id="chartType">
+                        <option value="line">Çizgi Grafik</option>
+                        <option value="bar">Sütun Grafik</option>
+                        <option value="horizontalBar">Yatay Sütun Grafik</option>
+                        <option value="lollipop">Lolipop Grafik</option>
+                        <option value="pie">Pasta Grafik</option>
+                        <option value="doughnut">Halka Grafik</option>
+                        <option value="radar">Radar Grafik</option>
+                        <option value="polarArea">Kutupsal Alan</option>
+                        <option value="bubble">Kabarcık Grafik</option>
+                        <option value="box">Kutu Grafik</option>
+                        <option value="histogram">Histogram</option>
+                        <option value="density">Yoğunluk Grafiği</option>
+                        <option value="area">Alan Grafiği</option>
+                        <option value="scatter">Dağılım Grafiği</option>
+                    </select>
+                </div>
+
+                <div class="info-panel">
+                    <div class="info-panel-title">Aktif Seçim Detayı</div>
+                    <div id="infoText"><em>Seçeneklerin tam metnini görmek için üzerine gelin.</em></div>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="actions">
+                    <button onclick="downloadChart()">Grafiği İndir (PNG)</button>
+                    <button onclick="downloadTable()">Tabloyu İndir (CSV)</button>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                </div>
+
+                <div class="table-container">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Yıl</th>
+                                <th>Değer</th>
+                                <th>Ölçü Birimi</th>
+                                <th>Bölge</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let rawData = [];
+        let filteredData = [];
+        let chartInstance = null;
+        let yillarChoicesInstance = null;
+
+        async function loadData() {
+            try {
+                const yillarElement = document.getElementById('f_yillar');
+                yillarChoicesInstance = new Choices(yillarElement, {
+                    removeItemButton: true,
+                    searchEnabled: false,
+                    placeholder: true,
+                    placeholderValue: 'Yıl Seçiniz',
+                    itemSelectText: '',
+                    shouldSort: false
+                });
+
+                yillarElement.addEventListener('change', updateChartAndTable);
+
+                const response = await fetch('./data/surdurulebilir.csv.gz');
+                if (!response.ok) throw new Error("Veri dosyası bulunamadı.");
+
+                const arrayBuffer = await response.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                const decompressedRaw = pako.ungzip(uint8Array);
+
+                let decoder = new TextDecoder('utf-8');
+                let decompressedData = decoder.decode(decompressedRaw);
+
+                if (decompressedData.charCodeAt(0) === 0xFEFF) {
+                    decompressedData = decompressedData.substring(1);
+                }
+
+                let parsed = Papa.parse(decompressedData, {
+                    header: true,
+                    delimiter: ';',
+                    skipEmptyLines: true,
+                    transformHeader: function (h) {
+                        return h.trim().replace(/^\uFEFF/, '');
+                    }
+                });
+
+                if (parsed.data.length > 0 && !parsed.data[0].hasOwnProperty('Amaç')) {
+                    decoder = new TextDecoder('windows-1254');
+                    decompressedData = decoder.decode(decompressedRaw);
+                    if (decompressedData.charCodeAt(0) === 0xFEFF) {
+                        decompressedData = decompressedData.substring(1);
+                    }
+                    parsed = Papa.parse(decompressedData, {
+                        header: true,
+                        delimiter: ';',
+                        skipEmptyLines: true,
+                        transformHeader: function (h) {
+                            return h.trim().replace(/^\uFEFF/, '');
+                        }
+                    });
+                }
+
+                rawData = parsed.data;
+                document.getElementById('loading').style.display = 'none';
+                updateFilters('init');
+                setupHoverEvents();
+
+            } catch (error) {
+                console.error("Veri yüklenirken hata oluştu:", error);
+                document.getElementById('loading').innerHTML = "Veri yüklenirken bir hata oluştu.";
+            }
+        }
+
+        function populateSelect(selectId, optionsSet, defaultText = null) {
+            const select = document.getElementById(selectId);
+            select.length = 0;
+            if (defaultText !== null) {
+                const defaultOpt = new Option(defaultText, '');
+                defaultOpt.title = defaultText;
+                select.add(defaultOpt);
+            }
+
+            let sortedOptions = Array.from(optionsSet).filter(Boolean);
+
+            if (selectId === 'f_amac') {
+                // Görseldeki 17 hedef sırasını ayırt edici anahtar kelimelerle tanımlıyoruz
+                const amacSiralama = [
+                    "yoksulluğa", "açlığa", "sağlıklı", "nitelikli", "cinsiyet",
+                    "temiz", "enerji", "ekonomik", "sanayi", "eşitsizlik",
+                    "şehir", "tüketim", "iklim", "sudaki", "karasal", "barış", "ortaklıklar"
+                ];
+
+                sortedOptions.sort((a, b) => {
+                    const aLower = a.toLocaleLowerCase('tr-TR');
+                    const bLower = b.toLocaleLowerCase('tr-TR');
+
+                    let aIndex = amacSiralama.findIndex(k => aLower.includes(k));
+                    let bIndex = amacSiralama.findIndex(k => bLower.includes(k));
+
+                    if (aIndex !== -1 && bIndex !== -1) {
+                        return aIndex - bIndex;
+                    }
+                    // Eğer anahtar kelimelerde eşleşmezse doğal sıralama yapsın
+                    return a.localeCompare(b, 'tr', { numeric: true });
+                });
+            } else {
+                // Diğer tüm alanlar için doğal sayısal sıralama (10'un 2'den önce gelmesini engeller)
+                sortedOptions.sort((a, b) => a.localeCompare(b, 'tr', { numeric: true }));
+            }
+
+            sortedOptions.forEach(opt => {
+                const textOpt = opt.length > 60 ? opt.substring(0, 60) + '...' : opt;
+                const optionElement = new Option(textOpt, opt);
+                optionElement.title = opt;
+                select.add(optionElement);
+            });
+        }
+
+        function populateMultiSelect(optionsSet) {
+            if (!yillarChoicesInstance) return;
+            const sortedOptions = Array.from(optionsSet)
+                .filter(Boolean)
+                .sort((a, b) => parseInt(a) - parseInt(b));
+            const choicesData = sortedOptions.map(opt => ({
+                value: opt.toString(),
+                label: opt.toString(),
+                selected: true
+            }));
+            yillarChoicesInstance.clearChoices();
+            yillarChoicesInstance.setChoices(choicesData, 'value', 'label', true);
+        }
+
+        function setupHoverEvents() {
+            document.querySelectorAll('.filter-group select').forEach(select => {
+                const updateInfoPanel = (e) => {
+                    const sel = e.target;
+                    const group = sel.closest('.filter-group');
+                    if (!group) return;
+                    const label = group.querySelector('label').innerText;
+                    let value = "";
+                    if (sel.multiple) {
+                        const selectedValues = yillarChoicesInstance.getValue(true);
+                        if (selectedValues && selectedValues.length > 0) {
+                            value = selectedValues.length > 6 ? selectedValues.slice(0, 6).join(', ') + ' ...' : selectedValues.join(', ');
+                        }
+                    } else {
+                        value = sel.value;
+                    }
+                    const infoBox = document.getElementById('infoText');
+                    if (value) {
+                        infoBox.innerHTML = `<strong>${label}:</strong><br/><span style="color:var(--primary);">${value}</span>`;
+                    } else {
+                        infoBox.innerHTML = `<em>${label} seçimi bekleniyor...</em>`;
+                    }
+                };
+                select.addEventListener('mouseenter', updateInfoPanel);
+                select.addEventListener('focus', updateInfoPanel);
+                select.addEventListener('change', updateInfoPanel);
+            });
+        }
+
+        function updateFilters(level) {
+            let valAmac = document.getElementById('f_amac').value;
+            let valHedef = document.getElementById('f_hedef').value;
+            let valGosterge = document.getElementById('f_gosterge').value;
+            let valAltGosterge = document.getElementById('f_altgosterge').value;
+            let currentPool = rawData;
+
+            if (level === 'amac' || level === 'init') {
+                if (level === 'init') {
+                    populateSelect('f_amac', new Set(currentPool.map(d => d['Amaç'])));
+                    valAmac = document.getElementById('f_amac').value;
+                }
+                currentPool = currentPool.filter(d => d['Amaç'] === valAmac);
+                populateSelect('f_hedef', new Set(currentPool.map(d => d['Hedef'])));
+                valHedef = document.getElementById('f_hedef').value;
+                level = 'hedef';
+            }
+            if (level === 'hedef') {
+                currentPool = rawData.filter(d => d['Amaç'] === valAmac && d['Hedef'] === valHedef);
+                populateSelect('f_gosterge', new Set(currentPool.map(d => d['Gösterge'])));
+                valGosterge = document.getElementById('f_gosterge').value;
+                level = 'gosterge';
+            }
+            if (level === 'gosterge') {
+                currentPool = rawData.filter(d => d['Amaç'] === valAmac && d['Hedef'] === valHedef && d['Gösterge'] === valGosterge);
+                populateSelect('f_altgosterge', new Set(currentPool.map(d => d['Alt gösterge'])), "Tümü / Göstergeyi Baz Al...");
+                const selectAltGosterge = document.getElementById('f_altgosterge');
+                if (selectAltGosterge.options.length > 1) selectAltGosterge.selectedIndex = 1;
+                valAltGosterge = selectAltGosterge.value;
+                level = 'altgosterge';
+            }
+            if (level === 'altgosterge') {
+                currentPool = rawData.filter(d => d['Amaç'] === valAmac && d['Hedef'] === valHedef && d['Gösterge'] === valGosterge);
+                if (valAltGosterge) currentPool = currentPool.filter(d => d['Alt gösterge'] === valAltGosterge);
+                populateMultiSelect(new Set(currentPool.map(d => d['Yıl'])));
+                populateSelect('f_bolge', new Set(currentPool.map(d => d['Bölge/Şehir'])));
+            }
+            updateChartAndTable();
+        }
+
+        function formatTitleToMultiline(text, maxCharsPerLine = 75) {
+            if (!text) return [];
+            const words = text.split(' ');
+            let lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > maxCharsPerLine) {
+                    if (currentLine.length > 0) lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else { currentLine += word + ' '; }
+            });
+            if (currentLine.trim().length > 0) lines.push(currentLine.trim());
+            if (lines.length > 3) { lines = lines.slice(0, 3); lines[2] += "..."; }
+            return lines;
+        }
+
+        function updateChartAndTable() {
+            const valGosterge = document.getElementById('f_gosterge').value;
+            const valAltGosterge = document.getElementById('f_altgosterge').value;
+            const valBolge = document.getElementById('f_bolge').value;
+            const selectedYillar = yillarChoicesInstance ? yillarChoicesInstance.getValue(true) : [];
+
+            if (!valGosterge || !valBolge || selectedYillar.length === 0) {
+                if (chartInstance) chartInstance.destroy();
+                document.querySelector('#dataTable tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;">Lütfen filtreleri seçin.</td></tr>';
+                return;
+            }
+
+            filteredData = rawData.filter(d =>
+                d['Gösterge'] === valGosterge && d['Bölge/Şehir'] === valBolge && selectedYillar.includes(d['Yıl'].toString())
+            );
+            if (valAltGosterge) filteredData = filteredData.filter(d => d['Alt gösterge'] === valAltGosterge);
+
+            filteredData.sort((a, b) => parseInt(a['Yıl']) - parseInt(b['Yıl']));
+            renderChart();
+            renderTable();
+        }
+
+        function renderChart() {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const typeKey = document.getElementById('chartType').value;
+
+            const labels = filteredData.map(d => d['Yıl']);
+            const dataValues = filteredData.map(d => parseFloat((d['Değer'] || "0").replace(',', '.')));
+            const birim = filteredData.length > 0 ? Object.keys(filteredData[0]).find(key => key.includes('Ölçü birimi')) || "Değer" : "Değer";
+            const birimLabel = filteredData.length > 0 ? filteredData[0][birim] : "";
+            const rawTitle = document.getElementById('f_altgosterge').value || document.getElementById('f_gosterge').value;
+            const chartDynamicTitle = formatTitleToMultiline(rawTitle, 80);
+
+            if (chartInstance) chartInstance.destroy();
+
+            let configType = 'line';
+            let datasets = [];
+            let configOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: chartDynamicTitle, font: { size: 14 }, padding: { bottom: 20 } },
+                    legend: {
+                        display: true, position: 'right', align: 'end',
+                        labels: { boxWidth: 12, padding: 15, font: { size: 11 } }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            callback: function (value) {
+                                let label = this.getLabelForValue(value);
+                                return label ? label.toString().replace(/\./g, '') : value;
+                            }
+                        }
+                    }
+                }
+            };
+
+            const colors = ['rgba(24, 188, 156, 0.6)', 'rgba(52, 152, 219, 0.6)', 'rgba(231, 76, 60, 0.6)', 'rgba(44, 62, 80, 0.6)', 'rgba(241, 196, 15, 0.6)', 'rgba(155, 89, 182, 0.6)'];
+
+            // Grafik Konfigürasyonları
+            switch (typeKey) {
+                case 'bar': configType = 'bar'; break;
+                case 'horizontalBar': configType = 'bar'; configOptions.indexAxis = 'y'; break;
+                case 'lollipop':
+                    configType = 'bar';
+                    datasets.push({
+                        label: `Değer (${birimLabel})`,
+                        data: dataValues,
+                        backgroundColor: colors[0],
+                        barThickness: 2,
+                        order: 2
+                    }, {
+                        label: 'Nokta',
+                        data: dataValues,
+                        type: 'scatter',
+                        backgroundColor: colors[2],
+                        pointRadius: 6,
+                        order: 1
+                    });
+                    break;
+                case 'bubble':
+                    configType = 'bubble';
+                    const bubbleData = dataValues.map((v, i) => ({ x: i, y: v, r: Math.abs(v) / 2 + 5 }));
+                    datasets.push({ label: `Değer (${birimLabel})`, data: bubbleData, backgroundColor: colors });
+                    break;
+                case 'histogram':
+                    configType = 'bar';
+                    configOptions.datasets = { bar: { barPercentage: 1, categoryPercentage: 1 } };
+                    break;
+                case 'density':
+                case 'area':
+                    configType = 'line';
+                    datasets.push({ label: `Değer (${birimLabel})`, data: dataValues, fill: true, tension: typeKey === 'density' ? 0.4 : 0.1, backgroundColor: colors[0] });
+                    break;
+                case 'box':
+                    configType = 'bar';
+                    break;
+                case 'pie': configType = 'pie'; break;
+                case 'doughnut': configType = 'doughnut'; break;
+                case 'radar': configType = 'radar'; break;
+                case 'polarArea': configType = 'polarArea'; break;
+                case 'stepped': configType = 'line'; datasets.push({ label: `Değer (${birimLabel})`, data: dataValues, stepped: true, borderColor: '#2C3E50' }); break;
+                case 'scatter': configType = 'scatter'; break;
+                default: configType = 'line';
+            }
+
+            if (datasets.length === 0) {
+                datasets.push({
+                    label: `Değer (${birimLabel})`,
+                    data: dataValues,
+                    backgroundColor: colors,
+                    borderColor: '#2C3E50',
+                    borderWidth: 1,
+                    tension: typeKey === 'smooth' ? 0.4 : 0.1
+                });
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: configType,
+                data: { labels: labels, datasets: datasets },
+                options: configOptions
+            });
+        }
+
+        document.getElementById('chartType').addEventListener('change', () => { if (filteredData.length > 0) renderChart(); });
+
+        function renderTable() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+            if (filteredData.length === 0) return;
+            const birimKey = Object.keys(filteredData[0]).find(key => key.includes('Ölçü birimi')) || "Ölçü birimi (%)";
+            filteredData.forEach(row => {
+                const tr = document.createElement('tr');
+                const yilTemiz = row['Yıl'].toString().replace(/\./g, '');
+                tr.innerHTML = `<td>${yilTemiz}</td><td>${row['Değer']}</td><td>${row[birimKey] || '-'}</td><td>${row['Bölge/Şehir']}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function downloadChart() {
+            if (!chartInstance) return;
+
+            // Orijinal grafik tuvalini al
+            const originalCanvas = document.getElementById('myChart');
+
+            // Arka planı beyaz yapmak için geçici bir tuval oluştur
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = originalCanvas.width;
+            tempCanvas.height = originalCanvas.height;
+            const tempCtx = tempCanvas.getContext('2d');
+
+            // Geçici tuvali beyaza boya
+            tempCtx.fillStyle = '#ffffff';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+            // Orijinal grafiği beyaz arka planın üzerine çiz
+            tempCtx.drawImage(originalCanvas, 0, 0);
+
+            // Beyaz arka planlı yeni resmi indir
+            const link = document.createElement('a');
+            link.download = 'grafik.png';
+            link.href = tempCanvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadTable() {
+            if (filteredData.length === 0) return;
+            const header = ['Yıl', 'Değer', 'Ölçü Birimi', 'Bölge/Şehir'];
+            const birimKey = Object.keys(filteredData[0]).find(key => key.includes('Ölçü birimi')) || "Ölçü birimi (%)";
+            const rows = filteredData.map(row => [row['Yıl'].toString().replace(/\./g, ''), row['Değer'], row[birimKey] || '-', row['Bölge/Şehir']]);
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF" + header.join(";") + "\r\n" + rows.map(e => e.join(";")).join("\r\n");
+            const link = document.createElement("a");
+            link.setAttribute("href", encodeURI(csvContent));
+            link.setAttribute("download", "tablo.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        window.onload = loadData;
+    </script>
+</body>
+
+</html>

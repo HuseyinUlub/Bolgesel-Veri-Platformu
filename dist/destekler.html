@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gelişmiş Destek Veri Analizi</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@4.2.0/build/index.umd.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --bg: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 25px;
+        }
+
+        .controls,
+        .chart-box,
+        .table-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        select.std-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        select.std-select:focus {
+            border-color: var(--accent);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button.main-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        button.main-btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-png {
+            background: #e67e22;
+        }
+
+        .btn-xls {
+            background: #27ae60;
+        }
+
+        .chart-box {
+            height: 600px;
+            position: relative;
+            background-color: white;
+        }
+
+        .table-box {
+            max-height: 500px;
+            overflow: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            text-align: left;
+            z-index: 10;
+        }
+
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        td:last-child,
+        th:last-child {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #eee;
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .ts-control {
+            border-radius: 6px;
+            padding: 8px;
+        }
+
+        .ts-wrapper.multi .ts-control>div.item {
+            background-color: #3498db !important;
+            color: #ffffff !important;
+            border: 1px solid #2980b9 !important;
+        }
+
+        @media (max-width: 1000px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <div id="loadMain" style="font-weight:bold; font-size:1.2rem;">Başlatılıyor...</div>
+        <div id="loadSub" style="color:#666;">Lütfen bekleyin</div>
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <h2>Ayarlar</h2>
+
+            <div class="control-group">
+                <label>1. Destek Türü</label>
+                <select id="selDestekTuru" class="std-select"></select>
+            </div>
+
+            <div class="control-group">
+                <label>2. Veri Türü</label>
+                <select id="selMetric" class="std-select">
+                    <option value="proje_sayisi">Proje Sayısı (Adet)</option>
+                    <option value="destek_tutar">Destek Tutarı (TL)</option>
+                    <option value="yatirim_tutar">Yatırım Tutarı (TL)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>3. Bölge / İl</label>
+                <select id="selLocations" multiple placeholder="Seçiniz..."></select>
+                <button onclick="tomLocations.clear()"
+                    style="margin-top:5px; font-size:0.8rem; cursor:pointer;">Temizle</button>
+                <button onclick="selectAllLocs()"
+                    style="margin-top:5px; font-size:0.8rem; cursor:pointer; color:green;">Hepsini Seç</button>
+            </div>
+
+            <div class="control-group">
+                <label>4. Yıl</label>
+                <select id="selYears" multiple placeholder="Yıl seçin..."></select>
+                <div style="margin-top:5px;">
+                    <button onclick="tomYears.clear()" style="font-size:0.8rem; cursor:pointer;">Temizle</button>
+                    <button onclick="selectAllYears()" style="font-size:0.8rem; cursor:pointer; color:green;">Hepsini
+                        Seç</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>5. Grafik Tipi</label>
+                <select id="selChartType" class="std-select">
+                    <option value="line">Çizgi</option>
+                    <option value="bar">Sütun</option>
+                    <option value="bar-stacked">Yığılmış Sütun</option>
+                    <option value="bar-horizontal">Yatay Çubuk</option>
+                    <option value="bar-horizontal-stacked">Yığılmış Yatay Çubuk</option>
+                    <option value="area">Alan</option>
+                    <option value="lollipop">Lolipop</option>
+                    <option value="bubble">Kabarcık</option>
+                    <option value="density">Yoğunluk</option>
+                    <option value="histogram">Histogram</option>
+                    <option value="boxplot">Kutu (Boxplot)</option>
+                    <option value="radar">Radar</option>
+                </select>
+            </div>
+
+            <div class="btn-group">
+                <button class="main-btn btn-png" onclick="downloadChart()">Grafik İndir</button>
+                <button class="main-btn btn-xls" onclick="downloadTable()">Excel İndir</button>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="chart-box">
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <div class="table-box">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Bölge/İl</th>
+                            <th>Yıl</th>
+                            <th>Destek Türü</th>
+                            <th>Veri Tipi</th>
+                            <th>Değer</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script id="worker-script" type="javascript/worker">
+    self.onmessage = function(e) {
+        const { fileBuffer, type } = e.data;
+        
+        if (type === 'PARSE') {
+            try {
+                importScripts('https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js');
+
+                const decoder = new TextDecoder('utf-8');
+                const csvText = decoder.decode(fileBuffer);
+                
+                Papa.parse(csvText, {
+                    header: true,
+                    skipEmptyLines: true,
+                    transformHeader: function(h) {
+                        return h.trim().toLowerCase().replace(/['"]+/g, '');
+                    },
+                    complete: function(results) {
+                        const rawData = results.data;
+                        const fields = results.meta.fields;
+
+                        const keyIl = fields.find(f => f.includes('il')) || 'il';
+                        const keyYil = fields.find(f => f.includes('yil') || f.includes('yıl')) || 'yil';
+                        const keyDestekTuru = fields.find(f => f.includes('destek_turu')) || 'destek_turu';
+                        const keyProje = fields.find(f => f.includes('proje_sayisi')) || 'proje_sayisi';
+                        const keyDestekTutar = fields.find(f => f.includes('destek_tutar')) || 'destek_tutar';
+                        const keyYatirimTutar = fields.find(f => f.includes('yatirim_tutar')) || 'yatirim_tutar';
+
+                        const locSet = new Set();
+                        const yearSet = new Set();
+                        const destekTuruSet = new Set();
+                        
+                        const parseNum = (val) => {
+                            if (typeof val === 'number') return val;
+                            if (!val) return 0;
+                            let clean = val.toString().trim();
+                            if(clean === '') return 0;
+                            clean = clean.replace(/\./g, '').replace(',', '.');
+                            return parseFloat(clean) || 0;
+                        };
+
+                        const processedData = rawData.map(d => {
+                            const il = d[keyIl];
+                            const yil = d[keyYil];
+                            const dTuru = d[keyDestekTuru];
+                            
+                            const valProje = parseNum(d[keyProje]);
+                            const valDestek = parseNum(d[keyDestekTutar]);
+                            const valYatirim = parseNum(d[keyYatirimTutar]);
+
+                            if (il) locSet.add(il);
+                            if (yil) yearSet.add(yil);
+                            if (dTuru) destekTuruSet.add(dTuru);
+
+                            return {
+                                il: il,
+                                yil: yil,
+                                destek_turu: dTuru,
+                                proje_sayisi: valProje,
+                                destek_tutar: valDestek,
+                                yatirim_tutar: valYatirim
+                            };
+                        }).filter(item => item.il && item.yil);
+
+                        const sortedLocs = Array.from(locSet).sort();
+                        const sortedYears = Array.from(yearSet).sort((a,b)=>a-b);
+                        const sortedDestekTuru = Array.from(destekTuruSet).sort();
+
+                        self.postMessage({
+                            type: 'DONE',
+                            data: processedData,
+                            uniqueLocs: sortedLocs,
+                            uniqueYears: sortedYears,
+                            uniqueDestekTuru: sortedDestekTuru
+                        });
+                    }
+                });
+            } catch (err) {
+                self.postMessage({ type: 'ERROR', msg: err.message });
+            }
+        }
+    };
+    </script>
+
+    <script>
+        // GÜNCELLENEN DOSYA YOLU
+        const FILENAME = "./data/destekv2.csv";
+
+        let worker;
+        let globalData = [];
+        let tomLocations, tomYears;
+        let chartInstance = null;
+        let currentFilteredData = [];
+        let uniqueLocs = [], uniqueYears = [], uniqueDestekTypes = [];
+
+        const els = {
+            loading: document.getElementById('loading'),
+            loadMain: document.getElementById('loadMain'),
+            loadSub: document.getElementById('loadSub'),
+            destekTuru: document.getElementById('selDestekTuru'),
+            metric: document.getElementById('selMetric'),
+            chartType: document.getElementById('selChartType'),
+            tableBody: document.querySelector('#dataTable tbody')
+        };
+
+        window.onload = function () {
+            initWorker();
+            fetchData();
+        };
+
+        function initWorker() {
+            const blob = new Blob([document.getElementById('worker-script').textContent], { type: "text/javascript" });
+            worker = new Worker(window.URL.createObjectURL(blob));
+
+            worker.onmessage = function (e) {
+                const msg = e.data;
+                if (msg.type === 'STATUS') {
+                    els.loadSub.textContent = msg.msg;
+                } else if (msg.type === 'DONE') {
+                    els.loadMain.textContent = "Arayüz Oluşturuluyor...";
+                    globalData = msg.data;
+                    uniqueLocs = msg.uniqueLocs;
+                    uniqueYears = msg.uniqueYears;
+                    uniqueDestekTypes = msg.uniqueDestekTuru;
+                    initUI();
+                    els.loading.classList.add('hidden');
+                } else if (msg.type === 'ERROR') {
+                    alert("HATA: " + msg.msg);
+                    els.loading.classList.add('hidden');
+                }
+            };
+        }
+
+        async function fetchData() {
+            try {
+                els.loadMain.textContent = "Dosya İndiriliyor...";
+                let response = await fetch(FILENAME);
+                if (!response.ok) throw new Error("CSV dosyası bulunamadı.");
+                const buffer = await response.arrayBuffer();
+                worker.postMessage({ type: 'PARSE', fileBuffer: buffer }, [buffer]);
+            } catch (err) {
+                alert("Hata: " + err.message);
+                els.loading.classList.add('hidden');
+            }
+        }
+
+        function initUI() {
+            // Destek Türü
+            uniqueDestekTypes = uniqueDestekTypes.filter(x => x !== 'Tüm Destekler');
+            uniqueDestekTypes.unshift('Tüm Destekler');
+            els.destekTuru.innerHTML = uniqueDestekTypes.map(d => `<option value="${d}">${d}</option>`).join('');
+            els.destekTuru.addEventListener('change', updateViz);
+
+            // Metrik
+            els.metric.addEventListener('change', updateViz);
+
+            // İller (TomSelect) - Önce tanımla
+            document.getElementById('selLocations').innerHTML = uniqueLocs.map(l => `<option value="${l}">${l}</option>`).join('');
+            tomLocations = new TomSelect('#selLocations', {
+                plugins: ['remove_button', 'checkbox_options'],
+                maxOptions: 2000,
+                onItemAdd: updateViz, onItemRemove: updateViz, onDelete: updateViz
+            });
+
+            // Yıllar (TomSelect) - Önce tanımla
+            document.getElementById('selYears').innerHTML = uniqueYears.map(y => `<option value="${y}" selected>${y}</option>`).join('');
+            tomYears = new TomSelect('#selYears', {
+                plugins: ['remove_button'],
+                onItemAdd: updateViz, onItemRemove: updateViz, onDelete: updateViz
+            });
+
+            // Grafik Tipi
+            els.chartType.addEventListener('change', updateViz);
+
+            // DEĞERLERİ SESSİZCE ATA (Tetiklemeden)
+            tomLocations.setValue(uniqueLocs, true);
+            tomYears.setValue(uniqueYears.map(String), true);
+
+            // Başlangıç analizini yap
+            updateViz();
+        }
+
+        function selectAllLocs() {
+            tomLocations.setValue(uniqueLocs);
+        }
+
+        function selectAllYears() {
+            tomYears.setValue(uniqueYears.map(String));
+        }
+
+        function formatNumber(num) {
+            return Number(num).toLocaleString('tr-TR', { maximumFractionDigits: 0 });
+        }
+
+        function updateViz() {
+            if (!tomLocations || !tomYears) return;
+
+            const sDestek = els.destekTuru.value;
+            const sMetric = els.metric.value;
+            const sLocs = tomLocations.getValue();
+            const sYears = tomYears.getValue();
+
+            if (!sLocs || sLocs.length === 0) {
+                els.tableBody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Lütfen il seçiniz.</td></tr>";
+                if (chartInstance) chartInstance.destroy();
+                return;
+            }
+
+            currentFilteredData = globalData.filter(d =>
+                d.destek_turu === sDestek &&
+                sLocs.includes(d.il) &&
+                sYears.includes(String(d.yil))
+            );
+
+            const metricText = els.metric.options[els.metric.selectedIndex].text;
+            renderTable(currentFilteredData, sMetric, metricText);
+            renderChart(currentFilteredData, sLocs, sYears, sMetric, metricText);
+        }
+
+        function renderTable(data, metricKey, metricName) {
+            const limit = 200;
+            let html = "";
+            if (data.length === 0) {
+                html = "<tr><td colspan='5' style='text-align:center;'>Veri yok.</td></tr>";
+            } else {
+                const sorted = [...data].sort((a, b) => b.yil - a.yil);
+                for (let i = 0; i < Math.min(sorted.length, limit); i++) {
+                    const row = sorted[i];
+                    html += `<tr>
+                        <td>${row.il}</td>
+                        <td>${row.yil}</td>
+                        <td>${row.destek_turu}</td>
+                        <td>${metricName}</td>
+                        <td><strong>${formatNumber(row[metricKey])}</strong></td>
+                    </tr>`;
+                }
+                if (data.length > limit) html += `<tr><td colspan="5" style="text-align:center;">... ${data.length - limit} kayıt daha ...</td></tr>`;
+            }
+            els.tableBody.innerHTML = html;
+        }
+
+        function renderChart(data, locs, years, metricKey, metricTitle) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            years.sort((a, b) => a - b);
+            const rawChartType = els.chartType.value;
+
+            // Yapılandırma değişkenleri
+            let chartType = rawChartType;
+            let stacked = false;
+            let fill = false;
+            let tension = 0.3;
+            let indexAxis = 'x'; // Varsayılan dikey
+            let datasets = [];
+
+            // X ekseninde mi Y ekseninde mi yıllar olacak?
+            // Varsayılan: labels = years. 
+            // Eğer indexAxis='y' olursa Chart.js yılları Y eksenine basar.
+            let labels = years;
+
+            // Özel Tip Dönüşümleri
+            if (rawChartType === 'bar-stacked') { chartType = 'bar'; stacked = true; }
+            if (rawChartType === 'bar-horizontal') { chartType = 'bar'; indexAxis = 'y'; }
+            if (rawChartType === 'bar-horizontal-stacked') { chartType = 'bar'; indexAxis = 'y'; stacked = true; }
+            if (rawChartType === 'area') { chartType = 'line'; fill = true; }
+            if (rawChartType === 'density') { chartType = 'line'; fill = true; tension = 0.5; }
+            if (rawChartType === 'histogram') { chartType = 'bar'; }
+            if (rawChartType === 'lollipop') { chartType = 'bar'; }
+
+            // Kutu Grafiği (Boxplot) - Özel durum
+            if (rawChartType === 'boxplot') {
+                labels = locs; // Boxplotta eksen iller olsun
+                const boxData = locs.map(loc => {
+                    return data
+                        .filter(d => d.il === loc)
+                        .map(d => d[metricKey]);
+                });
+
+                datasets = [{
+                    label: metricTitle,
+                    data: boxData,
+                    backgroundColor: 'rgba(52, 152, 219, 0.5)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 1,
+                    outlierColor: '#999999',
+                    padding: 10,
+                    itemRadius: 2
+                }];
+            }
+            // Radar Grafiği
+            else if (rawChartType === 'radar') {
+                datasets = locs.map((loc, i) => {
+                    const locData = data.filter(d => d.il === loc);
+                    const dPoints = years.map(y => {
+                        const rec = locData.find(d => String(d.yil) === String(y));
+                        return rec ? rec[metricKey] : 0;
+                    });
+                    const hue = (i * 137) % 360;
+                    return {
+                        label: loc,
+                        data: dPoints,
+                        borderColor: `hsla(${hue}, 70%, 50%, 1)`,
+                        backgroundColor: `hsla(${hue}, 70%, 50%, 0.2)`,
+                        pointBackgroundColor: `hsla(${hue}, 70%, 50%, 1)`,
+                    };
+                });
+            }
+            // Diğer Standart Grafikler (Bar, Line, Horizontal Bar vb.)
+            else {
+                datasets = locs.map((loc, i) => {
+                    const hue = (i * 137) % 360;
+                    const locData = data.filter(d => d.il === loc);
+
+                    const dataPoints = years.map(y => {
+                        const rec = locData.find(d => String(d.yil) === String(y));
+                        const val = rec ? rec[metricKey] : 0;
+
+                        if (rawChartType === 'bubble') {
+                            const rVal = val > 0 ? Math.sqrt(val) / 50 : 2;
+                            return { x: y, y: val, r: Math.min(Math.max(rVal, 3), 40) };
+                        }
+                        return val;
+                    });
+
+                    let ds = {
+                        label: loc,
+                        data: dataPoints,
+                        borderColor: `hsla(${hue}, 70%, 50%, 1)`,
+                        backgroundColor: `hsla(${hue}, 70%, 50%, 0.6)`,
+                        borderWidth: 2,
+                        tension: tension,
+                        fill: fill
+                    };
+
+                    if (rawChartType === 'histogram') {
+                        ds.barPercentage = 1.0;
+                        ds.categoryPercentage = 1.0;
+                        ds.borderWidth = 1;
+                        ds.borderColor = '#fff';
+                    }
+
+                    if (rawChartType === 'lollipop') {
+                        ds.barPercentage = 0.05;
+                        ds.backgroundColor = `hsla(${hue}, 70%, 50%, 1)`;
+                        ds.type = 'bar';
+                        ds.order = 1;
+                    }
+
+                    return ds;
+                });
+
+                if (rawChartType === 'lollipop') {
+                    const scatterSets = locs.map((loc, i) => {
+                        const hue = (i * 137) % 360;
+                        const locData = data.filter(d => d.il === loc);
+                        const dPoints = years.map(y => {
+                            const rec = locData.find(d => String(d.yil) === String(y));
+                            return rec ? rec[metricKey] : 0;
+                        });
+                        return {
+                            label: loc + ' (Nokta)',
+                            data: dPoints,
+                            type: 'scatter',
+                            backgroundColor: `hsla(${hue}, 70%, 50%, 1)`,
+                            borderColor: 'transparent',
+                            radius: 6,
+                            order: 0
+                        };
+                    });
+                    datasets.push(...scatterSets);
+                }
+            }
+
+            // --- EKSEN AYARLARI (DÜZELTİLDİ) ---
+            // Sayısal eksen ayarlarını bir obje olarak tanımlayalım
+            const numericAxisConfig = {
+                stacked: stacked,
+                beginAtZero: true,
+                ticks: {
+                    callback: function (val) {
+                        if (val >= 1000000) return (val / 1000000).toFixed(1) + ' Mn';
+                        if (val >= 1000) return (val / 1000).toFixed(0) + ' B';
+                        return val;
+                    }
+                }
+            };
+
+            // Kategori eksen ayarları (Yıllar veya İller)
+            const categoryAxisConfig = {
+                stacked: stacked
+            };
+
+            // Eğer grafik yataysa (horizontal), X ekseni sayısal, Y ekseni kategoridir.
+            // Eğer grafik dikeyse (vertical), Y ekseni sayısal, X ekseni kategoridir.
+            const scalesConfig = (rawChartType === 'radar') ? {} : {
+                x: (indexAxis === 'y') ? numericAxisConfig : categoryAxisConfig,
+                y: (indexAxis === 'y') ? categoryAxisConfig : numericAxisConfig
+            };
+
+            // GRAFİK OLUŞTURMA
+            chartInstance = new Chart(ctx, {
+                type: chartType,
+                data: { labels: labels, datasets: datasets },
+                plugins: [{
+                    id: 'custom_canvas_background_color',
+                    beforeDraw: (chart) => {
+                        const ctx = chart.canvas.getContext('2d');
+                        ctx.save();
+                        ctx.globalCompositeOperation = 'destination-over';
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, chart.width, chart.height);
+                        ctx.restore();
+                    }
+                }],
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: indexAxis, // Bu ayar x ve y'nin yönünü belirler
+                    scales: scalesConfig, // Dinamik eksen ayarı
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: [
+                                els.destekTuru.value,
+                                metricTitle
+                            ],
+                            font: { size: 16 }
+                        },
+                        legend: {
+                            position: 'left',
+                            align: 'end',
+                            labels: {
+                                boxWidth: 15,
+                                usePointStyle: false,
+                                padding: 15,
+                                filter: function (item) {
+                                    return !item.text.includes('(Nokta)');
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    if (rawChartType === 'boxplot') return context.dataset.label;
+                                    let label = context.dataset.label || '';
+                                    if (label) label = label.replace(' (Nokta)', '');
+                                    let val = context.raw;
+                                    if (typeof val === 'object' && val !== null) val = val.y;
+                                    return label + ': ' + formatNumber(val);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        window.downloadChart = () => {
+            const link = document.createElement('a');
+            link.download = 'Grafik.png';
+            link.href = document.getElementById('myChart').toDataURL();
+            link.click();
+        };
+
+        window.downloadTable = () => {
+            if (!currentFilteredData || currentFilteredData.length === 0) {
+                alert("İndirilecek veri yok.");
+                return;
+            }
+            const exportData = currentFilteredData.map(item => ({
+                "İl": item.il,
+                "Yıl": item.yil,
+                "Destek Türü": item.destek_turu,
+                "Metrik": els.metric.options[els.metric.selectedIndex].text,
+                "Değer": item[els.metric.value]
+            }));
+            const ws = XLSX.utils.json_to_sheet(exportData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Veriler");
+            XLSX.writeFile(wb, 'Rapor.xlsx');
+        };
+    </script>
+</body>
+
+</html>

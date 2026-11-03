@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harita Oluşturma · Türkiye Bölgesel Veri Analizleri</title>
+    <meta name="description" content="İlçe, il, Düzey 2 ve Düzey 1 düzeyinde tematik harita oluşturun; PNG, SVG ve CSV olarak indirin.">
+    <link rel="icon" href="/img/logo.png">
+</head>
+
+<body class="arac-sayfasi">
+    <header class="ust-cubuk">
+        <a class="marka" href="./">
+            <img src="/img/logo.png" alt="T.C. Sanayi ve Teknoloji Bakanlığı">
+            <span id="site-baslik"></span>
+        </a>
+        <nav class="ust-nav">
+            <a href="./">Ana Sayfa</a>
+            <a href="analiz.html">Analiz Masası</a>
+            <a href="okuryazarlik.html">Kalkınma Okuryazarlığı</a>
+            <a href="katalog.html">Veri Kataloğu</a>
+            <details class="araclar-menu">
+                <summary aria-current="page">Araçlar</summary>
+                <nav id="araclar"></nav>
+            </details>
+            <a href="hakkinda.html">Hakkında</a>
+        </nav>
+    </header>
+
+    <main class="arac">
+        <aside class="arac-panel" aria-label="Harita ayarları">
+            <p class="ust-etiket">Araçlar</p>
+            <h1>Harita Oluşturma</h1>
+
+            <fieldset class="arac-grup">
+                <legend>Veri</legend>
+                <div class="duzey-secici" role="radiogroup" aria-label="Düzey" id="duzey">
+                    <button type="button" data-duzey="ilce" role="radio">İlçe</button>
+                    <button type="button" data-duzey="il" role="radio">İl</button>
+                    <button type="button" data-duzey="duzey2" role="radio">Düzey 2</button>
+                    <button type="button" data-duzey="duzey1" role="radio">Düzey 1</button>
+                </div>
+                <label>Kategori <select id="kategori"></select></label>
+                <label>Gösterge <select id="gosterge"></select></label>
+                <div class="yan-yana">
+                    <label>Yıl <select id="yil"></select></label>
+                    <label>Alan <select id="kapsam"></select></label>
+                </div>
+                <details class="kendi-verisi" id="kendi-verisi">
+                    <summary>Kendi verinizi kullanın</summary>
+                    <p class="ipucu">İki sütun: birim (kod ya da ad) ve değer. Excel'den kopyalayıp yapıştırabilir ya da CSV dosyası seçebilirsiniz. İlçelerde "Adana-Aladağ" ya da "Aladağ (Adana)" yazın.</p>
+                    <textarea id="kendi-metin" rows="5" placeholder="Adana;12,5&#10;Adıyaman;9,8&#10;..."></textarea>
+                    <div class="yan-yana">
+                        <input type="file" id="kendi-dosya" accept=".csv,.txt,.tsv">
+                        <button type="button" id="kendi-uygula" class="dugme">Uygula</button>
+                    </div>
+                    <p class="ipucu" id="kendi-durum" role="status"></p>
+                </details>
+            </fieldset>
+
+            <fieldset class="arac-grup">
+                <legend>Görünüm</legend>
+                <label>Başlık <input type="text" id="baslik" placeholder="Göstergenin adı ve yılı"></label>
+                <div class="yan-yana">
+                    <label>Sınıflama
+                        <select id="siniflama">
+                            <option value="ceyrek">Eşit sayıda birim</option>
+                            <option value="esit">Eşit aralık</option>
+                            <option value="surekli">Sürekli renk</option>
+                        </select>
+                    </label>
+                    <label>Sınıf sayısı
+                        <select id="sinif">
+                            <option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="palet-secici" id="palet" role="radiogroup" aria-label="Renk paleti"></div>
+                <div class="yan-yana ozel-renk" id="ozel-renk" hidden>
+                    <label>Başlangıç <input type="color" id="renk1" value="#f6e9dc"></label>
+                    <label>Bitiş <input type="color" id="renk2" value="#86301a"></label>
+                </div>
+                <div class="yan-yana">
+                    <label>Lejant
+                        <select id="lejant">
+                            <option value="alt">Haritanın altında</option>
+                            <option value="sol-alt">Sol alt</option>
+                            <option value="sag-alt">Sağ alt</option>
+                            <option value="sag-ust">Sağ üst</option>
+                            <option value="yok">Gösterme</option>
+                        </select>
+                    </label>
+                    <label>Sınır rengi
+                        <select id="sinir">
+                            <option value="#ffffff">Beyaz</option>
+                            <option value="#8c8c8c">Gri</option>
+                            <option value="#2f2f2f">Koyu</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="kutular">
+                    <label class="kutu"><input type="checkbox" id="etiket-ad"> Birim adları</label>
+                    <label class="kutu"><input type="checkbox" id="etiket-deger"> Değerler</label>
+                    <label class="kutu"><input type="checkbox" id="ust-sinir" checked> Üst birim sınırları</label>
+                </div>
+            </fieldset>
+
+            <div class="indir-dugmeleri">
+                <button type="button" class="dugme dugme--ana" id="indir-png">PNG indir</button>
+                <button type="button" class="dugme" id="indir-svg">SVG indir</button>
+                <button type="button" class="dugme" id="indir-csv">Tablo (CSV)</button>
+            </div>
+        </aside>
+
+        <section class="arac-sahne" aria-live="polite">
+            <div class="harita-kap">
+                <svg id="harita" xmlns="http://www.w3.org/2000/svg" role="img"></svg>
+                <div class="arac-ipucu" id="ipucu" hidden></div>
+            </div>
+            <p class="arac-durum" id="durum" role="status"></p>
+            <div class="tablo-kap">
+                <table class="arac-tablo" id="tablo"></table>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="/src/pages/harita.js"></script>
+</body>
+
+</html>

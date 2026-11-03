@@ -1,0 +1,70 @@
+﻿dosya;olcu;birim;filtre;duzey;gosterge;kategori;carpan;eksik_kabul;payda;yayin;not
+DSD_REG_DEMO_DF_DEATH_5Y;MORT_STANDARD_RATIO;10P3HB;SEX=_T,AGE=_T;TL2,TL3,CTRY;Yaşa Göre Standartlaştırılmış Ölüm Hızı (OECD) (Binde);Demografi;0,01;;;;Yaş yapısı farkını giderir, iller arası karşılaştırma için kaba ölüm hızından uygundur OECD birimi 'bin kişide' diyor ama değerler yüz binde (TR 2022: 1048),  0,01 ile binde'ye çevrildi
+DSD_REG_DEMO_DF_DEATH_5Y;MORT_STANDARD_RATIO;10P3HB;SEX=F,AGE=_T;TL2,TL3,CTRY;Yaşa Göre Standartlaştırılmış Ölüm Hızı, Kadın (OECD) (Binde);Demografi;0,01;;;hayir;OECD birimi 'bin kişide' diyor ama değerler yüz binde (TR 2022: 1048),  0,01 ile binde'ye çevrildi
+DSD_REG_DEMO_DF_DEATH_5Y;MORT_STANDARD_RATIO;10P3HB;SEX=M,AGE=_T;TL2,TL3,CTRY;Yaşa Göre Standartlaştırılmış Ölüm Hızı, Erkek (OECD) (Binde);Demografi;0,01;;;hayir;OECD birimi 'bin kişide' diyor ama değerler yüz binde (TR 2022: 1048),  0,01 ile binde'ye çevrildi
+DSD_REG_ECO_DF_GDP;GDP;USD_PPP_WR;PRICES=V;TL2,CTRY;Çalışan Başına GSYH, SGP (OECD) ($);Ekonomi;;;;;
+DSD_REG_ECO_DF_INC;B6N;USD_PPP_PS;PRICES=V;TL2,CTRY;Kişi Başına Harcanabilir Hanehalkı Geliri, SGP (OECD) ($);Gelir ve Yaşam Koşulları;;;;;
+DSD_REG_ECO_DF_INC;B6N;XDC_PS;PRICES=V;TL2,CTRY;Kişi Başına Harcanabilir Hanehalkı Geliri (OECD) (TL);Gelir ve Yaşam Koşulları;;;;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=BTE;TL2,CTRY;İstihdamda Sektör Payı (OECD): Sanayi (Enerji Dahil) (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=C;TL2,CTRY;İstihdamda Sektör Payı (OECD): İmalat (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=F;TL2,CTRY;İstihdamda Sektör Payı (OECD): İnşaat (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=GTI;TL2,CTRY;İstihdamda Sektör Payı (OECD): Ticaret, Ulaştırma, Konaklama (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=J;TL2,CTRY;İstihdamda Sektör Payı (OECD): Bilgi ve İletişim (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=K;TL2,CTRY;İstihdamda Sektör Payı (OECD): Finans ve Sigorta (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=L;TL2,CTRY;İstihdamda Sektör Payı (OECD): Gayrimenkul (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=M_N;TL2,CTRY;İstihdamda Sektör Payı (OECD): Mesleki ve İdari Hizmetler (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=OTQ;TL2,CTRY;İstihdamda Sektör Payı (OECD): Kamu Yönetimi, Eğitim, Sağlık (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_EMP;EMP;PS;ACTIVITY=RTU;TL2,CTRY;İstihdamda Sektör Payı (OECD): Diğer Hizmetler (%);İşgücü;;;ACTIVITY=_T;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=_T;TL2,CTRY;Emek Verimliliği (OECD): Toplam Ekonomi ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=A;TL2,CTRY;Emek Verimliliği (OECD): Tarım, Ormancılık ve Balıkçılık ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=BTE;TL2,CTRY;Emek Verimliliği (OECD): Sanayi (Enerji Dahil) ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=C;TL2,CTRY;Emek Verimliliği (OECD): İmalat ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=F;TL2,CTRY;Emek Verimliliği (OECD): İnşaat ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=GTI;TL2,CTRY;Emek Verimliliği (OECD): Ticaret, Ulaştırma, Konaklama ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=J;TL2,CTRY;Emek Verimliliği (OECD): Bilgi ve İletişim ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=K;TL2,CTRY;Emek Verimliliği (OECD): Finans ve Sigorta ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=L;TL2,CTRY;Emek Verimliliği (OECD): Gayrimenkul ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=M_N;TL2,CTRY;Emek Verimliliği (OECD): Mesleki ve İdari Hizmetler ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=OTQ;TL2,CTRY;Emek Verimliliği (OECD): Kamu Yönetimi, Eğitim, Sağlık ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_ECO_DF_LPR;LAB_PROD;USD_PPP_WR;PRICES=V,ACTIVITY=RTU;TL2,CTRY;Emek Verimliliği (OECD): Diğer Hizmetler ($, SGP, Çalışan Başına);Ekonomi;;;;;
+DSD_REG_DEMO_DF_MIGR_FLOW;INMIG;PT_POP;;TL3,CTRY;Uluslararası Göç: Yurt Dışından Gelenler (OECD) (%);Göç;;;;;
+DSD_REG_DEMO_DF_MIGR_FLOW;OUTMIG;PT_POP;;TL3,CTRY;Uluslararası Göç: Yurt Dışına Gidenler (OECD) (%);Göç;;;;;
+DSD_REG_HEALTH_DF_HEALTH;H_DISCHARGE_T;DSC_10P5PS;;TL2,TL3,CTRY;Hastaneden Taburcu Olan (OECD) (Yüz Binde);Sağlık;;;;;
+DSD_REG_EDU_DF_ATTAIN;NEAC_SHARE_EA;PT_POP_SEX_AGE;AGE=Y25T64,SEX=_T,EDUCATION_LEV=ISCED11_5T8;TL2,CTRY;Eğitim Düzeyi (25-64 Yaş, OECD): Yükseköğretim Mezunu (%);Eğitim;;;;;kaynak: OECD Regional, Metropolitan and Local Statistics (kaynak veri: TÜİK Hanehalkı İşgücü Anketi)
+DSD_REG_EDU_DF_ATTAIN;NEAC_SHARE_EA;PT_POP_SEX_AGE;AGE=Y25T64,SEX=_T,EDUCATION_LEV=ISCED11_3_4;TL2,CTRY;Eğitim Düzeyi (25-64 Yaş, OECD): Lise Mezunu (%);Eğitim;;;;;kaynak: OECD Regional, Metropolitan and Local Statistics (kaynak veri: TÜİK Hanehalkı İşgücü Anketi)
+DSD_REG_EDU_DF_ATTAIN;NEAC_SHARE_EA;PT_POP_SEX_AGE;AGE=Y25T64,SEX=_T,EDUCATION_LEV=ISCED11_0T2;TL2,CTRY;Eğitim Düzeyi (25-64 Yaş, OECD): Lise Altı (%);Eğitim;;;;;kaynak: OECD Regional, Metropolitan and Local Statistics (kaynak veri: TÜİK Hanehalkı İşgücü Anketi)
+DSD_REG_EDU_DF_ATTAIN;NEAC_SHARE_EA;PT_POP_SEX_AGE;AGE=Y25T34,SEX=_T,EDUCATION_LEV=ISCED11_5T8;TL2,CTRY;Eğitim Düzeyi (25-34 Yaş, OECD): Yükseköğretim Mezunu (%);Eğitim;;;;;kaynak: OECD Regional, Metropolitan and Local Statistics (kaynak veri: TÜİK Hanehalkı İşgücü Anketi)
+DSD_REG_EDU_DF_EXCLU;TRANS_SHARE_EDULABOUR_NE_U_I;PT_POP_SEX_AGE;SEX=_T,STATISTICAL_OPERATION=MEAN;TL2,TL3,CTRY;Ne Eğitimde Ne İstihdamda Olan Gençler (NEET, OECD) (%);Eğitim;;;;;
+DSD_REG_EDU_DF_EXCLU;TRANS_SHARE_EDULABOUR_NE_U_I;PT_POP_SEX_AGE;SEX=F,STATISTICAL_OPERATION=MEAN;TL2,TL3,CTRY;Ne Eğitimde Ne İstihdamda Olan Gençler, Kadın (NEET, OECD) (%);Eğitim;;;;;
+DSD_REG_EDU_DF_EXCLU;EARLY_LEAVERS_RATE;PT_POP_SEX_AGE;SEX=_T;TL2,CTRY;Eğitimi Erken Bırakanlar (18-24 Yaş, OECD) (%);Eğitim;;;;;
+DSD_REG_EDU_DF_ENROL;ENRL_RATE;PT_POP_SEX_AGE;AGE=Y20T29,SEX=_T;TL2,CTRY;Okullaşma Oranı (OECD): 20-29 Yaş (%);Eğitim;;;;;
+DSD_REG_EDU_DF_TRAINING;AL_FNFAET4;PT_POP_SEX_AGE;SEX=_T;TL2,CTRY;Yetişkin Eğitimine Katılım, Son 4 Hafta (25-64 Yaş, OECD) (%);Eğitim;;;;;
+DSD_REG_INNOV_DF_RD_GERD;GERD;PT_B1GQ;SECT_PERF=BES;TL2,CTRY;Ar-Ge Harcamasının GSYH'ye Oranı (OECD): Şirketler (%);Araştırma ve Geliştirme;;;;;
+DSD_REG_INNOV_DF_RD_GERD;GERD;PT_B1GQ;SECT_PERF=GOV;TL2,CTRY;Ar-Ge Harcamasının GSYH'ye Oranı (OECD): Kamu (%);Araştırma ve Geliştirme;;;;;
+DSD_REG_INNOV_DF_RD_GERD;GERD;PT_B1GQ;SECT_PERF=HES;TL2,CTRY;Ar-Ge Harcamasının GSYH'ye Oranı (OECD): Yükseköğretim (%);Araştırma ve Geliştirme;;;;;
+DSD_REG_INNOV_DF_RD_PERS;EMP_RD_RSE;PT_EMP;SECT_PERF=BES;TL2,CTRY;Araştırmacıların İstihdamdaki Payı (OECD): Şirketler (%);Araştırma ve Geliştirme;;;;;
+DSD_REG_INNOV_DF_RD_PERS;EMP_RD_RSE;PT_EMP;SECT_PERF=HES;TL2,CTRY;Araştırmacıların İstihdamdaki Payı (OECD): Yükseköğretim (%);Araştırma ve Geliştirme;;;;;
+DSD_REG_INNOV_DF_PAT;PCT_PAT;10P6HB;DATE_TYPE=PRIORITY;TL2,TL3,CTRY;Milyon Kişi Başına PCT Patent Başvurusu (OECD);Araştırma ve Geliştirme;;;;;buluş sahibinin ikametine ve öncelik yılına göre, kesirli sayım
+DSD_REG_INNOV_DF_PAT;PCT_PAT;PATN;DATE_TYPE=PRIORITY,OECD_TECHNOLOGY_PATENT=_T;TL2,TL3,CTRY;PCT Patent Başvurusu (OECD): Toplam;Araştırma ve Geliştirme;;;;;
+DSD_REG_INNOV_DF_PAT;PCT_PAT;PATN;DATE_TYPE=PRIORITY,OECD_TECHNOLOGY_PATENT=ICT;TL2,TL3,CTRY;PCT Patent Başvurusu (OECD): Bilgi ve İletişim Teknolojileri;Araştırma ve Geliştirme;;evet;;;
+DSD_REG_INNOV_DF_PAT;PCT_PAT;PATN;DATE_TYPE=PRIORITY,OECD_TECHNOLOGY_PATENT=BIOTECH;TL2,TL3,CTRY;PCT Patent Başvurusu (OECD): Biyoteknoloji;Araştırma ve Geliştirme;;evet;;;
+DSD_REG_INNOV_DF_PAT;PCT_PAT;PATN;DATE_TYPE=PRIORITY,OECD_TECHNOLOGY_PATENT=NANOTECH;TL2,TL3,CTRY;PCT Patent Başvurusu (OECD): Nanoteknoloji;Araştırma ve Geliştirme;;evet;;;
+DSD_REG_INNOV_DF_PAT;PCT_PAT;PATN;DATE_TYPE=PRIORITY,OECD_TECHNOLOGY_PATENT=MEDICAL;TL2,TL3,CTRY;PCT Patent Başvurusu (OECD): Tıbbi Teknoloji;Araştırma ve Geliştirme;;evet;;;
+DSD_REG_INNOV_DF_PAT;PCT_PAT;PATN;DATE_TYPE=PRIORITY,OECD_TECHNOLOGY_PATENT=PHARMA;TL2,TL3,CTRY;PCT Patent Başvurusu (OECD): İlaç;Araştırma ve Geliştirme;;evet;;;
+DSD_REG_INNOV_DF_PAT;PCT_PAT;PATN;DATE_TYPE=PRIORITY,OECD_TECHNOLOGY_PATENT=AI;TL2,TL3,CTRY;PCT Patent Başvurusu (OECD): Yapay Zekâ;Araştırma ve Geliştirme;;evet;;;
+DSD_REG_INNOV_DF_PAT;PCT_PAT;PATN;DATE_TYPE=PRIORITY,OECD_TECHNOLOGY_PATENT=ENV_TECH;TL2,TL3,CTRY;PCT Patent Başvurusu (OECD): Çevre Teknolojileri;Araştırma ve Geliştirme;;evet;;;
+DSD_REG_SOC_DF_SAFETY;VEH_THEFT;CS_10P5PS;;TL2,TL3,CTRY;Motorlu Taşıt Hırsızlığı (OECD) (Yüz Binde);Gelir ve Yaşam Koşulları;;;;;
+DSD_REG_SOC_DF_SAFETY;HOMIC;CS_10P5PS;;TL2,TL3,CTRY;Kasten Öldürme Oranı (OECD) (Yüz Binde);Gelir ve Yaşam Koşulları;;;;;
+DSD_REG_SOC_DF_SAFETY;VOTERS_RATE;PT_POP_SUB;;TL2,TL3,CTRY;Genel Seçimlere Katılım Oranı (OECD) (%);Gelir ve Yaşam Koşulları;;;;;
+DSD_REG_SOC_DF_SAFETY;ROOMS;RO_PS;;TL2,CTRY;Kişi Başına Oda Sayısı (OECD);Bölgesel Refah (OECD);;;;;
+DSD_REG_SOC_DF_SAFETY;HOUSE_COST;PT_B6N_S14;;TL2,CTRY;Konut Maliyetinin Harcanabilir Gelirdeki Payı (OECD) (%);İnşaat ve Konut;;;;;
+DSD_REG_SOC_DF_SAFETY;VEH_STOCK_ELECTRIC;UT;;TL2,TL3,CTRY;Elektrikli Taşıt Sayısı (OECD);Ulaştırma;;;;;
+DSD_REG_SOC_DF_SAFETY;VEH_STOCK_HYBRID;UT;;TL2,TL3,CTRY;Hibrit Taşıt Sayısı (OECD);Ulaştırma;;;;;
+DSD_REG_MW_DF_WASTE;POP_WATER_2ND_TREAT;PT_POP;;TL2,TL3,CTRY;En Az İkincil Arıtmalı Atık Su Sistemine Bağlı Nüfus (OECD) (%);Çevre;;;;;
+DSD_REG_CLIM_DF_AIR_TEMP;AIR_TEMP2M;C;;TL2,TL3,CTRY;İklim (OECD): Ortalama Hava Sıcaklığı (°C);Çevre;;;;;
+DSD_REG_CLIM_DF_AIR_TEMP;HOT_DAYS;D;;TL2,TL3,CTRY;İklim (OECD): Sıcak Gün Sayısı (Gün);Çevre;;;;;
+DSD_REG_CLIM_DF_AIR_TEMP;TROP_NIGHTS;D;;TL2,TL3,CTRY;İklim (OECD): Tropikal Gece Sayısı (Gün);Çevre;;;;;
+DSD_REG_CLIM_DF_AIR_TEMP;ICING_DAYS;D;;TL2,TL3,CTRY;İklim (OECD): Buzlu Gün Sayısı (Gün);Çevre;;;;;
+DSD_REG_CLIM_DF_DEGREE_DAYS;HDD;DD;;TL2,TL3,CTRY;İklim (OECD): Isıtma Derece-Gün (Derece-Gün);Çevre;;;;;
+DSD_REG_CLIM_DF_DEGREE_DAYS;CDD;DD;;TL2,TL3,CTRY;İklim (OECD): Soğutma Derece-Gün (Derece-Gün);Çevre;;;;;
+DSD_REG_CLIM_DF_DEGREE_DAYS;CDD_DIFF_1981_2010;DD;;TL2,TL3,CTRY;İklim (OECD): Soğutma Derece-Gündeki Değişim, 1981-2010'a Göre (Derece-Gün);Çevre;;;;;

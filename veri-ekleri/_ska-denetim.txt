@@ -1,0 +1,25 @@
+Çakışan fazla satır atlandı: TR 2023 SKA 09 Sanayi, Yenilikçilik ve Altyapı: 9.5.2.b Sektörlere göre araştırmacı sayısı (Erkek) (TZE): 151219 tutuldu, 164529 atlandı
+SKA 04 Nitelikli Eğitim: 4.a.1.a Elektriği olan okulların oranı (%): '2013-2024' dönemi yıllara açıldı (100)
+17.6.1 2024: 0.46 değeri 2–10 Mbps sınıfına taşındı
+illerska.csv.gz: 22984 değerden surdurulebilir.csv.gz'de karşılığı olmayan: 0
+nuts2ska.csv: 312 değerden surdurulebilir.csv.gz'de karşılığı olmayan: 0
+surdurulebilir.csv.gz içindeki coğrafi bölge satırı: 56
+7bolgeska.csv: 56 değer (coğrafi bölge) veritabanına alınmadı, notta belirtildi
+Birimi addan çıkarılamayan gösterge: 17
+  SKA 02 Açlığa Son: 2.c.1 Gıda fiyat anomalileri göstergesi (Yıllık Fiyat Anomali Gösterge Değeri) (Başka Yerde Sınıflandırılmayan Diğer Gıda Ürünleri)
+  SKA 02 Açlığa Son: 2.c.1 Gıda fiyat anomalileri göstergesi (Yıllık Fiyat Anomali Gösterge Değeri) (Şeker; Reçel; Bal; Çikolata ve Şekerlemeler)
+  SKA 03 Sağlıklı ve Kaliteli Yaşam: 3.1.1 Anne ölüm oranı (100.000 canlı doğum başına)
+  SKA 03 Sağlıklı ve Kaliteli Yaşam: 3.5.2.b Bir takvim yılı içinde litre saf alkol olarak kişi başına yurtiçi alkol arzı (15 yaş ve üstü) (litre saf alkol) (Kişi başına litre saf alkol)
+  SKA 09 Sanayi, Yenilikçilik ve Altyapı: 9.2.1.a İmalat sanayi katma değerinin gayrisafi yurt içi hasıla (GSYH) içindeki payı
+  SKA 09 Sanayi, Yenilikçilik ve Altyapı: 9.4.1.a Katma değer birim başına CO2 emisyonu (Kg CO2/ABD $ (2021 $ SGP))
+  SKA 11 Sürdürülebilir Şehirler ve Topluluklar: 11.3.2.a Kent Konseyi olan illerin sayısı
+  SKA 11 Sürdürülebilir Şehirler ve Topluluklar: 11.3.2.c Kent Konseyi olan ilçelerin sayısı
+  SKA 15 Karasal Yaşam: 15.2.1 Sürdürülebilir orman yönetimine doğru ilerleme (Bağımsız olarak değerlendirilen bir orman yönetimi sertifikasyon şemasında bulunan orman alanı (Bin hektar))
+  SKA 15 Karasal Yaşam: 15.2.1 Sürdürülebilir orman yönetimine doğru ilerleme (Orman alanı yıllık net değişimi)
+  SKA 15 Karasal Yaşam: 15.2.1 Sürdürülebilir orman yönetimine doğru ilerleme (Ormandaki yer-üstü biyokütle stokları (Milyon ton))
+  SKA 16 Barış, Adalet ve Güçlü Kurumlar: 16.2.2.a 1 milyon kişi başına insan ticareti mağdurlarının sayısı
+  SKA 16 Barış, Adalet ve Güçlü Kurumlar: 16.2.2.b İnsan ticareti mağdurlarının sayısı
+  SKA 16 Barış, Adalet ve Güçlü Kurumlar: 16.7.1.a Türkiye Büyük Millet Meclisi (Gençlerin temsiliyet durumu)
+  SKA 16 Barış, Adalet ve Güçlü Kurumlar: 16.7.1.a Türkiye Büyük Millet Meclisi (Kadınların temsiliyet durumu)
+  SKA 16 Barış, Adalet ve Güçlü Kurumlar: 16.7.1.b Kamu hizmetleri (Gençlerin temsiliyet durumu)
+  SKA 16 Barış, Adalet ve Güçlü Kurumlar: 16.7.1.b Kamu hizmetleri (Kadınların temsiliyet durumu)
