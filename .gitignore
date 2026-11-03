@@ -17,16 +17,3 @@ veri-masasi/raporlar/
 # Excel'in açık dosya kilitleri
 ~$*
 
-# Kök klasörde kalmış eski derleme kopyaları (asılları src/ altında; temizlenince bu blok silinebilir)
-/analiz-*.js
-/arac-*.js
-/atlas.js
-/data-*.js
-/data-*.css
-/giris.js
-/grafik-*.js
-/hakkinda-*.js
-/harita-*.js
-/index-*.js
-/hikaye.css
-/vitrin.css
