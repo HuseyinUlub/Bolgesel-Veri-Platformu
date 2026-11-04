@@ -599,6 +599,8 @@ Emek Verimliliği (OECD): İmalat ($, SGP, Çalışan Başına);country;12;2024;
 Emek Verimliliği (OECD): İmalat ($, SGP, Çalışan Başına);region26;312;2024;24278520.1
 Emek Verimliliği (OECD): İnşaat ($, SGP, Çalışan Başına);country;12;2024;1041293.5
 Emek Verimliliği (OECD): İnşaat ($, SGP, Çalışan Başına);region26;312;2024;22326294.7
+Emek Verimliliği Yıllık Reel Artışı, 2018-2024 (OECD) (%);country;1;2024;2.48
+Emek Verimliliği Yıllık Reel Artışı, 2018-2024 (OECD) (%);region26;26;2024;62.96
 En Az Lise Mezunu İşgücü Oranı (OECD) (%);region26;26;2024;1132.3
 En Az İkincil Arıtmalı Atık Su Sistemine Bağlı Nüfus (OECD) (%);province;486;2022;25538.7117
 En Az İkincil Arıtmalı Atık Su Sistemine Bağlı Nüfus (OECD) (%);region26;260;2022;14158.753
@@ -1214,6 +1216,8 @@ Hat Uzunluğu (Km);region12;108;2024;11491822.0
 Hat Uzunluğu (Km);region26;234;2024;11492518.0
 Hava Kirliliği PM2.5 (OECD) (µg/m³);region26;26;2024;335.6
 Hava Sıcaklığındaki Değişim, 1981-2010 Ortalamasına Göre (OECD Kent) (°C);fua;338;2025;354.421
+Hava Sıcaklığındaki Değişim, 2021-2025 / 1981-2010 (OECD) (°C);country;1;2025;1.589
+Hava Sıcaklığındaki Değişim, 2021-2025 / 1981-2010 (OECD) (°C);region26;26;2025;40.767
 Hava Trafiği Geliş-Gidiş: Diğer;country;21;2024;3849970.0
 Hava Trafiği Geliş-Gidiş: Diğer;province;939;2024;3849970.0
 Hava Trafiği Geliş-Gidiş: Diğer;region26;527;2024;3849970.0
@@ -1450,6 +1454,7 @@ Kişi Başına Nakdi Kredi (TL);province;1296;2025;47761514.12
 Kişi Başına Nakdi Kredi (TL);region26;48;2025;5139410.5
 Kişi Başına Oda Sayısı (OECD);country;13;2025;14.13
 Kişi Başına Oda Sayısı (OECD);region26;285;2024;401.34
+Kişi Başına Reel GSYH Artışının Türkiye Ortalamasından Farkı, 2018-2024 (OECD) (Yüzde Puan);region26;26;2024;-1.61
 Kişi Başına Sanayi Elektrik Tüketimi (KWh);country;17;2023;22092.0
 Kişi Başına Sanayi Elektrik Tüketimi (KWh);province;1377;2023;1798082.0
 Kişi Başına Sanayi Elektrik Tüketimi (KWh);region12;171;2023;226184.0
@@ -2090,6 +2095,7 @@ Patates, Kuru Baklagiller vb. Üretim Miktarı (Ton);country;30;2024;185651802.0
 Patates, Kuru Baklagiller vb. Üretim Miktarı (Ton);province;2415;2024;185651802.0
 Patates, Kuru Baklagiller vb. Üretim Miktarı (Ton);region12;195;2024;91980364.0
 Patates, Kuru Baklagiller vb. Üretim Miktarı (Ton);region26;780;2024;185651802.0
+Patent Yoğunlaşma Katsayısı (OECD Kent);fua;26;2024;13.009
 Pratisyen Hekim Sayısı;country;23;2024;951751.0
 Pratisyen Hekim Sayısı;province;1863;2024;951751.0
 Pratisyen Hekim Sayısı;region12;188;2024;716039.0
@@ -5039,6 +5045,8 @@ Yaşa Göre Standartlaştırılmış Ölüm Hızı, Kadın (OECD) (Binde);countr
 Yaşa Göre Standartlaştırılmış Ölüm Hızı, Kadın (OECD) (Binde);province;972;2024;9294.496
 Yaşa Göre Standartlaştırılmış Ölüm Hızı, Kadın (OECD) (Binde);region26;312;2024;2921.277
 Yaşam Memnuniyeti (OECD) (0-10);region26;26;2024;126.2
+Yaşam Memnuniyetindeki Değişim, 2014/15-2024/25 (OECD) (Puan);country;1;2025;-0.34
+Yaşam Memnuniyetindeki Değişim, 2014/15-2024/25 (OECD) (Puan);region26;21;2025;-8.15
 Yaşlı Bağımlılık Oranı (%);country;19;2025;240.23
 Yaşlı Bağımlılık Oranı (%);district;12636;2025;286614.62
 Yaşlı Bağımlılık Oranı (%);province;1539;2025;22856.57
@@ -5057,6 +5065,8 @@ Yem Bitkileri (Saman ve Ot) Üretim Miktarı (Ton);country;30;2024;899844986.0
 Yem Bitkileri (Saman ve Ot) Üretim Miktarı (Ton);province;2408;2024;899844986.0
 Yem Bitkileri (Saman ve Ot) Üretim Miktarı (Ton);region12;195;2024;743741122.0
 Yem Bitkileri (Saman ve Ot) Üretim Miktarı (Ton);region26;780;2024;899844986.0
+Yeni Otomobil Satışlarında Elektrikli Araç Payı (OECD) (%);country;1;2024;10.23
+Yeni Otomobil Satışlarında Elektrikli Araç Payı (OECD) (%);region26;26;2024;211.73
 Yetişkin Eğitimine Katılım, Son 4 Hafta (25-64 Yaş, OECD) (%);country;13;2025;81.1
 Yetişkin Eğitimine Katılım, Son 4 Hafta (25-64 Yaş, OECD) (%);region26;338;2025;1894.2
 Yoksul Sayısı (Bin Kişi) (Medyan Gelirin %60'ına Göre);country;12;2025;206136.0

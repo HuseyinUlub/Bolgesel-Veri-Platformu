@@ -511,6 +511,23 @@
      ]
     },
     {
+     "id": "yasam-memnuniyetindeki-degisim-2014-15-2024-25-oecd-puan",
+     "ad": "Yaşam Memnuniyetindeki Değişim, 2014/15-2024/25 (OECD) (Puan)",
+     "birim": "Puan",
+     "ondalik": 2,
+     "kaynak": "OECD Regions and Cities at a Glance 2026",
+     "kaynakKisa": "OECD",
+     "not": "0-10 ölçeğindeki genel yaşam memnuniyetinin 2014/15 ile 2024/25 arasındaki değişimi. OECD, 26 bölgeden 21'i için yayımlamıştır. OECD, Regions and Cities at a Glance 2026, Şekil 3.5.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
      "id": "en-az-lise-mezunu-isgucu-orani-oecd",
      "ad": "En Az Lise Mezunu İşgücü Oranı (OECD) (%)",
      "birim": "%",
@@ -4453,6 +4470,39 @@
      ],
      "duzeyler": [
       "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "emek-verimliligi-yillik-reel-artisi-2018-2024-oecd",
+     "ad": "Emek Verimliliği Yıllık Reel Artışı, 2018-2024 (OECD) (%)",
+     "birim": "%",
+     "ondalik": 2,
+     "kaynak": "OECD Regions and Cities at a Glance 2026",
+     "kaynakKisa": "OECD",
+     "not": "Çalışan başına reel brüt katma değerin 2018-2024 dönemindeki yıllık ortalama artışı. OECD, Regions and Cities at a Glance 2026, Şekil 1.1.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "kisi-basina-reel-gsyh-artisinin-turkiye-ortalamasindan-farki-2018-2024-oecd-yuzd",
+     "ad": "Kişi Başına Reel GSYH Artışının Türkiye Ortalamasından Farkı, 2018-2024 (OECD) (Yüzde Puan)",
+     "birim": "Yüzde Puan",
+     "ondalik": 2,
+     "kaynak": "OECD Regions and Cities at a Glance 2026",
+     "kaynakKisa": "OECD",
+     "not": "Bölgenin 2018-2024 yıllık reel kişi başına GSYH artışı ile Türkiye ortalaması arasındaki fark. OECD, Regions and Cities at a Glance 2026, Şekil 1.5. Platformun TÜİK verisiyle yaptığı hesapla karşılaştırıldı: korelasyon 0,98, ortalama fark 0,26 puan.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2024
+     ],
+     "duzeyler": [
       "region26"
      ]
     },
@@ -14472,6 +14522,22 @@
       2023,
       2024,
       2025
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "patent-yogunlasma-katsayisi-oecd-kent",
+     "ad": "Patent Yoğunlaşma Katsayısı (OECD Kent)",
+     "birim": "OECD Kent",
+     "ondalik": 2,
+     "kaynak": "OECD Regions and Cities at a Glance 2026",
+     "kaynakKisa": "OECD",
+     "not": "Kentin ülke patent başvurularındaki payının ülke nüfusundaki payına oranı, 2024; 1'den büyük değer, kentte nüfusuna göre daha fazla patent üretildiğini gösterir. OECD, Regions and Cities at a Glance 2026, Şekil 1.12.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2024
      ],
      "duzeyler": [
       "fua"
@@ -56233,6 +56299,23 @@
      ]
     },
     {
+     "id": "yeni-otomobil-satislarinda-elektrikli-arac-payi-oecd",
+     "ad": "Yeni Otomobil Satışlarında Elektrikli Araç Payı (OECD) (%)",
+     "birim": "%",
+     "ondalik": 2,
+     "kaynak": "OECD Regions and Cities at a Glance 2026",
+     "kaynakKisa": "OECD",
+     "not": "Yeni özel otomobil satışları içinde elektrikli araçların payı, 2024. OECD, Regions and Cities at a Glance 2026, Şekil 4.10.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
      "id": "karayolu-trafik-kazalari-bir-milyon-motorlu-tasit-basina-olu-sayisi",
      "ad": "Karayolu Trafik Kazaları: Bir Milyon Motorlu Taşıt Başına Ölü Sayısı (TÜİK)",
      "birim": null,
@@ -57760,6 +57843,23 @@
       "country",
       "region26",
       "province"
+     ]
+    },
+    {
+     "id": "hava-sicakligindaki-degisim-2021-2025-1981-2010-oecd-c",
+     "ad": "Hava Sıcaklığındaki Değişim, 2021-2025 / 1981-2010 (OECD) (°C)",
+     "birim": "°C",
+     "ondalik": 2,
+     "kaynak": "OECD Regions and Cities at a Glance 2026",
+     "kaynakKisa": "OECD",
+     "not": "2021-2025 dönemi ortalama hava sıcaklığının 1981-2010 ortalamasından farkı. OECD, Regions and Cities at a Glance 2026, Şekil 4.1.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
      ]
     }
    ]

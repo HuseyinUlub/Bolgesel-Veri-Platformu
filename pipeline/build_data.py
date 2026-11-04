@@ -405,7 +405,7 @@ def load_oecd_geo(ek_dir: Path, ents, rep: Report):
 
 # Toplanamayan göstergeler (oran, ortalama, iklim ölçüleri) ve bölgeye dağıtılamayan payı olan sayımlar
 # (OECD PCT patentlerinin bir kısmı hiçbir bölgeye atanmaz; il toplamı Türkiye'den küçüktür)
-ORAN_IPUCU = re.compile(r"(%|oran|başına|düşen|ortalama|endeks|hız|binde|sıra|zincirlen|süre|iklim|derece-gün|patent)", re.I)
+ORAN_IPUCU = re.compile(r"(%|oran|başına|düşen|ortalama|endeks|hız|binde|sıra|zincirlen|süre|iklim|derece-gün|patent|değişim|artış|fark)", re.I)
 
 
 def check_sums(values, ents, rep: Report, extra=(), ind_meta=None):
