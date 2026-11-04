@@ -67,33 +67,6 @@
      ]
     },
     {
-     "id": "ar-ge-harcamasinin-gsyh-ye-orani-oecd-sirketler",
-     "ad": "Ar-Ge Harcamasının GSYH'ye Oranı (OECD): Şirketler (%)",
-     "birim": "%",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ulusal",
-     "kaynakAciklama": "TÜİK araştırma-geliştirme faaliyetleri araştırması",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
      "id": "ar-ge-harcamasinin-gsyh-ye-orani-oecd-kamu",
      "ad": "Ar-Ge Harcamasının GSYH'ye Oranı (OECD): Kamu (%)",
      "birim": "%",
@@ -148,8 +121,8 @@
      ]
     },
     {
-     "id": "arastirmacilarin-istihdamdaki-payi-oecd-sirketler",
-     "ad": "Araştırmacıların İstihdamdaki Payı (OECD): Şirketler (%)",
+     "id": "ar-ge-harcamasinin-gsyh-ye-orani-oecd-sirketler",
+     "ad": "Ar-Ge Harcamasının GSYH'ye Oranı (OECD): Şirketler (%)",
      "birim": "%",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -202,13 +175,14 @@
      ]
     },
     {
-     "id": "milyon-kisi-basina-pct-patent-basvurusu-oecd",
-     "ad": "Milyon Kişi Başına PCT Patent Başvurusu (OECD)",
-     "birim": "OECD",
+     "id": "arastirmacilarin-istihdamdaki-payi-oecd-sirketler",
+     "ad": "Araştırmacıların İstihdamdaki Payı (OECD): Şirketler (%)",
+     "birim": "%",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
+     "kaynakTuru": "oecd-ulusal",
+     "kaynakAciklama": "TÜİK araştırma-geliştirme faaliyetleri araştırması",
      "yillar": [
       2013,
       2014,
@@ -224,14 +198,13 @@
      ],
      "duzeyler": [
       "country",
-      "region26",
-      "province"
+      "region26"
      ]
     },
     {
-     "id": "pct-patent-basvurusu-oecd-toplam",
-     "ad": "PCT Patent Başvurusu (OECD): Toplam",
-     "birim": null,
+     "id": "milyon-kisi-basina-pct-patent-basvurusu-oecd",
+     "ad": "Milyon Kişi Başına PCT Patent Başvurusu (OECD)",
+     "birim": "OECD",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
@@ -337,8 +310,8 @@
      ]
     },
     {
-     "id": "pct-patent-basvurusu-oecd-tibbi-teknoloji",
-     "ad": "PCT Patent Başvurusu (OECD): Tıbbi Teknoloji",
+     "id": "pct-patent-basvurusu-oecd-toplam",
+     "ad": "PCT Patent Başvurusu (OECD): Toplam",
      "birim": null,
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -364,8 +337,8 @@
      ]
     },
     {
-     "id": "pct-patent-basvurusu-oecd-ilac",
-     "ad": "PCT Patent Başvurusu (OECD): İlaç",
+     "id": "pct-patent-basvurusu-oecd-tibbi-teknoloji",
+     "ad": "PCT Patent Başvurusu (OECD): Tıbbi Teknoloji",
      "birim": null,
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -420,6 +393,33 @@
     {
      "id": "pct-patent-basvurusu-oecd-cevre-teknolojileri",
      "ad": "PCT Patent Başvurusu (OECD): Çevre Teknolojileri",
+     "birim": null,
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+     ],
+     "duzeyler": [
+      "country",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "pct-patent-basvurusu-oecd-ilac",
+     "ad": "PCT Patent Başvurusu (OECD): İlaç",
      "birim": null,
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -4093,204 +4093,36 @@
      ]
     },
     {
-     "id": "calisan-basina-gsyh-sgp-oecd",
-     "ad": "Çalışan Başına GSYH, SGP (OECD) ($)",
-     "birim": "$",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "emek-verimliligi-oecd-toplam-ekonomi-sgp-calisan-basina",
-     "ad": "Emek Verimliliği (OECD): Toplam Ekonomi ($, SGP, Çalışan Başına)",
-     "birim": null,
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "emek-verimliligi-oecd-tarim-ormancilik-ve-balikcilik-sgp-calisan-basina",
-     "ad": "Emek Verimliliği (OECD): Tarım, Ormancılık ve Balıkçılık ($, SGP, Çalışan Başına)",
-     "birim": null,
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "emek-verimliligi-oecd-sanayi-enerji-dahil-sgp-calisan-basina",
-     "ad": "Emek Verimliliği (OECD): Sanayi (Enerji Dahil) ($, SGP, Çalışan Başına)",
-     "birim": null,
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "emek-verimliligi-oecd-imalat-sgp-calisan-basina",
-     "ad": "Emek Verimliliği (OECD): İmalat ($, SGP, Çalışan Başına)",
-     "birim": null,
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "emek-verimliligi-oecd-insaat-sgp-calisan-basina",
-     "ad": "Emek Verimliliği (OECD): İnşaat ($, SGP, Çalışan Başına)",
-     "birim": null,
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "emek-verimliligi-oecd-ticaret-ulastirma-konaklama-sgp-calisan-basina",
-     "ad": "Emek Verimliliği (OECD): Ticaret, Ulaştırma, Konaklama ($, SGP, Çalışan Başına)",
-     "birim": null,
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
      "id": "emek-verimliligi-oecd-bilgi-ve-iletisim-sgp-calisan-basina",
      "ad": "Emek Verimliliği (OECD): Bilgi ve İletişim ($, SGP, Çalışan Başına)",
+     "birim": null,
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "emek-verimliligi-oecd-diger-hizmetler-sgp-calisan-basina",
+     "ad": "Emek Verimliliği (OECD): Diğer Hizmetler ($, SGP, Çalışan Başına)",
      "birim": null,
      "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -4373,34 +4205,6 @@
      ]
     },
     {
-     "id": "emek-verimliligi-oecd-mesleki-ve-idari-hizmetler-sgp-calisan-basina",
-     "ad": "Emek Verimliliği (OECD): Mesleki ve İdari Hizmetler ($, SGP, Çalışan Başına)",
-     "birim": null,
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
      "id": "emek-verimliligi-oecd-kamu-yonetimi-egitim-saglik-sgp-calisan-basina",
      "ad": "Emek Verimliliği (OECD): Kamu Yönetimi, Eğitim, Sağlık ($, SGP, Çalışan Başına)",
      "birim": null,
@@ -4429,9 +4233,205 @@
      ]
     },
     {
-     "id": "emek-verimliligi-oecd-diger-hizmetler-sgp-calisan-basina",
-     "ad": "Emek Verimliliği (OECD): Diğer Hizmetler ($, SGP, Çalışan Başına)",
+     "id": "emek-verimliligi-oecd-mesleki-ve-idari-hizmetler-sgp-calisan-basina",
+     "ad": "Emek Verimliliği (OECD): Mesleki ve İdari Hizmetler ($, SGP, Çalışan Başına)",
      "birim": null,
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "emek-verimliligi-oecd-sanayi-enerji-dahil-sgp-calisan-basina",
+     "ad": "Emek Verimliliği (OECD): Sanayi (Enerji Dahil) ($, SGP, Çalışan Başına)",
+     "birim": null,
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "emek-verimliligi-oecd-tarim-ormancilik-ve-balikcilik-sgp-calisan-basina",
+     "ad": "Emek Verimliliği (OECD): Tarım, Ormancılık ve Balıkçılık ($, SGP, Çalışan Başına)",
+     "birim": null,
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "emek-verimliligi-oecd-ticaret-ulastirma-konaklama-sgp-calisan-basina",
+     "ad": "Emek Verimliliği (OECD): Ticaret, Ulaştırma, Konaklama ($, SGP, Çalışan Başına)",
+     "birim": null,
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "emek-verimliligi-oecd-toplam-ekonomi-sgp-calisan-basina",
+     "ad": "Emek Verimliliği (OECD): Toplam Ekonomi ($, SGP, Çalışan Başına)",
+     "birim": null,
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "emek-verimliligi-oecd-imalat-sgp-calisan-basina",
+     "ad": "Emek Verimliliği (OECD): İmalat ($, SGP, Çalışan Başına)",
+     "birim": null,
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "emek-verimliligi-oecd-insaat-sgp-calisan-basina",
+     "ad": "Emek Verimliliği (OECD): İnşaat ($, SGP, Çalışan Başına)",
+     "birim": null,
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "calisan-basina-gsyh-sgp-oecd",
+     "ad": "Çalışan Başına GSYH, SGP (OECD) ($)",
+     "birim": "$",
      "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
@@ -10431,36 +10431,8 @@
      ]
     },
     {
-     "id": "egitim-duzeyi-25-64-yas-oecd-yuksekogretim-mezunu",
-     "ad": "Eğitim Düzeyi (25-64 Yaş, OECD): Yükseköğretim Mezunu (%)",
-     "birim": "%",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics (kaynak veri: TÜİK Hanehalkı İşgücü Anketi)",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "egitim-duzeyi-25-64-yas-oecd-lise-mezunu",
-     "ad": "Eğitim Düzeyi (25-64 Yaş, OECD): Lise Mezunu (%)",
+     "id": "egitim-duzeyi-25-34-yas-oecd-yuksekogretim-mezunu",
+     "ad": "Eğitim Düzeyi (25-34 Yaş, OECD): Yükseköğretim Mezunu (%)",
      "birim": "%",
      "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics (kaynak veri: TÜİK Hanehalkı İşgücü Anketi)",
@@ -10515,11 +10487,67 @@
      ]
     },
     {
-     "id": "egitim-duzeyi-25-34-yas-oecd-yuksekogretim-mezunu",
-     "ad": "Eğitim Düzeyi (25-34 Yaş, OECD): Yükseköğretim Mezunu (%)",
+     "id": "egitim-duzeyi-25-64-yas-oecd-lise-mezunu",
+     "ad": "Eğitim Düzeyi (25-64 Yaş, OECD): Lise Mezunu (%)",
      "birim": "%",
      "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics (kaynak veri: TÜİK Hanehalkı İşgücü Anketi)",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "egitim-duzeyi-25-64-yas-oecd-yuksekogretim-mezunu",
+     "ad": "Eğitim Düzeyi (25-64 Yaş, OECD): Yükseköğretim Mezunu (%)",
+     "birim": "%",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics (kaynak veri: TÜİK Hanehalkı İşgücü Anketi)",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "egitimi-erken-birakanlar-18-24-yas-oecd",
+     "ad": "Eğitimi Erken Bırakanlar (18-24 Yaş, OECD) (%)",
+     "birim": "%",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
      "kaynakTuru": "oecd-ozgun",
      "yillar": [
@@ -10590,34 +10618,6 @@
       2022,
       2023,
       2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "egitimi-erken-birakanlar-18-24-yas-oecd",
-     "ad": "Eğitimi Erken Bırakanlar (18-24 Yaş, OECD) (%)",
-     "birim": "%",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
      ],
      "duzeyler": [
       "country",
@@ -12118,64 +12118,18 @@
      ]
     },
     {
-     "id": "kisi-basina-harcanabilir-hanehalki-geliri-sgp-oecd",
-     "ad": "Kişi Başına Harcanabilir Hanehalkı Geliri, SGP (OECD) ($)",
-     "birim": "$",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2021
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "kisi-basina-harcanabilir-hanehalki-geliri-oecd-tl",
-     "ad": "Kişi Başına Harcanabilir Hanehalkı Geliri (OECD) (TL)",
-     "birim": "TL",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2021
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "motorlu-tasit-hirsizligi-oecd-yuz-binde",
-     "ad": "Motorlu Taşıt Hırsızlığı (OECD) (Yüz Binde)",
-     "birim": "Yüz Binde",
-     "ondalik": 1,
+     "id": "genel-secimlere-katilim-orani-oecd",
+     "ad": "Genel Seçimlere Katılım Oranı (OECD) (%)",
+     "birim": "%",
+     "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
      "kaynakTuru": "oecd-ulusal",
-     "kaynakAciklama": "Emniyet Genel Müdürlüğü istatistikleri (il düzeyinde açık veri sınırlı)",
+     "kaynakAciklama": "Yüksek Seçim Kurulu seçim sonuçları",
      "yillar": [
-      2013,
-      2014,
       2015,
-      2016,
-      2017,
       2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
+      2023
      ],
      "duzeyler": [
       "country",
@@ -12213,18 +12167,64 @@
      ]
     },
     {
-     "id": "genel-secimlere-katilim-orani-oecd",
-     "ad": "Genel Seçimlere Katılım Oranı (OECD) (%)",
-     "birim": "%",
-     "ondalik": 2,
+     "id": "kisi-basina-harcanabilir-hanehalki-geliri-oecd-tl",
+     "ad": "Kişi Başına Harcanabilir Hanehalkı Geliri (OECD) (TL)",
+     "birim": "TL",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2021
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "kisi-basina-harcanabilir-hanehalki-geliri-sgp-oecd",
+     "ad": "Kişi Başına Harcanabilir Hanehalkı Geliri, SGP (OECD) ($)",
+     "birim": "$",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2021
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "motorlu-tasit-hirsizligi-oecd-yuz-binde",
+     "ad": "Motorlu Taşıt Hırsızlığı (OECD) (Yüz Binde)",
+     "birim": "Yüz Binde",
+     "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
      "kaynakTuru": "oecd-ulusal",
-     "kaynakAciklama": "Yüksek Seçim Kurulu seçim sonuçları",
+     "kaynakAciklama": "Emniyet Genel Müdürlüğü istatistikleri (il düzeyinde açık veri sınırlı)",
      "yillar": [
+      2013,
+      2014,
       2015,
+      2016,
+      2017,
       2018,
-      2023
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
      ],
      "duzeyler": [
       "country",
@@ -13111,8 +13111,8 @@
      ]
     },
     {
-     "id": "uluslararasi-goc-yurt-disindan-gelenler-oecd",
-     "ad": "Uluslararası Göç: Yurt Dışından Gelenler (OECD) (%)",
+     "id": "uluslararasi-goc-yurt-disina-gidenler-oecd",
+     "ad": "Uluslararası Göç: Yurt Dışına Gidenler (OECD) (%)",
      "birim": "%",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -13137,8 +13137,8 @@
      ]
     },
     {
-     "id": "uluslararasi-goc-yurt-disina-gidenler-oecd",
-     "ad": "Uluslararası Göç: Yurt Dışına Gidenler (OECD) (%)",
+     "id": "uluslararasi-goc-yurt-disindan-gelenler-oecd",
+     "ad": "Uluslararası Göç: Yurt Dışından Gelenler (OECD) (%)",
      "birim": "%",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -13487,65 +13487,29 @@
    "dosya": "k/kentler-oecd.json",
    "gostergeler": [
     {
-     "id": "kent-nufusu-oecd",
-     "ad": "Kent Nüfusu (OECD)",
-     "birim": "OECD",
-     "ondalik": 0,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "nufus-yogunlugu-oecd-kent-kisi-km",
-     "ad": "Nüfus Yoğunluğu (OECD Kent) (Kişi/km²)",
-     "birim": "Kişi/km²",
-     "ondalik": 0,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "yasli-bagimlilik-orani-oecd-kent",
-     "ad": "Yaşlı Bağımlılık Oranı (OECD Kent) (%)",
+     "id": "15-dakikada-hizmete-erisen-nufus-oecd-kent",
+     "ad": "15 Dakikada Hizmete Erişen Nüfus (OECD Kent) (%)",
      "birim": "%",
      "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
      "kaynakTuru": "oecd-ozgun",
      "yillar": [
+      2024
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "asiri-yagisli-gun-sayisi-oecd-kent-gun",
+     "ad": "Aşırı Yağışlı Gün Sayısı (OECD Kent) (Gün)",
+     "birim": "Gün",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
       2013,
       2014,
       2015,
@@ -13558,6 +13522,48 @@
       2022,
       2023,
       2024
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "buzlu-gun-sayisi-oecd-kent-gun",
+     "ad": "Buzlu Gün Sayısı (OECD Kent) (Gün)",
+     "birim": "Gün",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "dogal-ve-yari-dogal-alan-payi-oecd-kent",
+     "ad": "Doğal ve Yarı Doğal Alan Payı (OECD Kent) (%)",
+     "birim": "%",
+     "ondalik": 0,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2021
      ],
      "duzeyler": [
       "fua"
@@ -13589,10 +13595,10 @@
      ]
     },
     {
-     "id": "kisi-basina-gsyh-sgp-oecd-kent",
-     "ad": "Kişi Başına GSYH, SGP (OECD Kent) ($)",
-     "birim": "$",
-     "ondalik": 0,
+     "id": "gsyh-sgp-oecd-kent-milyon",
+     "ad": "GSYH, SGP (OECD Kent) (Milyon $)",
+     "birim": "Milyon $",
+     "ondalik": 3,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
      "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
@@ -13615,8 +13621,8 @@
      ]
     },
     {
-     "id": "issizlik-orani-oecd-kent",
-     "ad": "İşsizlik Oranı (OECD Kent) (%)",
+     "id": "genc-bagimlilik-orani-oecd-kent",
+     "ad": "Genç Bağımlılık Oranı (OECD Kent) (%)",
      "birim": "%",
      "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -13635,126 +13641,6 @@
       2022,
       2023,
       2024
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "istihdam-orani-15-64-yas-oecd-kent",
-     "ad": "İstihdam Oranı 15-64 Yaş (OECD Kent) (%)",
-     "birim": "%",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "kentsel-isi-adasi-yaz-geceleri-oecd-kent-c",
-     "ad": "Kentsel Isı Adası, Yaz Geceleri (OECD Kent) (°C)",
-     "birim": "°C",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "kisi-basina-yesil-alan-oecd-kent-m",
-     "ad": "Kişi Başına Yeşil Alan (OECD Kent) (m²)",
-     "birim": "m²",
-     "ondalik": 0,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2021
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "sicak-gun-sayisi-oecd-kent-gun",
-     "ad": "Sıcak Gün Sayısı (OECD Kent) (Gün)",
-     "birim": "Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "tropikal-gece-sayisi-oecd-kent-gun",
-     "ad": "Tropikal Gece Sayısı (OECD Kent) (Gün)",
-     "birim": "Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
      ],
      "duzeyler": [
       "fua"
@@ -13764,190 +13650,6 @@
      "id": "guclu-isi-stresi-gunleri-oecd-kent-gun",
      "ad": "Güçlü Isı Stresi Günleri (OECD Kent) (Gün)",
      "birim": "Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "toprak-nemi-anomalisi-oecd-kent",
-     "ad": "Toprak Nemi Anomalisi (OECD Kent) (%)",
-     "birim": "%",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "nehir-taskinina-maruz-nufus-100-yillik-oecd-kent",
-     "ad": "Nehir Taşkınına Maruz Nüfus, 100 Yıllık (OECD Kent) (%)",
-     "birim": "%",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2015,
-      2020
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "kiyi-taskinina-maruz-nufus-100-yillik-oecd-kent",
-     "ad": "Kıyı Taşkınına Maruz Nüfus, 100 Yıllık (OECD Kent) (%)",
-     "birim": "%",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2015,
-      2020
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "sabit-internet-indirme-hizi-oecd-kent-turkiye-100",
-     "ad": "Sabit İnternet İndirme Hızı (OECD Kent) (Türkiye=100)",
-     "birim": "Türkiye=100",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "mobil-internet-indirme-hizi-oecd-kent-turkiye-100",
-     "ad": "Mobil İnternet İndirme Hızı (OECD Kent) (Türkiye=100)",
-     "birim": "Türkiye=100",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "kisi-basina-sera-gazi-emisyonu-oecd-kent-t-co2e",
-     "ad": "Kişi Başına Sera Gazı Emisyonu (OECD Kent) (t CO2e)",
-     "birim": "t CO2e",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "yapilasmis-alan-payi-oecd-kent",
-     "ad": "Yapılaşmış Alan Payı (OECD Kent) (%)",
-     "birim": "%",
-     "ondalik": 0,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2021
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "15-dakikada-hizmete-erisen-nufus-oecd-kent",
-     "ad": "15 Dakikada Hizmete Erişen Nüfus (OECD Kent) (%)",
-     "birim": "%",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2024
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "ortalama-hava-sicakligi-oecd-kent-c",
-     "ad": "Ortalama Hava Sıcaklığı (OECD Kent) (°C)",
-     "birim": "°C",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
@@ -13999,112 +13701,6 @@
      ]
     },
     {
-     "id": "sicak-gun-sayisindaki-degisim-1981-2010-a-gore-oecd-kent-gun",
-     "ad": "Sıcak Gün Sayısındaki Değişim, 1981-2010'a Göre (OECD Kent) (Gün)",
-     "birim": "Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "buzlu-gun-sayisi-oecd-kent-gun",
-     "ad": "Buzlu Gün Sayısı (OECD Kent) (Gün)",
-     "birim": "Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024,
-      2025
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "toplam-yagis-oecd-kent-mm",
-     "ad": "Toplam Yağış (OECD Kent) (mm)",
-     "birim": "mm",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "asiri-yagisli-gun-sayisi-oecd-kent-gun",
-     "ad": "Aşırı Yağışlı Gün Sayısı (OECD Kent) (Gün)",
-     "birim": "Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
      "id": "isitma-derece-gun-oecd-kent-derece-gun",
      "ad": "Isıtma Derece Gün (OECD Kent) (Derece-Gün)",
      "birim": "Derece-Gün",
@@ -14132,9 +13728,318 @@
      ]
     },
     {
-     "id": "sogutma-derece-gun-oecd-kent-derece-gun",
-     "ad": "Soğutma Derece Gün (OECD Kent) (Derece-Gün)",
-     "birim": "Derece-Gün",
+     "id": "kent-nufusu-oecd",
+     "ad": "Kent Nüfusu (OECD)",
+     "birim": "OECD",
+     "ondalik": 0,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "kentsel-isi-adasi-yaz-geceleri-oecd-kent-c",
+     "ad": "Kentsel Isı Adası, Yaz Geceleri (OECD Kent) (°C)",
+     "birim": "°C",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "kentsel-isi-adasi-yaz-gunduzleri-oecd-kent-c",
+     "ad": "Kentsel Isı Adası, Yaz Gündüzleri (OECD Kent) (°C)",
+     "birim": "°C",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "kisi-basina-gsyh-sgp-oecd-kent",
+     "ad": "Kişi Başına GSYH, SGP (OECD Kent) ($)",
+     "birim": "$",
+     "ondalik": 0,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "kisi-basina-karayolu-ulasimi-kaynakli-sera-gazi-oecd-kent-t-co2e",
+     "ad": "Kişi Başına Karayolu Ulaşımı Kaynaklı Sera Gazı (OECD Kent) (t CO2e)",
+     "birim": "t CO2e",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "kisi-basina-kentlesmis-alan-oecd-kent-2025-2030-tahmin-m",
+     "ad": "Kişi Başına Kentleşmiş Alan (OECD Kent, 2025-2030 Tahmin) (m²)",
+     "birim": "m²",
+     "ondalik": 0,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2015,
+      2020,
+      2025,
+      2030
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "kisi-basina-sera-gazi-emisyonu-oecd-kent-t-co2e",
+     "ad": "Kişi Başına Sera Gazı Emisyonu (OECD Kent) (t CO2e)",
+     "birim": "t CO2e",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "kisi-basina-yesil-alan-oecd-kent-m",
+     "ad": "Kişi Başına Yeşil Alan (OECD Kent) (m²)",
+     "birim": "m²",
+     "ondalik": 0,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2021
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "kisi-basina-imalat-kaynakli-sera-gazi-oecd-kent-t-co2e",
+     "ad": "Kişi Başına İmalat Kaynaklı Sera Gazı (OECD Kent) (t CO2e)",
+     "birim": "t CO2e",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "kiyi-taskinina-maruz-nufus-100-yillik-oecd-kent",
+     "ad": "Kıyı Taşkınına Maruz Nüfus, 100 Yıllık (OECD Kent) (%)",
+     "birim": "%",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2015,
+      2020
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "mobil-internet-indirme-hizi-oecd-kent-turkiye-100",
+     "ad": "Mobil İnternet İndirme Hızı (OECD Kent) (Türkiye=100)",
+     "birim": "Türkiye=100",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "nehir-taskinina-maruz-nufus-100-yillik-oecd-kent",
+     "ad": "Nehir Taşkınına Maruz Nüfus, 100 Yıllık (OECD Kent) (%)",
+     "birim": "%",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2015,
+      2020
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "nufus-agirlikli-no2-maruziyeti-oecd-kent-g-m",
+     "ad": "Nüfus Ağırlıklı NO2 Maruziyeti (OECD Kent) (µg/m³)",
+     "birim": "µg/m³",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2021,
+      2022,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "nufus-yogunlugu-oecd-kent-kisi-km",
+     "ad": "Nüfus Yoğunluğu (OECD Kent) (Kişi/km²)",
+     "birim": "Kişi/km²",
+     "ondalik": 0,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "ortalama-hava-sicakligi-oecd-kent-c",
+     "ad": "Ortalama Hava Sıcaklığı (OECD Kent) (°C)",
+     "birim": "°C",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
@@ -14184,6 +14089,170 @@
      ]
     },
     {
+     "id": "sabit-internet-yukleme-hizi-oecd-kent-turkiye-100",
+     "ad": "Sabit İnternet Yükleme Hızı (OECD Kent) (Türkiye=100)",
+     "birim": "Türkiye=100",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "sabit-internet-indirme-hizi-oecd-kent-turkiye-100",
+     "ad": "Sabit İnternet İndirme Hızı (OECD Kent) (Türkiye=100)",
+     "birim": "Türkiye=100",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "sogutma-derece-gun-oecd-kent-derece-gun",
+     "ad": "Soğutma Derece Gün (OECD Kent) (Derece-Gün)",
+     "birim": "Derece-Gün",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "sicak-gun-sayisi-oecd-kent-gun",
+     "ad": "Sıcak Gün Sayısı (OECD Kent) (Gün)",
+     "birim": "Gün",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "sicak-gun-sayisindaki-degisim-1981-2010-a-gore-oecd-kent-gun",
+     "ad": "Sıcak Gün Sayısındaki Değişim, 1981-2010'a Göre (OECD Kent) (Gün)",
+     "birim": "Gün",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "tarim-arazisi-payi-oecd-kent",
+     "ad": "Tarım Arazisi Payı (OECD Kent) (%)",
+     "birim": "%",
+     "ondalik": 0,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2021
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
+     "id": "toplam-bagimlilik-orani-oecd-kent",
+     "ad": "Toplam Bağımlılık Oranı (OECD Kent) (%)",
+     "birim": "%",
+     "ondalik": 1,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "fua"
+     ]
+    },
+    {
      "id": "toplam-sera-gazi-emisyonu-oecd-kent-t-co2e",
      "ad": "Toplam Sera Gazı Emisyonu (OECD Kent) (t CO2e)",
      "birim": "t CO2e",
@@ -14210,9 +14279,9 @@
      ]
     },
     {
-     "id": "kisi-basina-karayolu-ulasimi-kaynakli-sera-gazi-oecd-kent-t-co2e",
-     "ad": "Kişi Başına Karayolu Ulaşımı Kaynaklı Sera Gazı (OECD Kent) (t CO2e)",
-     "birim": "t CO2e",
+     "id": "toplam-yagis-oecd-kent-mm",
+     "ad": "Toplam Yağış (OECD Kent) (mm)",
+     "birim": "mm",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
@@ -14236,10 +14305,10 @@
      ]
     },
     {
-     "id": "kisi-basina-imalat-kaynakli-sera-gazi-oecd-kent-t-co2e",
-     "ad": "Kişi Başına İmalat Kaynaklı Sera Gazı (OECD Kent) (t CO2e)",
-     "birim": "t CO2e",
-     "ondalik": 2,
+     "id": "toprak-nemi-anomalisi-oecd-kent",
+     "ad": "Toprak Nemi Anomalisi (OECD Kent) (%)",
+     "birim": "%",
+     "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
      "kaynakTuru": "oecd-ozgun",
@@ -14255,23 +14324,6 @@
       2021,
       2022,
       2023,
-      2024
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "nufus-agirlikli-no2-maruziyeti-oecd-kent-g-m",
-     "ad": "Nüfus Ağırlıklı NO2 Maruziyeti (OECD Kent) (µg/m³)",
-     "birim": "µg/m³",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2021,
-      2022,
       2024,
       2025
      ],
@@ -14280,10 +14332,10 @@
      ]
     },
     {
-     "id": "kentsel-isi-adasi-yaz-gunduzleri-oecd-kent-c",
-     "ad": "Kentsel Isı Adası, Yaz Gündüzleri (OECD Kent) (°C)",
-     "birim": "°C",
-     "ondalik": 1,
+     "id": "tropikal-gece-sayisi-oecd-kent-gun",
+     "ad": "Tropikal Gece Sayısı (OECD Kent) (Gün)",
+     "birim": "Gün",
+     "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
      "kaynakTuru": "oecd-ozgun",
@@ -14298,15 +14350,17 @@
       2020,
       2021,
       2022,
-      2023
+      2023,
+      2024,
+      2025
      ],
      "duzeyler": [
       "fua"
      ]
     },
     {
-     "id": "tarim-arazisi-payi-oecd-kent",
-     "ad": "Tarım Arazisi Payı (OECD Kent) (%)",
+     "id": "yapilasmis-alan-payi-oecd-kent",
+     "ad": "Yapılaşmış Alan Payı (OECD Kent) (%)",
      "birim": "%",
      "ondalik": 0,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -14320,41 +14374,8 @@
      ]
     },
     {
-     "id": "dogal-ve-yari-dogal-alan-payi-oecd-kent",
-     "ad": "Doğal ve Yarı Doğal Alan Payı (OECD Kent) (%)",
-     "birim": "%",
-     "ondalik": 0,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2021
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "kisi-basina-kentlesmis-alan-oecd-kent-2025-2030-tahmin-m",
-     "ad": "Kişi Başına Kentleşmiş Alan (OECD Kent, 2025-2030 Tahmin) (m²)",
-     "birim": "m²",
-     "ondalik": 0,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2015,
-      2020,
-      2025,
-      2030
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "genc-bagimlilik-orani-oecd-kent",
-     "ad": "Genç Bağımlılık Oranı (OECD Kent) (%)",
+     "id": "yasli-bagimlilik-orani-oecd-kent",
+     "ad": "Yaşlı Bağımlılık Oranı (OECD Kent) (%)",
      "birim": "%",
      "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -14379,8 +14400,8 @@
      ]
     },
     {
-     "id": "toplam-bagimlilik-orani-oecd-kent",
-     "ad": "Toplam Bağımlılık Oranı (OECD Kent) (%)",
+     "id": "istihdam-orani-15-64-yas-oecd-kent",
+     "ad": "İstihdam Oranı 15-64 Yaş (OECD Kent) (%)",
      "birim": "%",
      "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -14431,13 +14452,12 @@
      ]
     },
     {
-     "id": "gsyh-sgp-oecd-kent-milyon",
-     "ad": "GSYH, SGP (OECD Kent) (Milyon $)",
-     "birim": "Milyon $",
-     "ondalik": 3,
+     "id": "issizlik-orani-oecd-kent",
+     "ad": "İşsizlik Oranı (OECD Kent) (%)",
+     "birim": "%",
+     "ondalik": 1,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
      "kaynakKisa": "OECD",
-     "not": "SGP: Satın Alma Gücü Paritesi (İng. PPP). Değerler ülkeler arası fiyat düzeyi farkları arındırılarak dolara çevrilmiştir; 1 SGP doları, ABD'de 1 doların aldığı mal ve hizmet sepetini alır.",
      "kaynakTuru": "oecd-ozgun",
      "yillar": [
       2013,
@@ -14450,28 +14470,8 @@
       2020,
       2021,
       2022,
-      2023
-     ],
-     "duzeyler": [
-      "fua"
-     ]
-    },
-    {
-     "id": "sabit-internet-yukleme-hizi-oecd-kent-turkiye-100",
-     "ad": "Sabit İnternet Yükleme Hızı (OECD Kent) (Türkiye=100)",
-     "birim": "Türkiye=100",
-     "ondalik": 1,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2019,
-      2020,
-      2021,
-      2022,
       2023,
-      2024,
-      2025
+      2024
      ],
      "duzeyler": [
       "fua"
@@ -57570,6 +57570,61 @@
      ]
     },
     {
+     "id": "iklim-oecd-buzlu-gun-sayisi-gun",
+     "ad": "İklim (OECD): Buzlu Gün Sayısı (Gün)",
+     "birim": "Gün",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "iklim-oecd-isitma-derece-gun-derece-gun",
+     "ad": "İklim (OECD): Isıtma Derece-Gün (Derece-Gün)",
+     "birim": "Derece-Gün",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+     ],
+     "duzeyler": [
+      "country",
+      "region26",
+      "province"
+     ]
+    },
+    {
      "id": "iklim-oecd-ortalama-hava-sicakligi-c",
      "ad": "İklim (OECD): Ortalama Hava Sıcaklığı (°C)",
      "birim": "°C",
@@ -57590,6 +57645,60 @@
       2022,
       2023,
       2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "iklim-oecd-sogutma-derece-gun-derece-gun",
+     "ad": "İklim (OECD): Soğutma Derece-Gün (Derece-Gün)",
+     "birim": "Derece-Gün",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+     ],
+     "duzeyler": [
+      "country",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "iklim-oecd-sogutma-derece-gundeki-degisim-1981-2010-a-gore-derece-gun",
+     "ad": "İklim (OECD): Soğutma Derece-Gündeki Değişim, 1981-2010'a Göre (Derece-Gün)",
+     "birim": "Derece-Gün",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
      ],
      "duzeyler": [
       "country",
@@ -57646,115 +57755,6 @@
       2022,
       2023,
       2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26",
-      "province"
-     ]
-    },
-    {
-     "id": "iklim-oecd-buzlu-gun-sayisi-gun",
-     "ad": "İklim (OECD): Buzlu Gün Sayısı (Gün)",
-     "birim": "Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26",
-      "province"
-     ]
-    },
-    {
-     "id": "iklim-oecd-isitma-derece-gun-derece-gun",
-     "ad": "İklim (OECD): Isıtma Derece-Gün (Derece-Gün)",
-     "birim": "Derece-Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023
-     ],
-     "duzeyler": [
-      "country",
-      "region26",
-      "province"
-     ]
-    },
-    {
-     "id": "iklim-oecd-sogutma-derece-gun-derece-gun",
-     "ad": "İklim (OECD): Soğutma Derece-Gün (Derece-Gün)",
-     "birim": "Derece-Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023
-     ],
-     "duzeyler": [
-      "country",
-      "region26",
-      "province"
-     ]
-    },
-    {
-     "id": "iklim-oecd-sogutma-derece-gundeki-degisim-1981-2010-a-gore-derece-gun",
-     "ad": "İklim (OECD): Soğutma Derece-Gündeki Değişim, 1981-2010'a Göre (Derece-Gün)",
-     "birim": "Derece-Gün",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023
      ],
      "duzeyler": [
       "country",
@@ -59688,116 +59688,35 @@
      ]
     },
     {
-     "id": "istihdamda-sektor-payi-oecd-sanayi-enerji-dahil",
-     "ad": "İstihdamda Sektör Payı (OECD): Sanayi (Enerji Dahil) (%)",
-     "birim": "%",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "istihdamda-sektor-payi-oecd-imalat",
-     "ad": "İstihdamda Sektör Payı (OECD): İmalat (%)",
-     "birim": "%",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "istihdamda-sektor-payi-oecd-insaat",
-     "ad": "İstihdamda Sektör Payı (OECD): İnşaat (%)",
-     "birim": "%",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
-     "id": "istihdamda-sektor-payi-oecd-ticaret-ulastirma-konaklama",
-     "ad": "İstihdamda Sektör Payı (OECD): Ticaret, Ulaştırma, Konaklama (%)",
-     "birim": "%",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
      "id": "istihdamda-sektor-payi-oecd-bilgi-ve-iletisim",
      "ad": "İstihdamda Sektör Payı (OECD): Bilgi ve İletişim (%)",
+     "birim": "%",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "istihdamda-sektor-payi-oecd-diger-hizmetler",
+     "ad": "İstihdamda Sektör Payı (OECD): Diğer Hizmetler (%)",
      "birim": "%",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
@@ -59877,33 +59796,6 @@
      ]
     },
     {
-     "id": "istihdamda-sektor-payi-oecd-mesleki-ve-idari-hizmetler",
-     "ad": "İstihdamda Sektör Payı (OECD): Mesleki ve İdari Hizmetler (%)",
-     "birim": "%",
-     "ondalik": 2,
-     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
-     "kaynakKisa": "OECD",
-     "kaynakTuru": "oecd-ozgun",
-     "yillar": [
-      2013,
-      2014,
-      2015,
-      2016,
-      2017,
-      2018,
-      2019,
-      2020,
-      2021,
-      2022,
-      2023,
-      2024
-     ],
-     "duzeyler": [
-      "country",
-      "region26"
-     ]
-    },
-    {
      "id": "istihdamda-sektor-payi-oecd-kamu-yonetimi-egitim-saglik",
      "ad": "İstihdamda Sektör Payı (OECD): Kamu Yönetimi, Eğitim, Sağlık (%)",
      "birim": "%",
@@ -59931,8 +59823,116 @@
      ]
     },
     {
-     "id": "istihdamda-sektor-payi-oecd-diger-hizmetler",
-     "ad": "İstihdamda Sektör Payı (OECD): Diğer Hizmetler (%)",
+     "id": "istihdamda-sektor-payi-oecd-mesleki-ve-idari-hizmetler",
+     "ad": "İstihdamda Sektör Payı (OECD): Mesleki ve İdari Hizmetler (%)",
+     "birim": "%",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "istihdamda-sektor-payi-oecd-sanayi-enerji-dahil",
+     "ad": "İstihdamda Sektör Payı (OECD): Sanayi (Enerji Dahil) (%)",
+     "birim": "%",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "istihdamda-sektor-payi-oecd-ticaret-ulastirma-konaklama",
+     "ad": "İstihdamda Sektör Payı (OECD): Ticaret, Ulaştırma, Konaklama (%)",
+     "birim": "%",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "istihdamda-sektor-payi-oecd-imalat",
+     "ad": "İstihdamda Sektör Payı (OECD): İmalat (%)",
+     "birim": "%",
+     "ondalik": 2,
+     "kaynak": "OECD Regional, Metropolitan and Local Statistics",
+     "kaynakKisa": "OECD",
+     "kaynakTuru": "oecd-ozgun",
+     "yillar": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+     ],
+     "duzeyler": [
+      "country",
+      "region26"
+     ]
+    },
+    {
+     "id": "istihdamda-sektor-payi-oecd-insaat",
+     "ad": "İstihdamda Sektör Payı (OECD): İnşaat (%)",
      "birim": "%",
      "ondalik": 2,
      "kaynak": "OECD Regional, Metropolitan and Local Statistics",
