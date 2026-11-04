@@ -5,8 +5,8 @@
 ## Ortam (önemli)
 
 - İki Windows bilgisayar, tek kaynak GitHub (`HuseyinUlub/Bolgesel-Veri-Platformu`). İşe başlarken Pull, bitirirken Commit + Push; aynı anda iki yerde çalışılmaz.
-- Python komutu `py`'dir. Türkçe karakterler için `py -X utf8 ...` kullanın. Gerekli paketler: `requirements.txt` (`py -m pip install -r requirements.txt`).
-- Yönetici bilgisayarda Node vardır (`npm run build`); iş bilgisayarında Node yoktur ve `.bat` dosyaları antivirüse takılır. `dist/` depoda tutulur; site `py siteyi-ac.py` ile `dist/`'ten açılır.
+- Python komutu `py`'dir; `python` yalnızca Microsoft Store kısayoludur ve çalışmaz (`npm run veri` ve `npm test`'in Python kısmı bu yüzden başarısız olur). Türkçe karakterler için `py -X utf8 ...` kullanın. Yönetici bilgisayarda varsayılan `py` Python 3.15 beta'dır ve shapely orada import sırasında çöker; veri hattını `py -3.13 -X utf8 ...` ile çalıştırın. Gerekli paketler: `requirements.txt` (`py -m pip install -r requirements.txt`).
+- Yönetici bilgisayarda Node, npm ve Git Bash vardır, `.bat` dosyaları çalışır (ilk seferde `npm ci`, sonra `npm run build`); iş bilgisayarında Node yoktur ve `.bat` dosyaları antivirüse takılır. `dist/` depoda tutulur; site `py siteyi-ac.py` ile `dist/`'ten açılır.
 - `tuik-api-key.txt` gizlidir: içeriğini asla okumayın, yazdırmayın, commit etmeyin.
 
 ## Yapı

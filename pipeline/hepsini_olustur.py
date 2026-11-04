@@ -160,8 +160,12 @@ def main() -> None:
         calistir("pipeline/build_data.py")
 
     for ad, hedef in SABIT.items():
-        (KOK / hedef).parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(KOK / "kaynaklar" / "sabit" / ad, KOK / hedef)
+        h = KOK / hedef
+        h.parent.mkdir(parents=True, exist_ok=True)
+        if h.exists():
+            h.chmod(0o644)  # önceki kopya salt okunur kalmış olabilir
+        # copy2 kaynağın salt okunur özniteliğini de taşır ve sonraki çalıştırmada üzerine yazılamaz
+        shutil.copyfile(KOK / "kaynaklar" / "sabit" / ad, h)
     for b in SAYFA:
         calistir(b)
 
