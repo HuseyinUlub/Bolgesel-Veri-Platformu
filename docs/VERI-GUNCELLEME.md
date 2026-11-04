@@ -12,14 +12,31 @@ Betikler `tools/guncelle/` altındadır. Hiçbiri onaysız olarak `veri-ekleri/`
 TÜİK API değerleri esastır: `veri-ekleri/tuik-api.csv` en son okunur ve aynı il-yıl için diğer dosyaların önüne geçer
 (`pipeline/ekler.py`, `SON_OKUNAN`). API'de bulunmayan yıllar ve düzeyler eski kaynaklarından gelmeye devam eder.
 
-## Aylık güncelleme (onayla)
+## Haftalık güncelleme (onayla)
 
 ```
-python tools/guncelle/guncelle.py                       # indir + karşılaştır + denetle → build/guncelleme/rapor-YYYY-AA-GG.md
-python tools/guncelle/guncelle.py --indirme-yok --uygula  # raporu onayladıktan sonra: veri-ekleri'ne yaz, veri hattını çalıştır
+py -3.13 -X utf8 tools/guncelle/guncelle.py                                # indir + karşılaştır + denetle → build/guncelleme/rapor-YYYY-AA-GG.md
+py -3.13 -X utf8 tools/guncelle/guncelle.py --indirme-yok --uygula --site  # raporu onayladıktan sonra
 ```
 
-`--kaynak tuik` ya da `--kaynak oecd` ile tek kaynak güncellenir. Uygulamadan sonra siteyi yeniden derleyin (`npm run build`).
+`--uygula` aday dosyaları `veri-ekleri/`'ne yazar ve bütün veri hattını (`pipeline/hepsini_olustur.py`, değişiklik denetimi
+dahil) çalıştırır; `--site` siteyi de derler. `--kaynak tuik` ya da `--kaynak oecd` ile tek kaynak güncellenir.
+
+**Otomatik çalışma (GitHub Actions, bilgisayardan bağımsız):** `.github/workflows/haftalik-guncelleme.yml` her pazartesi
+09:00'da (ya da Actions sekmesinden elle) veriyi baştan üretir, API'lerden indirir, karşılaştırır ve denetler. `veri-ekleri/`
+değiştiyse uygular, siteyi derler ve **onay için pull request açar**: PR açıklaması güncelleme raporu ve değişiklik
+denetimidir; `kaynaklar/veri-ozeti.csv` farkı hangi gösterge × düzeyin değiştiğini gösterir. PR'ı birleştirmek onaydır;
+birleştirmeden önce yerelde Pull yapıp gerekirse `dist/` üzerinden kontrol edin. Değişiklik yoksa PR açılmaz; rapor her
+çalıştırmanın "Artifacts" bölümündedir. Gerekli ayarlar iş akışı dosyasının başında yazılıdır (`TUIK_API_KEY` gizli değişkeni).
+`tuik-erisim-denemesi.yml` GitHub sunucusundan TÜİK'e erişimi sınamak içindir.
+
+Yerel zamanlanmış görev (yedek; Actions TÜİK'e erişemezse): `tools/guncelle/haftalik.py` yalnız indirir ve raporlar,
+özeti `build/guncelleme/SON-RAPOR.txt`'ye yazar. Kaydetmek / kaldırmak: `py -3.13 tools/guncelle/haftalik.py --kaydet` / `--kaldir`.
+
+Uygulamadan önce TÜİK adayları Veri Masası kontrollerinden geçer (`aday_denetim.py`: birim, ±%50 sıçrama, ondalık
+kayması, 81 il = Türkiye); uyarılı değerler raporda ve `build/guncelleme/aday/tuik-api-denetim.csv`'de listelenir.
+`topla=evet` göstergelerinde bir il o yıl akışta hiç yoksa bölge ve Türkiye değeri o yıl üretilmez (eksik illerle toplam
+yazılmaz); il akışta var ama bu seride yoksa değeri 0 sayılır.
 
 Raporun TÜİK bölümü: sitedeki değerle aynı olanlar, TÜİK'te farklı olanlar (revizyon; örneklerle), yeni yıllar,
 API'de bulunmayan site değerleri (korunur) ve indirilemeyen akışlar.
@@ -28,7 +45,9 @@ API'de bulunmayan site değerleri (korunur) ve indirilemeyen akışlar.
 
 | Betik | Ne yapar |
 |---|---|
-| `guncelle.py` | Bütün adımları çalıştırır ve raporu yazar; `--uygula` ile aday dosyaları `veri-ekleri/`'ne yazar, `pipeline/build_data.py` ve `tools/analiz/analiz_verisi.py`'yi çalıştırır. |
+| `guncelle.py` | Bütün adımları çalıştırır ve raporu yazar; `--uygula` ile aday dosyaları `veri-ekleri/`'ne yazar ve `pipeline/hepsini_olustur.py`'yi çalıştırır. |
+| `aday_denetim.py` | TÜİK adaylarını uygulamadan önce Veri Masası kontrollerinden geçirir. |
+| `haftalik.py` | Zamanlanmış görev: haftalık indirme ve rapor; `--kaydet` / `--kaldir`. |
 | `oecd_indir.py` | OECD bölgesel ve kent akışlarını yalnız Türkiye için indirir. |
 | `tuik_indir.py` | `tuik.csv`'deki onaylı göstergelerin akışlarını ve yapısal metaverisini indirir (belirteç süresi dolarsa yeniler). |
 | `tuik_aday.py` | Eşlemeyi uygular, değerleri sitedeki ondalığa yuvarlar, sitedeki değerlerle karşılaştırır. |

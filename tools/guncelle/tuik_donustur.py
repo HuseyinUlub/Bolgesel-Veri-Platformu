@@ -190,20 +190,41 @@ def ust_kodlar(kod: str) -> list[str]:
     return [kod[:4], kod[:3], "TR"]
 
 
-def topla(deg: dict) -> dict:
-    """Eksik üst düzeyleri il değerlerinden toplar (yalnız bütün illeri bulunan yıllar için Türkiye)."""
+def akistaki_iller(d: Tablo, geo: str) -> set:
+    """Akışın herhangi bir serisinde değeri olan (il, yıl) çiftleri."""
+    return {(r.get(geo, ""), r["YIL"]) for r in d.satirlar
+            if duzey(r.get(geo, "")) == "il" and sayi(r.get("OBS_VALUE")) is not None}
+
+
+def topla(deg: dict, mevcut: set | None = None) -> dict:
+    """Eksik üst düzeyleri il değerlerinden toplar; yalnız o birimin bütün illeri bulunan yıllar için Türkiye/bölge.
+
+    Bir ilin bu seride değeri yoksa:
+      - il o yıl akışta başka serilerde varsa (mevcut), değeri 0 sayılır (ör. 50+ yaş doğum, belde ve köy nüfusu);
+      - il o yıl akışta hiç yoksa veri eksiktir ve üst birim o yıl toplanmaz (ör. 2025 trafik verisinde
+        Kahramanmaraş yok: TR63/TR6 eksik illerle toplanıp doğru değerin yerine "revizyon" olarak yazılırdı).
+    mevcut verilmezse yalnız bu serinin illerine bakılır. Bir birimin illeri akışın bütün yıllarından çıkarılır.
+    """
     out = dict(deg)
     toplam = defaultdict(float)
-    sayac = defaultdict(int)
+    var = defaultdict(set)     # (üst, yıl) -> o yıl verisi olan iller
+    iller = defaultdict(set)   # üst -> akışta görülen bütün iller
+    kaynak = mevcut if mevcut is not None else set(deg)
+    for kod, yil in kaynak:
+        if duzey(kod) == "il":
+            for u in ust_kodlar(kod):
+                var[(u, yil)].add(kod)
+                iller[u].add(kod)
     for (kod, yil), v in deg.items():
         if duzey(kod) == "il":
             for u in ust_kodlar(kod):
                 toplam[(u, yil)] += v
-                sayac[(u, yil)] += 1
+                var[(u, yil)].add(kod)
+                iller[u].add(kod)
     for k, v in toplam.items():
         if k in out:
             continue
-        if k[0] == "TR" and sayac[k] < 81:
+        if len(var[k]) < (81 if k[0] == "TR" else len(iller[k[0]])):
             continue
         out[k] = v
     return out
@@ -215,14 +236,15 @@ def uygula(satir: dict, d: Tablo | None = None) -> dict:
     geo = satir["geo"]
     c = sayi(satir.get("carpan")) or 1.0
     toplanir = (satir.get("topla") or "").strip().lower() == "evet"
+    mevcut = akistaki_iller(d, geo) if toplanir else None
     pay = seri(d, geo, filtre_coz(satir["filtre"]))
     if satir.get("payda"):
         payda = seri(d, geo, filtre_coz(satir["payda"]))
         if toplanir:
-            pay, payda = topla(pay), topla(payda)
+            pay, payda = topla(pay, mevcut), topla(payda, mevcut)
         return {k: v / payda[k] * c for k, v in pay.items() if payda.get(k)}
     out = {k: v * c for k, v in pay.items()}
-    return topla(out) if toplanir else out
+    return topla(out, mevcut) if toplanir else out
 
 
 def esleme_oku(p: Path = ESLEME) -> list[dict]:

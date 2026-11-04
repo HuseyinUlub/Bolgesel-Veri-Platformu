@@ -30,6 +30,7 @@ import argparse
 import csv
 import datetime as dt
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -38,6 +39,7 @@ from pathlib import Path
 
 KOK = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).parent))
+import aday_denetim  # noqa: E402
 import denetim  # noqa: E402
 
 GD = KOK / "build/guncelleme"
@@ -115,14 +117,19 @@ def birlestir(ad: str, gecmis: bool = False):
 
 
 def calistir(komut: list[str], log: Path) -> int:
+    # Alt betikler Türkçe yazar; Windows'ta varsayılan kodlama cp1252 olduğundan UTF-8 zorunlu kılınır
+    env = dict(os.environ, PYTHONUTF8="1")
     with open(log, "w", encoding="utf-8") as f:
-        return subprocess.run(komut, cwd=KOK, stdout=f, stderr=subprocess.STDOUT).returncode
+        return subprocess.run(komut, cwd=KOK, stdout=f, stderr=subprocess.STDOUT, env=env).returncode
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--indirme-yok", action="store_true")
     ap.add_argument("--uygula", action="store_true")
+    ap.add_argument("--site", action="store_true", help="--uygula ile: sonunda siteyi de derle (npm run build)")
+    ap.add_argument("--ozet-kaydet", action="store_true",
+                    help="--uygula ile: yeni veri özetini kaynaklar/veri-ozeti.csv'ye yaz (PR'da fark görünsün)")
     ap.add_argument("--gecmis", action="store_true", help="mevcut ilk yıldan önceki yılları da ekle")
     ap.add_argument("--kaynak", default="oecd,tuik", help="güncellenecek kaynaklar (virgülle): oecd, tuik")
     a = ap.parse_args(argv)
@@ -132,14 +139,22 @@ def main(argv=None):
 
     kaynaklar = {k.strip() for k in a.kaynak.split(",")}
     if a.uygula:
+        dp = GD / "aday" / f"{TUIK_DOSYA}-denetim.json"
+        if dp.exists():
+            d = json.loads(dp.read_text(encoding="utf-8"))
+            print(f"TÜİK adayları: {d['ekleme']} yeni, {d['revizyon']} revize; "
+                  f"kontrollerden geçmeyen: {d['uyarili']} uyarılı, {d['hatali']} hatalı (raporda listelendi)")
         for ad in OECD_DOSYALAR + [TUIK_DOSYA]:
             src = GD / "aday" / f"{ad}.csv"
             if src.exists():
-                shutil.copy2(src, KOK / "veri-ekleri" / f"{ad}.csv")
+                shutil.copyfile(src, KOK / "veri-ekleri" / f"{ad}.csv")
                 print(f"uygulandı: veri-ekleri/{ad}.csv")
-        rc = calistir([sys.executable, "pipeline/build_data.py"], GD / "log" / "build_data.log")
-        rc |= calistir([sys.executable, "tools/analiz/analiz_verisi.py"], GD / "log" / "analiz_verisi.log")
-        print("veri hattı", "tamam" if rc == 0 else "HATA (build/guncelleme/log)")
+        # Yalnız build_data.py public/veri/'yi baştan yazar ve sayfa verilerini (vitrin, analiz…) siler;
+        # bütün veri hattı ve değişiklik denetimi hepsini_olustur.py ile çalışır.
+        rc = calistir([sys.executable, "pipeline/hepsini_olustur.py"] + (["--site"] if a.site else [])
+                      + (["--ozet-kaydet"] if a.ozet_kaydet else []), GD / "log" / "hepsini_olustur.log")
+        print("veri hattı", "tamam" if rc == 0 else "HATA (build/guncelleme/log/hepsini_olustur.log)",
+              "· değişiklik raporu: build/degisiklik-raporu.md")
         return rc
 
     # 1. OECD indir + dönüştür
@@ -166,7 +181,8 @@ def main(argv=None):
                 "aday_log": (GD / "log" / "tuik_aday.log").read_text(encoding="utf-8"),
                 "kiyas": json.loads(kp.read_text(encoding="utf-8")) if kp.exists() else {"kiyas": {}, "eksik_akis": []},
                 # sitedeki ilk yıldan önceki yıllar tuik_aday.py'de ayıklandığı için burada ayrıca ayıklanmaz
-                "birlesik": birlestir(TUIK_DOSYA, True)}
+                "birlesik": birlestir(TUIK_DOSYA, True),
+                "denetim": aday_denetim.denetle(TUIK_DOSYA)}
 
     # 2-3. birleştir ve karşılaştır
     sonuc = {ad: birlestir(ad, a.gecmis) for ad in (OECD_DOSYALAR if "oecd" in kaynaklar else [])}
@@ -226,7 +242,7 @@ def rapor(bugun, oecd_log, donustur, sonuc, den, tuik=None) -> str:
     L += tuik_raporu(tuik)
     L += ["", "## 3. Denetimler", ""]
     L += den
-    L += ["", "---", "Bu rapor yalnızca öneridir. Uygulamak için: `python tools/guncelle/guncelle.py --uygula`"]
+    L += ["", "---", "Bu rapor yalnızca öneridir. Uygulamak için: `py -3.13 -X utf8 tools/guncelle/guncelle.py --indirme-yok --uygula --site`"]
     return "\n".join(L) + "\n"
 
 
@@ -262,6 +278,7 @@ def tuik_raporu(t) -> list[str]:
     hatali = [g for g, v in K.items() if "hata" in v]
     if hatali:
         L += ["", "**Dönüştürülemeyen göstergeler**", ""] + [f"- {g}: {K[g]['hata']}" for g in hatali]
+    L += aday_denetim.rapor_satirlari(t.get("denetim"))
     return L
 
 

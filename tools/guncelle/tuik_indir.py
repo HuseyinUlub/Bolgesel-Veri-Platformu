@@ -2,7 +2,8 @@
 tuik_indir.py — eşleme tablosundaki (ya da verilen) TÜİK veri akışlarını ve yapısal metaverilerini indirir.
 
 Çıktı: build/guncelleme/tuik/ham/<akış>.csv.gz (SDMX-CSV) ve build/guncelleme/tuik/yapi/<akış>.xml.gz
-Belirteç (token) kısa ömürlü olduğu için 401 yanıtında yenilenir. Ağ kesintilerinde tuik_sdmx.getir yeniden dener.
+Belirteç (token) kısa ömürlü olduğu için 401 yanıtında yenilenir. Ağ kesintilerinde tuik_sdmx.getir yeniden dener;
+başarısız akışlar sonda bir kez daha denenir. Yapı dosyası 30 günden yeniyse yeniden indirilmez.
 
 Kullanım:
     python tools/guncelle/tuik_indir.py                      # tuik.csv'deki onaylı eşlemelerin akışları (yeniden indirir)
@@ -16,6 +17,7 @@ import csv
 import gzip
 import sys
 import threading
+import time
 import urllib.error
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -26,6 +28,9 @@ import tuik_donustur as D  # noqa: E402
 
 CSV_KABUL = "application/vnd.sdmx.data+csv;version=1.0.0"
 KAPSAM = D.KOK / "tuik-akis-kapsami.csv"
+# Bazı istekler sunucuda yanıtsız kalıyor ve yeniden denemede saniyeler içinde dönüyor: uzun beklemek yerine erken kes
+ZAMAN_ASIMI = 90
+YAPI_GUN = 30  # yapı (kod listeleri) nadiren değişir; bundan yeni dosya yeniden indirilmez
 
 
 class Belirtec:
@@ -36,14 +41,14 @@ class Belirtec:
     def getir(self, yol, kabul=None):
         t = self.t
         try:
-            return T.getir(yol, t, kabul)
+            return T.getir(yol, t, kabul, ZAMAN_ASIMI)
         except urllib.error.HTTPError as e:
             if e.code != 401:
                 raise
             with self.kilit:
                 if self.t == t:
                     self.t = T.token()
-            return T.getir(yol, self.t, kabul)
+            return T.getir(yol, self.t, kabul, ZAMAN_ASIMI)
 
 
 def surumler() -> dict:
@@ -69,7 +74,8 @@ def indir(akislar, onbellek=False, isci=2, yazdir=print) -> dict:
         try:
             if not (onbellek and p.exists()):
                 p.write_bytes(gzip.compress(B.getir(f"/data/TR,{akis},{surum}", CSV_KABUL)))
-            if not (onbellek and y.exists()):
+            yeni = y.exists() and time.time() - y.stat().st_mtime < YAPI_GUN * 86400
+            if not ((onbellek and y.exists()) or yeni):
                 y.write_bytes(gzip.compress(B.getir(f"/dataflow/TR/{akis}/{surum}?references=descendants")))
             return akis, "tamam"
         except urllib.error.HTTPError as e:
@@ -80,7 +86,16 @@ def indir(akislar, onbellek=False, isci=2, yazdir=print) -> dict:
     with ThreadPoolExecutor(isci) as ex:
         for akis, durum in ex.map(bir, akislar):
             sonuc[akis] = durum
-            yazdir(f"  {akis}: {durum}")
+    # geçici ağ hataları (DNS, zaman aşımı) için başarısız akışlar bir kez daha denenir
+    kalan = [a for a, d in sonuc.items() if d != "tamam"]
+    if kalan:
+        time.sleep(30)
+        B.t = T.token()
+        with ThreadPoolExecutor(isci) as ex:
+            for akis, durum in ex.map(bir, kalan):
+                sonuc[akis] = durum
+    for akis in akislar:
+        yazdir(f"  {akis}: {sonuc[akis]}")
     return sonuc
 
 

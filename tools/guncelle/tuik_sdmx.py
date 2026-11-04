@@ -17,8 +17,10 @@ from __future__ import annotations
 
 import argparse
 import csv
+import http.client
 import io
 import json
+import os
 import re
 import sys
 import time
@@ -42,7 +44,11 @@ def anahtar_oku() -> str:
         p = KOK / ad
         if p.exists() and p.read_text(encoding="utf-8-sig").strip():
             return p.read_text(encoding="utf-8-sig").strip()
-    sys.exit("API anahtarı bulunamadı ya da dosya boş: proje kökünde tuik-api-key.txt (ya da .tuik-api-key) olmalı.")
+    # GitHub Actions: anahtar depo gizli değişkeninden (secret) ortam değişkeni olarak gelir
+    if os.environ.get("TUIK_API_KEY", "").strip():
+        return os.environ["TUIK_API_KEY"].strip()
+    sys.exit("API anahtarı bulunamadı: proje kökünde tuik-api-key.txt (ya da .tuik-api-key) "
+             "ya da TUIK_API_KEY ortam değişkeni olmalı.")
 
 
 def token() -> str:
@@ -52,18 +58,18 @@ def token() -> str:
         return json.load(r)["access_token"]
 
 
-def getir(yol: str, tok: str, kabul: str | None = None) -> bytes:
+def getir(yol: str, tok: str, kabul: str | None = None, zaman_asimi: int = 300) -> bytes:
     h = {"Authorization": f"Bearer {tok}", "User-Agent": UA}
     if kabul:
         h["Accept"] = kabul
     for i in range(4):
         try:
-            with urllib.request.urlopen(urllib.request.Request(API + yol, headers=h), timeout=300) as r:
+            with urllib.request.urlopen(urllib.request.Request(API + yol, headers=h), timeout=zaman_asimi) as r:
                 return r.read()
         except urllib.error.HTTPError as e:
             if e.code < 500 or i == 3:
                 raise
-        except (urllib.error.URLError, TimeoutError, ConnectionError):
+        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.IncompleteRead):
             if i == 3:
                 raise
         time.sleep(5 * (i + 1))

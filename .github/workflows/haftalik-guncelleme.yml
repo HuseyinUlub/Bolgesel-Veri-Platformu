@@ -1,0 +1,103 @@
+# Haftalık veri güncellemesi: TÜİK ve OECD API'lerinden indirir, mevcut veriyle karşılaştırır, kontrollerden geçirir.
+# Değişiklik varsa uygular, siteyi derler ve onay için pull request açar; PR'ı birleştirmek onaydır.
+# Değişiklik yoksa PR açılmaz; rapor her çalıştırmada "Artifacts" altında saklanır.
+#
+# Gerekli ayarlar (bir kez):
+#   - Settings → Secrets and variables → Actions → New repository secret: TUIK_API_KEY
+#   - Settings → Actions → General → Workflow permissions: "Read and write" ve
+#     "Allow GitHub Actions to create and approve pull requests" işaretli
+name: Haftalık Veri Güncellemesi
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # her pazartesi 06:00 UTC (Türkiye saatiyle 09:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: haftalik-guncelleme
+  cancel-in-progress: false
+
+jobs:
+  guncelle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Bağımlılıklar
+        run: |
+          python -m pip install -r requirements.txt
+          npm ci
+
+      # Karşılaştırma için veritabanı ve sayfa verileri gerekir (build/ ve public/veri/ depoda tutulmaz)
+      - name: Mevcut veriyi üret
+        run: python pipeline/hepsini_olustur.py
+
+      - name: API'lerden indir, karşılaştır, denetle
+        env:
+          TUIK_API_KEY: ${{ secrets.TUIK_API_KEY }}
+        run: |
+          python tools/guncelle/guncelle.py
+          cp build/guncelleme/rapor-*.md build/guncelleme/RAPOR.md
+
+      - name: Raporu sakla
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guncelleme-raporu
+          path: |
+            build/guncelleme/rapor-*.md
+            build/guncelleme/aday/*-denetim.csv
+            build/guncelleme/log/
+            build/degisiklik-raporu.md
+            build/guncellik.html
+          retention-days: 90
+
+      - name: Uygula ve siteyi derle
+        run: |
+          python tools/guncelle/guncelle.py --indirme-yok --uygula --site --ozet-kaydet
+          if git diff --quiet -- veri-ekleri/; then
+            echo "DEGISIKLIK=yok" >> "$GITHUB_ENV"
+            echo "Veri değişikliği yok; PR açılmayacak." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "DEGISIKLIK=var" >> "$GITHUB_ENV"
+            git diff --stat -- veri-ekleri/ kaynaklar/veri-ozeti.csv >> "$GITHUB_STEP_SUMMARY"
+          fi
+          {
+            cat build/guncelleme/RAPOR.md
+            echo
+            echo "## Değişiklik denetimi"
+            echo
+            cat build/degisiklik-raporu.md
+          } > build/guncelleme/PR.md
+          cat build/guncelleme/PR.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Onay için pull request aç
+        if: env.DEGISIKLIK == 'var'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: veri-guncellemesi
+          delete-branch: true
+          title: "Veri güncellemesi (${{ github.run_id }})"
+          commit-message: "Haftalık veri güncellemesi (TÜİK/OECD API)"
+          body-path: build/guncelleme/PR.md
+          add-paths: |
+            veri-ekleri/
+            kaynaklar/veri-ozeti.csv
+            dist/

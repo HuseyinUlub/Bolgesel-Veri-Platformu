@@ -1,0 +1,47 @@
+# TÜİK ve OECD API'lerine GitHub sunucusundan erişilebiliyor mu? Elle çalıştırılır (Actions → TÜİK Erişim Denemesi → Run workflow).
+# Gerekli gizli değişken: TUIK_API_KEY (Settings → Secrets and variables → Actions). Anahtar günlüğe yazılmaz.
+name: TÜİK Erişim Denemesi
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  erisim:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Sunucu adresleri
+        run: |
+          for h in nsiws.tuik.gov.tr giris.tuik.gov.tr sdmx.oecd.org; do
+            getent hosts "$h" || echo "$h: ad çözülemedi"
+          done
+
+      - name: TÜİK belirteci ve akış listesi
+        env:
+          TUIK_API_KEY: ${{ secrets.TUIK_API_KEY }}
+          PYTHONUTF8: "1"
+        run: |
+          if [ -z "$TUIK_API_KEY" ]; then echo "::error::TUIK_API_KEY gizli değişkeni tanımlı değil"; exit 1; fi
+          python tools/guncelle/tuik_sdmx.py liste
+
+      - name: Örnek akış indirme (DF_ADNKS_T20)
+        env:
+          TUIK_API_KEY: ${{ secrets.TUIK_API_KEY }}
+          PYTHONUTF8: "1"
+        run: |
+          time python tools/guncelle/tuik_indir.py DF_ADNKS_T20
+          ls -la build/guncelleme/tuik/ham build/guncelleme/tuik/yapi
+
+      - name: OECD erişimi
+        run: |
+          curl -sS -o /dev/null -w "OECD SDMX: HTTP %{http_code}, %{time_total} sn\n" \
+            "https://sdmx.oecd.org/public/rest/dataflow/OECD.CFE.EDS/all/latest"
