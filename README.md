@@ -1,4 +1,4 @@
-# dakaveri v2
+# Bölgesel Veri Platformu
 
 Türkiye Bölgesel Veri Analizleri sitesinin yeni yapısı. Eski site (`../dakaveri`) **hiç değiştirilmedi**. Sayfalar tek tek bu yapıya taşınıyor, taşınmayanlar build sırasında eski hâlleriyle kopyalanıyor.
 
