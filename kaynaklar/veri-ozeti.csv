@@ -556,6 +556,30 @@ Ekilen Tarım Alanı (Hektar);country;30;2024;504584392.0
 Ekilen Tarım Alanı (Hektar);province;2423;2024;504584456.0
 Ekilen Tarım Alanı (Hektar);region12;195;2024;239445459.0
 Ekilen Tarım Alanı (Hektar);region26;780;2024;504584409.0
+Elektrik Tüketici Sayısı: Aydınlatma;country;2;2025;575796.0
+Elektrik Tüketici Sayısı: Aydınlatma;province;162;2025;575796.0
+Elektrik Tüketici Sayısı: Aydınlatma;region12;24;2025;575796.0
+Elektrik Tüketici Sayısı: Aydınlatma;region26;52;2025;575796.0
+Elektrik Tüketici Sayısı: Kamu ve Özel Hizmetler ile Diğer;country;2;2025;14656977.0
+Elektrik Tüketici Sayısı: Kamu ve Özel Hizmetler ile Diğer;province;162;2025;14656977.0
+Elektrik Tüketici Sayısı: Kamu ve Özel Hizmetler ile Diğer;region12;24;2025;14656977.0
+Elektrik Tüketici Sayısı: Kamu ve Özel Hizmetler ile Diğer;region26;52;2025;14656977.0
+Elektrik Tüketici Sayısı: Mesken;country;2;2025;85664009.0
+Elektrik Tüketici Sayısı: Mesken;province;162;2025;85664009.0
+Elektrik Tüketici Sayısı: Mesken;region12;24;2025;85664009.0
+Elektrik Tüketici Sayısı: Mesken;region26;52;2025;85664009.0
+Elektrik Tüketici Sayısı: Sanayi;country;2;2025;135158.0
+Elektrik Tüketici Sayısı: Sanayi;province;162;2025;135158.0
+Elektrik Tüketici Sayısı: Sanayi;region12;24;2025;135158.0
+Elektrik Tüketici Sayısı: Sanayi;region26;52;2025;135158.0
+Elektrik Tüketici Sayısı: Tarımsal Faaliyetler;country;2;2025;1578112.0
+Elektrik Tüketici Sayısı: Tarımsal Faaliyetler;province;162;2025;1578112.0
+Elektrik Tüketici Sayısı: Tarımsal Faaliyetler;region12;24;2025;1578112.0
+Elektrik Tüketici Sayısı: Tarımsal Faaliyetler;region26;52;2025;1578112.0
+Elektrik Tüketici Sayısı: Toplam;country;2;2025;102610052.0
+Elektrik Tüketici Sayısı: Toplam;province;162;2025;102610052.0
+Elektrik Tüketici Sayısı: Toplam;region12;24;2025;102610052.0
+Elektrik Tüketici Sayısı: Toplam;region26;52;2025;102610052.0
 Elektrik, Gaz, Buhar ve Havalandırma Sistemi Üretim ve Dağıtımı Sektöründe İhracatın İthalatı Karşılama Oranı (%);country;12;2024;1449.8
 Elektrik, Gaz, Buhar ve Havalandırma Sistemi Üretim ve Dağıtımı Sektöründe İhracatın İthalatı Karşılama Oranı (%);province;34;2024;7548.7
 Elektrik, Gaz, Buhar ve Havalandırma Sistemi Üretim ve Dağıtımı Sektöründe İhracatın İthalatı Karşılama Oranı (%);region12;33;2024;30243.4
@@ -1035,6 +1059,30 @@ Faaliyet İline Göre İhracat (1000 $);region26;104;2025;1018593291.0
 Faaliyet İline Göre İhracatın İthalatı Karşılama Oranı (%);province;243;2024;195720.5
 Faaliyet İline Göre İhracatın İthalatı Karşılama Oranı (%);region12;36;2024;7859.3
 Faaliyet İline Göre İhracatın İthalatı Karşılama Oranı (%);region26;78;2024;17759.9
+Faturalanan Elektrik Tüketimi: Aydınlatma (MWh);country;2;2025;11506955.187
+Faturalanan Elektrik Tüketimi: Aydınlatma (MWh);province;162;2025;11506955.188
+Faturalanan Elektrik Tüketimi: Aydınlatma (MWh);region12;24;2025;11506955.187
+Faturalanan Elektrik Tüketimi: Aydınlatma (MWh);region26;52;2025;11506955.186
+Faturalanan Elektrik Tüketimi: Kamu ve Özel Hizmetler ile Diğer (MWh);country;2;2025;146525307.574
+Faturalanan Elektrik Tüketimi: Kamu ve Özel Hizmetler ile Diğer (MWh);province;162;2025;146525307.576
+Faturalanan Elektrik Tüketimi: Kamu ve Özel Hizmetler ile Diğer (MWh);region12;24;2025;146525307.573
+Faturalanan Elektrik Tüketimi: Kamu ve Özel Hizmetler ile Diğer (MWh);region26;52;2025;146525307.579
+Faturalanan Elektrik Tüketimi: Mesken (MWh);country;2;2025;153307370.399
+Faturalanan Elektrik Tüketimi: Mesken (MWh);province;162;2025;153307370.399
+Faturalanan Elektrik Tüketimi: Mesken (MWh);region12;24;2025;153307370.399
+Faturalanan Elektrik Tüketimi: Mesken (MWh);region26;52;2025;153307370.399
+Faturalanan Elektrik Tüketimi: Sanayi (MWh);country;2;2025;229942518.426
+Faturalanan Elektrik Tüketimi: Sanayi (MWh);province;162;2025;229942518.428
+Faturalanan Elektrik Tüketimi: Sanayi (MWh);region12;24;2025;229942518.424
+Faturalanan Elektrik Tüketimi: Sanayi (MWh);region26;52;2025;229942518.425
+Faturalanan Elektrik Tüketimi: Tarımsal Faaliyetler (MWh);country;2;2025;26330090.338
+Faturalanan Elektrik Tüketimi: Tarımsal Faaliyetler (MWh);province;162;2025;26330090.338
+Faturalanan Elektrik Tüketimi: Tarımsal Faaliyetler (MWh);region12;24;2025;26330090.338
+Faturalanan Elektrik Tüketimi: Tarımsal Faaliyetler (MWh);region26;52;2025;26330090.339
+Faturalanan Elektrik Tüketimi: Toplam (MWh);country;2;2025;567612241.922
+Faturalanan Elektrik Tüketimi: Toplam (MWh);province;162;2025;567612241.923
+Faturalanan Elektrik Tüketimi: Toplam (MWh);region12;24;2025;567612241.923
+Faturalanan Elektrik Tüketimi: Toplam (MWh);region26;52;2025;567612241.925
 Fiber Optik Kablo Uzunluğu (km);country;15;2024;5206947.0
 Fiber Optik Kablo Uzunluğu (km);province;1053;2024;4891718.0
 Fiber Optik Kablo Uzunluğu (km);region12;156;2024;4891718.0
@@ -1572,18 +1620,22 @@ Kır Nüfusu;province;324;2025;59272417.0
 Kır Nüfusu;region12;48;2025;59272417.0
 Kır Nüfusu;region26;104;2025;59272417.0
 Kıyı Taşkınına Maruz Nüfus, 100 Yıllık (OECD Kent) (%);fua;52;2020;10.1783
-Lisanslı Elektrik Üretimi (GWh);country;9;2024;2716811.9994
-Lisanslı Elektrik Üretimi (GWh);province;720;2024;2716811.0194
-Lisanslı Elektrik Üretimi (GWh);region12;108;2024;2716811.02
-Lisanslı Elektrik Üretimi (GWh);region26;234;2024;2716811.0194
-Lisanslı Kurulu Güç (MW);country;9;2024;797620.88
-Lisanslı Kurulu Güç (MW);province;721;2024;797621.02
-Lisanslı Kurulu Güç (MW);region12;108;2024;797621.02
-Lisanslı Kurulu Güç (MW);region26;234;2024;797621.02
-Lisanssız Kurulu Güç (MW);country;9;2024;71866.28
-Lisanssız Kurulu Güç (MW);province;681;2024;71866.355
-Lisanssız Kurulu Güç (MW);region12;108;2024;71860.338
-Lisanssız Kurulu Güç (MW);region26;232;2024;71866.355
+Lisanslı Elektrik Üretimi (GWh);country;10;2025;3042518.8694
+Lisanslı Elektrik Üretimi (GWh);province;801;2025;3042517.8494
+Lisanslı Elektrik Üretimi (GWh);region12;120;2025;3042517.85
+Lisanslı Elektrik Üretimi (GWh);region26;260;2025;3042517.8494
+Lisanslı Kurulu Güç (MW);country;10;2025;896756.2
+Lisanslı Kurulu Güç (MW);province;802;2025;896756.38
+Lisanslı Kurulu Güç (MW);region12;120;2025;896756.38
+Lisanslı Kurulu Güç (MW);region26;260;2025;896756.38
+Lisanssız Brüt Elektrik Üretimi (GWh);country;1;2025;28877.29
+Lisanssız Brüt Elektrik Üretimi (GWh);province;77;2025;28877.32
+Lisanssız Brüt Elektrik Üretimi (GWh);region12;12;2025;28877.32
+Lisanssız Brüt Elektrik Üretimi (GWh);region26;26;2025;28877.32
+Lisanssız Kurulu Güç (MW);country;10;2025;96237.87
+Lisanssız Kurulu Güç (MW);province;762;2025;96237.965
+Lisanssız Kurulu Güç (MW);region12;120;2025;96231.948
+Lisanssız Kurulu Güç (MW);region26;258;2025;96237.965
 Lisanssız Üretilen İhtiyaç Fazlası Olarak Sisteme Verilen Enerji Miktarı (GWh);country;9;2024;84851.2235
 Lisanssız Üretilen İhtiyaç Fazlası Olarak Sisteme Verilen Enerji Miktarı (GWh);province;686;2024;84851.2537
 Lisanssız Üretilen İhtiyaç Fazlası Olarak Sisteme Verilen Enerji Miktarı (GWh);region12;108;2024;84851.24
@@ -2095,7 +2147,7 @@ Patates, Kuru Baklagiller vb. Üretim Miktarı (Ton);country;30;2024;185651802.0
 Patates, Kuru Baklagiller vb. Üretim Miktarı (Ton);province;2415;2024;185651802.0
 Patates, Kuru Baklagiller vb. Üretim Miktarı (Ton);region12;195;2024;91980364.0
 Patates, Kuru Baklagiller vb. Üretim Miktarı (Ton);region26;780;2024;185651802.0
-Patent Yoğunlaşma Katsayısı (OECD Kent);fua;26;2024;13.009
+Patent Yoğunlaşma Katsayısı (OECD Kent) (Katsayı);fua;26;2024;13.009
 Pratisyen Hekim Sayısı;country;23;2024;951751.0
 Pratisyen Hekim Sayısı;province;1863;2024;951751.0
 Pratisyen Hekim Sayısı;region12;188;2024;716039.0

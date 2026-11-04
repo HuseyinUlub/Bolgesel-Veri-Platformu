@@ -84,7 +84,7 @@ def main() -> None:
         ekle("TR", "Yaşam Memnuniyetindeki Değişim, 2014/15-2024/25 (OECD) (Puan)", "Bölgesel Refah (OECD)", 2025, bq[0]["National_Avg_Change"], 2)
     for r in tablo("5krnsc"):
         if r["iso3"] == "TUR" and r["fuacode"] in fua:
-            ekle(r["fuacode"], "Patent Yoğunlaşma Katsayısı (OECD Kent)", "Kentler (OECD)", int(r["year"]), r["lq"], 3)
+            ekle(r["fuacode"], "Patent Yoğunlaşma Katsayısı (OECD Kent) (Katsayı)", "Kentler (OECD)", int(r["year"]), r["lq"], 3)
 
     out = [o for o in out if o[0]]
     CIKTI.parent.mkdir(exist_ok=True)

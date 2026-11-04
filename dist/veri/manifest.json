@@ -6569,7 +6569,8 @@
       2021,
       2022,
       2023,
-      2024
+      2024,
+      2025
      ],
      "duzeyler": [
       "country",
@@ -6594,7 +6595,8 @@
       2021,
       2022,
       2023,
-      2024
+      2024,
+      2025
      ],
      "duzeyler": [
       "country",
@@ -6908,7 +6910,8 @@
       2021,
       2022,
       2023,
-      2024
+      2024,
+      2025
      ],
      "duzeyler": [
       "country",
@@ -7130,6 +7133,252 @@
       2022,
       2023,
       2024
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "elektrik-tuketici-sayisi-aydinlatma",
+     "ad": "Elektrik Tüketici Sayısı: Aydınlatma (EPDK)",
+     "birim": null,
+     "ondalik": 0,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "Tüketici türüne göre tüketici (abone) sayısı, yıl sonu (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 4).",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "elektrik-tuketici-sayisi-kamu-ve-ozel-hizmetler-ile-diger",
+     "ad": "Elektrik Tüketici Sayısı: Kamu ve Özel Hizmetler ile Diğer (EPDK)",
+     "birim": null,
+     "ondalik": 0,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "Tüketici türüne göre tüketici (abone) sayısı, yıl sonu (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 4).",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "elektrik-tuketici-sayisi-mesken",
+     "ad": "Elektrik Tüketici Sayısı: Mesken (EPDK)",
+     "birim": null,
+     "ondalik": 0,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "Tüketici türüne göre tüketici (abone) sayısı, yıl sonu (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 4).",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "elektrik-tuketici-sayisi-sanayi",
+     "ad": "Elektrik Tüketici Sayısı: Sanayi (EPDK)",
+     "birim": null,
+     "ondalik": 0,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "Tüketici türüne göre tüketici (abone) sayısı, yıl sonu (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 4).",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "elektrik-tuketici-sayisi-tarimsal-faaliyetler",
+     "ad": "Elektrik Tüketici Sayısı: Tarımsal Faaliyetler (EPDK)",
+     "birim": null,
+     "ondalik": 0,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "Tüketici türüne göre tüketici (abone) sayısı, yıl sonu (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 4).",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "elektrik-tuketici-sayisi-toplam",
+     "ad": "Elektrik Tüketici Sayısı: Toplam (EPDK)",
+     "birim": null,
+     "ondalik": 0,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "Tüketici türüne göre tüketici (abone) sayısı, yıl sonu (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 4).",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "faturalanan-elektrik-tuketimi-aydinlatma-mwh",
+     "ad": "Faturalanan Elektrik Tüketimi: Aydınlatma (MWh) (EPDK)",
+     "birim": "MWh",
+     "ondalik": 2,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "EPDK'ya bildirilen faturalanan tüketim (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 3). TÜİK'in tüketici türüne göre elektrik tüketimi serilerinden farklı bir tanımdır; doğrudan karşılaştırılmamalıdır.",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "faturalanan-elektrik-tuketimi-kamu-ve-ozel-hizmetler-ile-diger-mwh",
+     "ad": "Faturalanan Elektrik Tüketimi: Kamu ve Özel Hizmetler ile Diğer (MWh) (EPDK)",
+     "birim": "MWh",
+     "ondalik": 2,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "EPDK'ya bildirilen faturalanan tüketim (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 3). TÜİK'in tüketici türüne göre elektrik tüketimi serilerinden farklı bir tanımdır; doğrudan karşılaştırılmamalıdır.",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "faturalanan-elektrik-tuketimi-mesken-mwh",
+     "ad": "Faturalanan Elektrik Tüketimi: Mesken (MWh) (EPDK)",
+     "birim": "MWh",
+     "ondalik": 2,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "EPDK'ya bildirilen faturalanan tüketim (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 3). TÜİK'in tüketici türüne göre elektrik tüketimi serilerinden farklı bir tanımdır; doğrudan karşılaştırılmamalıdır.",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "faturalanan-elektrik-tuketimi-sanayi-mwh",
+     "ad": "Faturalanan Elektrik Tüketimi: Sanayi (MWh) (EPDK)",
+     "birim": "MWh",
+     "ondalik": 2,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "EPDK'ya bildirilen faturalanan tüketim (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 3). TÜİK'in tüketici türüne göre elektrik tüketimi serilerinden farklı bir tanımdır; doğrudan karşılaştırılmamalıdır.",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "faturalanan-elektrik-tuketimi-tarimsal-faaliyetler-mwh",
+     "ad": "Faturalanan Elektrik Tüketimi: Tarımsal Faaliyetler (MWh) (EPDK)",
+     "birim": "MWh",
+     "ondalik": 2,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "EPDK'ya bildirilen faturalanan tüketim (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 3). TÜİK'in tüketici türüne göre elektrik tüketimi serilerinden farklı bir tanımdır; doğrudan karşılaştırılmamalıdır.",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "faturalanan-elektrik-tuketimi-toplam-mwh",
+     "ad": "Faturalanan Elektrik Tüketimi: Toplam (MWh) (EPDK)",
+     "birim": "MWh",
+     "ondalik": 2,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "EPDK'ya bildirilen faturalanan tüketim (EPDK, Elektrik Piyasası 2025 Yılı Piyasa Gelişim Raporu, Ek Tablo 3). TÜİK'in tüketici türüne göre elektrik tüketimi serilerinden farklı bir tanımdır; doğrudan karşılaştırılmamalıdır.",
+     "yillar": [
+      2024,
+      2025
+     ],
+     "duzeyler": [
+      "country",
+      "region12",
+      "region26",
+      "province"
+     ]
+    },
+    {
+     "id": "lisanssiz-brut-elektrik-uretimi-gwh",
+     "ad": "Lisanssız Brüt Elektrik Üretimi (GWh) (EPDK)",
+     "birim": "GWh",
+     "ondalik": 2,
+     "kaynak": "Enerji Piyasası Düzenleme Kurumu",
+     "kaynakKisa": "EPDK",
+     "not": "Lisanssız üretim tesislerinin brüt elektrik üretimi (EPDK, 2025 Piyasa Gelişim Raporu, Tablo 1.8). Sisteme verilen ihtiyaç fazlası enerjiden farklıdır. Tabloda yer almayan dört il boş bırakılmıştır.",
+     "yillar": [
+      2025
      ],
      "duzeyler": [
       "country",
@@ -14528,9 +14777,9 @@
      ]
     },
     {
-     "id": "patent-yogunlasma-katsayisi-oecd-kent",
-     "ad": "Patent Yoğunlaşma Katsayısı (OECD Kent)",
-     "birim": "OECD Kent",
+     "id": "patent-yogunlasma-katsayisi-oecd-kent-katsayi",
+     "ad": "Patent Yoğunlaşma Katsayısı (OECD Kent) (Katsayı)",
+     "birim": "Katsayı",
      "ondalik": 2,
      "kaynak": "OECD Regions and Cities at a Glance 2026",
      "kaynakKisa": "OECD",
