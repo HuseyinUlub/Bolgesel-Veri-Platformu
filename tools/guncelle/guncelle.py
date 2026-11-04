@@ -103,10 +103,10 @@ def birlestir(ad: str, gecmis: bool = False):
     for k in E:
         if k[1] in yeni_gost and k not in Y:
             ozet[k[1]]["kaynakta_yok"] += 1
-    # birleşik: eski değerler korunur, yeni değerler üzerine yazar
-    birlesik = dict(E)
-    birlesik.update(Y)
-    satirlar = sorted(birlesik.values(), key=lambda r: (r[1], r[3], r[0]))
+    # birleşik: eski değerler korunur, yeni değerler üzerine yazar. Mevcut satır sırası korunur (sıra değişirse
+    # değerler aynı kalsa da dosya ve sitedeki gösterge sırası değişir, gereksiz PR açılır); yeni satırlar sona eklenir.
+    satirlar = [Y.get(k, r) for k, r in E.items()]
+    satirlar += sorted((r for k, r in Y.items() if k not in E), key=lambda r: (r[1], r[3], r[0]))
     with open(GD / "aday" / f"{ad}.csv", "w", encoding="utf-8-sig", newline="") as f:
         w = csv.writer(f, delimiter=";")
         w.writerow(bas)
