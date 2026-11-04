@@ -7,7 +7,8 @@ Depodan yeni indirilmiş bir bilgisayarda da aynı siteyi üretmek için kullan�
                       (bir ek değiştiyse 1. adım bir kez daha çalışır)
   3. Sayfa verileri   tools/uluslararasi, tools/vitrin, tools/analiz; kaynaklar/sabit/ (kent-kır haritası)
                                                              → public/veri/*.json
-  4. Değişiklik denetimi  kaynaklar/veri-ozeti.csv ile karşılaştırma → build/degisiklik-raporu.md
+  4. Güncellik raporu     tools/guncellik/guncellik_raporu.py → build/guncellik.html
+     Değişiklik denetimi  kaynaklar/veri-ozeti.csv ile karşılaştırma → build/degisiklik-raporu.md
   5. Site (isteğe bağlı, --site)  npm run build              → dist/
 
 Kullanım:
@@ -164,6 +165,7 @@ def main() -> None:
     for b in SAYFA:
         calistir(b)
 
+    calistir("tools/guncellik/guncellik_raporu.py")
     denetle(a.ozet_kaydet)
 
     if a.site:
@@ -173,7 +175,7 @@ def main() -> None:
         print("\n▶ npm run build", flush=True)
         if subprocess.run([npm, "run", "build"], cwd=KOK).returncode:
             sys.exit("✖ Site derlenemedi.")
-    print(f"\nBitti ({(time.time() - t0) / 60:.1f} dk). Rapor: build/rapor.md, denetim: build/degisiklik-raporu.md")
+    print(f"\nBitti ({(time.time() - t0) / 60:.1f} dk). Raporlar: build/rapor.md, build/guncellik.html, build/degisiklik-raporu.md")
 
 
 if __name__ == "__main__":

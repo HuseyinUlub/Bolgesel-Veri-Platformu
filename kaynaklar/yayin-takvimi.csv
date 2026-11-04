@@ -1,0 +1,15 @@
+kaynak;kategori;gosterge;bulten;siklik;yayin_ayi;gecikme;dogrulandi;not;son_yayin
+Türkiye İstatistik Kurumu$;Demografi;Doğum|Doğurganlık|Anne Yaşı;TÜİK Doğum İstatistikleri;yillik;5;1;;;
+Türkiye İstatistik Kurumu$;Demografi;Beklenen Yaşam Süresi;TÜİK Hayat Tabloları (il düzeyi, üç yıllık dönem);yillik;;;evet;Kullanıcı 4 Kasım 2026'da kontrol etti: il düzeyinde yayımlanan son dönem 2023;2023
+Türkiye İstatistik Kurumu$;Demografi;Ölüm|Yaşam Beklentisi|Bebek;TÜİK Ölüm ve Ölüm Nedeni İstatistikleri;yillik;6;1;;;
+Türkiye İstatistik Kurumu$;Demografi;Evlen|Boşan;TÜİK Evlenme ve Boşanma İstatistikleri;yillik;3;1;;;
+Türkiye İstatistik Kurumu$;Demografi;Hanehalkı;TÜİK Adrese Dayalı Nüfus Kayıt Sistemi (Hanehalkı);yillik;5;1;;;
+Türkiye İstatistik Kurumu$;Nüfus;;TÜİK Adrese Dayalı Nüfus Kayıt Sistemi Sonuçları;yillik;2;1;;;
+Türkiye İstatistik Kurumu$;Göç;;TÜİK Adrese Dayalı Nüfus Kayıt Sistemi (İç Göç);yillik;5;1;;Yayın ayı doğrulanmalı;
+Türkiye İstatistik Kurumu$;İşgücü;;TÜİK İşgücü İstatistikleri (Bölgesel);yillik;3;1;;;
+Türkiye İstatistik Kurumu$;Ekonomi;Hasıla|GSYH|GSKD|Katma Değer|Sektör;TÜİK İl Bazında Gayrisafi Yurt İçi Hasıla;yillik;12;1;;;
+Türkiye İstatistik Kurumu$;Sanayi;Hasıla|GSYH|GSKD|Katma Değer|Sektör;TÜİK İl Bazında Gayrisafi Yurt İçi Hasıla;yillik;12;1;;;
+Türkiye İstatistik Kurumu$;Dış Ticaret;;TÜİK İl Bazında Dış Ticaret İstatistikleri;yillik;3;1;;Yayın ayı doğrulanmalı;
+Türkiye İstatistik Kurumu$;Gelir ve Yaşam Koşulları;Mutluluk|Memnuniyet;TÜİK Yaşam Memnuniyeti Araştırması (il düzeyi);tek-sefer;;;;İl düzeyinde yalnızca 2013 için yayımlandı;
+;Sürdürülebilir Kalkınma;;TÜİK Sürdürülebilir Kalkınma Göstergeleri (kullanılan baskı: Şubat 2026);derleme;2;;;Göstergelerin gecikmesi farklıdır. Güncellik, son baskının kullanılıp kullanılmadığına göre değerlendirilir; yeni baskı eklendiğinde bülten adındaki yıl güncellenir.;
+DPT|Tolan|SEGE;;;Sosyo-Ekonomik Gelişmişlik Sıralaması Araştırması;donemsel;;;;Düzenli aralıkla yayımlanmaz;

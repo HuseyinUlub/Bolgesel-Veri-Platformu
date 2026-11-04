@@ -2,7 +2,10 @@
 
 Amaç: hangi göstergenin eskidiğini aramadan görmek; yeni veriyi siteye girmeden önce otomatik kontrolden geçirmek; her veri değişikliğinin izini tutmak.
 
-## 1. Güncellik raporu (ilk adım)
+## 1. Güncellik raporu (uygulandı, 4 Kasım 2026)
+
+Uygulama: `tools/guncellik/guncellik_raporu.py`, `kaynaklar/yayin-takvimi.csv`. Takvim satırı olmayan göstergelerde beklenen yıl "emsal" yöntemiyle (aynı kaynak ve kategorideki göstergelerin en az %30'unun ulaştığı yıl) bulunur; derleme yayınlarında (SKA) kullanılan baskının yılı esas alınır.
+
 
 - Betik: `tools/guncellik/guncellik_raporu.py` (yazılacak). Girdi: `build/veri.db` ve `kaynaklar/yayin-takvimi.csv`.
 - `kaynaklar/yayin-takvimi.csv` (yazılacak): `gosterge;kaynak;siklik;yayin_ayi;gecikme_yil;not`. Örnek: il GSYH yıllık, Aralık'ta, bir önceki yıl. Gösterge adları `indicators.indicator` ile birebir aynı olmalı; bilinmeyenler için kaynak bazında varsayılan satır kullanılır.

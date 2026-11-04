@@ -22,7 +22,8 @@
 
 ## Bilinen işler
 
-- Güncellik raporu (docs/VERI-GUNCELLIK-PLANI.md, 1. adım) henüz yok.
+- Güncellik raporu: `tools/guncellik/guncellik_raporu.py` → `build/guncellik.html` (hepsini_olustur içinde çalışır). Yayın takvimi `kaynaklar/yayin-takvimi.csv`; `dogrulandi` sütunu boş satırlar taslaktır, takvimi olmayanlar emsal yöntemiyle değerlendirilir.
+- Sıradaki: onaylı otomatik TÜİK güncellemesi (planın 2. adımı; `tools/guncelle/guncelle.py` var).
 - `trgrafik.html` (eski sayfa) Chart.js'i CDN'den yükler; CDN'ye erişilemeyen ortamda çalışmaz.
 
 ## Yazım kuralları
