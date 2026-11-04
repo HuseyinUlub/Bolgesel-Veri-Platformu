@@ -1,1 +1,0 @@
-import{S as r,e as a}from"./format-bHyAvxj3.js";/* empty css               */document.querySelector("#site-baslik").textContent=r.baslik;document.querySelector("#araclar").innerHTML=r.araclar.map(e=>`<a href="${e.href}">${a(e.ad)}</a>`).join("");

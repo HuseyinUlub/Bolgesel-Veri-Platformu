@@ -1,0 +1,5 @@
+# Veri hattı ve sayfa verisi betikleri için: py -m pip install -r requirements.txt
+numpy
+scipy
+shapely
+openpyxl

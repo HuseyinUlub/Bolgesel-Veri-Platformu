@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye İlçe Veri Analizi</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --bg: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 25px;
+        }
+
+        .controls,
+        .chart-box,
+        .table-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        optgroup {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button.main-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-png {
+            background: #e67e22;
+        }
+
+        .btn-xls {
+            background: #27ae60;
+        }
+
+        .chart-box {
+            height: 600px;
+            position: relative;
+        }
+
+        .table-box {
+            max-height: 600px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #eee;
+            border-collapse: collapse;
+        }
+
+        td:nth-last-child(2) {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            padding-right: 15px;
+        }
+
+        th:nth-last-child(2) {
+            text-align: right;
+            padding-right: 15px;
+        }
+
+        td:last-child {
+            width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #eee;
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .ts-control {
+            border-radius: 6px;
+            padding: 8px;
+        }
+
+        .ts-wrapper.multi .ts-control>div.item {
+            background-color: #3498db !important;
+            color: #ffffff !important;
+            border: 1px solid #2980b9 !important;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-weight: normal;
+            font-size: 0.75rem;
+        }
+
+        .ts-wrapper.multi .ts-control>div.item .remove {
+            color: #ffffff !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
+
+        @media (max-width: 1000px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <div id="loadMain" style="font-weight:bold; font-size:1.2rem;">Başlatılıyor...</div>
+        <div id="loadSub" style="color:#666;">Lütfen bekleyin</div>
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <h2>Ayarlar</h2>
+
+            <div class="control-group">
+                <label>1. İlçe Seçimi</label>
+                <select id="selLocations" multiple placeholder="İlçe seçin..."></select>
+                <button onclick="tomLocations.clear()"
+                    style="margin-top:5px; font-size:0.8rem; cursor:pointer;">Temizle</button>
+            </div>
+
+            <div class="control-group">
+                <label>2. Kategori</label>
+                <select id="selCategory"></select>
+            </div>
+
+            <div class="control-group">
+                <label>3. Veri Tipi</label>
+                <select id="selType"></select>
+            </div>
+
+            <div class="control-group">
+                <label>4. Yıl</label>
+                <select id="selYears" multiple placeholder="Yıl seçin..."></select>
+                <div style="margin-top:5px;">
+                    <button onclick="tomYears.clear()" style="font-size:0.8rem; cursor:pointer;">Temizle</button>
+                    <button onclick="selectAllYears()" style="font-size:0.8rem; cursor:pointer; color:green;">Hepsini
+                        Seç</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>5. Grafik Tipi</label>
+                <select id="selChartType">
+                    <option value="line">Çizgi</option>
+                    <option value="bar">Sütun</option>
+                    <option value="bar-stacked">Yığılmış Sütun</option>
+                    <option value="horizontalBar">Yatay Çubuk</option>
+                    <option value="horizontalBar-stacked">Yatay Yığılmış Çubuk</option>
+                    <option value="area">Alan</option>
+                    <option value="scatter">Dağılım</option>
+                    <option value="bubble">Kabarcık</option>
+                    <option value="lollipop">Lolipop</option>
+                    <option value="radar">Radar</option>
+                    <option value="box">Kutu</option>
+                    <option value="histogram">Histogram</option>
+                    <option value="density">Yoğunluk</option>
+                    <option value="pie">Pasta</option>
+                    <option value="doughnut">Halka</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Vurgula</label>
+                <select id="selHighlight">
+                    <option value="">Vurgulama Yok</option>
+                </select>
+            </div>
+
+            <div class="btn-group">
+                <button class="main-btn btn-png" onclick="downloadChart()">Grafiği İndir</button>
+                <button class="main-btn btn-xls" onclick="downloadTable()">Tabloyu İndir</button>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="chart-box">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="table-box">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>İlçe</th>
+                            <th>Kategori</th>
+                            <th>Veri Tipi</th>
+                            <th>Yıl</th>
+                            <th>Değer</th>
+                            <th>Veri Kaynağı</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script id="worker-script" type="javascript/worker">
+    self.onmessage = function(e) {
+        const { fileBuffer, type } = e.data;
+        
+        if (type === 'PARSE') {
+            try {
+                self.postMessage({ type: 'STATUS', msg: 'Kütüphaneler yükleniyor...' });
+                importScripts(
+                    'https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js',
+                    'https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js'
+                );
+
+                let csvText;
+                try {
+                    self.postMessage({ type: 'STATUS', msg: 'Veri işleniyor...' });
+                    const compressed = new Uint8Array(fileBuffer);
+                    const decompressed = pako.ungzip(compressed);
+                    const decoder = new TextDecoder('utf-8');
+                    csvText = decoder.decode(decompressed);
+                } catch (err) {
+                    const decoder = new TextDecoder('utf-8');
+                    csvText = decoder.decode(fileBuffer);
+                }
+
+                self.postMessage({ type: 'STATUS', msg: 'Tablo oluşturuluyor...' });
+                
+                Papa.parse(csvText, {
+                    header: true,
+                    delimiter: ";",
+                    skipEmptyLines: true,
+                    transformHeader: function(h) {
+                        return h.trim().replace(/^[\uFEFF\xEF\xBB\xBF]*/, "").replace(/['"]+/g, '');
+                    },
+                    complete: function(results) {
+                        const rawData = results.data;
+                        const fields = results.meta.fields;
+
+                        const findKey = (search) => fields.find(f => f.toLowerCase() === search.toLowerCase());
+                        const keyIlce = findKey('ilçe') || findKey('ilce') || findKey('il') || fields[0];
+                        const keyKat = findKey('kategori');
+                        const keyVeri = findKey('veri');
+                        const keyYil = findKey('yil') || findKey('yıl') || findKey('year');
+                        const keyDeger = findKey('deger') || findKey('değer') || findKey('value');
+
+                        if (!keyDeger || !keyYil) {
+                             self.postMessage({ type: 'ERROR', msg: 'Gerekli sütunlar (Yıl/Değer) bulunamadı.' });
+                             return;
+                        }
+
+                        const locSet = new Set();
+                        const catSet = new Set();
+                        const yearSet = new Set();
+                        
+                        const processedData = rawData.map(d => {
+                            const ilce = d[keyIlce];
+                            const kat = d[keyKat];
+                            const ver = d[keyVeri];
+                            const yil = d[keyYil];
+                            const kaynak = d["veri_kaynagi"];
+                            let val = d[keyDeger];
+
+                            if (typeof val === 'string') {
+                                val = val.trim();
+                                if(val === '') val = 0;
+                                else val = parseFloat(val.replace(/\./g, '').replace(',', '.'));
+                            } else {
+                                val = parseFloat(val);
+                            }
+
+                            if (ilce) locSet.add(ilce);
+                            if (kat) catSet.add(kat);
+                            if (yil) yearSet.add(yil);
+
+                            return {
+                                ilce: ilce,
+                                kategori: kat,
+                                veri: ver,
+                                yil: yil,
+                                deger: val || 0,
+                                kaynak:kaynak
+                            };
+                        }).filter(item => item.ilce && item.yil);
+
+                        if (processedData.length === 0) {
+                            self.postMessage({ type: 'ERROR', msg: 'Veri tablosu boş geldi.' });
+                            return;
+                        }
+
+                        self.postMessage({
+                            type: 'DONE',
+                            data: processedData,
+                            uniqueLocs: Array.from(locSet).sort(),
+                            uniqueCats: Array.from(catSet).sort(),
+                            uniqueYears: Array.from(yearSet).sort((a,b)=>a-b)
+                        });
+                    }
+                });
+            } catch (err) {
+                self.postMessage({ type: 'ERROR', msg: 'İşlem Hatası: ' + err.message });
+            }
+        }
+    };
+    </script>
+
+    <script>
+        const FILENAME = "./data/ilcetr.csv.gz";
+        let worker;
+        let rawData = [];
+        let currentFilteredData = [];
+        let tomLocations, tomYears;
+        let chartInstance = null;
+        let uniqueLocs = [], uniqueYears = [];
+
+        const els = {
+            loading: document.getElementById('loading'),
+            loadMain: document.getElementById('loadMain'),
+            loadSub: document.getElementById('loadSub'),
+            cat: document.getElementById('selCategory'),
+            type: document.getElementById('selType'),
+            chartType: document.getElementById('selChartType'),
+            highlight: document.getElementById('selHighlight'),
+            tableBody: document.querySelector('#dataTable tbody')
+        };
+
+        window.onload = function () {
+            initWorker();
+            fetchData();
+        };
+
+        function initWorker() {
+            const blob = new Blob([document.getElementById('worker-script').textContent], { type: "text/javascript" });
+            worker = new Worker(window.URL.createObjectURL(blob));
+
+            worker.onmessage = function (e) {
+                const msg = e.data;
+                if (msg.type === 'STATUS') {
+                    els.loadSub.textContent = msg.msg;
+                } else if (msg.type === 'DONE') {
+                    els.loadMain.textContent = "Arayüz Hazırlanıyor...";
+                    rawData = msg.data;
+                    uniqueLocs = msg.uniqueLocs;
+                    uniqueYears = msg.uniqueYears;
+
+                    initUI(msg.uniqueCats);
+                    els.loading.classList.add('hidden');
+                } else if (msg.type === 'ERROR') {
+                    alert("HATA: " + msg.msg);
+                    els.loadMain.textContent = "Yükleme Başarısız";
+                }
+            };
+        }
+
+        async function fetchData() {
+            try {
+                els.loadMain.textContent = "Dosya İndiriliyor...";
+                let response = await fetch(FILENAME);
+                if (!response.ok) throw new Error("ilcetr.csv.gz dosyası bulunamadı!");
+                const buffer = await response.arrayBuffer();
+                els.loadSub.textContent = "Veriler işleniyor...";
+                worker.postMessage({ type: 'PARSE', fileBuffer: buffer }, [buffer]);
+            } catch (err) {
+                alert("Dosya İndirme Hatası: " + err.message);
+            }
+        }
+
+        function initUI(cats) {
+            els.cat.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
+            els.cat.value = "Nüfus";
+            els.cat.addEventListener('change', () => { updateTypeFilter(); updateViz(); });
+
+            updateTypeFilter();
+
+            const locSelect = document.getElementById('selLocations');
+            locSelect.innerHTML = uniqueLocs.map(l => `<option value="${l}">${l}</option>`).join('');
+            tomLocations = new TomSelect('#selLocations', {
+                plugins: ['remove_button', 'checkbox_options'],
+                maxOptions: 2000,
+                onItemAdd: () => { updateHighlightOptions(); updateViz(); },
+                onItemRemove: () => { updateHighlightOptions(); updateViz(); },
+                onDelete: () => { updateHighlightOptions(); updateViz(); }
+            });
+            if (uniqueLocs.length > 0) tomLocations.addItem(uniqueLocs[0]);
+
+            const yearSelect = document.getElementById('selYears');
+            yearSelect.innerHTML = uniqueYears.map(y => `<option value="${y}" selected>${y}</option>`).join('');
+            tomYears = new TomSelect('#selYears', {
+                plugins: ['remove_button'],
+                onItemAdd: () => { updateHighlightOptions(); updateViz(); },
+                onItemRemove: () => { updateHighlightOptions(); updateViz(); },
+                onDelete: () => { updateHighlightOptions(); updateViz(); }
+            });
+
+            els.type.addEventListener('change', updateViz);
+            els.chartType.addEventListener('change', updateViz);
+            els.highlight.addEventListener('change', updateViz);
+
+            updateHighlightOptions();
+            updateViz();
+        }
+
+        // --- GÜNCELLENEN VURGULA MENÜSÜ YAPISI ---
+        function updateHighlightOptions() {
+            const selectedLocs = tomLocations ? tomLocations.getValue() : [];
+            const selectedYears = tomYears ? tomYears.getValue() : [];
+            const currentVal = els.highlight.value;
+
+            let html = '<option value="">Vurgulama Yok</option>';
+
+            if (selectedLocs.length > 0) {
+                html += '<optgroup label="Bölge">';
+                selectedLocs.forEach(loc => {
+                    html += `<option value="${loc}">${loc}</option>`;
+                });
+                html += '</optgroup>';
+            }
+
+            if (selectedYears.length > 0) {
+                html += '<optgroup label="Yıl">';
+                selectedYears.forEach(year => {
+                    html += `<option value="${year}">${year}</option>`;
+                });
+                html += '</optgroup>';
+            }
+
+            els.highlight.innerHTML = html;
+
+            // Eğer önceden seçili olan vurgu hala mevcut verilerde varsa koru
+            if (selectedLocs.includes(currentVal) || selectedYears.includes(currentVal)) {
+                els.highlight.value = currentVal;
+            }
+        }
+
+        function createDiagonalPattern(color) {
+            const shape = document.createElement('canvas');
+            shape.width = 10;
+            shape.height = 10;
+            const c = shape.getContext('2d');
+            c.strokeStyle = color;
+            c.lineWidth = 2;
+            c.beginPath();
+            c.moveTo(0, 10);
+            c.lineTo(10, 0);
+            c.stroke();
+            return c.createPattern(shape, 'repeat');
+        }
+
+        function updateTypeFilter() {
+            const currentCat = els.cat.value;
+            const types = [...new Set(rawData
+                .filter(d => d.kategori == currentCat)
+                .map(d => d.veri)
+            )].sort();
+            els.type.innerHTML = types.map(t => `<option value="${t}">${t}</option>`).join('');
+        }
+
+        function selectAllYears() {
+            tomYears.setValue(uniqueYears.map(String));
+        }
+
+        function updateViz() {
+            if (!tomLocations || !tomYears) return;
+
+            const sLocs = tomLocations.getValue();
+            const sYears = tomYears.getValue();
+            const sCat = els.cat.value;
+            const sType = els.type.value;
+
+            const optPie = els.chartType.querySelector('option[value="pie"]');
+            const optDoughnut = els.chartType.querySelector('option[value="doughnut"]');
+
+            if (optPie && optDoughnut) {
+                if (sLocs.length === 1 || sYears.length === 1) {
+                    optPie.disabled = false;
+                    optDoughnut.disabled = false;
+                } else {
+                    optPie.disabled = true;
+                    optDoughnut.disabled = true;
+                    if (els.chartType.value === 'pie' || els.chartType.value === 'doughnut') {
+                        els.chartType.value = 'line';
+                    }
+                }
+            }
+
+            if (sLocs.length === 0) {
+                els.tableBody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Lütfen bir İlçe/Bölge seçin.</td></tr>";
+                if (chartInstance) chartInstance.destroy();
+                return;
+            }
+
+            const filtered = rawData.filter(d =>
+                d.kategori == sCat &&
+                d.veri == sType &&
+                sLocs.includes(d.ilce) &&
+                sYears.includes(String(d.yil))
+            );
+
+            currentFilteredData = filtered;
+
+            renderTable(filtered);
+            renderChart(filtered, sLocs, sYears, sType);
+        }
+
+        function renderTable(data) {
+            const limit = 100;
+            let html = "";
+            if (data.length === 0) {
+                html = "<tr><td colspan='5' style='text-align:center;'>Veri yok.</td></tr>";
+            } else {
+                for (let i = 0; i < Math.min(data.length, limit); i++) {
+                    const row = data[i];
+                    html += `<tr>
+                        <td>${row.ilce}</td>
+                        <td>${row.kategori}</td>
+                        <td>${row.veri}</td>
+                        <td>${row.yil}</td>
+                        <td><strong>${Number(row.deger).toLocaleString('tr-TR')}</strong></td>
+                        <td>${row.kaynak}</td>
+                    </tr>`;
+                }
+                if (data.length > limit) html += `<tr><td colspan="5" style="text-align:center;">... ${data.length - limit} satır daha ...</td></tr>`;
+            }
+            els.tableBody.innerHTML = html;
+        }
+
+        function renderChart(data, locs, years, titleLabel) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            const chartType = document.getElementById('selChartType').value;
+            const highlightVal = document.getElementById('selHighlight').value;
+            years.sort((a, b) => a - b);
+
+            let processedTitle = titleLabel;
+            if (titleLabel.length > 50) {
+                const mid = Math.floor(titleLabel.length / 2);
+                const splitIndex = titleLabel.indexOf(' ', mid);
+                if (splitIndex !== -1) {
+                    processedTitle = [titleLabel.slice(0, splitIndex), titleLabel.slice(splitIndex + 1)];
+                }
+            }
+
+            let datasets = [];
+            let labels = years;
+            let finalType = 'line';
+            let boxPlotPlugin = null;
+
+            let options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'x',
+                scales: {
+                    y: { beginAtZero: false },
+                    x: {}
+                },
+                layout: {
+                    padding: { top: 10 }
+                },
+                plugins: {}
+            };
+
+            const getColor = (i, opacity = 1) => {
+                const hue = (i * 137) % 360;
+                return `hsla(${hue}, 70%, 50%, ${opacity})`;
+            };
+
+            // --- İSTATİSTİKSEL MODLAR (Histogram, Density, Box) ---
+            if (['histogram', 'density', 'box'].includes(chartType)) {
+
+                if (chartType === 'box') {
+                    finalType = 'bar';
+                    labels = locs;
+
+                    const statsData = [];
+
+                    const ranges = locs.map((loc, i) => {
+                        let vals = data.filter(d => d.ilce === loc).map(d => d.deger).sort((a, b) => a - b);
+                        if (vals.length === 0) {
+                            statsData.push(null);
+                            return null;
+                        }
+
+                        const q = (arr, p) => {
+                            const pos = (arr.length - 1) * p;
+                            const base = Math.floor(pos);
+                            const rest = pos - base;
+                            if (arr[base + 1] !== undefined) {
+                                return arr[base] + rest * (arr[base + 1] - arr[base]);
+                            } else {
+                                return arr[base];
+                            }
+                        };
+
+                        const min = vals[0];
+                        const max = vals[vals.length - 1];
+                        const q1 = q(vals, 0.25);
+                        const median = q(vals, 0.50);
+                        const q3 = q(vals, 0.75);
+
+                        statsData.push({ min, q1, median, q3, max });
+                        return [q1, q3];
+                    });
+
+                    const bgColors = locs.map((loc, i) => (loc === highlightVal) ? getColor(i, 0.9) : getColor(i, 0.6));
+                    const borderColors = locs.map((loc, i) => getColor(i, 1));
+                    const borderWidths = locs.map((loc) => (loc === highlightVal) ? 3 : 1);
+
+                    datasets = [{
+                        label: 'Kutu (Q1-Q3)',
+                        data: ranges,
+                        backgroundColor: bgColors,
+                        borderColor: borderColors,
+                        borderWidth: borderWidths,
+                        borderSkipped: false,
+                        barPercentage: 0.5,
+                        stats: statsData
+                    }];
+
+                    boxPlotPlugin = {
+                        id: 'boxPlotShapes',
+                        afterDatasetsDraw: (chart) => {
+                            const { ctx, data, scales: { y } } = chart;
+                            const dataset = data.datasets[0];
+                            const meta = chart.getDatasetMeta(0);
+
+                            meta.data.forEach((bar, index) => {
+                                const stats = dataset.stats[index];
+                                if (!stats) return;
+
+                                const x = bar.x;
+                                const w = bar.width;
+                                const yMin = y.getPixelForValue(stats.min);
+                                const yQ1 = y.getPixelForValue(stats.q1);
+                                const yMedian = y.getPixelForValue(stats.median);
+                                const yQ3 = y.getPixelForValue(stats.q3);
+                                const yMax = y.getPixelForValue(stats.max);
+
+                                ctx.save();
+                                ctx.beginPath();
+                                ctx.lineWidth = dataset.borderWidth[index] ? dataset.borderWidth[index] : 2;
+                                ctx.strokeStyle = dataset.borderColor[index] || '#333';
+
+                                ctx.moveTo(x, yQ1); ctx.lineTo(x, yMin);
+                                ctx.moveTo(x - w / 4, yMin); ctx.lineTo(x + w / 4, yMin);
+                                ctx.moveTo(x, yQ3); ctx.lineTo(x, yMax);
+                                ctx.moveTo(x - w / 4, yMax); ctx.lineTo(x + w / 4, yMax);
+                                ctx.moveTo(x - w / 2, yMedian); ctx.lineTo(x + w / 2, yMedian);
+
+                                ctx.stroke();
+                                ctx.restore();
+                            });
+                        }
+                    };
+
+                } else {
+                    finalType = (chartType === 'density') ? 'line' : 'bar';
+                    const allValues = data.map(d => d.deger);
+                    const minVal = Math.min(...allValues);
+                    const maxVal = Math.max(...allValues);
+                    const binCount = 15;
+                    const step = (maxVal - minVal) / binCount;
+
+                    labels = [];
+                    for (let i = 0; i < binCount; i++) {
+                        labels.push((minVal + i * step).toFixed(0) + ' - ' + (minVal + (i + 1) * step).toFixed(0));
+                    }
+
+                    datasets = locs.map((loc, i) => {
+                        const locVals = data.filter(d => d.ilce === loc).map(d => d.deger);
+                        const bins = new Array(binCount).fill(0);
+                        locVals.forEach(v => {
+                            let idx = Math.floor((v - minVal) / step);
+                            if (idx >= binCount) idx = binCount - 1;
+                            bins[idx]++;
+                        });
+
+                        const isHighlighted = (loc === highlightVal);
+                        const color = getColor(i, 1);
+                        let bg = getColor(i, (chartType === 'density' ? 0.2 : 0.5));
+                        let borderW = 2;
+
+                        if (isHighlighted) {
+                            if (chartType === 'density') borderW = 5;
+                            else bg = createDiagonalPattern(color);
+                        }
+
+                        return {
+                            label: loc,
+                            data: bins,
+                            borderColor: color,
+                            backgroundColor: bg,
+                            borderWidth: borderW,
+                            tension: (chartType === 'density') ? 0.4 : 0,
+                            fill: (chartType === 'density')
+                        };
+                    });
+                }
+            }
+            // --- PASTA VE HALKA GRAFİKLERİ ---
+            else if (['pie', 'doughnut'].includes(chartType)) {
+                finalType = chartType;
+                let pieLabels = [];
+                let pieData = [];
+                let pieBgColors = [];
+                let pieOffsets = [];
+                let pieBorderColors = []; // Dinamik kenarlık renkleri
+                let pieBorderWidths = []; // Dinamik kenarlık genişlikleri
+
+                if (years.length === 1) {
+                    pieLabels = locs;
+                    locs.forEach((loc, i) => {
+                        const rec = data.find(d => d.ilce === loc && String(d.yil) === String(years[0]));
+                        pieData.push(rec ? rec.deger : 0);
+
+                        // Vurgulama Kontrolü (Zaman Serisi Modu'ndan kopyalandı)
+                        let isHighlighted = false;
+                        if (years.length === 1) {
+                            isHighlighted = (loc === highlightVal || String(years[0]) === highlightVal);
+                        } else {
+                            isHighlighted = (String(loc) === highlightVal || locs[0] === highlightVal);
+                        }
+
+                        if (isHighlighted) {
+                            // DÜZELTME 1: Çirkin iç kenarlık kaldırıldı ( createDiagonalPattern(getColor(i, 1)) -> getColor(i, 1) )
+                            pieBgColors.push(getColor(i, 1));
+                            pieOffsets.push(20);
+                            // DÜZELTME 2: Dış koyu kenarlık eklendi
+                            pieBorderColors.push('#333333'); // Koyu gri/siyah kenarlık rengi
+                            pieBorderWidths.push(4); // Daha kalın kenarlık (4px)
+                        } else {
+                            pieBgColors.push(getColor(i, 0.8));
+                            pieOffsets.push(0);
+                            // Normal dilimler için ince beyaz kenarlık
+                            pieBorderColors.push('#ffffff');
+                            pieBorderWidths.push(2); // Normal kalınlık (2px)
+                        }
+                    });
+                }
+                else {
+                    pieLabels = years.map(String);
+                    years.forEach((y, i) => {
+                        const rec = data.find(d => d.ilce === locs[0] && String(d.yil) === String(y));
+                        pieData.push(rec ? rec.deger : 0);
+
+                        // Vurgulama Kontrolü (Zaman Serisi Modu'ndan kopyalandı)
+                        let isHighlighted = false;
+                        if (years.length === 1) {
+                            isHighlighted = (String(y) === highlightVal || String(years[0]) === highlightVal);
+                        } else {
+                            isHighlighted = (String(y) === highlightVal || locs[0] === highlightVal);
+                        }
+
+                        if (isHighlighted) {
+                            // DÜZELTME 1: Çirkin iç kenarlık kaldırıldı
+                            pieBgColors.push(getColor(i, 1));
+                            pieOffsets.push(20);
+                            // DÜZELTME 2: Dış koyu kenarlık eklendi
+                            pieBorderColors.push('#333333');
+                            pieBorderWidths.push(4);
+                        } else {
+                            pieBgColors.push(getColor(i, 0.8));
+                            pieOffsets.push(0);
+                            // Normal dilimler için ince beyaz kenarlık
+                            pieBorderColors.push('#ffffff');
+                            pieBorderWidths.push(2);
+                        }
+                    });
+                }
+
+                datasets = [{
+                    data: pieData,
+                    backgroundColor: pieBgColors,
+                    // DÜZELTME: Sabit renk/genişlik yerine oluşturduğumuz dinamik dizileri kullan
+                    borderColor: pieBorderColors,
+                    borderWidth: pieBorderWidths,
+                    offset: pieOffsets
+                }];
+                labels = pieLabels;
+
+                delete options.scales;
+                delete options.indexAxis;
+
+                options.plugins.datalabels = {
+                    color: '#fff',
+                    font: { weight: 'bold', size: 12 },
+                    anchor: 'end',
+                    align: 'start',
+                    offset: 10,
+                    formatter: (value, context) => {
+                        if (value === null || value === 0) return '';
+                        const label = context.chart.data.labels[context.dataIndex];
+                        return label + '\n' + Number(value).toLocaleString('tr-TR');
+                    },
+                    textAlign: 'center',
+                    textShadowColor: 'rgba(0,0,0,0.7)',
+                    textShadowBlur: 4
+                };
+            }
+            // --- ZAMAN SERİSİ MODLARI ---
+            else {
+                if (chartType === 'horizontalBar') {
+                    finalType = 'bar';
+                    options.indexAxis = 'y';
+                } else if (chartType === 'horizontalBar-stacked') {
+                    finalType = 'bar';
+                    options.indexAxis = 'y';
+                    options.scales = { x: { stacked: true }, y: { stacked: true } };
+                } else if (chartType === 'bar-stacked') {
+                    finalType = 'bar';
+                    options.scales = { x: { stacked: true }, y: { stacked: true } };
+                } else if (chartType === 'area') {
+                    finalType = 'line';
+                } else if (chartType === 'lollipop') {
+                    finalType = 'bar';
+                } else if (chartType === 'bubble') {
+                    finalType = 'bubble';
+                } else {
+                    finalType = chartType;
+                }
+
+                const maxValGlobal = Math.max(...data.map(d => d.deger)) || 1;
+
+                datasets = [];
+                locs.forEach((loc, i) => {
+                    const locData = data.filter(d => d.ilce === loc);
+                    const baseColor = getColor(i, 1);
+                    const baseBg = getColor(i, 0.5);
+
+                    const isLocHighlighted = (loc === highlightVal);
+                    let finalBorderWidth = 2;
+
+                    if (isLocHighlighted && (finalType === 'line' || finalType === 'radar')) {
+                        finalBorderWidth = 6;
+                    }
+
+                    if (chartType === 'lollipop') {
+                        const dataPoints = years.map(y => {
+                            const rec = locData.find(d => String(d.yil) === String(y));
+                            return rec ? rec.deger : null;
+                        });
+
+                        datasets.push({
+                            type: 'bar',
+                            label: loc,
+                            data: dataPoints,
+                            backgroundColor: baseColor,
+                            barPercentage: years.map(y => (isLocHighlighted || String(y) === highlightVal) ? 0.2 : 0.1),
+                            barThickness: years.map(y => (isLocHighlighted || String(y) === highlightVal) ? 4 : 2),
+                            order: 2
+                        });
+
+                        datasets.push({
+                            type: 'scatter',
+                            label: loc + ' (Nokta)',
+                            data: years.map((y, idx) => ({ x: y, y: dataPoints[idx] })),
+                            backgroundColor: baseColor,
+                            pointRadius: years.map(y => (isLocHighlighted || String(y) === highlightVal) ? 8 : 6),
+                            order: 1
+                        });
+
+                    } else if (chartType === 'bubble') {
+                        const bubbleData = years.map(y => {
+                            const rec = locData.find(d => String(d.yil) === String(y));
+                            if (!rec) return null;
+                            return {
+                                x: y,
+                                y: rec.deger,
+                                r: (rec.deger / maxValGlobal) * 30 + 5
+                            };
+                        }).filter(item => item !== null);
+
+                        datasets.push({
+                            label: loc,
+                            data: bubbleData,
+                            backgroundColor: years.map(y => (isLocHighlighted || String(y) === highlightVal) ? createDiagonalPattern(baseColor) : baseBg),
+                            borderColor: baseColor,
+                            borderWidth: years.map(y => (isLocHighlighted || String(y) === highlightVal) ? 3 : 1)
+                        });
+                    } else {
+                        const dataPoints = years.map(y => {
+                            const rec = locData.find(d => String(d.yil) === String(y));
+                            return rec ? rec.deger : null;
+                        });
+
+                        datasets.push({
+                            label: loc,
+                            data: dataPoints,
+                            borderColor: baseColor,
+                            backgroundColor: years.map(y => (isLocHighlighted || String(y) === highlightVal) ? createDiagonalPattern(baseColor) : baseBg),
+                            borderWidth: finalBorderWidth,
+                            pointRadius: years.map(y => (isLocHighlighted || String(y) === highlightVal) ? 6 : 3),
+                            tension: 0.3,
+                            fill: (chartType === 'area')
+                        });
+                    }
+                });
+            }
+
+            options.plugins.title = {
+                display: true,
+                text: processedTitle,
+                font: { size: 16, weight: 'bold' },
+                color: '#2c3e50',
+                padding: { top: 10, bottom: 30 }
+            };
+
+            options.plugins.legend = {
+                position: 'right',
+                align: 'end',
+                labels: {
+                    boxWidth: 12,
+                    boxHeight: 12,
+                    padding: 15,
+                    usePointStyle: false,
+                    filter: function (item, chart) {
+                        if (!item || !item.text) return true;
+                        return !String(item.text).includes('(Nokta)');
+                    }
+                }
+            };
+
+            if (!['pie', 'doughnut'].includes(chartType)) {
+                options.plugins.legend.labels.generateLabels = (chart) => {
+                    const defaults = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                    return defaults.map(lbl => {
+                        lbl.lineWidth = 0;
+                        return lbl;
+                    });
+                };
+            }
+
+            options.plugins.custom_canvas_background_color = { color: 'white' };
+
+            if (['box', 'pie', 'doughnut'].includes(chartType)) {
+                options.plugins.legend.display = false;
+            }
+
+            if (!['pie', 'doughnut'].includes(chartType)) {
+                options.plugins.datalabels = { display: false };
+            }
+
+            const bgPlugin = {
+                id: 'custom_canvas_background_color',
+                beforeDraw: (chart, args, options) => {
+                    const { ctx } = chart;
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'destination-over';
+                    ctx.fillStyle = options.color || '#ffffff';
+                    ctx.fillRect(0, 0, chart.width, chart.height);
+                    ctx.restore();
+                }
+            };
+
+            const plugins = [bgPlugin];
+            if (boxPlotPlugin) plugins.push(boxPlotPlugin);
+            if (window.ChartDataLabels) plugins.push(window.ChartDataLabels);
+
+            chartInstance = new Chart(ctx, {
+                type: finalType,
+                data: { labels: labels, datasets: datasets },
+                options: options,
+                plugins: plugins
+            });
+        }
+
+        window.downloadChart = () => {
+            const link = document.createElement('a');
+            link.download = 'Grafik.png';
+            link.href = document.getElementById('myChart').toDataURL();
+            link.click();
+        };
+
+        window.downloadTable = () => {
+            if (!currentFilteredData || currentFilteredData.length === 0) {
+                alert("İndirilecek veri yok.");
+                return;
+            }
+            const exportData = currentFilteredData.map(row => ({
+                "İlçe": row.ilce,
+                "Kategori": row.kategori,
+                "Veri Tipi": row.veri,
+                "Yıl": row.yil,
+                "Değer": row.deger,
+                "Veri Kaynağı": row.kaynak
+            }));
+
+            const ws = XLSX.utils.json_to_sheet(exportData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Veriler");
+            XLSX.writeFile(wb, 'Ilce_Veri_Analizi.xlsx');
+        };
+    </script>
+</body>
+
+</html>

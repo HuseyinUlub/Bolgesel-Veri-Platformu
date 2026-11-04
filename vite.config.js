@@ -8,7 +8,9 @@ import { cpSync, existsSync, readdirSync } from 'node:fs';
  * sırasında ESKI_SITE klasöründen olduğu gibi kopyalanır. Böylece site
  * bütün hâlinde çalışmaya devam eder, sayfalar tek tek taşınır.
  */
-const ESKI_SITE = process.env.ESKI_SITE || resolve(__dirname, '../dakaveri');
+// Eski sayfalar depoda (kaynaklar/eski-site); ESKI_SITE ortam değişkeni ya da ../dakaveri yalnızca yedek yoldur
+const DEPO_ESKI = resolve(__dirname, 'kaynaklar/eski-site');
+const ESKI_SITE = process.env.ESKI_SITE || (existsSync(DEPO_ESKI) ? DEPO_ESKI : resolve(__dirname, '../dakaveri'));
 // Eski sayfaların ham verisi depoda (kaynaklar/eski-site/data); yoksa eski site klasöründeki data kullanılır
 const DEPO_VERI = resolve(__dirname, 'kaynaklar/eski-site/data');
 const ESKI_VERI = existsSync(DEPO_VERI) ? DEPO_VERI : resolve(ESKI_SITE, 'data');
@@ -49,12 +51,12 @@ function eskiSayfalariKopyala() {
       // Eski sayfaların kullandığı veri ve görseller (./data, ./img)
       // public/data'daki dosyalar (örn. veritabanından üretilen infografik.csv.gz) eski kopyanın üzerine yazılmaz
       cpSync(ESKI_VERI, resolve(out, 'data'), { recursive: true, force: false });
-      cpSync(resolve(ESKI_SITE, 'img'), resolve(out, 'img'), {
+      if (existsSync(resolve(ESKI_SITE, 'img'))) cpSync(resolve(ESKI_SITE, 'img'), resolve(out, 'img'), {
         recursive: true,
         force: false,
         filter: (s) => !s.includes(' - Kopya'),
       });
-      console.log(`[eski-sayfalar] ${n} eski sayfa + data/ + img/ kopyalandı.`);
+      console.log(`[eski-sayfalar] ${n} eski sayfa + data/ kopyalandı (${ESKI_SITE}).`);
     },
   };
 }

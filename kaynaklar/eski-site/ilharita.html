@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye Veri Analiz Paneli</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            flex: 0 0 auto;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        select,
+        button,
+        input[type="color"] {
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        input[type="color"] {
+            padding: 0 2px;
+            height: 25px;
+            width: 30px;
+            vertical-align: middle;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 20px;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .top-section {
+            display: flex;
+            flex: 1;
+            min-height: 650px;
+            gap: 20px;
+        }
+
+        .bottom-section {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 300px;
+        }
+
+        .panel-half {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chart-container {
+            flex: 1;
+            min-height: 350px;
+        }
+
+        #map {
+            flex: 1;
+            min-height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .table-container {
+            overflow: auto;
+            flex: 1;
+            max-height: 400px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .map-controls {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: #555;
+            align-items: center;
+        }
+
+        .map-controls label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-left: 1px solid #ddd;
+            padding-left: 15px;
+        }
+
+        #uploadOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .upload-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            color: #333;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .file-row {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .file-row label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 900px) {
+            .top-section {
+                flex-direction: column;
+                flex: 0 1 auto;
+                min-height: initial;
+            }
+
+            .map-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .control-group {
+                border-left: none;
+                padding-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="uploadOverlay">
+        <div class="upload-box">
+            <h2>Dosya Yükleme</h2>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">
+                Otomatik yükleme güvenlik nedeniyle engellendi veya dosya bulunamadı.<br>
+                Lütfen dosyaları aşağıdan seçiniz.
+            </p>
+
+            <div class="file-row">
+                <label>1. Harita Dosyası (tr.geojson / tr.json):</label>
+                <input type="file" id="geoInput" accept=".json, .geojson" style="width: 100%;">
+            </div>
+
+            <div class="file-row">
+                <label>2. Veri Dosyası (illerveri.csv.gz veya illerveri.csv):</label>
+                <input type="file" id="dataInput" accept=".gz, .csv" style="width: 100%;">
+            </div>
+
+            <button onclick="manualLoad()" style="width: 100%; padding: 10px; margin-top: 10px;">Analizi Başlat</button>
+            <div id="errorMsg" style="color: red; margin-top: 10px; font-size: 0.8rem;"></div>
+        </div>
+    </div>
+
+    <header>
+        <div class="controls">
+            <select id="sheetSelect" onchange="updateYears()" title="Kategori"></select>
+            <select id="categorySelect" onchange="renderDashboard()" title="Veri"></select>
+            <select id="regionSelect" onchange="updateCategories()" title="Bölge"></select>
+            <select id="yearSelect" onchange="updateRegions()" title="Yıl"></select>
+
+            <button onclick="downloadChart()">Grafik İndir</button>
+            <button onclick="downloadMap()">Harita İndir</button>
+            <button onclick="downloadTable()">Tablo İndir</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="top-section">
+            <div class="panel-half">
+                <div class="card">
+                    <div id="chart-wrapper" style="flex: 1; display: flex; flex-direction: column;">
+                        <div id="chart" class="chart-container"></div>
+                    </div>
+
+                    <div style="margin-top: 10px; text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
+                        <label for="chartType" style="font-size: 0.9rem; color: #666;">Grafik Türü:</label>
+                        <select id="chartType" onchange="renderChart()" style="margin-left: 5px;">
+                            <option value="bar">Sütun (Dikey)</option>
+                            <option value="bar_h">Sütun (Yatay)</option>
+                            <option value="line">Çizgi Grafiği</option>
+                            <option value="area">Alan Grafiği</option>
+                            <option value="pie">Pasta Grafiği</option>
+                            <option value="donut">Halka Grafiği</option>
+                            <option value="bubble">Kabarcık (Bubble)</option>
+                            <option value="box">Kutu (Box Plot)</option>
+                            <option value="histogram">Histogram</option>
+                            <option value="lollipop">Lolipop</option>
+                            <option value="treemap">Ağaç Haritası</option>
+                        </select>
+
+                        <label for="highlightSelect" style="font-size: 0.9rem; color: #666; margin-left: 10px;">İl
+                            Vurgula:</label>
+                        <select id="highlightSelect" onchange="renderChart()"
+                            style="margin-left: 5px; min-width: 100px;">
+                            <option value="">Yok</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-half">
+                <div class="card">
+                    <div id="map"></div>
+                    <div class="map-controls">
+                        <div class="control-group">
+                            <span>Etiketler:</span>
+                            <label><input type="checkbox" id="chkShowCity" checked onchange="toggleMapLabels()">
+                                İl</label>
+                            <label><input type="checkbox" id="chkShowValue" checked onchange="toggleMapLabels()">
+                                Değer</label>
+                            <label><input type="checkbox" id="chkShowPercent" onchange="toggleMapLabels()">
+                                Yüzde</label>
+                        </div>
+
+                        <div class="control-group">
+                            <span>Lejant:</span>
+                            <select id="legendPos" onchange="renderMap()">
+                                <option value="bottom-left">Sol Alt</option>
+                                <option value="bottom-right">Sağ Alt</option>
+                                <option value="top-left">Sol Üst</option>
+                                <option value="top-right">Sağ Üst</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <span>Renkler:</span>
+                            <input type="color" id="colorStart" value="#fff9c4" onchange="renderMap()">
+                            ➝<input type="color" id="colorEnd" value="#ff0000" onchange="renderMap()">
+                        </div>
+
+                        <div class="control-group">
+                            <span>Lejant Düzeyi:</span>
+                            <select id="legendLevelSelect" onchange="renderMap()">
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5" selected>5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="card">
+                <h3 id="tableTitle" style="margin-top: 0;">Veri Tablosu</h3>
+                <div class="table-container">
+                    <table id="dataTable">
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ALL_DATA = {};
+        let GEOJSON = null;
+        let currentSheet = "", currentYear = "", currentRegion = "", currentCategory = "";
+        let filteredData = [], titleString = "", chartTitleString = "";
+
+        // --- 1. OTOMATİK YÜKLEME (GZ ve CSV için) ---
+        window.onload = async function () {
+            try {
+                const p1 = fetch('./data/tr.geojson').then(r => { if (!r.ok) throw 'Err'; return r.json(); });
+                const p2 = fetch('./data/illerveri.csv.gz').then(async r => {
+                    if (!r.ok) throw 'Err';
+                    const buffer = await r.arrayBuffer();
+                    // pako kütüphanesi ile GZIP'ten metne dönüştür
+                    const csvText = pako.inflate(new Uint8Array(buffer), { to: 'string' });
+                    // PapaParse ile CSV formatından JSON formatına çevir
+                    return Papa.parse(csvText, { header: true, skipEmptyLines: true, delimiter: ';' }).data;
+                });
+
+                const [geo, parsedData] = await Promise.all([p1, p2]);
+                processFiles(geo, parsedData);
+            } catch (e) {
+                console.log("Otomatik yükleme yapılamadı, manuel ekran açılıyor.", e);
+                document.getElementById('uploadOverlay').style.display = 'flex';
+            }
+        };
+
+        // --- 2. MANUEL YÜKLEME ---
+        function manualLoad() {
+            const geoInput = document.getElementById('geoInput').files[0];
+            const dataInput = document.getElementById('dataInput').files[0];
+            const errorDiv = document.getElementById('errorMsg');
+
+            if (!geoInput || !dataInput) {
+                errorDiv.innerText = "Lütfen her iki dosyayı da seçiniz.";
+                return;
+            }
+            errorDiv.innerText = "Yükleniyor...";
+
+            const readerGeo = new FileReader();
+            readerGeo.onload = function (eGeo) {
+                try {
+                    const geoData = JSON.parse(eGeo.target.result);
+                    const readerData = new FileReader();
+                    readerData.onload = function (eData) {
+                        const dataBuffer = eData.target.result;
+                        let text = "";
+                        try {
+                            // Gzip ise aç
+                            text = pako.inflate(new Uint8Array(dataBuffer), { to: 'string' });
+                        } catch (err) {
+                            // Değilse düz CSV olarak oku
+                            text = new TextDecoder('utf-8').decode(dataBuffer);
+                        }
+
+                        const parsedData = Papa.parse(text, { header: true, skipEmptyLines: true, delimiter: ';' }).data;
+                        document.getElementById('uploadOverlay').style.display = 'none';
+                        processFiles(geoData, parsedData);
+                    };
+                    readerData.readAsArrayBuffer(dataInput);
+                } catch (err) {
+                    errorDiv.innerText = "GeoJSON dosyası hatalı!";
+                }
+            };
+            readerGeo.readAsText(geoInput);
+        }
+
+        // --- 3. VERİ İŞLEME ---
+        function processFiles(geo, parsedData) {
+            GEOJSON = geo;
+            GEOJSON.features.forEach(f => {
+                f.properties.centroid = calculateCentroid(f.geometry);
+            });
+
+            ALL_DATA = {};
+            // Artık Excel sayfaları yerine CSV'deki 'Kategori' sütununu ana kırılım yapıyoruz
+            parsedData.forEach(row => {
+                const cat = row['Kategori'];
+                if (!cat) return; // Boş satırları atla
+                if (!ALL_DATA[cat]) ALL_DATA[cat] = [];
+                ALL_DATA[cat].push(row);
+            });
+
+            normalizeGeoNames();
+            initDropdowns();
+        }
+
+        function calculateCentroid(geometry) {
+            let coords = [];
+            if (geometry.type === 'Polygon') coords = geometry.coordinates[0];
+            else if (geometry.type === 'MultiPolygon') coords = geometry.coordinates[0][0];
+            let xSum = 0, ySum = 0, len = coords.length;
+            coords.forEach(c => { xSum += c[0]; ySum += c[1]; });
+            return [xSum / len, ySum / len];
+        }
+
+        function normalizeGeoNames() {
+            const excelCities = new Set();
+            Object.values(ALL_DATA).forEach(rows => {
+                rows.forEach(r => { if (r['Şehir']) excelCities.add(r['Şehir']); });
+            });
+            const normMap = {};
+            excelCities.forEach(c => { normMap[normalizeStr(c)] = c; });
+            GEOJSON.features.forEach(f => {
+                let name = f.properties.name;
+                let nName = normalizeStr(name);
+                if (normMap[nName]) f.properties.name = normMap[nName];
+                else if (nName.includes("afyon")) f.properties.name = normMap[normalizeStr("Afyonkarahisar")] || "Afyonkarahisar";
+            });
+        }
+
+        function normalizeStr(s) {
+            if (!s) return "";
+            const map = { 'İ': 'i', 'I': 'ı', 'Ş': 's', 'ş': 's', 'Ğ': 'g', 'ğ': 'g', 'Ü': 'u', 'ü': 'u', 'Ö': 'o', 'ö': 'o', 'Ç': 'c', 'ç': 'c' };
+            return s.split('').map(c => map[c] || c).join('').toLowerCase();
+        }
+
+        // --- DROPDOWN AYARLAMALARI ---
+        function initDropdowns() {
+            const sheetSelect = document.getElementById('sheetSelect');
+            sheetSelect.innerHTML = "";
+            Object.keys(ALL_DATA).forEach(key => {
+                const opt = document.createElement('option');
+                opt.value = key; opt.innerText = key;
+                sheetSelect.appendChild(opt);
+            });
+            if (sheetSelect.options.length > 0) {
+                sheetSelect.selectedIndex = 0;
+                updateYears();
+            }
+        }
+
+        function updateYears() {
+            currentSheet = document.getElementById('sheetSelect').value;
+            const yearSelect = document.getElementById('yearSelect');
+            yearSelect.innerHTML = "";
+
+            const rawData = ALL_DATA[currentSheet];
+            // Benzersiz yılları al, büyükten küçüğe sırala
+            const years = [...new Set(rawData.map(d => d['Yıl']))].filter(x => x).sort((a, b) => b - a);
+
+            years.forEach(y => {
+                const opt = document.createElement('option');
+                opt.value = y; opt.innerText = y;
+                yearSelect.appendChild(opt);
+            });
+
+            if (years.length > 0) yearSelect.selectedIndex = 0;
+            updateRegions();
+        }
+
+        function updateRegions() {
+            currentSheet = document.getElementById('sheetSelect').value;
+            currentYear = document.getElementById('yearSelect').value;
+
+            const regionSelect = document.getElementById('regionSelect');
+            regionSelect.innerHTML = "";
+            const allOpt = document.createElement('option');
+            allOpt.value = "Türkiye"; allOpt.innerText = "Türkiye (Tümü)";
+            regionSelect.appendChild(allOpt);
+
+            // Seçili kategoriye ve seçili yıla ait verilerden bölgeleri bul
+            const rawData = ALL_DATA[currentSheet].filter(d => d['Yıl'] == currentYear);
+            const regions = [...new Set(rawData.map(d => d['Bölge']))].filter(x => x).sort();
+
+            regions.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r; opt.innerText = r;
+                regionSelect.appendChild(opt);
+            });
+            regionSelect.selectedIndex = 0;
+            updateCategories();
+        }
+
+        function updateCategories() {
+            currentSheet = document.getElementById('sheetSelect').value;
+            currentYear = document.getElementById('yearSelect').value;
+            currentRegion = document.getElementById('regionSelect').value;
+
+            const categorySelect = document.getElementById('categorySelect');
+            categorySelect.innerHTML = "";
+
+            const rawData = ALL_DATA[currentSheet].filter(d => d['Yıl'] == currentYear);
+            let regionData = (currentRegion === "Türkiye") ? rawData : rawData.filter(d => d['Bölge'] === currentRegion);
+
+            const categories = [...new Set(regionData.map(d => d['Veri']))].filter(x => x).sort();
+            categories.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c; opt.innerText = c;
+                categorySelect.appendChild(opt);
+            });
+
+            if (categories.length > 0) {
+                categorySelect.selectedIndex = 0;
+                renderDashboard();
+            }
+        }
+
+        function renderDashboard() {
+            currentSheet = document.getElementById('sheetSelect').value;
+            currentYear = document.getElementById('yearSelect').value;
+            currentRegion = document.getElementById('regionSelect').value;
+            currentCategory = document.getElementById('categorySelect').value;
+
+            const rawData = ALL_DATA[currentSheet].filter(d => d['Yıl'] == currentYear);
+            filteredData = (currentRegion === "Türkiye")
+                ? rawData.filter(d => d['Veri'] === currentCategory)
+                : rawData.filter(d => d['Bölge'] === currentRegion && d['Veri'] === currentCategory);
+
+            titleString = `${currentCategory} (${currentYear})`;
+            chartTitleString = titleString;
+
+            document.getElementById('tableTitle').innerText = titleString + " Tablosu";
+
+            updateHighlightDropdown();
+            renderTable();
+            renderChart();
+            renderMap();
+        }
+
+        function updateHighlightDropdown() {
+            const hlSelect = document.getElementById('highlightSelect');
+            const currentSelection = hlSelect.value;
+            hlSelect.innerHTML = '<option value="">Yok</option>';
+
+            const cities = filteredData.map(d => d['Şehir']).sort();
+            cities.forEach(city => {
+                const opt = document.createElement('option');
+                opt.value = city;
+                opt.innerText = city;
+                hlSelect.appendChild(opt);
+            });
+
+            if (cities.includes(currentSelection)) {
+                hlSelect.value = currentSelection;
+            }
+        }
+
+        function formatNum(n) {
+            if (n === null || n === undefined) return "";
+            const num = parseFloat(n);
+            if (isNaN(num)) return n;
+            return num.toLocaleString('tr-TR');
+        }
+
+        function formatChartTitle(text) {
+            if (text.length > 50) {
+                const mid = Math.floor(text.length / 2);
+                const space = text.lastIndexOf(' ', mid);
+                if (space > 0) {
+                    return text.substring(0, space) + '<br>' + text.substring(space + 1);
+                }
+            }
+            return text;
+        }
+
+        // --- TABLO OLUŞTURMA ---
+        function renderTable() {
+            const table = document.getElementById('dataTable');
+            const thead = table.querySelector('thead');
+            const tbody = table.querySelector('tbody');
+
+            tbody.innerHTML = "";
+            thead.innerHTML = "";
+
+            if (filteredData.length === 0) return;
+
+            // Sütunların gösterilme sırası (CSV dosyasına uyumlu olacak şekilde)
+            const columns = ['Şehir', 'Bölge', 'Yıl', 'Kategori', 'Veri', 'Değer', 'Veri Kaynağı'];
+
+            // Başlık satırı
+            thead.innerHTML = "<tr>" + columns.map(col => `<th>${col}</th>`).join('') + "</tr>";
+
+            filteredData.forEach(row => {
+                const tr = document.createElement('tr');
+                columns.forEach(col => {
+                    const td = document.createElement('td');
+                    const val = row[col];
+
+                    if (typeof val === 'number' || (!isNaN(parseFloat(val)) && isFinite(val) && val.trim() !== "")) {
+                        td.innerText = val;
+                        td.style.textAlign = 'right';
+                    } else {
+                        td.innerText = val !== undefined ? val : "";
+                    }
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- CHART (Plotly) ---
+        function renderChart() {
+            const wrapper = document.getElementById('chart-wrapper');
+            wrapper.innerHTML = '';
+            const newChartDiv = document.createElement('div');
+            newChartDiv.id = 'chart';
+            newChartDiv.className = 'chart-container';
+            wrapper.appendChild(newChartDiv);
+
+            const chartType = document.getElementById('chartType').value;
+            const cities = filteredData.map(d => d['Şehir']);
+            const values = filteredData.map(d => parseFloat(d['Değer']));
+
+            setTimeout(() => {
+                drawPlotlyChart(chartType, cities, values);
+            }, 0);
+        }
+
+        function drawPlotlyChart(chartType, cities, values) {
+            let traces = [];
+            const chartTitleText = formatChartTitle(chartTitleString);
+            const highlightCity = document.getElementById('highlightSelect').value;
+
+            let layout = {
+                title: {
+                    text: chartTitleText,
+                    font: { size: 14 }
+                },
+                annotations: [],
+                legend: {
+                    orientation: 'v',
+                    x: 0,
+                    y: -0.2,
+                    yanchor: 'top',
+                    xanchor: 'left',
+                    bgcolor: 'rgba(0,0,0,0)',
+                    bordercolor: 'rgba(0,0,0,0)'
+                },
+                xaxis: { tickangle: -45 },
+                yaxis: {},
+                margin: { b: 120 }
+            };
+
+            if (['pie', 'donut', 'treemap'].includes(chartType)) {
+                delete layout.xaxis;
+                delete layout.yaxis;
+            }
+
+            const defaultColor = '#3498db';
+            const highlightColor = '#e74c3c';
+
+            const colorArray = cities.map(c => c === highlightCity ? highlightColor : defaultColor);
+            const patternArray = cities.map(c => c === highlightCity ? "/" : "");
+            const pullArray = cities.map(c => c === highlightCity ? 0.2 : 0);
+            const sizeArray = cities.map(c => c === highlightCity ? 15 : 8);
+            const lineWidth = cities.map(c => c === highlightCity ? 4 : 0);
+
+            if (chartType === 'bar') {
+                traces.push({
+                    x: cities, y: values, type: 'bar',
+                    marker: {
+                        color: colorArray,
+                        pattern: { shape: patternArray, fgopacity: 1 }
+                    },
+                    name: 'Değer'
+                });
+            } else if (chartType === 'bar_h') {
+                const combined = cities.map((c, i) => ({ city: c, val: values[i] }));
+                combined.sort((a, b) => a.val - b.val);
+                const sortedCities = combined.map(x => x.city);
+                const sortedColorArray = sortedCities.map(c => c === highlightCity ? highlightColor : defaultColor);
+                const sortedPatternArray = sortedCities.map(c => c === highlightCity ? "/" : "");
+
+                traces.push({
+                    x: combined.map(x => x.val),
+                    y: sortedCities,
+                    type: 'bar', orientation: 'h',
+                    marker: {
+                        color: sortedColorArray,
+                        pattern: { shape: sortedPatternArray, fgopacity: 1 }
+                    },
+                    name: 'Değer'
+                });
+            } else if (chartType === 'lollipop') {
+                traces.push({
+                    x: cities, y: values, mode: 'markers',
+                    marker: { size: sizeArray, color: colorArray, symbol: 'circle' },
+                    name: 'Değer', type: 'scatter'
+                });
+                traces.push({
+                    x: cities, y: values, type: 'bar',
+                    width: 0.05, marker: { color: '#333' },
+                    hoverinfo: 'none', showlegend: false
+                });
+            } else if (chartType === 'box') {
+                traces.push({
+                    x: cities, y: values, type: 'box', name: 'Değer',
+                    marker: { color: '#3498db' }
+                });
+            } else if (chartType === 'histogram') {
+                traces.push({
+                    x: values, type: 'histogram',
+                    marker: { color: '#3498db' }, name: 'Frekans'
+                });
+                layout.xaxis = { title: 'Değer Aralığı' };
+                layout.yaxis = { title: 'Frekans' };
+            } else if (chartType === 'bubble') {
+                traces.push({
+                    x: cities, y: values, mode: 'markers',
+                    marker: {
+                        size: values, sizemode: 'area',
+                        sizeref: 2.0 * Math.max(...values) / (50 ** 2),
+                        color: values, colorscale: 'Viridis',
+                        symbol: 'circle',
+                        line: { width: lineWidth, color: 'black' }
+                    }, name: 'Değer'
+                });
+            } else if (chartType === 'line') {
+                traces.push({
+                    x: cities, y: values, type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: { color: colorArray, size: sizeArray, symbol: 'square' },
+                    line: { color: '#3498db', width: 2 }, name: 'Değer'
+                });
+            } else if (chartType === 'area') {
+                traces.push({
+                    x: cities, y: values, type: 'scatter',
+                    fill: 'tozeroy', mode: 'lines+markers',
+                    marker: { color: colorArray, size: sizeArray },
+                    name: 'Değer'
+                });
+            } else if (chartType === 'pie' || chartType === 'donut') {
+                traces.push({
+                    labels: cities, values: values, type: 'pie',
+                    textinfo: 'percent', textposition: 'inside', automargin: true,
+                    hole: chartType === 'donut' ? 0.4 : 0, name: 'Oran',
+                    pull: pullArray
+                });
+            } else if (chartType === 'treemap') {
+                traces.push({
+                    type: "treemap", labels: cities,
+                    parents: Array(cities.length).fill(currentCategory),
+                    values: values, textinfo: "label+value",
+                    marker: { colors: Array(cities.length).fill('#3498db') }
+                });
+            }
+
+            Plotly.newPlot('chart', traces, layout, { responsive: true });
+        }
+
+        function generateMapPalette(levels) {
+            const start = document.getElementById('colorStart').value;
+            const end = document.getElementById('colorEnd').value;
+            const interpolate = d3.interpolateRgb(start, end);
+
+            if (levels < 1) levels = 1;
+            if (levels === 1) return [interpolate(0.5)];
+
+            const step = 1.0 / (levels - 1);
+            const palette = [];
+            for (let i = 0; i < levels; i++) {
+                palette.push(interpolate(i * step));
+            }
+            return palette;
+        }
+
+        // --- HARİTA (D3.JS) GÜNCELLEMELERİ ---
+        function renderMap() {
+            const mapDiv = document.getElementById('map');
+            mapDiv.innerHTML = "";
+            const width = mapDiv.clientWidth;
+            const height = mapDiv.clientHeight;
+
+            const cityNames = filteredData.map(d => d['Şehir']);
+            const dataMap = {};
+            filteredData.forEach(d => { dataMap[d['Şehir']] = parseFloat(d['Değer']); });
+
+            // Tüm geçerli sayısal değerleri al ve küçükten büyüğe sırala
+            const allValues = Object.values(dataMap).filter(v => !isNaN(v)).sort((a, b) => a - b);
+
+            // Toplam Değer (Yüzde Hesabı İçin)
+            const totalValue = d3.sum(allValues) || 0;
+
+            let features = GEOJSON.features;
+            if (currentRegion !== "Türkiye") {
+                features = features.filter(f => cityNames.includes(f.properties.name));
+            }
+
+            const svg = d3.select("#map")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("viewBox", [0, 0, width, height])
+                .style("max-width", "100%")
+                .style("height", "auto");
+
+            svg.append("rect")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("fill", "transparent")
+                .on("click", reset);
+
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", 25)
+                .attr("text-anchor", "middle")
+                .style("font-size", "18px")
+                .style("font-weight", "bold")
+                .style("font-family", "sans-serif")
+                .style("fill", "#333")
+                .text(titleString);
+
+            const g = svg.append("g");
+            const projection = d3.geoMercator().fitSize([width, height], { type: "FeatureCollection", features: features });
+            const path = d3.geoPath().projection(projection);
+
+            const legendLevels = parseInt(document.getElementById('legendLevelSelect').value, 10);
+            const palette = generateMapPalette(legendLevels);
+
+            const colorScale = d3.scaleQuantile()
+                .domain(allValues)
+                .range(palette);
+
+            // 1. Poligonları çiz
+            g.selectAll("path.map-polygon")
+                .data(features)
+                .join("path")
+                .attr("class", "map-polygon")
+                .attr("d", path)
+                .attr("fill", d => {
+                    const val = dataMap[d.properties.name];
+                    return (val !== undefined) ? colorScale(val) : "#ccc";
+                })
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 0.5)
+                .attr("cursor", "default");
+
+            // 2. İl İsimlerini Çiz (Ayrı Katman)
+            g.selectAll("text.map-label-name")
+                .data(features)
+                .join("text")
+                .attr("class", "map-label map-label-name")
+                .attr("transform", d => `translate(${path.centroid(d)})`)
+                .attr("text-anchor", "middle")
+                .attr("dy", "-0.4em")
+                .style("pointer-events", "none")
+                .style("font-family", "sans-serif")
+                .style("font-weight", "normal") // Kalınlık kaldırıldı
+                .style("fill", "#333")
+                .style("text-shadow", "1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff")
+                .text(d => d.properties.name);
+
+            // 3. Değerleri Çiz (Ayrı Katman)
+            g.selectAll("text.map-label-value")
+                .data(features)
+                .join("text")
+                .attr("class", "map-label map-label-value")
+                .attr("transform", d => `translate(${path.centroid(d)})`)
+                .attr("text-anchor", "middle")
+                .attr("dy", "0.8em")
+                .style("pointer-events", "none")
+                .style("font-family", "sans-serif")
+                .style("fill", "#333")
+                .style("text-shadow", "1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff")
+                .text(d => {
+                    const val = dataMap[d.properties.name];
+                    return (val !== undefined && val !== null && !isNaN(val)) ? formatNum(val) : "";
+                });
+
+            // 4. Yüzdeleri Çiz (Ayrı Katman)
+            g.selectAll("text.map-label-percent")
+                .data(features)
+                .join("text")
+                .attr("class", "map-label map-label-percent")
+                .attr("transform", d => `translate(${path.centroid(d)})`)
+                .attr("text-anchor", "middle")
+                .attr("dy", "2.0em")
+                .style("pointer-events", "none")
+                .style("font-family", "sans-serif")
+                .style("fill", "#333")
+                .style("text-shadow", "1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff")
+                .text(d => {
+                    const val = dataMap[d.properties.name];
+                    if (val === undefined || val === null || isNaN(val) || totalValue === 0) return "";
+                    const percent = (val / totalValue) * 100;
+                    return "%" + percent.toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+                });
+
+            // Gelişmiş Zoom ve Çizgi Kalınlığı & Etiket Boyutu Ayarlama
+            const zoom = d3.zoom()
+                .scaleExtent([0.5, 8])
+                .on("zoom", (event) => {
+                    g.attr("transform", event.transform);
+
+                    const k = event.transform.k;
+                    // İlk değer tam 9px, maksimum 14px olacak şekilde sabitliyoruz.
+                    const currentSize = Math.min(Math.max(9 * k, 9), 14);
+
+                    // Etiketlerin fontlarını güncelliyoruz
+                    g.selectAll(".map-label-name").style("font-size", (currentSize / k) + "px");
+                    g.selectAll(".map-label-value").style("font-size", (currentSize / k) + "px");
+                    g.selectAll(".map-label-percent").style("font-size", (currentSize / k) + "px");
+
+                    // Sınır çizgilerinin kalın kalmasını engellemek için ters oranlı incelt
+                    g.selectAll("path.map-polygon").attr("stroke-width", 0.5 / k);
+                });
+
+            svg.call(zoom);
+
+            // İlk açılışta etiket boyutunun hemen 9px olarak uygulanmasını sağlamak için zoom'u tetikliyoruz
+            svg.call(zoom.transform, d3.zoomIdentity);
+
+            function reset() {
+                svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+            }
+
+            const legendPos = document.getElementById('legendPos').value;
+            const legendWidth = 120;
+            const itemHeight = 20;
+            const legendHeight = (colorScale.range().length * itemHeight) + 20;
+
+            let lx = 20, ly = 20;
+            if (legendPos.includes("right")) lx = width - legendWidth - 20;
+            if (legendPos.includes("bottom")) ly = height - legendHeight - 20;
+
+            const legend = svg.append("g")
+                .attr("class", "legend")
+                .attr("transform", `translate(${lx}, ${ly})`);
+
+            legend.append("rect")
+                .attr("width", legendWidth)
+                .attr("height", legendHeight)
+                .attr("fill", "rgba(255, 255, 255, 0.8)")
+                .attr("stroke", "#ccc")
+                .attr("rx", 5);
+
+            const ranges = colorScale.range().map(color => {
+                const d = colorScale.invertExtent(color);
+                return { color: color, min: d[0], max: d[1] };
+            });
+
+            ranges.forEach((r, i) => {
+                const lg = legend.append("g").attr("transform", `translate(10, ${10 + i * itemHeight})`);
+                lg.append("rect")
+                    .attr("width", 15)
+                    .attr("height", 15)
+                    .attr("fill", r.color)
+                    .attr("stroke", "#999");
+
+                let minTxt = formatNum(r.min);
+                let maxTxt = formatNum(r.max);
+                if (r.min && minTxt.length > 8) minTxt = Math.round(r.min / 1000) + 'k';
+                if (r.max && maxTxt.length > 8) maxTxt = Math.round(r.max / 1000) + 'k';
+
+                lg.append("text")
+                    .attr("x", 25)
+                    .attr("y", 12)
+                    .style("font-size", "10px")
+                    .text(`${minTxt} - ${maxTxt}`);
+            });
+
+            // Çizim bitince etiketlerin güncel görünümlerini kontrol et.
+            toggleMapLabels();
+        }
+
+        // Haritayı baştan çizmeye gerek bırakmayan etiket görünürlüğü açma/kapama fonksiyonu
+        function toggleMapLabels() {
+            const showCity = document.getElementById('chkShowCity').checked;
+            const showValue = document.getElementById('chkShowValue').checked;
+            const showPercent = document.getElementById('chkShowPercent').checked;
+
+            // Opaklıkları ayarla (Gizle/Göster)
+            d3.selectAll('.map-label-name').style('opacity', showCity ? 1 : 0);
+            d3.selectAll('.map-label-value').style('opacity', showValue ? 1 : 0);
+            d3.selectAll('.map-label-percent').style('opacity', showPercent ? 1 : 0);
+
+            // Dinamik Y (dy) boşluk hesaplaması
+            let nameDy = "-0.4em";
+            let valueDy = "0.8em";
+            let percentDy = "2.0em";
+
+            if (showCity && showValue && showPercent) {
+                // Hepsi açık, varsayılan aralıklar
+                nameDy = "-0.4em"; valueDy = "0.8em"; percentDy = "2.0em";
+            } else if (showCity && showValue && !showPercent) {
+                nameDy = "-0.4em"; valueDy = "0.8em";
+            } else if (showCity && !showValue && showPercent) {
+                // SADECE İL VE YÜZDE AÇIK: Yüzdeyi değerin yerine yukarı kaydır
+                nameDy = "-0.4em"; percentDy = "0.8em";
+            } else if (!showCity && showValue && showPercent) {
+                // İl adı yoksa, değer ve yüzdeyi yukarı kaydır
+                valueDy = "-0.4em"; percentDy = "0.8em";
+            } else if (showCity && !showValue && !showPercent) {
+                nameDy = "0.3em"; // Sadece il adı varsa tam merkeze al
+            } else if (!showCity && showValue && !showPercent) {
+                valueDy = "0.3em"; // Sadece değer varsa tam merkeze al
+            } else if (!showCity && !showValue && showPercent) {
+                percentDy = "0.3em"; // Sadece yüzde varsa tam merkeze al
+            }
+
+            // Yeni dy pozisyonlarını uygula
+            d3.selectAll('.map-label-name').attr('dy', nameDy);
+            d3.selectAll('.map-label-value').attr('dy', valueDy);
+            d3.selectAll('.map-label-percent').attr('dy', percentDy);
+        }
+
+        function downloadChart() { Plotly.downloadImage('chart', { format: 'png', filename: 'grafik_' + titleString }); }
+
+        function downloadMap() {
+            const svgElement = document.querySelector("#map svg");
+            const canvas = document.createElement("canvas");
+            const bbox = svgElement.getBoundingClientRect();
+            canvas.width = bbox.width;
+            canvas.height = bbox.height;
+            const ctx = canvas.getContext("2d");
+            const data = (new XMLSerializer()).serializeToString(svgElement);
+            const DOMURL = window.URL || window.webkitURL || window;
+            const img = new Image();
+            const svgBlob = new Blob([data], { type: "image/svg+xml;charset=utf-8" });
+            const url = DOMURL.createObjectURL(svgBlob);
+            img.onload = function () {
+                ctx.fillStyle = "white";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0);
+                DOMURL.revokeObjectURL(url);
+                const imgURI = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                const evt = new MouseEvent("click", {
+                    view: window,
+                    bubbles: false,
+                    cancelable: true
+                });
+                const a = document.createElement("a");
+                a.setAttribute("download", "harita_" + titleString + ".png");
+                a.setAttribute("href", imgURI);
+                a.setAttribute("target", '_blank');
+                a.dispatchEvent(evt);
+            };
+            img.src = url;
+        }
+
+        function downloadTable() {
+            const ws = XLSX.utils.json_to_sheet(filteredData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Veri");
+            XLSX.writeFile(wb, `${titleString}.xlsx`);
+        }
+    </script>
+</body>
+
+</html>

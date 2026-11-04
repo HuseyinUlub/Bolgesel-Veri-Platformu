@@ -15,7 +15,9 @@ Amaç: hangi göstergenin eskidiğini aramadan görmek; yeni veriyi siteye girme
 - API anahtarı yalnızca yerel `tuik-api-key.txt` dosyasından okunur; içeriği hiçbir çıktıya yazılmaz.
 - API'de olmayanlar (MEB, BTK, OECD, BDDK vb.) Veri Masası Excel'i ile elle girilir.
 
-## 3. Değişiklik denetimi
+## 3. Değişiklik denetimi (uygulandı, 4 Kasım 2026)
+
+Uygulama: `pipeline/hepsini_olustur.py` her çalıştırmada `kaynaklar/veri-ozeti.csv` ile karşılaştırır ve `build/degisiklik-raporu.md` yazar (kaybolan, azalan, son yılı değişen, revize, yeni). `--ozet-kaydet` yeni özeti kaynak kabul eder.
 
 - Her `build_data.py` çalışmasından sonra yeni veritabanı bir öncekinin özetiyle karşılaştırılır (gösterge × düzey × yıl başına değer sayısı ve toplam/ortalama). Kaybolan, yeni gelen ve değişen değerler `build/degisiklik-raporu.md`'ye yazılır.
 - Önceki özet `kaynaklar/veri-ozeti.csv` olarak depoda tutulur; böylece her commit neyin değiştiğini taşır.

@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye Veri Haritası</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@4.3.4/build/index.umd.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+            background-color: #f4f6f9;
+            overflow: hidden;
+        }
+
+        /* Sidebar (Left Column) */
+        #sidebar {
+            width: 250px;
+            min-width: 250px;
+            background-color: #ffffff;
+            padding: 20px 15px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+            z-index: 100;
+            position: relative;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        /* Varsayılan Form Elemanları */
+        select,
+        input[type="number"],
+        input[type="color"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: white;
+            width: 100%;
+        }
+
+        /* Select Kutuları Kesme ve 3 Nokta */
+        select {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 6px;
+        }
+
+        /* Butonlar */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .btn-chart {
+            background-color: #ff9800;
+        }
+
+        /* Turuncu */
+        .btn-chart:hover {
+            background-color: #e68a00;
+        }
+
+        .btn-map {
+            background-color: #28a745;
+        }
+
+        /* Yeşil */
+        .btn-map:hover {
+            background-color: #1e7e34;
+        }
+
+        .btn-data {
+            background-color: #007bff;
+        }
+
+        /* Mavi */
+        .btn-data:hover {
+            background-color: #0056b3;
+        }
+
+        /* Content Area (Right Side) */
+        #content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Main Content (Chart & Map) */
+        #main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            padding: 15px;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        /* Left Panel - Chart */
+        #left-panel {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        #chart-export-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+        }
+
+        #chart-container {
+            flex: 1;
+            position: relative;
+            min-height: 0;
+        }
+
+        /* Right Panel - Map */
+        #right-panel {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #map-export-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            position: relative;
+        }
+
+        #map-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+        }
+
+        #map-container:active {
+            cursor: grabbing;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .province {
+            stroke: #fff;
+            stroke-width: 1px;
+            transition: fill 0.3s;
+        }
+
+        /* Titles & Controls Bars */
+        .panel-title {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+            min-height: 20px;
+        }
+
+        /* Alt Kontrol Alanları ve Elemanları */
+        .bottom-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 13px;
+            background: #fff;
+        }
+
+        .bottom-controls label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        /* Seçim kutularına 2px padding ayarı */
+        .bottom-controls select,
+        .bottom-controls input[type="number"] {
+            padding: 2px 4px;
+            height: 26px;
+        }
+
+        /* Renk kutularını küçültme */
+        .bottom-controls input[type="color"] {
+            padding: 0;
+            border: 1px solid #ccc;
+            height: 24px;
+            width: 30px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        /* Map Labels */
+        .map-label {
+            pointer-events: none;
+            text-anchor: middle;
+            font-family: sans-serif;
+            font-weight: bold;
+            fill: #333;
+            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+        }
+
+        .label-name {
+            font-size: 0.9em;
+        }
+
+        .label-value {
+            font-size: 0.8em;
+            font-weight: normal;
+        }
+
+        /* Legend */
+        #legend {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 12px;
+            z-index: 5;
+            transition: all 0.3s;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+        }
+
+        /* Bottom Panel - Table */
+        #bottom-panel {
+            height: 250px;
+            background: white;
+            margin: 0 15px 15px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            padding: 15px;
+            z-index: 10;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        /* Loading Overlay */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading">Veriler Yükleniyor... Lütfen Bekleyin.</div>
+
+    <div id="sidebar">
+        <div style="text-align: center; margin-bottom: 10px;">
+            <h3 style="margin: 0; color: #333; font-size: 18px;">Veri Kontrol Paneli</h3>
+            <hr style="border: 0; border-top: 1px solid #ddd; margin-top: 10px;" />
+        </div>
+
+        <div class="control-group">
+            <label>Amaç</label>
+            <select id="sel-amac"></select>
+        </div>
+        <div class="control-group">
+            <label>Hedef</label>
+            <select id="sel-hedef"></select>
+        </div>
+        <div class="control-group">
+            <label>Gösterge</label>
+            <select id="sel-gosterge"></select>
+        </div>
+        <div class="control-group">
+            <label>Alt Gösterge</label>
+            <select id="sel-alt-gosterge"></select>
+        </div>
+        <div class="control-group">
+            <label>Yıl</label>
+            <select id="sel-yil"></select>
+        </div>
+        <div class="control-group">
+            <label>Bölge</label>
+            <select id="sel-bolge">
+                <option value="Tümü" title="Tümü">Tümü</option>
+            </select>
+        </div>
+        <div class="btn-group">
+            <button class="btn-chart" onclick="downloadChart()">Grafik İndir</button>
+            <button class="btn-map" onclick="downloadMap()">Harita İndir</button>
+            <button class="btn-data" onclick="downloadData()">Veri İndir (CSV)</button>
+        </div>
+    </div>
+
+    <div id="content-area">
+        <div id="main-content">
+            <div id="left-panel">
+                <div id="chart-export-area">
+                    <div id="chart-title" class="panel-title">Grafik Başlığı</div>
+                    <div id="chart-container">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+                <div class="bottom-controls" style="justify-content: flex-start;">
+                    <label for="sel-chart-type"><strong>Grafik Türü:</strong></label>
+                    <select id="sel-chart-type" style="min-width:150px; width:auto;">
+                        <option value="bar">Bar (Sütun)</option>
+                        <option value="line">Line (Çizgi)</option>
+                        <option value="lollipop">Lollipop</option>
+                        <option value="pie">Pie (Pasta)</option>
+                        <option value="doughnut">Doughnut (Simit)</option>
+                        <option value="radar">Radar</option>
+                        <option value="polarArea">Polar Area</option>
+                        <option value="bubble">Bubble (Baloncuk)</option>
+                        <option value="scatter">Scatter (Dağılım)</option>
+                        <option value="horizontalBar">Yatay Bar</option>
+                        <option value="area">Area (Alan - Çizgi)</option>
+                    </select>
+                    <label for="sel-highlight-city"><strong>Vurgulanacak İl:</strong></label>
+                    <select id="sel-highlight-city" style="min-width:150px; width:auto;">
+                        <option value="">Vurgulama Yok</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="right-panel">
+                <div id="map-export-area">
+                    <div id="map-title" class="panel-title">Harita Başlığı</div>
+                    <div id="map-container"></div>
+                    <div id="legend"></div>
+                </div>
+
+                <div class="bottom-controls">
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <label><strong>Yeri:</strong>
+                            <select id="sel-legend-pos" style="width: auto;">
+                                <option value="bottom-left">Sol Alt</option>
+                                <option value="bottom-right">Sağ Alt</option>
+                                <option value="top-left">Sol Üst</option>
+                                <option value="top-right">Sağ Üst</option>
+                            </select>
+                        </label>
+                        <label><strong>Düzeyi:</strong>
+                            <input type="number" id="num-legend-levels" min="2" max="10" value="5">
+                        </label>
+                        <label><input type="checkbox" id="chk-labels" checked> Etiket</label>
+                        <label><input type="checkbox" id="chk-values" checked> Değer</label>
+                    </div>
+
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <strong>Renk:</strong>
+                        <input type="color" id="color-start" value="#ffffcc" title="Başlangıç Rengi">
+                        <span>-</span>
+                        <input type="color" id="color-end" value="#ff0000" title="Bitiş Rengi">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="bottom-panel">
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>Şehir</th>
+                        <th>Bölge Kod</th>
+                        <th>Yıl</th>
+                        <th>Değer</th>
+                        <th>Kaynak</th>
+                        <th>İnternet Adresi</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Verilerin üzerinde değer gösteren eklentiyi Chart.js'e kaydedelim
+        Chart.register(ChartDataLabels);
+
+        let rawData = [];
+        let geoData = null;
+        let chartInstance = null;
+        let mapSvg, mapProjection, mapPath, mapGroup, d3Zoom;
+        let colorScale;
+
+        const CSV_GZ_PATH = './data/illerska.csv.gz';
+        const GEOJSON_PATH = './data/tr.geojson';
+
+        // Grafik İndirme Arkaplan Eklentisi
+        const canvasWhiteBackgroundPlugin = {
+            id: 'customCanvasBackgroundColor',
+            beforeDraw: (chart, args, options) => {
+                const { ctx } = chart;
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = options.color || '#ffffff';
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        };
+
+        function normalizeCityName(name) {
+            return name.toUpperCase()
+                .replace(/İ/g, 'I').replace(/Ş/g, 'S').replace(/Ğ/g, 'G')
+                .replace(/Ü/g, 'U').replace(/Ö/g, 'O').replace(/Ç/g, 'C').trim();
+        }
+
+        Promise.all([
+            fetch(CSV_GZ_PATH).then(res => res.arrayBuffer()),
+            d3.json(GEOJSON_PATH)
+        ]).then(([csvBuffer, geojson]) => {
+            geoData = geojson;
+
+            const uint8Array = new Uint8Array(csvBuffer);
+            const decompressedText = pako.inflate(uint8Array, { to: 'string' });
+
+            rawData = d3.dsvFormat(";").parse(decompressedText);
+
+            rawData.forEach(d => {
+                if (d.Değer) d.Değer = parseFloat(d.Değer.replace(',', '.'));
+                d.NormalizedCity = normalizeCityName(d.Şehir);
+            });
+
+            initMap();
+            populateDropdowns();
+            bindBottomControls();
+
+            document.getElementById('loading').style.display = 'none';
+            updateAll();
+        }).catch(err => {
+            console.error("Veri yüklenirken hata:", err);
+            document.getElementById('loading').innerText = "Veri Yüklenemedi! Dosya yollarını kontrol edin.";
+        });
+
+        function updateSelectTitle(sel) {
+            if (sel.options.length > 0 && sel.selectedIndex >= 0) {
+                sel.title = sel.options[sel.selectedIndex].title;
+            }
+        }
+
+        function bindBottomControls() {
+            document.getElementById('sel-legend-pos').addEventListener('change', updateLegendPosition);
+            document.getElementById('num-legend-levels').addEventListener('change', () => updateMap(getFilteredData()));
+            document.getElementById('chk-labels').addEventListener('change', updateLabelsVisibility);
+            document.getElementById('chk-values').addEventListener('change', updateLabelsVisibility);
+            document.getElementById('color-start').addEventListener('change', () => updateMap(getFilteredData()));
+            document.getElementById('color-end').addEventListener('change', () => updateMap(getFilteredData()));
+            document.getElementById('sel-highlight-city').addEventListener('change', () => updateChart(getFilteredData()));
+        }
+
+        // Doğal sayısal sıralama (10'un 2'den önce gelmesini engeller)
+        function getUnique(data, key) {
+            return [...new Set(data.map(d => d[key]).filter(v => v))].sort((a, b) =>
+                a.toString().localeCompare(b.toString(), 'tr', { numeric: true })
+            );
+        }
+
+        function populateDropdowns() {
+            const selAmac = document.getElementById('sel-amac');
+            const selHedef = document.getElementById('sel-hedef');
+            const selGosterge = document.getElementById('sel-gosterge');
+            const selAltGosterge = document.getElementById('sel-alt-gosterge');
+            const selYil = document.getElementById('sel-yil');
+            const selBolge = document.getElementById('sel-bolge');
+
+            // Select Title Güncellemeleri için Event'ler
+            [selAmac, selHedef, selGosterge, selAltGosterge, selYil, selBolge].forEach(sel => {
+                sel.addEventListener('change', () => updateSelectTitle(sel));
+            });
+
+            fillSelect(selAmac, getUnique(rawData, 'Amaç'));
+
+            selAmac.addEventListener('change', () => {
+                const filtered = rawData.filter(d => d.Amaç === selAmac.value);
+                fillSelect(selHedef, getUnique(filtered, 'Hedef'));
+                selHedef.dispatchEvent(new Event('change'));
+            });
+
+            selHedef.addEventListener('change', () => {
+                const filtered = rawData.filter(d => d.Amaç === selAmac.value && d.Hedef === selHedef.value);
+                fillSelect(selGosterge, getUnique(filtered, 'Gösterge'));
+                selGosterge.dispatchEvent(new Event('change'));
+            });
+
+            selGosterge.addEventListener('change', () => {
+                const filtered = rawData.filter(d => d.Amaç === selAmac.value && d.Hedef === selHedef.value && d.Gösterge === selGosterge.value);
+                const altGostergeler = getUnique(filtered, 'Alt Gösterge');
+                fillSelect(selAltGosterge, altGostergeler);
+
+                const yillar = getUnique(filtered, 'Yıl');
+                fillSelect(selYil, yillar);
+
+                updateAll();
+            });
+
+            selAltGosterge.addEventListener('change', updateAll);
+            selYil.addEventListener('change', updateAll);
+            selBolge.addEventListener('change', updateAll);
+            document.getElementById('sel-chart-type').addEventListener('change', () => updateChart(getFilteredData()));
+
+            const bolgeler = getUnique(rawData, 'Bölge_kod');
+            bolgeler.forEach(b => {
+                const opt = document.createElement('option');
+                opt.value = b;
+                opt.title = b;
+                opt.textContent = b.toString().length > 40 ? b.toString().substring(0, 40) + '...' : b;
+                selBolge.appendChild(opt);
+            });
+
+            selAmac.dispatchEvent(new Event('change'));
+        }
+
+        function fillSelect(selectEl, options) {
+            selectEl.innerHTML = '';
+            if (options.length === 0 && selectEl.id === 'sel-alt-gosterge') {
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.title = 'Yok';
+                opt.textContent = 'Yok';
+                selectEl.appendChild(opt);
+                updateSelectTitle(selectEl);
+                return;
+            }
+
+            let sortedOptions = [...options];
+
+            // Amaç kutusu için özel sıralama (Görseldeki mantığa göre)
+            if (selectEl.id === 'sel-amac') {
+                const amacSiralama = [
+                    "yoksulluğa", "açlığa", "sağlıklı", "nitelikli", "cinsiyet",
+                    "temiz", "enerji", "ekonomik", "sanayi", "eşitsizlik",
+                    "şehir", "tüketim", "iklim", "sudaki", "karasal", "barış", "ortaklıklar"
+                ];
+
+                sortedOptions.sort((a, b) => {
+                    const aLower = a.toString().toLocaleLowerCase('tr-TR');
+                    const bLower = b.toString().toLocaleLowerCase('tr-TR');
+
+                    let aIndex = amacSiralama.findIndex(k => aLower.includes(k));
+                    let bIndex = amacSiralama.findIndex(k => bLower.includes(k));
+
+                    if (aIndex !== -1 && bIndex !== -1) {
+                        return aIndex - bIndex;
+                    }
+                    return a.toString().localeCompare(b.toString(), 'tr', { numeric: true });
+                });
+            }
+
+            sortedOptions.forEach(optVal => {
+                const opt = document.createElement('option');
+                opt.value = optVal;
+                opt.title = optVal;
+                opt.textContent = optVal.toString().length > 40 ? optVal.toString().substring(0, 40) + '...' : optVal;
+                selectEl.appendChild(opt);
+            });
+
+            if (sortedOptions.length > 0) {
+                selectEl.selectedIndex = 0;
+            }
+            updateSelectTitle(selectEl);
+        }
+
+        function getFilteredData() {
+            const amac = document.getElementById('sel-amac').value;
+            const hedef = document.getElementById('sel-hedef').value;
+            const gosterge = document.getElementById('sel-gosterge').value;
+            const altGosterge = document.getElementById('sel-alt-gosterge').value;
+            const yil = document.getElementById('sel-yil').value;
+            const bolge = document.getElementById('sel-bolge').value;
+
+            return rawData.filter(d => {
+                const matchAmac = d.Amaç === amac;
+                const matchHedef = d.Hedef === hedef;
+                const matchGosterge = d.Gösterge === gosterge;
+                const matchAlt = altGosterge === '' ? true : d['Alt Gösterge'] === altGosterge;
+                const matchYil = yil === '' ? true : d.Yıl.toString() === yil;
+                const matchBolge = bolge === 'Tümü' ? true : d.Bölge_kod === bolge;
+                return matchAmac && matchHedef && matchGosterge && matchAlt && matchYil && matchBolge && !isNaN(d.Değer);
+            });
+        }
+
+        function getActiveTitle() {
+            const gosterge = document.getElementById('sel-gosterge').value;
+            const altGosterge = document.getElementById('sel-alt-gosterge').value;
+            const yil = document.getElementById('sel-yil').value;
+            const baseTitle = (altGosterge && altGosterge !== 'Yok') ? altGosterge : gosterge;
+            return `${baseTitle} (${yil})`;
+        }
+
+        function updateAll() {
+            const data = getFilteredData();
+            const title = getActiveTitle();
+
+            document.getElementById('map-title').innerText = title;
+            document.getElementById('chart-title').innerText = title;
+
+            updateMap(data);
+            updateChart(data);
+            updateTable(data);
+        }
+
+        // --- HARİTA ---
+        function initMap() {
+            const container = document.getElementById('map-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            mapSvg = d3.select("#map-container").append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            mapProjection = d3.geoMercator().fitSize([width, height], geoData);
+            mapPath = d3.geoPath().projection(mapProjection);
+
+            mapGroup = mapSvg.append("g").attr("id", "map-group");
+
+            d3Zoom = d3.zoom()
+                .scaleExtent([0.2, 10])
+                .on("zoom", (event) => {
+                    mapGroup.attr("transform", event.transform);
+                    mapGroup.selectAll(".map-label").style("font-size", `${10 / event.transform.k}px`);
+                });
+
+            mapSvg.call(d3Zoom);
+
+            mapGroup.selectAll("path")
+                .data(geoData.features)
+                .enter().append("path")
+                .attr("class", "province")
+                .attr("d", mapPath)
+                .attr("fill", "#ddd");
+
+            const labels = mapGroup.selectAll("text")
+                .data(geoData.features)
+                .enter().append("text")
+                .attr("class", "map-label")
+                .attr("transform", d => `translate(${mapPath.centroid(d)})`)
+                .style("font-size", "10px");
+
+            labels.append("tspan")
+                .attr("class", "label-name")
+                .attr("x", 0).attr("dy", "-0.2em")
+                .text(d => d.properties.name);
+
+            labels.append("tspan")
+                .attr("class", "label-value")
+                .attr("x", 0).attr("dy", "1.2em")
+                .text("");
+        }
+
+        function updateMap(data) {
+            if (!mapSvg) return;
+
+            const selectedBolge = document.getElementById('sel-bolge').value;
+            const cityData = {};
+            let activeCities = new Set();
+
+            rawData.forEach(d => {
+                if (selectedBolge === 'Tümü' || d.Bölge_kod === selectedBolge) {
+                    activeCities.add(d.NormalizedCity);
+                }
+            });
+
+            data.forEach(d => {
+                const city = d.NormalizedCity;
+                if (!cityData[city]) cityData[city] = { sum: 0, count: 0 };
+                cityData[city].sum += d.Değer;
+                cityData[city].count += 1;
+            });
+
+            const values = Object.values(cityData).map(v => v.sum / v.count);
+            const min = values.length > 0 ? d3.min(values) : 0;
+            const max = values.length > 0 ? d3.max(values) : 1;
+
+            const startColor = document.getElementById('color-start').value;
+            const endColor = document.getElementById('color-end').value;
+
+            let legendLevels = parseInt(document.getElementById('num-legend-levels').value) || 5;
+            legendLevels = Math.max(2, Math.min(10, legendLevels));
+
+            const customColors = d3.quantize(d3.interpolate(startColor, endColor), legendLevels);
+
+            colorScale = d3.scaleQuantize()
+                .domain([min, max])
+                .range(customColors);
+
+            mapGroup.selectAll(".province")
+                .attr("display", d => activeCities.has(normalizeCityName(d.properties.name)) ? "block" : "none")
+                .transition().duration(500)
+                .attr("fill", d => {
+                    let pName = normalizeCityName(d.properties.name);
+                    if (cityData[pName]) {
+                        const val = cityData[pName].sum / cityData[pName].count;
+                        d.properties.value = val;
+                        return colorScale(val);
+                    }
+                    d.properties.value = null;
+                    return "#ddd";
+                });
+
+            mapGroup.selectAll(".map-label")
+                .attr("display", d => activeCities.has(normalizeCityName(d.properties.name)) ? "block" : "none");
+
+            mapGroup.selectAll(".label-value")
+                .text(d => d.properties.value !== null ? d.properties.value.toFixed(1) : "-");
+
+            focusOnRegion(activeCities);
+            updateLegend(min, max, values.length);
+            updateLabelsVisibility();
+        }
+
+        function focusOnRegion(activeCities) {
+            const container = document.getElementById('map-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            const activeFeatures = geoData.features.filter(f => activeCities.has(normalizeCityName(f.properties.name)));
+            if (activeFeatures.length === 0) return;
+
+            const bounds = mapPath.bounds({ type: "FeatureCollection", features: activeFeatures });
+            const dx = bounds[1][0] - bounds[0][0];
+            const dy = bounds[1][1] - bounds[0][1];
+            const x = (bounds[0][0] + bounds[1][0]) / 2;
+            const y = (bounds[0][1] + bounds[1][1]) / 2;
+
+            const scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height)));
+            const translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+            mapSvg.transition().duration(750).call(
+                d3Zoom.transform,
+                d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale)
+            );
+        }
+
+        function updateLegend(min, max, length) {
+            const legendDiv = document.getElementById('legend');
+            if (length === 0) { legendDiv.innerHTML = 'Veri Bulunamadı'; return; }
+
+            legendDiv.innerHTML = '';
+
+            const breaks = colorScale.thresholds();
+            const ranges = [min, ...breaks, max];
+
+            for (let i = 0; i < ranges.length - 1; i++) {
+                const color = colorScale.range()[i];
+                legendDiv.innerHTML += `
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: ${color}"></div>
+                        <span>${ranges[i].toFixed(1)} - ${ranges[i + 1].toFixed(1)}</span>
+                    </div>
+                `;
+            }
+        }
+
+        function updateLegendPosition() {
+            const pos = document.getElementById('sel-legend-pos').value;
+            const legend = document.getElementById('legend');
+            legend.style.top = pos.includes('top') ? '15px' : 'auto';
+            legend.style.bottom = pos.includes('bottom') ? '15px' : 'auto';
+            legend.style.left = pos.includes('left') ? '15px' : 'auto';
+            legend.style.right = pos.includes('right') ? '15px' : 'auto';
+        }
+
+        function updateLabelsVisibility() {
+            const showLabels = document.getElementById('chk-labels').checked;
+            const showValues = document.getElementById('chk-values').checked;
+            d3.selectAll('.label-name').style('visibility', showLabels ? 'visible' : 'hidden');
+            d3.selectAll('.label-value').style('visibility', showValues ? 'visible' : 'hidden');
+        }
+
+        // --- GRAFİK ---
+        function updateChart(data) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+
+            let chartType = document.getElementById('sel-chart-type').value;
+            const isHorizontal = chartType === 'horizontalBar';
+            const isLollipop = chartType === 'lollipop';
+            const isBoxplot = chartType === 'boxplot';
+
+            let baseChartType = chartType;
+            if (isHorizontal) baseChartType = 'bar';
+            if (chartType === 'area') baseChartType = 'line';
+            if (isLollipop) baseChartType = 'bar';
+
+            const cityData = {};
+            data.forEach(d => {
+                if (!cityData[d.Şehir]) cityData[d.Şehir] = { values: [] };
+                cityData[d.Şehir].values.push(d.Değer);
+            });
+
+            const sortedData = Object.keys(cityData).map(city => {
+                const vals = cityData[city].values;
+                const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
+                return { city: city, val: mean, rawValues: vals };
+            }).sort((a, b) => b.val - a.val).slice(0, 30);
+
+            const highlightSelect = document.getElementById('sel-highlight-city');
+            const currentHighlight = highlightSelect.value;
+            highlightSelect.innerHTML = '<option value="">Vurgulama Yok</option>';
+            sortedData.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d.city; opt.textContent = d.city;
+                if (d.city === currentHighlight) opt.selected = true;
+                highlightSelect.appendChild(opt);
+            });
+
+            const highlightCity = highlightSelect.value;
+            const labels = sortedData.map(d => d.city);
+            const values = sortedData.map(d => d.val);
+            const rawArrays = sortedData.map(d => d.rawValues);
+
+            const pointColors = labels.map(city => {
+                if (highlightCity && city === highlightCity) return '#ff0000';
+                if (baseChartType === 'pie' || baseChartType === 'doughnut' || baseChartType === 'polarArea') {
+                    return `hsl(${Math.random() * 360}, 70%, 60%)`;
+                }
+                return highlightCity ? '#b3d7ff' : '#007bff';
+            });
+
+            let datasetData = values;
+            if (baseChartType === 'bubble' || baseChartType === 'scatter') {
+                datasetData = values.map((v, i) => ({ x: i, y: v, r: baseChartType === 'bubble' ? Math.max(5, v / d3.max(values) * 20) : 5 }));
+            }
+
+            let chartDatasets = [];
+
+            if (isLollipop) {
+                chartDatasets = [
+                    {
+                        type: 'line',
+                        label: getActiveTitle() + ' (Nokta)',
+                        data: values,
+                        backgroundColor: pointColors,
+                        borderColor: highlightCity ? pointColors : '#0056b3',
+                        pointBackgroundColor: pointColors,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 1,
+                        pointRadius: labels.map(city => (city === highlightCity ? 8 : 6)),
+                        showLine: false
+                    },
+                    {
+                        type: 'bar',
+                        label: getActiveTitle() + ' (Sütun)',
+                        data: values,
+                        backgroundColor: pointColors,
+                        barThickness: 2
+                    }
+                ];
+            } else if (isBoxplot) {
+                chartDatasets = [{
+                    label: getActiveTitle(),
+                    data: rawArrays,
+                    backgroundColor: pointColors,
+                    borderColor: '#333',
+                    borderWidth: 1,
+                    outlierBackgroundColor: '#ff0000',
+                    itemRadius: 3
+                }];
+            } else {
+                const isPieDonut = (baseChartType === 'pie' || baseChartType === 'doughnut');
+                chartDatasets = [{
+                    label: getActiveTitle(),
+                    data: datasetData,
+                    backgroundColor: pointColors,
+                    borderColor: isPieDonut
+                        ? labels.map(city => city === highlightCity ? '#333' : '#fff')
+                        : (highlightCity ? pointColors : '#0056b3'),
+                    borderWidth: isPieDonut
+                        ? labels.map(city => city === highlightCity ? 3 : 1)
+                        : 1,
+                    fill: chartType === 'area',
+                    pointBackgroundColor: pointColors,
+                    pointRadius: labels.map(city => (city === highlightCity ? 8 : 4)),
+                    offset: isPieDonut
+                        ? labels.map(city => city === highlightCity ? 25 : 0)
+                        : undefined
+                }];
+            }
+
+            if (chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
+                type: baseChartType,
+                data: {
+                    labels: labels,
+                    datasets: chartDatasets
+                },
+                plugins: [canvasWhiteBackgroundPlugin],
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: isHorizontal ? 'y' : 'x',
+                    events: [], // Grafik üzerindeki tüm fare etkileşimlerini iptal eder
+                    layout: {
+                        padding: {
+                            top: 20,
+                            bottom: 20,
+                            left: 20,
+                            right: 20
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            enabled: false // Tooltip deaktive
+                        },
+                        legend: {
+                            display: baseChartType === 'polarArea',
+                            position: 'right',
+                            align: 'end'
+                        },
+                        customCanvasBackgroundColor: { color: '#ffffff' },
+                        // Datalabels Plugin Ayarları
+                        datalabels: {
+                            display: function (context) {
+                                return ['pie', 'doughnut'].includes(baseChartType);
+                            },
+                            anchor: 'end',
+                            align: 'start',
+                            textAlign: 'center',
+                            color: '#fff',
+                            textStrokeColor: '#000',
+                            textStrokeWidth: 2,
+                            font: {
+                                weight: 'bold',
+                                size: 11
+                            },
+                            formatter: function (value, context) {
+                                if (value !== null && value !== undefined) {
+                                    const cityName = context.chart.data.labels[context.dataIndex];
+                                    return [cityName, value.toFixed(1)];
+                                }
+                                return '';
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- TABLO ---
+        function updateTable(data) {
+            const tbody = document.querySelector('#data-table tbody');
+            tbody.innerHTML = '';
+
+            const displayData = data.slice(0, 500);
+
+            displayData.forEach(d => {
+                const tr = document.createElement('tr');
+
+                // İnternet adresi varsa tıklanabilir link yapalım
+                let linkHtml = d['İnternet Adresi'] ? `<a href="${d['İnternet Adresi']}" target="_blank" style="color: #007bff; text-decoration: none;">${d['İnternet Adresi']}</a>` : '';
+                let kaynakHtml = d.Kaynak ? d.Kaynak : '';
+
+                tr.innerHTML = `
+                    <td>${d.Şehir}</td>
+                    <td>${d.Bölge_kod}</td>
+                    <td>${d.Yıl}</td>
+                    <td>${d.Değer}</td>
+                    <td>${kaynakHtml}</td>
+                    <td>${linkHtml}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- İNDİRME ---
+        function downloadChart() {
+            const chartEl = document.getElementById('chart-export-area');
+            html2canvas(chartEl, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'grafik.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        function downloadMap() {
+            const mapEl = document.getElementById('map-export-area');
+            html2canvas(mapEl, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'harita.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        function downloadData() {
+            const data = getFilteredData();
+            if (data.length === 0) return alert("İndirilecek veri bulunamadı.");
+
+            // CSV İndirme formatına Kaynak ve İnternet Adresi eklendi
+            const keys = ["Şehir", "Bölge_kod", "Yıl", "Değer", "Amaç", "Hedef", "Gösterge", "Alt Gösterge", "Kaynak", "İnternet Adresi"];
+            let csvContent = "data:text/csv;charset=utf-8," + keys.join(";") + "\n";
+
+            data.forEach(d => { csvContent += keys.map(k => d[k] || "").join(";") + "\n"; });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "veri.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        window.addEventListener('resize', () => {
+            if (mapSvg) {
+                document.getElementById('map-container').innerHTML = '';
+                initMap();
+                updateMap(getFilteredData());
+            }
+        });
+
+    </script>
+</body>
+
+</html>

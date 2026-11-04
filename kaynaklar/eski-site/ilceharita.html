@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye İlçe Veri Analizi</title>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Yükleme Ekranı */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            flex-direction: column;
+        }
+
+        .loading-sub {
+            font-size: 0.8em;
+            font-weight: normal;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        /* Kontrol Paneli */
+        .controls-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #222;
+        }
+
+        select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+            min-width: 140px;
+        }
+
+        .btn-group {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            transition: opacity 0.2s;
+        }
+
+        .btn-chart {
+            background-color: #ffb3ba;
+            color: #444;
+        }
+
+        .btn-map {
+            background-color: #baffc9;
+            color: #444;
+        }
+
+        .btn-table {
+            background-color: #bae1ff;
+            color: #444;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Grid Yapısı */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Kart Altı Kontrolleri */
+        .card-control-footer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 0.9em;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-weight: 800;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #2c3e50;
+            width: 100%;
+        }
+
+        /* Grafik ve Harita Yükseklikleri */
+        #chart-wrapper {
+            position: relative;
+            height: 550px;
+            width: 100%;
+        }
+
+        #map-container {
+            height: 550px;
+            width: 100%;
+            background-color: #fff;
+            overflow: hidden;
+            position: relative;
+            border-radius: 4px;
+        }
+
+        .district {
+            stroke: #ccc;
+            stroke-width: 0.5px;
+            /* Fare etkileşimini (hover/click vb.) tamamen kapatır */
+            pointer-events: none;
+        }
+
+        .map-label {
+            font-size: 9px;
+            fill: #222;
+            /* Renk #222 olarak güncellendi */
+            pointer-events: none;
+            text-anchor: middle;
+            font-weight: normal;
+            stroke: white;
+            stroke-width: 0.5px;
+            paint-order: stroke fill;
+        }
+
+        /* Harita Lejantı */
+        .map-legend {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.85em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+            z-index: 10;
+            bottom: 15px;
+            left: 15px;
+            top: auto;
+            right: auto;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tablo */
+        .table-container {
+            overflow-x: auto;
+            max-height: 400px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #2c3e50;
+            position: sticky;
+            top: 0;
+            color: #fff;
+            z-index: 5;
+            border-bottom: 2px solid #ddd;
+        }
+
+        td.numeric-cell {
+            text-align: right;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        @media (max-width: 1000px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader" class="loading-overlay">
+        <div>Uygulama Hazırlanıyor...</div>
+        <div class="loading-sub">data.zip okunuyor</div>
+    </div>
+
+    <div class="controls-container">
+        <div class="control-group">
+            <label>Bölge</label>
+            <select id="sel-bolge">
+                <option value="all">Tümü</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>İl</label>
+            <select id="sel-il">
+                <option value="all">Tümü</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>Kategori</label>
+            <select id="sel-kategori"></select>
+        </div>
+        <div class="control-group">
+            <label>Veri Türü</label>
+            <select id="sel-veri"></select>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-chart" onclick="downloadElement('card-chart', 'grafik')">Grafik İndir</button>
+            <button class="btn-map" onclick="downloadElement('card-map', 'harita')">Harita İndir</button>
+            <button class="btn-table" onclick="downloadTable()">Tablo İndir (XLSX)</button>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="card" id="card-chart">
+            <div id="chart-wrapper">
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <div class="card-control-footer" data-html2canvas-ignore="true">
+                <div class="control-group">
+                    <label for="sel-chart-type" style="font-weight:bold; color:#555;">Grafik Türü:</label>
+                    <select id="sel-chart-type">
+                        <option value="bar">Bar (Dikey)</option>
+                        <option value="horizontalBar">Bar (Yatay)</option>
+                        <option value="line">Line (Çizgi)</option>
+                        <option value="area">Area (Alan)</option>
+                        <option value="pie">Pie (Pasta)</option>
+                        <option value="doughnut">Doughnut (Halka)</option>
+                        <option value="lollipop">Lollipop</option>
+                        <option value="histogram">Histogram (Dağılım)</option>
+                        <option value="density">Yoğunluk (Eğri)</option>
+                        <option value="boxplot">Kutu (Box Plot)</option>
+                        <option value="bubble">Kabarcık (Bubble)</option>
+                        <option value="polarArea">Polar Area</option>
+                        <option value="radar">Radar</option>
+                    </select>
+                </div>
+                <div class="control-group" style="margin-left: 15px;">
+                    <label for="sel-highlight" style="font-weight:bold; color:#555;">İlçe Vurgula:</label>
+                    <select id="sel-highlight">
+                        <option value="">Yok</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="card-map">
+            <div id="map-title" class="section-title">Yükleniyor...</div>
+            <div id="map-container">
+                <div id="map-legend" class="map-legend"></div>
+            </div>
+
+            <div class="card-control-footer" data-html2canvas-ignore="true" style="align-items: flex-end;">
+
+                <div class="control-group">
+                    <div style="font-weight:bold; color:#555; font-size: 0.85em; margin-bottom:5px;">Etiketler:</div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="chk-label-name" checked> İlçe Adı</label>
+                        <label><input type="checkbox" id="chk-label-value" checked> Değer</label>
+                    </div>
+                </div>
+
+                <div style="border-left:1px solid #ddd; margin:0 5px; height:30px;"></div>
+
+                <div class="control-group">
+                    <label style="font-size:10px;">Lejant Konumu</label>
+                    <select id="sel-legend-pos" style="padding:4px; font-size:0.85em;">
+                        <option value="bl" selected>Sol Alt</option>
+                        <option value="br">Sağ Alt</option>
+                        <option value="tl">Sol Üst</option>
+                        <option value="tr">Sağ Üst</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label style="font-size:10px;">Renkler</label>
+                    <div style="display:flex; gap:5px; align-items:center;">
+                        <input type="color" id="color-start" value="#FFF9C4"
+                            style="border:none; padding:0; width:30px; height:25px; cursor:pointer;"
+                            title="Başlangıç Rengi">
+                        <span style="font-size:12px;">➝</span>
+                        <input type="color" id="color-end" value="#E57373"
+                            style="border:none; padding:0; width:30px; height:25px; cursor:pointer;"
+                            title="Bitiş Rengi">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label style="font-size:10px;">Lejant Düzeyi</label>
+                    <select id="sel-legend-level" style="padding:4px; font-size:0.85em; min-width:40px">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected>5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div id="table-title" class="section-title">Veri Tablosu</div>
+        <div class="table-container">
+            <table id="data-table">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // --- Global Değişkenler ---
+        let rawData = [];
+        let geoData = null;
+        let chartInstance = null;
+
+        const headerMapping = {
+            "ilce": "İlçe", "il": "İl", "bolge": "Bölge", "kod": "Kod",
+            "veri": "Veri Türü", "kategori": "Kategori", "yil": "Yıl",
+            "deger": "Değer", "veri_kaynagi": "Veri Kaynağı", "ilcekod": "İlçe Kodu", "shapeName": "Shape Name"
+        };
+
+        // Arkaplanı beyaz yapma eklentisi
+        Chart.register({
+            id: 'custom_canvas_background_color',
+            beforeDraw: (chart) => {
+                const ctx = chart.canvas.getContext('2d');
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        });
+
+        // --- Başlatma ---
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('./data/data.zip');
+                if (!response.ok) throw new Error("data.zip bulunamadı.");
+
+                const blob = await response.blob();
+                const zip = await JSZip.loadAsync(blob);
+
+                let csvFile = null, geojsonFile = null;
+                zip.forEach((path, file) => {
+                    if (path.endsWith(".csv")) csvFile = file;
+                    if (path.endsWith(".geojson") || path.endsWith(".json")) geojsonFile = file;
+                });
+
+                if (!csvFile || !geojsonFile) throw new Error("Zip içeriği eksik.");
+
+                const csvText = await csvFile.async("string");
+                const geojsonText = await geojsonFile.async("string");
+
+                geoData = JSON.parse(geojsonText);
+                processCSV(csvText);
+
+                document.getElementById('loader').style.display = 'none';
+                initDropdowns();
+                setupEventListeners();
+                updateVeriTuruOptions();
+
+            } catch (error) {
+                console.error(error);
+                document.getElementById('loader').innerHTML = `
+                    <div style="color:#e74c3c">HATA OLUŞTU</div>
+                    <div class="loading-sub">${error.message}</div>`;
+            }
+        });
+
+        function processCSV(text) {
+            const lines = text.trim().split('\n');
+            const headers = lines[0].replace(/^\uFEFF/, '').trim().split(';');
+
+            rawData = lines.slice(1).map(line => {
+                const values = line.trim().split(';');
+                let obj = {};
+                headers.forEach((h, i) => {
+                    let val = values[i];
+                    if (typeof val === 'string') val = val.replace(',', '.');
+                    if (['deger', 'kod', 'ilcekod'].includes(h)) {
+                        val = parseFloat(val) || 0;
+                    }
+                    obj[h] = val;
+                });
+                return obj;
+            });
+        }
+
+        // --- Kontroller ---
+        function initDropdowns() {
+            const regions = [...new Set(rawData.map(d => d.bolge))].filter(Boolean).sort();
+            const cities = [...new Set(rawData.map(d => d.il))].filter(Boolean).sort();
+            const categories = [...new Set(rawData.map(d => d.kategori))].filter(Boolean).sort();
+
+            populateSelect('sel-bolge', regions, true);
+            populateSelect('sel-il', cities, true);
+            populateSelect('sel-kategori', categories, false);
+            document.getElementById('sel-kategori').value = "Nüfus";
+        }
+
+        function populateSelect(id, list, addAll) {
+            const sel = document.getElementById(id);
+            sel.innerHTML = '';
+            if (addAll) {
+                const opt = document.createElement('option');
+                opt.value = "all"; opt.textContent = "Tümü";
+                sel.appendChild(opt);
+            }
+            list.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item; opt.textContent = item;
+                sel.appendChild(opt);
+            });
+        }
+
+        function updateVeriTuruOptions() {
+            const selectedCat = document.getElementById('sel-kategori').value;
+            const veriTypes = [...new Set(rawData
+                .filter(d => d.kategori === selectedCat)
+                .map(d => d.veri))].sort();
+
+            populateSelect('sel-veri', veriTypes, false);
+            if (veriTypes.length > 0) document.getElementById('sel-veri').selectedIndex = 0;
+            updateDashboard();
+        }
+
+        function setupEventListeners() {
+            document.getElementById('sel-bolge').addEventListener('change', () => {
+                const region = document.getElementById('sel-bolge').value;
+                let filtered = region === 'all' ? rawData : rawData.filter(d => d.bolge === region);
+                const cities = [...new Set(filtered.map(d => d.il))].sort();
+
+                const ilSel = document.getElementById('sel-il');
+                ilSel.innerHTML = '<option value="all">Tümü</option>';
+                cities.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c; opt.textContent = c; ilSel.appendChild(opt);
+                });
+                updateDashboard();
+            });
+
+            document.getElementById('sel-kategori').addEventListener('change', updateVeriTuruOptions);
+
+            ['sel-il', 'sel-veri', 'sel-chart-type', 'chk-label-name', 'chk-label-value', 'sel-highlight', 'sel-legend-level'].forEach(id => {
+                document.getElementById(id).addEventListener('change', updateDashboard);
+            });
+
+            // Renk ve Lejant olay dinleyicileri
+            document.getElementById('sel-legend-pos').addEventListener('change', () => {
+                updateLegendPosition();
+            });
+
+            document.getElementById('color-start').addEventListener('change', updateDashboard);
+            document.getElementById('color-end').addEventListener('change', updateDashboard);
+        }
+
+        // --- YENİ: Taralı Desen Oluşturma (Sütun grafiği için) ---
+        function createDiagonalPattern(color) {
+            const shape = document.createElement('canvas');
+            shape.width = 10;
+            shape.height = 10;
+            const c = shape.getContext('2d');
+            c.strokeStyle = color;
+            c.lineWidth = 2;
+            c.beginPath(); c.moveTo(0, 10); c.lineTo(10, 0); c.stroke();
+            return c.createPattern(shape, 'repeat');
+        }
+
+        // --- Lejant Pozisyonunu Ayarlama ---
+        function updateLegendPosition() {
+            const pos = document.getElementById('sel-legend-pos').value;
+            const legend = document.getElementById('map-legend');
+
+            // Stilleri sıfırla
+            legend.style.top = 'auto';
+            legend.style.bottom = 'auto';
+            legend.style.left = 'auto';
+            legend.style.right = 'auto';
+
+            if (pos === 'bl') { // Bottom Left
+                legend.style.bottom = '15px';
+                legend.style.left = '15px';
+            } else if (pos === 'br') { // Bottom Right
+                legend.style.bottom = '15px';
+                legend.style.right = '15px';
+            } else if (pos === 'tl') { // Top Left
+                legend.style.top = '15px';
+                legend.style.left = '15px';
+            } else if (pos === 'tr') { // Top Right
+                legend.style.top = '15px';
+                legend.style.right = '15px';
+            }
+        }
+
+        // --- R Tarzı Lejant Hesaplama (Dinamik Renkli) ---
+        function calculateQuantileBreaks(data) {
+            if (!data || data.length === 0) return null;
+
+            const c1 = document.getElementById('color-start').value;
+            const c2 = document.getElementById('color-end').value;
+            const levels = parseInt(document.getElementById('sel-legend-level').value, 10);
+
+            // D3 ile iki renk arası interpolasyon
+            const interpolator = d3.interpolateRgb(c1, c2);
+
+            // Dinamik renk paleti üret
+            const dynamicColors = [];
+            if (levels > 0) {
+                const step = 1.0 / (levels - 1);
+                for (let i = 0; i < levels; i++) {
+                    dynamicColors.push(interpolator(i * step));
+                }
+            }
+
+
+            const values = data.map(d => d.deger).sort((a, b) => a - b);
+            const probs = [];
+            if (levels > 0) {
+                for (let i = 0; i <= levels; i++) {
+                    probs.push(i / levels);
+                }
+            } else {
+                return null;
+            }
+
+            const breaks = probs.map(p => d3.quantile(values, p));
+
+            // Handle cases where quantile might return null/undefined for sparse data
+            for (let i = 0; i < breaks.length; i++) {
+                if (breaks[i] === null || breaks[i] === undefined) {
+                    const nextValid = breaks.slice(i).find(v => v !== null && v !== undefined);
+                    const prevValid = breaks.slice(0, i).reverse().find(v => v !== null && v !== undefined);
+                    if (prevValid !== undefined && nextValid !== undefined) {
+                        breaks[i] = (prevValid + nextValid) / 2;
+                    } else {
+                        breaks[i] = prevValid || nextValid || 0; // Fallback
+                    }
+                }
+            }
+
+
+            const isInteger = values.every(v => Number.isInteger(v));
+
+            const ranges = [];
+            const fmt = new Intl.NumberFormat('tr-TR', {
+                minimumFractionDigits: isInteger ? 0 : 2,
+                maximumFractionDigits: isInteger ? 0 : 2
+            });
+
+            for (let i = 0; i < breaks.length - 1; i++) {
+                let s = breaks[i];
+                let e = breaks[i + 1];
+                ranges.push({
+                    min: s,
+                    max: e,
+                    label: `${fmt.format(s)} - ${fmt.format(e)}`,
+                    color: dynamicColors[i]
+                });
+            }
+            return { breaks, ranges };
+        }
+
+        // --- Dashboard Güncelleme ---
+        function updateDashboard() {
+            const region = document.getElementById('sel-bolge').value;
+            const city = document.getElementById('sel-il').value;
+            const category = document.getElementById('sel-kategori').value;
+            const dataType = document.getElementById('sel-veri').value;
+            const chartType = document.getElementById('sel-chart-type').value;
+
+            // Filtreleme
+            let filteredData = rawData.filter(d => d.kategori === category && d.veri === dataType);
+            if (region !== 'all') filteredData = filteredData.filter(d => d.bolge === region);
+            if (city !== 'all') filteredData = filteredData.filter(d => d.il === city);
+
+            // Başlıklar
+            document.getElementById('map-title').textContent = dataType;
+            document.getElementById('table-title').textContent = dataType + " Verileri";
+
+            // YENİ: İlçe Vurgulama Dropdownını Doldur
+            updateHighlightDropdown(filteredData);
+
+            // Harita ve Lejant
+            const legendInfo = calculateQuantileBreaks(filteredData);
+            let mapLegendRanges = [];
+            let getMapColor = () => '#eee';
+
+            if (legendInfo) {
+                mapLegendRanges = legendInfo.ranges;
+                getMapColor = (val) => {
+                    if (val === undefined || val === null) return '#eee';
+                    for (let i = 0; i < legendInfo.ranges.length; i++) {
+                        if (i === legendInfo.ranges.length - 1) {
+                            if (val >= legendInfo.ranges[i].min && val <= legendInfo.ranges[i].max + 0.0001) return legendInfo.ranges[i].color;
+                        } else {
+                            if (val >= legendInfo.ranges[i].min && val < legendInfo.ranges[i].max) return legendInfo.ranges[i].color;
+                        }
+                    }
+                    if (val < legendInfo.ranges[0].min) return legendInfo.ranges[0].color;
+                    return legendInfo.ranges[legendInfo.ranges.length - 1].color;
+                };
+            } else {
+                mapLegendRanges.push({ label: "Veri Yok", color: "#ccc" });
+            }
+
+            renderChart(filteredData, chartType, dataType);
+            renderMap(filteredData, getMapColor);
+            renderTable(filteredData);
+            renderHTMLMapLegend(mapLegendRanges);
+            updateLegendPosition();
+        }
+
+        // YENİ: Vurgulama Dropdown Listesini Güncelle
+        function updateHighlightDropdown(data) {
+            const hlSelect = document.getElementById('sel-highlight');
+            const currentVal = hlSelect.value;
+            const districts = [...new Set(data.map(d => d.ilce))].sort();
+
+            hlSelect.innerHTML = '<option value="">Yok</option>';
+            districts.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d; opt.textContent = d;
+                hlSelect.appendChild(opt);
+            });
+
+            if (districts.includes(currentVal)) hlSelect.value = currentVal;
+        }
+
+        // --- Grafik Çizimi ---
+        function renderChart(data, type, titleText) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            // YENİ: Seçilen ilçeyi al
+            const highlightedDistrict = document.getElementById('sel-highlight').value;
+
+            // Genel sıralama
+            let sortedData = [...data].sort((a, b) => b.deger - a.deger).slice(0, 50);
+
+            // Renkler
+            const palette = sortedData.map((_, i) => `hsl(${(i * 137.5) % 360}, 70%, 60%)`);
+
+            let labels = sortedData.map(d => d.ilce);
+            let datasetData = sortedData.map(d => d.deger);
+            let datasets = [];
+            let chartConfigType = type;
+
+            const showLegend = ['pie', 'doughnut', 'polarArea', 'bubble'].includes(type);
+
+            // --- YENİ: Stil Ayarlamaları (Vurgulama) ---
+            // Bar için desen
+            const bgColors = sortedData.map((d, i) => {
+                if (d.ilce === highlightedDistrict && (type === 'bar' || type === 'horizontalBar')) {
+                    return createDiagonalPattern(palette[i]);
+                }
+                return palette[i];
+            });
+
+            // Pie/Doughnut için offset
+            const offsets = sortedData.map(d => d.ilce === highlightedDistrict ? 30 : 0);
+
+            // Line için nokta yarıçapı ve kenarlık
+            const pointRadii = sortedData.map(d => d.ilce === highlightedDistrict ? 10 : 3);
+            const pointBorderWidths = sortedData.map(d => d.ilce === highlightedDistrict ? 3 : 1);
+            const pointHoverRadii = sortedData.map(d => d.ilce === highlightedDistrict ? 12 : 5);
+
+
+            // Kabarcık Etiket Eklentisi
+            const bubbleLabelPlugin = {
+                id: 'bubbleLabels',
+                afterDatasetsDraw(chart) {
+                    if (chart.config.type !== 'bubble') return;
+                    const ctx = chart.ctx;
+                    ctx.save();
+                    ctx.font = '10px Arial';
+                    ctx.fillStyle = '#333';
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    chart.data.datasets.forEach((dataset, i) => {
+                        const meta = chart.getDatasetMeta(i);
+                        if (!meta.hidden && meta.data[0]) {
+                            const element = meta.data[0];
+                            const { x, y, r } = element.getProps(['x', 'y', 'r'], true);
+                            const label = dataset.label;
+                            if (label) ctx.fillText(label, x + r + 4, y);
+                        }
+                    });
+                    ctx.restore();
+                }
+            };
+
+            let options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: { padding: 20 },
+                plugins: {
+                    legend: {
+                        display: showLegend,
+                        position: 'left',
+                        labels: { usePointStyle: true, pointStyle: 'rect', boxWidth: 12, font: { size: 10 } }
+                    },
+                    title: {
+                        display: true,
+                        text: titleText,
+                        font: { size: 16, weight: 'bold' },
+                        color: '#333',
+                        padding: { bottom: 20 }
+                    },
+                    tooltip: { enabled: true }
+                }
+            };
+
+            // --- Grafik Tipi Kontrolleri ---
+            if (type === 'histogram' || type === 'density') {
+                const histData = createHistogram(data);
+                labels = histData.labels;
+                chartConfigType = (type === 'density') ? 'line' : 'bar';
+                datasets.push({
+                    label: 'Frekans',
+                    data: histData.data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    tension: (type === 'density') ? 0.4 : 0,
+                    fill: (type === 'density')
+                });
+                options.scales = { x: { display: true }, y: { display: true } };
+
+            } else if (type === 'boxplot') {
+                chartConfigType = 'boxplot';
+                const groups = {};
+                data.forEach(d => {
+                    if (!groups[d.ilce]) groups[d.ilce] = [];
+                    groups[d.ilce].push(d.deger);
+                });
+                const sortedGroups = Object.keys(groups).map(key => {
+                    const vals = groups[key];
+                    const sum = vals.reduce((a, b) => a + b, 0);
+                    return { ilce: key, values: vals, avg: sum / vals.length };
+                }).sort((a, b) => b.avg - a.avg).slice(0, 50);
+
+                labels = sortedGroups.map(g => g.ilce);
+                datasets.push({
+                    label: titleText,
+                    data: sortedGroups.map(g => g.values),
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    outlierColor: '#999999',
+                    itemRadius: 2
+                });
+                options.scales = { x: { display: true }, y: { display: true } };
+
+            } else if (type === 'lollipop') {
+                chartConfigType = 'bar';
+                datasets.push({
+                    type: 'bar', label: 'Değer', data: datasetData, backgroundColor: palette,
+                    barPercentage: 0.1, categoryPercentage: 0.8
+                }, {
+                    type: 'scatter', label: 'Nokta', data: datasetData,
+                    backgroundColor: palette,
+                    // Lollipop için vurgu
+                    pointRadius: pointRadii.map(r => r + 2) // Lollipop noktaları biraz daha büyük
+                });
+                options.scales = { x: { display: true }, y: { display: true } };
+
+            } else if (type === 'horizontalBar') {
+                chartConfigType = 'bar';
+                options.indexAxis = 'y';
+                datasets.push({
+                    label: 'Değer',
+                    data: datasetData,
+                    backgroundColor: bgColors // Desenli arkaplan
+                });
+
+            } else if (type === 'bubble') {
+                chartConfigType = 'bubble';
+                const maxVal = Math.max(...datasetData);
+
+                sortedData.forEach((d, i) => {
+                    // Bubble için vurgulama: Kenarlık kalınlığı
+                    const borderWidth = d.ilce === highlightedDistrict ? 3 : 1;
+                    const borderColor = d.ilce === highlightedDistrict ? '#000' : palette[i].replace('60%', '40%');
+
+                    datasets.push({
+                        label: d.ilce,
+                        data: [{
+                            x: i,
+                            y: d.deger,
+                            r: (d.deger / maxVal) * 25
+                        }],
+                        backgroundColor: palette[i],
+                        borderColor: borderColor,
+                        borderWidth: borderWidth
+                    });
+                });
+                options.scales = {
+                    x: { display: false },
+                    y: { display: true, title: { display: true, text: 'Değer' } }
+                };
+
+            } else {
+                // Line, Bar, Area, Pie, Doughnut...
+                if (type === 'area') {
+                    chartConfigType = 'line';
+                    datasets.push({
+                        label: 'Değer', data: datasetData, fill: true,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: '#36A2EB', tension: 0.5,
+                        pointRadius: pointRadii,
+                        pointHoverRadius: pointHoverRadii,
+                        pointBorderWidth: pointBorderWidths
+                    });
+                } else {
+                    let datasetConfig = {
+                        label: 'Değer',
+                        data: datasetData,
+                        backgroundColor: (type === 'line') ? 'rgba(54, 162, 235, 0.2)' : bgColors,
+                        borderColor: (type === 'line') ? '#36A2EB' : '#fff',
+                        borderWidth: 1,
+                        fill: (type === 'line') ? false : true,
+                    };
+
+                    // Line Chart Özel Ayarları (Vurgulama)
+                    if (type === 'line') {
+                        datasetConfig.pointRadius = pointRadii;
+                        datasetConfig.pointHoverRadius = pointHoverRadii;
+                        datasetConfig.pointBorderWidth = pointBorderWidths;
+                        datasetConfig.pointBackgroundColor = sortedData.map(d => d.ilce === highlightedDistrict ? '#ff0000' : '#36A2EB');
+                    }
+
+                    // Pie/Doughnut/PolarArea Özel Ayarları (Vurgulama)
+                    if (['pie', 'doughnut', 'polarArea'].includes(type)) {
+                        datasetConfig.offset = offsets;
+                        datasetConfig.hoverOffset = 10;
+                    }
+
+                    datasets.push(datasetConfig);
+                }
+
+                if (['pie', 'doughnut', 'polarArea', 'radar'].includes(type)) {
+                    options.scales = {};
+                } else {
+                    options.scales = { x: { display: true }, y: { display: true } };
+                }
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: chartConfigType,
+                data: { labels: labels, datasets: datasets },
+                options: options,
+                plugins: [bubbleLabelPlugin]
+            });
+        }
+
+        // --- Harita Çizimi ---
+        function renderMap(data, colorScale) {
+            const container = document.getElementById('map-container');
+            d3.select("#map-container svg").remove();
+
+            if (!geoData) return;
+
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            const showNames = document.getElementById('chk-label-name').checked;
+            const showValues = document.getElementById('chk-label-value').checked;
+
+            const svg = d3.select("#map-container")
+                .insert("svg", ":first-child")
+                .attr("width", width)
+                .attr("height", height);
+
+            const dataMap = new Map();
+            const nameMap = new Map();
+            data.forEach(d => {
+                dataMap.set(d.kod, d.deger);
+                nameMap.set(d.kod, d.ilce);
+            });
+
+            const region = document.getElementById('sel-bolge').value;
+            const city = document.getElementById('sel-il').value;
+
+            let features = geoData.features.filter(f => {
+                if (city !== 'all') return f.properties.il === city;
+                if (region !== 'all') return dataMap.has(f.properties.ilcekod);
+                return true;
+            });
+
+            const projection = d3.geoIdentity()
+                .reflectY(true)
+                .fitSize([width, height], { type: "FeatureCollection", features: features });
+
+            const path = d3.geoPath().projection(projection);
+
+            const g = svg.append("g");
+            const zoom = d3.zoom()
+                .scaleExtent([0.1, 8])
+                .on("zoom", (e) => {
+                    g.attr("transform", e.transform);
+
+                    // Başlangıç boyutu 9px
+                    const baseFontSize = 9;
+
+                    // Ekrandaki gerçek görsel boyut (zoom oranıyla çarpılmış hali)
+                    let visualSize = baseFontSize * e.transform.k;
+
+                    // Görsel boyutu 8px ile 14px arasında sıkıştır (clamp)
+                    let clampedVisualSize = Math.max(8, Math.min(14, visualSize));
+
+                    // Grup (g) elementi e.transform.k kadar büyüdüğü için, 
+                    // SVG font boyutunu k'ya bölerek gerçek görsel boyutu dengeliyoruz
+                    let finalFontSize = clampedVisualSize / e.transform.k;
+
+                    g.selectAll(".map-label")
+                        .style("font-size", finalFontSize + "px")
+                        .style("stroke-width", (1 / e.transform.k) + "px");
+                });
+            svg.call(zoom);
+
+            g.selectAll("path")
+                .data(features)
+                .join("path")
+                .attr("class", "district")
+                .attr("d", path)
+                .attr("fill", d => {
+                    const val = dataMap.get(d.properties.ilcekod);
+                    return colorScale(val);
+                });
+            // title ekleme (tooltip) kaldırıldı
+
+            if (showNames || showValues) {
+                const labelsGroup = g.selectAll("g.label-group")
+                    .data(features)
+                    .enter()
+                    .append("g")
+                    .attr("class", "label-group")
+                    .attr("transform", d => `translate(${path.centroid(d)})`);
+
+                const textElements = labelsGroup.append("text")
+                    .attr("class", "map-label");
+
+                if (showNames) {
+                    textElements.append("tspan")
+                        .attr("x", 0)
+                        // Değer de gösteriliyorsa biraz yukarı it, tek başına ise ortala
+                        .attr("dy", showValues ? "-0.2em" : "0.3em")
+                        .text(d => nameMap.get(d.properties.ilcekod) || d.properties.shapeName);
+                }
+
+                if (showValues) {
+                    textElements.append("tspan")
+                        .attr("x", 0)
+                        // İlçe adı gösteriliyorsa onun 1.2 satır yüksekliği kadar altına in, tek başınaysa ortala
+                        .attr("dy", showNames ? "1.2em" : "0.3em")
+                        .text(d => {
+                            const val = dataMap.get(d.properties.ilcekod);
+                            return val !== undefined ? val.toLocaleString('tr-TR') : "";
+                        });
+                }
+            }
+        }
+
+        function renderHTMLMapLegend(legendData) {
+            const el = document.getElementById('map-legend');
+            el.innerHTML = '';
+            legendData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'legend-item';
+                div.innerHTML = `<div class="legend-color" style="background-color: ${item.color}"></div><span>${item.label}</span>`;
+                el.appendChild(div);
+            });
+        }
+
+        // --- Tablo Çizimi ---
+        function renderTable(data) {
+            const table = document.getElementById('data-table');
+            table.innerHTML = '<thead></thead><tbody></tbody>';
+
+            const thead = table.querySelector('thead');
+            const tbody = table.querySelector('tbody');
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5">Veri bulunamadı.</td></tr>';
+                return;
+            }
+
+            const keys = Object.keys(data[0]);
+
+            const trH = document.createElement('tr');
+            keys.forEach(k => {
+                const th = document.createElement('th');
+                th.textContent = headerMapping[k] || k.toUpperCase();
+                trH.appendChild(th);
+            });
+            thead.appendChild(trH);
+
+            data.slice(0, 200).forEach(row => {
+                const tr = document.createElement('tr');
+                keys.forEach(k => {
+                    const td = document.createElement('td');
+                    let val = row[k];
+
+                    if (typeof val === 'number') {
+                        td.textContent = val.toLocaleString('tr-TR');
+                        td.classList.add('numeric-cell');
+                    } else {
+                        td.textContent = val;
+                    }
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+        }
+
+        function createHistogram(data, binCount = 10) {
+            const values = data.map(d => d.deger).sort((a, b) => a - b);
+            if (values.length === 0) return { labels: [], data: [] };
+            const min = values[0];
+            const max = values[values.length - 1];
+            const range = max - min;
+            const binSize = range / binCount;
+            let bins = new Array(binCount).fill(0);
+            let labels = [];
+            for (let i = 0; i < binCount; i++) {
+                let start = min + (i * binSize);
+                let end = min + ((i + 1) * binSize);
+                labels.push(`${Math.floor(start)} - ${Math.floor(end)}`);
+            }
+            values.forEach(v => {
+                let idx = Math.floor((v - min) / binSize);
+                if (idx >= binCount) idx = binCount - 1;
+                bins[idx]++;
+            });
+            return { labels, data: bins };
+        }
+
+        // --- İndirme İşlemleri ---
+        function downloadElement(elementId, fileName) {
+            const element = document.getElementById(elementId);
+            html2canvas(element, { backgroundColor: "#ffffff", scale: 2 })
+                .then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `${fileName}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+        }
+
+        function downloadTable() {
+            const region = document.getElementById('sel-bolge').value;
+            const city = document.getElementById('sel-il').value;
+            const category = document.getElementById('sel-kategori').value;
+            const dataType = document.getElementById('sel-veri').value;
+
+            let dataToExport = rawData.filter(d => d.kategori === category && d.veri === dataType);
+            if (region !== 'all') dataToExport = dataToExport.filter(d => d.bolge === region);
+            if (city !== 'all') dataToExport = dataToExport.filter(d => d.il === city);
+
+            const formattedData = dataToExport.map(row => {
+                let newRow = {};
+                Object.keys(row).forEach(key => {
+                    newRow[headerMapping[key] || key] = row[key];
+                });
+                return newRow;
+            });
+
+            const ws = XLSX.utils.json_to_sheet(formattedData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Veriler");
+            XLSX.writeFile(wb, 'veriler.xlsx');
+        }
+
+    </script>
+</body>
+
+</html>
