@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
-import { cpSync, existsSync, readdirSync } from 'node:fs';
+import { cpSync, existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { etiketEkle, paylasimEtiketleri } from './tools/og/paylasim.mjs';
 
 /*
  * Çok sayfalı yapı: her yeni sayfa `pages` listesine eklenir.
@@ -44,7 +45,8 @@ function eskiSayfalariKopyala() {
       let n = 0;
       for (const f of readdirSync(ESKI_SITE)) {
         if (f.endsWith('.html') && !TASINAN.has(f) && !ESKI_ATLA.has(f)) {
-          cpSync(resolve(ESKI_SITE, f), resolve(out, f));
+          // paylaşım etiketleri ve sekme simgesi eklenerek kopyalanır
+          writeFileSync(resolve(out, f), etiketEkle(readFileSync(resolve(ESKI_SITE, f), 'utf8'), f));
           n++;
         }
       }
@@ -67,5 +69,5 @@ export default defineConfig({
     rollupOptions: { input: pages },
     chunkSizeWarningLimit: 800,
   },
-  plugins: [eskiSayfalariKopyala()],
+  plugins: [paylasimEtiketleri(), eskiSayfalariKopyala()],
 });
