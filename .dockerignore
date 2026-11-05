@@ -1,0 +1,4 @@
+# Görüntüye yalnızca dist/ ve nginx.conf girer
+*
+!dist/
+!nginx.conf
